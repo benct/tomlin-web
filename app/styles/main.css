@@ -1,0 +1,89 @@
+body {
+    background: url(assets/images/bg-min.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: "Ubuntu Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    line-height: 1.75;
+    font-size: 18px;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    padding-left: 0.1em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.borders {
+    position: absolute;
+    width: -webkit-calc(100% - 40px);
+    width: -moz-calc(100% - 40px);
+    width: calc(100% - 40px);
+    height: -webkit-calc(100% - 40px);
+    height: -moz-calc(100% - 40px);
+    height: calc(100% - 40px);
+    top: 20px;
+    left: 20px;
+    bottom: 20px;
+    right: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 10px solid rgba(0,0,0, .5);
+    z-index: -1;
+}
+
+.social {
+    position: absolute;
+    right: 60px;
+    bottom: 50px;
+}
+.social a {
+    display: inline-block;
+    margin: 0 10px;
+    opacity: 0.925;
+}
+.social a:hover {
+    opacity: 0.7;
+}
+.social a img {
+    width: 20px;
+    height: 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 40px;
+}
+@media screen and (min-width: 480px) {
+    .section-title {
+        font-size: 50px;
+    }
+}
+@media screen and (min-width: 768px) {
+    .section-title {
+        font-size: 70px;
+    }
+}
+@media screen and (min-width: 992px) {
+    .section-title {
+        font-size: 90px;
+    }
+}
+
+.section-subtitle {
+    font-weight: 400;
+    letter-spacing: 5px;
+    padding-left: 5px;
+    font-size: 15px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
