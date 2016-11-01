@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 
 import Home from './views/home.jsx';
 import About from './views/about.jsx';
+import Social from './components/social.jsx';
 
 function App (props) {
     return (
@@ -18,7 +19,7 @@ function App (props) {
                 { props.children }
             </div>
             <footer>
-                footer
+                <Social circle={false} />
             </footer>
         </div>
     );
