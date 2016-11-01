@@ -1,0 +1,19 @@
+/* TEAM */
+
+Developer: Ben Christopher Tomlin
+Contact: ben [at] tomlin.no
+Linkedin: https://www.linkedin.com/in/bentomlin
+Location: Oslo, Norway
+
+
+/* THANKS */
+
+Mom and Dad?
+
+
+/* SITE */
+
+Last update: 2016/10/30
+Standards: HTML5, CSS3, ES6
+Components: Webpack, Babel, Node, Npm, Gulp
+Software: IntelliJ IDEA, Notepad++
