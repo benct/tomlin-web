@@ -1,33 +1,46 @@
 const path = require('path');
 
-module.exports = {
-  context: __dirname + "/app",
+const PATHS = {
+  app: path.join(__dirname, "app"),
+  dist: path.join(__dirname, "dist")
+};
 
+module.exports = {
   entry: {
-    javascript: ["babel-polyfill", "./scripts/main.js"],
-    html: "./index.html"
+    javascript: ["babel-polyfill", path.resolve(PATHS.app, "scripts", "main.js")],
+    html: path.resolve(PATHS.app, "index.html"),
+    css: path.resolve(PATHS.app, "styles", "main.css")
   },
 
   output: {
-    path: __dirname + "/dist",
+    path: PATHS.dist,
     filename: "./assets/scripts/bundle.js"
   },
 
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
-    root: path.resolve(__dirname, './app/scripts')
+    root: path.join(PATHS.app, "scripts")
   },
 
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
+        loaders: ["babel-loader"],
         exclude: /node_modules/,
-        loaders: ["babel-loader"]
+        include: PATHS.app
+      },
+      {
+        test: /\.css$/,
+        loaders: ["css"],
+        exclude: /node_modules/,
+        include: PATHS.app
       },
       {
         test: /\.html$/,
-        loader: "file?name=[name].[ext]"
+        loader: "file?name=[name].[ext]",
+        exclude: /node_modules/,
+        include: PATHS.app
       }
     ]
   }
