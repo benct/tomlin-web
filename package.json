@@ -4,8 +4,9 @@
   "description": "tomlin.no website",
   "main": "main.js",
   "scripts": {
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback",
     "build": "node ./node_modules/webpack/bin/webpack.js",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback"
+    "build-prod": "node ./node_modules/webpack/bin/webpack.js -p"
   },
   "repository": {
     "type": "git",
