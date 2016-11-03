@@ -4,9 +4,9 @@
   "description": "tomlin.no website",
   "main": "main.js",
   "scripts": {
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback",
-    "build": "node ./node_modules/webpack/bin/webpack.js",
-    "build-prod": "node ./node_modules/webpack/bin/webpack.js -p"
+    "test": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback",
+    "build": "node ./node_modules/webpack/bin/webpack.js --progress --colors",
+    "build-prod": "node ./node_modules/webpack/bin/webpack.js --progress --colors --optimize-minimize --optimize-occurrence-order"
   },
   "repository": {
     "type": "git",
@@ -39,11 +39,15 @@
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.1",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "finn-js-code-style": "^5.0.0",
+    "html-webpack-plugin": "^2.24.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.6",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   },

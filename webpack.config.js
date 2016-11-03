@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -6,42 +8,56 @@ const PATHS = {
 };
 
 module.exports = {
+  context: PATHS.app,
+
   entry: {
-    main: ['babel-polyfill', path.resolve(PATHS.app, 'scripts', 'main.js')],
-    html: path.resolve(PATHS.app, 'index.html'),
-    css: path.resolve(PATHS.app, 'styles', 'main.css')
+    main: ['babel-polyfill', path.join(PATHS.app, 'scripts', 'main.js')]
   },
 
   output: {
     path: PATHS.dist,
-    filename: './assets/scripts/bundle.js'
+    filename: 'assets/scripts/bundle.js'
   },
 
-  resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    root: path.join(PATHS.app, 'scripts')
-  },
+  devtool: 'source-map',
 
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         loaders: ['babel-loader'],
-        exclude: /node_modules/,
-        include: PATHS.app
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
-        loaders: ['css'],
-        exclude: /node_modules/,
-        include: PATHS.app
+        loader: ExtractTextPlugin.extract('style', 'css'),
+        exclude: /node_modules/
       },
       {
-        test: /\.html$/,
-        loader: 'file?name=[name].[ext]',
-        exclude: /node_modules/,
-        include: PATHS.app
-      }
+        test: /\.(jpe?g|png|svg)$/,
+        loader: 'file?name=assets/[path][name].[ext]',
+        exclude: /node_modules/
+      },
+      // {
+      //   test: /\.(jpe?g|png|ico|svg|txt)$/,
+      //   loaders: ['file?name=assets/[path][name].[ext]', 'html', 'css'],
+      //   exclude: /node_modules/,
+      //   include: PATHS.app
+      // }
     ]
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(PATHS.app, 'index.html')
+    }),
+    new ExtractTextPlugin(path.join('assets', 'styles', 'main.css'))
+  ],
+
+  devServer: {
+    colors: true,
+    historyApiFallback: true,
+    inline: true,
+    hot: true
   }
 };
