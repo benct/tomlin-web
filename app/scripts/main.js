@@ -6,6 +6,8 @@ import Home from './views/home.jsx';
 import About from './views/about.jsx';
 import Social from './components/social.jsx';
 
+import '../styles/main.css';
+
 function App (props) {
     return (
         <div className="wrapper">
