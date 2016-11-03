@@ -16,10 +16,15 @@ module.exports = {
 
   output: {
     path: PATHS.dist,
-    filename: 'assets/scripts/bundle.js'
+    filename: 'assets/scripts/bundle.js',
+    publicPath: '/'
   },
 
   devtool: 'source-map',
+
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
 
   module: {
     loaders: [
