@@ -11,7 +11,7 @@ module.exports = {
   context: PATHS.app,
 
   entry: {
-    main: ['babel-polyfill', path.join(PATHS.app, 'scripts', 'main.js')]
+    main: ['babel-polyfill', path.join(PATHS.app, 'scripts', 'entry.js')]
   },
 
   output: {
@@ -30,7 +30,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        loader: 'babel-loader',
         exclude: /node_modules/
       },
       {
@@ -43,19 +43,16 @@ module.exports = {
         loader: 'file?name=assets/[path][name].[ext]',
         exclude: /node_modules/
       },
-      // {
-      //   test: /\.(jpe?g|png|ico|svg|txt)$/,
-      //   loaders: ['file?name=assets/[path][name].[ext]', 'html', 'css'],
-      //   exclude: /node_modules/,
-      //   include: PATHS.app
-      // }
+      {
+        test: /(\.(ico|txt)|\d+\.html)$/,
+        loader: 'file?name=[path][name].[ext]',
+        exclude: /node_modules/
+      }
     ]
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(PATHS.app, 'index.html')
-    }),
+    new HtmlWebpackPlugin({ template: path.join(PATHS.app, 'index.html') }),
     new ExtractTextPlugin(path.join('assets', 'styles', 'main.css'))
   ],
 
