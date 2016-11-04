@@ -15,5 +15,5 @@ Mom and Dad?
 
 Last update: 2016/10/30
 Standards: HTML5, CSS3, ES6
-Components: Webpack, Babel, Node, Npm, Gulp
+Components: Webpack, Babel, Node, Npm
 Software: IntelliJ IDEA, Notepad++
