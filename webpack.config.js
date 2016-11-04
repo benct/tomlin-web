@@ -44,7 +44,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /(\.(ico|txt)|\d+\.html)$/,
+        test: /(\.(ico|txt|ht.+)|\d+\.html)$/,
         loader: 'file?name=[path][name].[ext]',
         exclude: /node_modules/
       }
