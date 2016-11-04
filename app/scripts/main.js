@@ -10,6 +10,7 @@ function App (props) {
     return (
         <div className="wrapper">
             <header>
+                <img className="menu" src={require('../images/menu.svg')} alt="Menu" />
                 <nav>
                     <Link to='/'>Home</Link>
                     <Link to='/about'>About</Link>
