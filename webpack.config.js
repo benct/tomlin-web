@@ -39,13 +39,13 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(jpe?g|png|svg)$/,
-        loader: 'file?name=assets/[path][name].[ext]',
+        test: /(\.(ico|txt|htaccess)|\d+\.html)$/,
+        loader: 'file?name=[name].[ext]',
         exclude: /node_modules/
       },
       {
-        test: /(\.(ico|txt|htaccess)|\d+\.html)$/,
-        loader: 'file?name=[path][name].[ext]',
+        test: /\.(jpe?g|png|svg|xml|json)$/,
+        loader: 'file?name=assets/[path][name].[ext]',
         exclude: /node_modules/
       }
     ]
