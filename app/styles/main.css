@@ -54,7 +54,6 @@ img.menu:hover {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border: 10px solid rgba(0,0,0, .5);
-    z-index: -1;
 }
 
 .social {
@@ -73,6 +72,14 @@ img.menu:hover {
 .social a img {
     width: 20px;
     height: 20px;
+}
+
+@media screen and (max-width: 480px) {
+    .social {
+        right: 0;
+        width: 100%;
+        text-align: center;
+    }
 }
 
 .section-title {

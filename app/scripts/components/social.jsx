@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Social (props) {
+export default function Social(props) {
     const circle = props.circle ? 'circle-' : '';
     return (
         <div className="social">
