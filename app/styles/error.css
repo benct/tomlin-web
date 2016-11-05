@@ -1,0 +1,47 @@
+.error-page {
+    color: #888;
+    background: none !important;
+    line-height: normal;
+    font-family: sans-serif;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: normal;
+    font-size: inherit;
+    position: absolute;
+    width: 300px;
+    height: inherit;
+    left: 50%;
+    top: 50%;
+    margin: -88px 0 0 -150px;
+}
+
+.error-page h1 {
+    color: #555;
+    font-size: 2em;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.5;
+    text-transform: none;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.error-page p {
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: normal;
+    font-size: inherit;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@media only screen and (max-width: 270px) {
+    .error-page {
+        margin: 10px auto;
+        position: static;
+        width: 95%;
+    }
+    .error-page h1 {
+        font-size: 1.5em;
+    }
+}
