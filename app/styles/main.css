@@ -74,11 +74,32 @@ img.menu:hover {
     height: 20px;
 }
 
+.social.large a img {
+    width: 25px;
+    height: 25px;
+}
+
 @media screen and (max-width: 480px) {
+    img.menu {
+        right: 40px;
+        top: 40px;
+    }
     .social {
-        right: 0;
+        right: 0 !important;
+        bottom: 30px;
         width: 100%;
         text-align: center;
+    }
+}
+
+@media screen and (max-height: 480px) {
+    img.menu {
+        right: 40px;
+        top: 30px;
+    }
+    .social {
+        right: 35px;
+        bottom: 30px;
     }
 }
 

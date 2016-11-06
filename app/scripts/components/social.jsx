@@ -3,7 +3,7 @@ import React from 'react';
 export default function Social(props) {
     const circle = props.circle ? 'circle-' : '';
     return (
-        <div className="social">
+        <div className={'social' + (props.circle ? ' large' : '')}>
             <a href="https://www.facebook.com/ben.c.tomlin" target="_blank">
                 <img src={require("../../images/social/" + circle + "facebook.svg")} alt="facebook" />
             </a>
