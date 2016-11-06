@@ -39,7 +39,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /(\.(ico|txt|htaccess)|\d+\.html)$/,
+        test: /\.(ico|txt|htaccess)$/,
         loader: 'file?name=[name].[ext]',
         exclude: /node_modules/
       },
@@ -53,6 +53,8 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({ template: path.join(PATHS.app, 'index.html') }),
+    new HtmlWebpackPlugin({ template: path.join(PATHS.app, '403.html'), filename: '403.html', inject: false }),
+    new HtmlWebpackPlugin({ template: path.join(PATHS.app, '404.html'), filename: '404.html', inject: false }),
     new ExtractTextPlugin(path.join('assets', 'styles', 'main.css'))
   ],
 
