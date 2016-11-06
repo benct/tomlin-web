@@ -8,3 +8,5 @@ temp
 *.ipr
 *.swp
 *.bak
+.DS_Store
+npm-debug.log
