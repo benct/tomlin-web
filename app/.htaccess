@@ -5,7 +5,7 @@
     </FilesMatch>
 </IfModule>
 
-# Prevent Apache from returning a 404 error as the result of a rewrite.
+# Prevent Apache from returning a 404 error as the result of a rewrite
 # when the directory with the same name does not exist.
 Options -MultiViews
 
@@ -16,16 +16,15 @@ ErrorDocument 403 /403.html
 # Use UTF-8 encoding for anything served as text/html or text/plain.
 AddDefaultCharset utf-8
 
-# Turn on the rewrite engine and enable the FollowSymLinks option.
+# Enable the FollowSymLinks option and hide all files in folder list.
 <IfModule mod_rewrite.c>
     Options +FollowSymlinks
-  # Options +SymLinksIfOwnerMatch
-    RewriteEngine On
-  # RewriteBase /
+    IndexIgnore */*
 </IfModule>
 
 # Rewrite http://www.example.com -> https://example.com.
 <IfModule mod_rewrite.c>
+    RewriteEngine On
     RewriteCond %{HTTPS} off
     RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
@@ -37,6 +36,7 @@ AddDefaultCharset utf-8
     Options -Indexes
 </IfModule>
 
+# Rewrite requests to non-existing files and folders.
 <IfModule mod_rewrite.c>
     RewriteBase /
     RewriteCond %{REQUEST_FILENAME} !-f
