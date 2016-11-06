@@ -7,20 +7,35 @@ import About from './views/about.jsx';
 import Error from './views/error.jsx';
 import Social from './components/social.jsx';
 
-function App(props) {
-    return (
-        <div className="borders">
-            <header>
-                <img className="menu" src={require('../images/menu.svg')} alt="Menu" />
-            </header>
-            <div className="content">
-                { props.children }
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            circleIcons: false
+        };
+    }
+
+    toggleIcons() {
+        this.setState({
+            circleIcons: !this.state.circleIcons
+        });
+    }
+
+    render() {
+        return (
+            <div className="borders">
+                <header>
+                    <img className="menu" src={require('../images/menu.svg')} alt="Menu" onClick={this.toggleIcons.bind(this)} />
+                </header>
+                <div className="content">
+                    { this.props.children }
+                </div>
+                <footer>
+                    <Social circle={ this.state.circleIcons }/>
+                </footer>
             </div>
-            <footer>
-                <Social circle={false} />
-            </footer>
-        </div>
-    );
+        );
+    }
 }
 
 ReactDOM.render(
