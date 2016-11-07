@@ -25,6 +25,7 @@ class App extends React.Component {
         return (
             <div className="borders">
                 <header>
+                    <h1 className="logo">Tom<span className="color">lin</span>.<span className="no-upper">no</span></h1>
                     <img className="menu" src={require('../images/menu.svg')} alt="Menu" onClick={this.toggleIcons.bind(this)} />
                 </header>
                 <div className="content">
