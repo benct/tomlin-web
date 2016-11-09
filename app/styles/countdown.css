@@ -43,3 +43,15 @@
     line-height: 1.6;
     margin-top: 5px;
 }
+
+@media screen and (min-width: 768px) {
+    .countdown-title {
+        font-size: 28px;
+    }
+    .time {
+        font-size: 54px;
+    }
+    .unit {
+        font-size: 20px;
+    }
+}
