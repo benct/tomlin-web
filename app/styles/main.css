@@ -28,6 +28,23 @@ h1 {
     margin-bottom: 0;
 }
 
+a {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    background-color: transparent;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+a:focus, a:hover {
+    text-decoration: none;
+    color: #ffffff;
+    outline: 0;
+}
+
 .borders {
     position: absolute;
     width: -webkit-calc(100% - 40px);

@@ -2,12 +2,17 @@
     position: absolute;
     right: 60px;
     bottom: 50px;
+    z-index: 950;
 }
 
 .social a {
     display: inline-block;
     margin: 0 10px;
     opacity: 0.925;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .social a:hover {

@@ -1,4 +1,4 @@
-img.menu {
+img.menu-icon {
     position: absolute;
     right: 60px;
     top: 62px;
@@ -8,9 +8,14 @@ img.menu {
     display: inline-block;
     margin: 0 10px;
     opacity: 0.925;
+    z-index: 950;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
-img.menu:hover {
+img.menu-icon:hover {
     opacity: 0.7;
 }
 
@@ -21,10 +26,20 @@ img.menu:hover {
     color: rgba(255, 255, 255, 0.9);
     text-align: center;
     font-size: 44px;
+    cursor: pointer;
+    z-index: 950;
 }
 
 .logo .color {
     color: rgba(40, 160, 180, 0.9);
+    -webkit-transition: color 0.5s ease;
+    -moz-transition: color 0.5s ease;
+    -o-transition: color 0.5s ease;
+    transition: color 0.5s ease;
+}
+
+.logo:hover .color {
+    color: rgba(60, 255, 240, 0.9);
 }
 
 .logo .no-upper {
@@ -32,7 +47,7 @@ img.menu:hover {
 }
 
 @media screen and (max-width: 480px) {
-    img.menu {
+    img.menu-icon {
         right: 40px;
         top: 42px;
     }
@@ -44,7 +59,7 @@ img.menu:hover {
 }
 
 @media screen and (max-height: 480px) {
-    img.menu {
+    img.menu-icon {
         right: 40px;
         top: 32px;
     }
@@ -53,4 +68,75 @@ img.menu:hover {
         top: 30px;
         font-size: 25px;
     }
+}
+
+.menu-wrap {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 100%;
+    top: 0;
+    z-index: 900;
+    text-align: center;
+    background-color: rgba(20, 20, 20, 0.9);
+    -webkit-transition: left .8s ease-in-out;
+    -moz-transition: left .8s ease-in-out;
+    -o-transition: left .8s ease-in-out;
+    transition: left .8s ease-in-out;
+}
+
+.menu {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+
+.menu li {
+    margin: 20px 0;
+    display: block !important;
+}
+
+.menu a {
+    position: relative;
+    font-family: "Raleway", Georgia, "Times New Roman", Times, serif;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+}
+
+.menu a:before {
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    width: 0;
+    height: 100%;
+    opacity: .75;
+    z-index: -1;
+    background-color: #28c8a8;
+}
+
+.menu a:hover:before {
+    left: 0;
+    right: 0;
+    width: 100%;
 }

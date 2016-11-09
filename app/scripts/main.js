@@ -10,9 +10,17 @@ import Social from './components/social.jsx';
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.toggleMenu = this.toggleMenu.bind(this);
         this.state = {
+            showMenu: false,
             circleIcons: false
         };
+    }
+
+    toggleMenu() {
+        this.setState({
+            showMenu: !this.state.showMenu
+        });
     }
 
     toggleIcons() {
@@ -25,9 +33,17 @@ class App extends React.Component {
         return (
             <div className="borders">
                 <header>
-                    <h1 className="logo">Tom<span className="color">lin</span>.<span className="no-upper">no</span></h1>
-                    <img className="menu" src={require('../images/menu.svg')} alt="Menu" onClick={this.toggleIcons.bind(this)} />
+                    <h1 className="logo">Tomlin<span className="color no-upper">.no</span></h1>
+                    <img className="menu-icon" src={require('../images/menu.svg')} alt="Menu" onClick={this.toggleMenu} />
                 </header>
+                <nav className="menu-wrap" style={{left: (this.state.showMenu ? '0px' : '100%')}}>
+                    <ul className="menu" style={{opacity: (this.state.showMenu ? 1 : 0)}}>
+                        <li><Link to="/" onClick={this.toggleMenu}>Home</Link></li>
+                        <li><Link to="/about" onClick={this.toggleMenu}>About</Link></li>
+                        <li><a onClick={this.toggleIcons.bind(this)}>Toggle</a></li>
+                        <li><Link to="/login" onClick={this.toggleMenu}>Login</Link></li>
+                    </ul>
+                </nav>
                 <div className="content">
                     { this.props.children }
                 </div>
