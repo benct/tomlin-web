@@ -24,7 +24,8 @@ export default class Transition extends React.Component {
 
     render() {
         return (
-            <ReactTransitionGroup transitionName="fade" component="div" className={this.props.className}>
+            <ReactTransitionGroup transitionName="fade" className={this.props.className}
+                                  component={this.props.component || "div"}>
                 {this.state.visible &&
                 <TransitionChild key={this.props.path} childDidLeave={this.childDidLeave.bind(this)} {...this.props}>
                     {this.props.children}
