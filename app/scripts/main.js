@@ -6,6 +6,7 @@ import Home from './views/home.jsx';
 import About from './views/about.jsx';
 import Error from './views/error.jsx';
 import Social from './components/social.jsx';
+import Transition from './components/transition.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -44,11 +45,12 @@ class App extends React.Component {
                         <li><Link to="/login" onClick={this.toggleMenu}>Login</Link></li>
                     </ul>
                 </nav>
-                <div className="content">
+                <Transition className="content" path={location.pathname} transition="opacity .5s ease-in"
+                            initialStyle={{opacity: 0}} finalStyle={{opacity: 1}}>
                     { this.props.children }
-                </div>
+                </Transition>
                 <footer>
-                    <Social circle={ this.state.circleIcons }/>
+                    <Social circle={this.state.circleIcons}/>
                 </footer>
             </div>
         );
