@@ -10,6 +10,10 @@ export default class Login extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.refs.username.focus();
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
