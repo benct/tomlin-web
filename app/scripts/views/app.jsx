@@ -53,8 +53,9 @@ export default class App extends React.Component {
                         <li><Link to="/about" onClick={this.toggleMenu}>About</Link></li>
                         <li><Link to="/files" onClick={this.toggleMenu}>Files</Link></li>
                         <li><a onClick={this.toggleIcons.bind(this)}>Toggle</a></li>
-                        <li><Link to="/login" onClick={this.toggleMenu}>Login</Link></li>
-                        <li><Link to="/logout" onClick={this.toggleMenu}>Logout</Link></li>
+                        { auth.loggedIn() ?
+                            <li><Link to="/logout" onClick={this.toggleMenu}>Logout</Link></li> :
+                            <li><Link to="/login" onClick={this.toggleMenu}>Login</Link></li> }
                     </ul>
                 </nav>
                 <Transition className="content" path={location.pathname} transition="opacity .5s ease-in"
