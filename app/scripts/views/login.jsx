@@ -32,7 +32,7 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit.bind(this)}>
+            <form ref="form" onSubmit={this.handleSubmit.bind(this)}>
                 <input tabindex="1" type="text" ref="username" placeholder="username" autoComplete="off"/>
                 <input tabindex="2" type="password" ref="password" placeholder="********"/>
                 <input tabindex="3" type="submit" value="login" />
