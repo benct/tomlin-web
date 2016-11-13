@@ -26,6 +26,7 @@ export default class Login extends React.Component {
             } else {
                 this.props.router.replace('/');
             }
+            this.refs.form.style.display = 'none';
         });
     }
 
