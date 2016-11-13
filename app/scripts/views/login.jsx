@@ -36,11 +36,11 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit.bind(this)} ref="form">
-                <label><input ref="username" placeholder="username" /></label><br/>
-                <label><input ref="password" placeholder="password" /></label><br/>
-                <button type="submit">login</button>
-                {this.state.error && (<p className="text">Incorrect username or password...</p>)}
+            <form ref="form" onSubmit={this.handleSubmit.bind(this)}>
+                <input type="text" ref="username" placeholder="username" autoComplete="off"/>
+                <input type="password" ref="password" placeholder="********"/>
+                <input type="submit" value="login" />
+                {this.state.error && (<p className="text error">Incorrect username or password...</p>)}
             </form>
         );
     }

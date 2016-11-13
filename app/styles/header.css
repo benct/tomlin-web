@@ -31,7 +31,7 @@ img.menu-icon:hover {
 }
 
 .logo .color {
-    color: rgba(40, 160, 180, 0.9);
+    color: rgba(40, 160, 200, 0.9);
     -webkit-transition: color 0.5s ease;
     -moz-transition: color 0.5s ease;
     -o-transition: color 0.5s ease;
@@ -88,8 +88,6 @@ img.menu-icon:hover {
 }
 
 .menu {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
     list-style: none;
     padding: 0;
     margin: 0;

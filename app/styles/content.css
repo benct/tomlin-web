@@ -18,6 +18,10 @@
     max-width: 600px;
 }
 
+.text.error {
+    box-shadow: 0 0 10px rgba(255, 20, 20, 0.5);
+}
+
 .text a {
     color: cyan;
 }
