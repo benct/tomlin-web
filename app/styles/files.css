@@ -1,0 +1,36 @@
+.filesystem {
+    background-color: rgba(20, 20, 20, 0.5);
+    text-align: center;
+    padding: 10px 20px;
+    max-width: 800px;
+}
+
+.filesystem th {
+    padding: 3px 5px;
+    font-size: 14px;
+}
+
+.filesystem td {
+    padding: 3px 5px;
+    line-height: 1;
+}
+
+.filesystem .fileicon {
+    width: 30px;
+    height: 30px;
+    padding: 0 5px 0 0;
+    vertical-align: middle;
+}
+
+.filesystem .filename {
+    font-family: "Raleway", Georgia, "Times New Roman", Times, serif;
+    padding-right: 30px;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.filesystem .fileinfo {
+    padding-left: 10px;
+    font-size: 12px;
+}
