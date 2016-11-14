@@ -1,7 +1,7 @@
 node_modules
 dist
-api
 temp
+/api
 .tmp
 .idea
 *.iml
