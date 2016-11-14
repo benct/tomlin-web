@@ -1,65 +1,24 @@
 import React from 'react';
 
+import fetch from '../api/api.js'
+
 export default class Files extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             cwd: '.',
-            directories: [
-                {
-                    name: '..',
-                    shortName: '..',
-                    size: '4.00 KB',
-                    perms: 'drwxr-xr-x',
-                    date: '01/01/1970',
-                    isDir: true,
-                    type: 'dir',
-                    href: '/',
-                    download: false,
-                    icon: 'dir.png',
-                    preview: false
-                },{
-                    name: 'directory',
-                    shortName: 'directory',
-                    size: '4.00 KB',
-                    perms: 'drwxr-xr-x',
-                    date: '01/01/1970',
-                    isDir: true,
-                    type: 'dir',
-                    href: '/files/directory',
-                    download: false,
-                    icon: 'dir.png',
-                    preview: false
-                }
-            ],
-            files: [
-                {
-                    name: 'test.jpg',
-                    shortName: 'test.jpg',
-                    size: '1.64 MB',
-                    perms: '-rwxr--r--',
-                    date: '23/05/1988',
-                    isDir: false,
-                    type: 'jpg',
-                    href: '/files/test.jpg',
-                    download: 'TODO: download function',
-                    icon: 'jpg.png',
-                    preview: true
-                },{
-                    name: 'test.png',
-                    shortName: 'test.png',
-                    size: '3.24 MB',
-                    perms: '-rwxrwxrwx',
-                    date: '23/05/1988',
-                    isDir: false,
-                    type: 'png',
-                    href: '/files/test.png',
-                    download: 'TODO: download function',
-                    icon: 'png.png',
-                    preview: true
-                }
-            ]
+            content: [],
         };
+    }
+
+    componentDidMount() {
+        this.refreshContent();
+    }
+
+    refreshContent() {
+        fetch({ action: 'ls', path: this.state.cwd })
+            .then((data) => this.setState({ content: data.content }))
+            .catch((error) => console.log('Request failed:', error));
     }
 
     changeDirectory(dirname) {
@@ -72,10 +31,7 @@ export default class Files extends React.Component {
             dir += '/' + dirname;
         }
         this.setState({ cwd: dir });
-    }
-
-    canPreview(type) {
-        return 'png|jpg|jpeg|gif|mp4|txt|html'.indexOf(type) >= 0;
+        this.refreshContent();
     }
 
     openFile(path) {
@@ -87,9 +43,9 @@ export default class Files extends React.Component {
     }
 
     handleClick(content) {
-        if (content.isDir) {
+        if (content.dir) {
             this.changeDirectory(content.name);
-        } else if (this.canPreview(content.type)) {
+        } else if (content.preview) {
             this.openFile(content.href);
         } else {
             this.forceDownload(content.href);
@@ -100,8 +56,8 @@ export default class Files extends React.Component {
         return (
             <tr>
                 <td><img className="fileicon" src={require('../../images/file/' + content.icon)}/></td>
-                <td className="filename" onClick={() => this.handleClick(content)}>{content.shortName}</td>
-                <td className="fileinfo monospace hide-lt480">{content.size}</td>
+                <td className="filename" onClick={() => this.handleClick(content)}>{content.short}</td>
+                <td className="fileinfo monospace hide-lt480 rightify">{content.size}</td>
                 <td className="fileinfo monospace hide-lt768">{content.perms}</td>
                 <td className="fileinfo monospace hide-lt600">{content.date}</td>
             </tr>
@@ -109,8 +65,6 @@ export default class Files extends React.Component {
     }
 
     render() {
-        const content = this.state.directories.map((item, i) => this.renderItem(item, i))
-            .concat(this.state.files.map((item, i) => this.renderItem(item, i)));
         return (
             <table className="filesystem">
                 <thead>
@@ -119,11 +73,12 @@ export default class Files extends React.Component {
                         <th className="leftify">Filename</th>
                         <th className="hide-lt480">Size</th>
                         <th className="hide-lt768">Permissions</th>
-                        <th className="hide-lt600">Created</th>
+                        <th className="hide-lt600">Uploaded</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.directories.length || this.state.files.length ? content : (<tr><td>Empty</td></tr>)}
+                    {this.state.content.length ?
+                        this.state.content.map((item, i) => this.renderItem(item, i)) : (<tr><td>Empty</td></tr>)}
                 </tbody>
             </table>
         );
