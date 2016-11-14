@@ -101,9 +101,9 @@ export default class Files extends React.Component {
             <tr>
                 <td><img className="fileicon" src={require('../../images/file/' + content.icon)}/></td>
                 <td className="filename" onClick={() => this.handleClick(content)}>{content.shortName}</td>
-                <td className="fileinfo monospace">{content.size}</td>
-                <td className="fileinfo monospace">{content.perms}</td>
-                <td className="fileinfo monospace">{content.date}</td>
+                <td className="fileinfo monospace hide-lt480">{content.size}</td>
+                <td className="fileinfo monospace hide-lt768">{content.perms}</td>
+                <td className="fileinfo monospace hide-lt600">{content.date}</td>
             </tr>
         );
     }
@@ -114,7 +114,13 @@ export default class Files extends React.Component {
         return (
             <table className="filesystem">
                 <thead>
-                    <tr><th>&nbsp;</th><th className="leftify">Filename</th><th>Size</th><th>Permissions</th><th>Created</th></tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th className="leftify">Filename</th>
+                        <th className="hide-lt480">Size</th>
+                        <th className="hide-lt768">Permissions</th>
+                        <th className="hide-lt600">Created</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {this.state.directories.length || this.state.files.length ? content : (<tr><td>Empty</td></tr>)}
