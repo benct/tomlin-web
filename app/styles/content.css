@@ -53,3 +53,21 @@
         font-size: 18px;
     }
 }
+
+@media (max-width: 767px) {
+    .hide-lt768 {
+        display: none !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .hide-lt600 {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hide-lt480 {
+        display: none !important;
+    }
+}
