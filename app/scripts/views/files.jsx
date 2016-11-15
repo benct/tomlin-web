@@ -56,10 +56,10 @@ export default class Files extends React.Component {
         return (
             <tr>
                 <td><img className="fileicon" src={require('../../images/file/' + content.icon)}/></td>
-                <td className="filename" onClick={() => this.handleClick(content)}>{content.short}</td>
-                <td className="fileinfo monospace hide-lt480 rightify">{content.size}</td>
-                <td className="fileinfo monospace hide-lt768">{content.perms}</td>
-                <td className="fileinfo monospace hide-lt600">{content.date}</td>
+                <td className="filename"><span onClick={() => this.handleClick(content)}>{content.short}</span></td>
+                <td className="fileinfo monospace hide-lt480 rightify"><span>{content.size}</span></td>
+                <td className="fileinfo monospace hide-lt768"><span>{content.perms}</span></td>
+                <td className="fileinfo monospace hide-lt600"><span>{content.date}</span></td>
             </tr>
         );
     }

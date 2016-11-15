@@ -1,8 +1,17 @@
 .filesystem {
-    background-color: rgba(20, 20, 20, 0.5);
+    background-color: rgba(20, 20, 20, 0.8);
     text-align: center;
     padding: 10px 20px;
     max-width: 800px;
+}
+
+.filesystem tr:hover td,
+.filesystem tr:active td {
+    -webkit-transition: color .3s ease-in-out;
+    -moz-transition: color .3s ease-in-out;
+    -o-transition: color .3s ease-in-out;
+    transition: color .3s ease-in-out;
+    color: #28a0c8;
 }
 
 .filesystem th {
@@ -11,13 +20,13 @@
 }
 
 .filesystem td {
-    padding: 3px 5px;
+    padding: 1px 5px;
     line-height: 1;
 }
 
 .filesystem .fileicon {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     padding: 0 5px 0 0;
     vertical-align: middle;
 }
@@ -27,6 +36,9 @@
     padding-right: 30px;
     text-align: left;
     font-size: 16px;
+}
+
+.filesystem .filename span {
     cursor: pointer;
 }
 
