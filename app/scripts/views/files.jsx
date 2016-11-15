@@ -6,7 +6,7 @@ export default class Files extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cwd: '.',
+            cwd: '',
             content: [],
         };
     }
@@ -24,11 +24,15 @@ export default class Files extends React.Component {
     changeDirectory(dirname) {
         let dir = this.state.cwd;
         if (dirname === '..') {
-            if (dir !== '.') {
+            if (dir !== '') {
                 dir = dir.substring(0, dir.lastIndexOf('/'));
             }
         } else {
-            dir += '/' + dirname;
+            if (dir === '') {
+                dir = dirname;
+            } else {
+                dir += '/' + dirname;
+            }
         }
         this.setState({ cwd: dir });
         this.refreshContent();
@@ -66,21 +70,24 @@ export default class Files extends React.Component {
 
     render() {
         return (
-            <table className="filesystem">
-                <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th className="leftify">Filename</th>
-                        <th className="hide-lt480">Size</th>
-                        <th className="hide-lt768">Permissions</th>
-                        <th className="hide-lt600">Uploaded</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.state.content.length ?
-                        this.state.content.map((item, i) => this.renderItem(item, i)) : (<tr><td>Empty</td></tr>)}
-                </tbody>
-            </table>
+            <div>
+                <div onClick={() => this.changeDirectory('..')}>UP</div>
+                <table className="filesystem">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th className="leftify">Filename</th>
+                            <th className="hide-lt480">Size</th>
+                            <th className="hide-lt768">Permissions</th>
+                            <th className="hide-lt600">Uploaded</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.content.length ?
+                            this.state.content.map((item, i) => this.renderItem(item, i)) : (<tr><td>Empty</td></tr>)}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }
