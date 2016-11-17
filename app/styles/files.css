@@ -7,6 +7,7 @@
     max-height: 600px;
     overflow-x: hidden;
     overflow-y: auto;
+    height: 60vh;
 }
 
 .file-table tr:hover td:not(.file-name) span,
@@ -73,6 +74,7 @@
 
 .file-overlay img {
     cursor: pointer;
+    max-width: 100%;
 }
 
 input[type=button].file-control {
@@ -81,4 +83,10 @@ input[type=button].file-control {
     margin: 0 0 5px;
     padding: 0 5px;
     line-height: normal;
+}
+
+@media (max-width: 767px) {
+    input[type=button].file-control {
+        width: 20%;
+    }
 }
