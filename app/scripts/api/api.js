@@ -10,12 +10,12 @@ export default function fetchContent(params = {}) {
     return fetch(`${apiUrl}?${query}`)
         .then((response) => {
             if (response.status >= 300) {
-                console.log('Network error ({}): {}', response.status, response.statusText);
+                console.log('Network error (', response.status, '):', response.statusText);
             }
             return response.json();
         }).then((data) => {
             if (data.status >= 300) {
-                console.log('API error ({}): {}', data.status, data.content);
+                console.log('API error (', data.status, '):', data.content);
                 return {};
             }
             return data.content;
