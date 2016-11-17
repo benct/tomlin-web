@@ -80,7 +80,7 @@
 input[type=button].file-control {
     width: 10%;
     height: 32px;
-    margin: 0 0 5px;
+    margin: 0 5px 5px;
     padding: 0 5px;
     line-height: normal;
 }
@@ -88,5 +88,12 @@ input[type=button].file-control {
 @media (max-width: 767px) {
     input[type=button].file-control {
         width: 20%;
+    }
+}
+
+@media (max-width: 480px) {
+    input[type=button].file-control {
+        width: 25%;
+        margin: 0 5px 3px;
     }
 }
