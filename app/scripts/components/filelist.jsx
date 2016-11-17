@@ -25,7 +25,7 @@ export default function Filelist({ content, handleClick }) {
             </tr>
             </thead>
             <tbody>
-            {content.length ? content.map((item, i) => renderItem(item, i)) : (<tr><td>Empty</td></tr>)}
+            {content.length ? content.map((item, i) => renderItem(item, i)) : (<tr><td colSpan="5">This folder is empty...</td></tr>)}
             </tbody>
         </table>
     );
