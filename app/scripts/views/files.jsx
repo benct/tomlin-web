@@ -8,20 +8,19 @@ export default class Files extends React.Component {
         super(props);
         this.state = {
             cwd: '',
-            content: [],
-            status: 200
+            content: []
         };
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.refreshContent(this.state.cwd);
     }
 
     refreshContent(cwd) {
         fetchContent({ action: 'ls', path: cwd })
-            .then((data) => this.setState({ content: data.content, status: data.status }))
-            .catch((error) => console.log('Request failed:', error));
+            .then((data) => this.setState({ content: data }))
+            .catch(console.log);
     }
 
     changeDirectory(dirname) {
