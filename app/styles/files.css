@@ -1,4 +1,4 @@
-.filesystem {
+.file-table {
     background-color: rgba(20, 20, 20, 0.8);
     text-align: center;
     padding: 10px;
@@ -9,36 +9,36 @@
     overflow-y: auto;
 }
 
-.filesystem tr:hover td:not(.filename) span,
-.filesystem tr:active td:not(.filename) span {
+.file-table tr:hover td:not(.file-name) span,
+.file-table tr:active td:not(.file-name) span {
     font-weight: 600;
 }
 
-.filesystem th {
+.file-table th {
     padding: 3px 5px;
     font-size: 14px;
 }
 
-.filesystem td {
+.file-table td {
     padding: 1px 5px;
     line-height: 1;
 }
 
-.filesystem .fileicon {
+.file-table .file-icon {
     width: 28px;
     height: 28px;
     padding: 0 5px 0 0;
     vertical-align: middle;
 }
 
-.filesystem .filename {
+.file-table .file-name {
     font-family: "Raleway", Georgia, "Times New Roman", Times, serif;
     padding-right: 30px;
     text-align: left;
     font-size: 16px;
 }
 
-.filesystem .filename span {
+.file-table .file-name span {
     -webkit-transition: color .2s ease-in-out;
     -moz-transition: color .2s ease-in-out;
     -o-transition: color .2s ease-in-out;
@@ -46,12 +46,20 @@
     cursor: pointer;
 }
 
-.filesystem .filename span:hover,
-.filesystem .filename span:active {
+.file-table .file-name span:hover,
+.file-table .file-name span:active {
     color: #28a0c8;
 }
 
-.filesystem .fileinfo {
+.file-table .file-info {
     padding-left: 10px;
     font-size: 12px;
+}
+
+input[type=button].file-control {
+    width: 10%;
+    height: 32px;
+    margin: 0 0 5px;
+    padding: 0 5px;
+    line-height: normal;
 }

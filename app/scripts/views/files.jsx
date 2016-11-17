@@ -57,7 +57,9 @@ export default class Files extends React.Component {
     render() {
         return (
             <div>
-                <div onClick={() => this.changeDirectory('..')}>UP</div>
+                <div style={{textAlign: 'right'}}>
+                    <input className="file-control" type="button" onClick={() => this.changeDirectory('..')} value="UP" />
+                </div>
                 <Filelist content={this.state.content} handleClick={this.handleClick} />
             </div>
         );
