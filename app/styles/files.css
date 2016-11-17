@@ -67,13 +67,12 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    z-index: 900;
+    z-index: 999;
     background-color: rgba(20, 20, 20, 0.5);
 }
 
 .file-overlay img {
     cursor: pointer;
-    z-index: 999;
 }
 
 input[type=button].file-control {
