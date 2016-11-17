@@ -8,9 +8,9 @@ export default class Files extends React.Component {
         super(props);
         this.state = {
             cwd: '',
-            content: []
+            content: [],
+            preview: null
         };
-        this.handleClick = this.handleClick.bind(this);
     }
 
     componentWillMount() {
@@ -36,21 +36,22 @@ export default class Files extends React.Component {
         this.refreshContent(dir);
     }
 
-    openFile(path) {
-
+    previewFile(path) {
+        this.setState({ preview: path });
     }
 
     forceDownload(path) {
-
+        console.log('Not yet implemented.');
     }
 
-    handleClick(content) {
-        if (content.dir) {
-            this.changeDirectory(content.name);
-        } else if (content.preview) {
-            this.openFile(content.href);
+    handleClick(item) {
+        console.log(item);
+        if (item.dir) {
+            this.changeDirectory(item.name);
+        } else if (item.preview) {
+            this.previewFile(item.href);
         } else {
-            this.forceDownload(content.href);
+            this.forceDownload(item.href);
         }
     }
 
@@ -60,7 +61,10 @@ export default class Files extends React.Component {
                 <div style={{textAlign: 'right'}}>
                     <input className="file-control" type="button" onClick={() => this.changeDirectory('..')} value="UP" />
                 </div>
-                <Filelist content={this.state.content} handleClick={this.handleClick} />
+                <Filelist content={this.state.content} handleClick={this.handleClick.bind(this)} />
+                <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>
+                    <img src={this.state.preview} onClick={() => this.setState({ preview: null })} />
+                </div>
             </div>
         );
     }
