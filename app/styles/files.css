@@ -2,7 +2,11 @@
     background-color: rgba(20, 20, 20, 0.8);
     text-align: center;
     padding: 10px;
+    display: block;
     max-width: 800px;
+    max-height: 600px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .filesystem tr:hover td:not(.filename) span,
