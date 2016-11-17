@@ -10,6 +10,16 @@
     height: 60vh;
 }
 
+.file-table::-webkit-scrollbar {
+    width: 0.2em;
+}
+.file-table::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.file-table::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
 .file-table tr:hover td:not(.file-name) span,
 .file-table tr:active td:not(.file-name) span {
     font-weight: 600;
