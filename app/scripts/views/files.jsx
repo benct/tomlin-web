@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Filelist from '../components/filelist.jsx';
-import fetchContent from '../api/api.js';
+import { fetchContent, fetchFile } from '../api/api.js';
 
 export default class Files extends React.Component {
     constructor(props) {
@@ -9,7 +9,8 @@ export default class Files extends React.Component {
         this.state = {
             cwd: '',
             content: [],
-            preview: null
+            preview: null,
+            previewContents: null
         };
     }
 
@@ -36,22 +37,42 @@ export default class Files extends React.Component {
         this.refreshContent(dir);
     }
 
-    previewFile(path) {
-        this.setState({ preview: path });
+    previewFile(item) {
+        if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
+            this.setState({ preview: { src: item.href, image: true } });
+        } else {
+            fetchFile(item.href)
+                .then((data) => this.setState({ previewContents: data }));
+            this.setState({ preview: true });
+        }
     }
 
-    forceDownload(path) {
+    forceDownload(item) {
+        console.log(item);
         console.log('Not yet implemented.');
     }
 
     handleClick(item) {
-        console.log(item);
         if (item.dir) {
             this.changeDirectory(item.name);
         } else if (item.preview) {
-            this.previewFile(item.href);
+            this.previewFile(item);
         } else {
-            this.forceDownload(item.href);
+            this.forceDownload(item);
+        }
+    }
+
+    closePreview() {
+        this.setState({ preview: null, previewContents: null });
+    }
+
+    renderPreview() {
+        if (this.state.preview) {
+            if (this.state.preview.image) {
+                return <img src={this.state.preview.src} onClick={this.closePreview.bind(this)} alt="Preview" />
+            } else {
+                return <pre onClick={this.closePreview.bind(this)}>{this.state.previewContents}</pre>
+            }
         }
     }
 
@@ -63,7 +84,7 @@ export default class Files extends React.Component {
                 </div>
                 <Filelist content={this.state.content} handleClick={this.handleClick.bind(this)} />
                 <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>
-                    <img src={this.state.preview} onClick={() => this.setState({ preview: null })} />
+                    { this.renderPreview() }
                 </div>
             </div>
         );

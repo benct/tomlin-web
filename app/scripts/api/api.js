@@ -1,16 +1,16 @@
 import 'whatwg-fetch';
 
-const apiUrl = 'https://tomlin.no/api/';
+const baseUrl = 'https://tomlin.no';
 
-export default function fetchContent(params = {}) {
+export function fetchContent(params = {}) {
     const query = Object.keys(params)
         .filter(k => params[k] !== null && typeof params[k] !== 'undefined')
         .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
         .join('&');
-    return fetch(`${apiUrl}?${query}`)
+    return fetch(`${baseUrl}/api/?${query}`)
         .then((response) => {
             if (response.status >= 300) {
-                console.log('Network error (', response.status, '):', response.statusText);
+                console.log('HTTP error (', response.status, '):', response.statusText);
             }
             return response.json();
         }).then((data) => {
@@ -19,5 +19,15 @@ export default function fetchContent(params = {}) {
                 return {};
             }
             return data.content;
+        });
+}
+
+export function fetchFile(path) {
+    return fetch(`${baseUrl}${path}`)
+        .then((response) => {
+            if (response.status >= 300) {
+                console.log('HTTP error (', response.status, '):', response.statusText);
+            }
+            return response.text();
         });
 }
