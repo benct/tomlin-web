@@ -3,6 +3,8 @@ import React from 'react';
 import Filelist from '../components/filelist.jsx';
 import { fetchContent, fetchFile } from '../api/api.js';
 
+const PARENT_DIR = '..';
+
 export default class Files extends React.Component {
     constructor(props) {
         super(props);
@@ -18,6 +20,10 @@ export default class Files extends React.Component {
         this.refreshContent(this.state.cwd);
     }
 
+    componentDidMount() {
+        document.addEventListener("keyup", this.handleKeyboard.bind(this), false);
+    }
+
     refreshContent(cwd) {
         fetchContent({ action: 'ls', path: cwd })
             .then((data) => this.setState({ content: data }))
@@ -26,7 +32,7 @@ export default class Files extends React.Component {
 
     changeDirectory(dirname) {
         let dir = this.state.cwd;
-        if (dirname === '..') {
+        if (dirname === PARENT_DIR) {
             if (dir === '')
                 return;
             dir = dir.substring(0, dir.lastIndexOf('/'));
@@ -62,6 +68,18 @@ export default class Files extends React.Component {
         }
     }
 
+    handleKeyboard(event) {
+        switch (event.keyCode) {
+            case 8:
+                this.changeDirectory(PARENT_DIR);
+                break;
+            case 13:
+            case 27:
+                this.closePreview();
+                break;
+        }
+    }
+
     closePreview() {
         this.setState({ preview: null, previewContents: null });
     }
@@ -80,7 +98,7 @@ export default class Files extends React.Component {
         return (
             <div>
                 <div style={{textAlign: 'right'}}>
-                    <input className="file-control" type="button" onClick={() => this.changeDirectory('..')} value="UP" />
+                    <input className="file-control" type="button" onClick={() => this.changeDirectory(PARENT_DIR)} value="UP" />
                 </div>
                 <Filelist content={this.state.content} handleClick={this.handleClick.bind(this)} />
                 <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>
