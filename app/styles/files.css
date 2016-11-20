@@ -27,7 +27,7 @@
 
 .file-table th {
     padding: 3px 5px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .file-table td {
@@ -46,7 +46,7 @@
     font-family: "Raleway", Georgia, "Times New Roman", Times, serif;
     padding-right: 30px;
     text-align: left;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .file-table .file-name span {
@@ -64,7 +64,7 @@
 
 .file-table .file-info {
     padding-left: 10px;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .file-overlay {
