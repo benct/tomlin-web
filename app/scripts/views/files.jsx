@@ -123,8 +123,12 @@ export default class Files extends React.Component {
     render() {
         return (
             <div>
-                <div style={{textAlign: 'right'}}>
-                    <input className="file-control" type="button" onClick={() => this.changeDirectory(PARENT_DIR)} value="UP" />
+                <div>
+                    <div className="file-table-header">
+                        <span className="mll mts">{this.state.cwd}</span>
+                        <input className="file-control" type="button" onClick={() => this.changeDirectory(PARENT_DIR)}
+                               value="UP" disabled={this.state.cwd === ''}/>
+                    </div>
                 </div>
                 <FileList content={this.state.content} focused={this.state.focused} handleClick={this.handleClick.bind(this)} />
                 <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>

@@ -68,6 +68,11 @@
     font-size: 11px;
 }
 
+.file-table-header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .file-overlay {
     display: flex;
     justify-content: center;
