@@ -1,4 +1,4 @@
-import { authenticate } from '../api/api.js'
+import { authenticate } from '../lib/api.js'
 
 export default {
     init() {

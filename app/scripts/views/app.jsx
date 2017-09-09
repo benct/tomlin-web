@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import Social from '../components/social.jsx';
 import Transition from '../components/transition.jsx';
 
-import auth from '../authentication/auth.js';
+import auth from '../lib/auth.js';
 
 export default class App extends React.Component {
     constructor(props) {

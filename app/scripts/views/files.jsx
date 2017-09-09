@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Filelist from '../components/filelist.jsx';
-import { fetchContent, fetchFile } from '../api/api.js';
+import { fetchContent, fetchFile } from '../lib/api.js';
 
 const PARENT_DIR = '..';
 

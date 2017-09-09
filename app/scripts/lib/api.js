@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import auth from '../authentication/auth.js';
+import auth from '../lib/auth.js';
 
 const baseUrl = 'https://tomlin.no';
 
