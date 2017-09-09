@@ -16,6 +16,10 @@ const error = {
 };
 
 export default class Error extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
         document.title += (' - ' + error[this.props.route.code].title);
         document.body.classList.add('error-page');
