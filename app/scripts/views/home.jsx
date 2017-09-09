@@ -18,7 +18,7 @@ export default class Home extends React.Component {
     }
 
     calculateCountdown() {
-        var timestamp = (this.state.countdownTo - Date.now()) / 1000;
+        const timestamp = (this.state.countdownTo - Date.now()) / 1000;
         this.setState({
             days    : this.timeComponent(timestamp, 24 * 60 * 60),
             hours   : this.timeComponent(timestamp,      60 * 60) % 24,
