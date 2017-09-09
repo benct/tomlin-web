@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Filelist({ content, focused, handleClick }) {
+export default function FileList({ content, focused, handleClick }) {
     const renderItem = (item, i) => {
         return (
             <tr key={i}>

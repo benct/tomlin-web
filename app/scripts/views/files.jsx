@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Filelist from '../components/filelist.jsx';
+import FileList from '../components/filelist.jsx';
 import { fetchContent, fetchFile } from '../lib/api.js';
 
 const PARENT_DIR = '..';
@@ -126,7 +126,7 @@ export default class Files extends React.Component {
                 <div style={{textAlign: 'right'}}>
                     <input className="file-control" type="button" onClick={() => this.changeDirectory(PARENT_DIR)} value="UP" />
                 </div>
-                <Filelist content={this.state.content} focused={this.state.focused} handleClick={this.handleClick.bind(this)} />
+                <FileList content={this.state.content} focused={this.state.focused} handleClick={this.handleClick.bind(this)} />
                 <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>
                     { this.renderPreview() }
                 </div>
