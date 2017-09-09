@@ -5,7 +5,7 @@ export default class Home extends React.Component {
         super(props);
         this.calculateCountdown = this.calculateCountdown.bind(this);
         this.state = {
-            countdownTo: 1560000000000,
+            countdownTo: 1600000000000,
             days: 0,
             hours: 0,
             minutes: 0,
