@@ -42,6 +42,19 @@
     font-family: monospace;
 }
 
+.mts { margin-top: 5px !important; }
+.mtm { margin-top: 10px !important; }
+.mtl { margin-top: 20px !important; }
+.mrs { margin-right: 5px !important; }
+.mrm { margin-right: 10px !important; }
+.mrl { margin-right: 20px !important; }
+.mbs { margin-bottom: 5px !important; }
+.mbm { margin-bottom: 10px !important; }
+.mbl { margin-bottom: 20px !important; }
+.mls { margin-left: 5px !important; }
+.mlm { margin-left: 10px !important; }
+.mll { margin-left: 20px !important; }
+
 @media screen and (max-width: 480px) {
     .text {
         letter-spacing: 1px;
