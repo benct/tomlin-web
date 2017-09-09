@@ -1,6 +1,6 @@
 import React from 'react';
 
-import auth from '../authentication/auth.js';
+import auth from '../lib/auth.js';
 
 export default class Logout extends React.Component {
     constructor(props) {

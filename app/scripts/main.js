@@ -10,7 +10,7 @@ import Logout from './views/logout.jsx';
 import Files from './views/files.jsx';
 import Error from './views/error.jsx';
 
-import auth from './authentication/auth.js';
+import auth from './lib/auth.js';
 
 function requireAuthentication(nextState, replace) {
     if (!auth.loggedIn()) {
