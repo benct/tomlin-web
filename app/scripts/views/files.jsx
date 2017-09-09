@@ -79,27 +79,30 @@ export default class Files extends React.Component {
 
     handleKeyboard(event) {
         event.preventDefault();
+
         switch (event.keyCode) {
             case 8: // backspace
                 this.changeDirectory(PARENT_DIR);
                 break;
             case 13: // enter
+                if (this.state.focused !== null) {
+                    this.handleClick(this.state.content[this.state.focused]);
+                }
+                break;
             case 27: // escape
                 this.closePreview();
                 break;
             case 38: // up
                 if (this.state.focused === null) {
-                    this.setState({ focused: (this.state.content.length - 1) });
-                }
-                if (this.state.focused > 0) {
+                    this.setState({ focused: 0 });
+                } else if (this.state.focused > 0) {
                     this.setState({ focused: --this.state.focused });
                 }
                 break;
             case 40: // down
                 if (this.state.focused === null) {
                     this.setState({ focused: 0 });
-                }
-                if (this.state.focused < (this.state.content.length - 1)) {
+                } else if (this.state.focused < (this.state.content.length - 1)) {
                     this.setState({ focused: ++this.state.focused });
                 }
                 break;
