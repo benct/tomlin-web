@@ -1,11 +1,13 @@
 import React from 'react';
 
-export default function Filelist({ content, handleClick }) {
+export default function Filelist({ content, focused, handleClick }) {
     const renderItem = (item, i) => {
         return (
             <tr key={i}>
                 <td><img className="file-icon" src={require('../../images/file/' + item.icon)}/></td>
-                <td className="file-name"><span onClick={() => handleClick(item)}>{item.short}</span></td>
+                <td className="file-name">
+                    <span onClick={() => handleClick(item)} className={i === focused ? 'focused' : ''}>{item.short}</span>
+                </td>
                 <td className="file-info monospace hide-lt600 rightify"><span>{item.size}</span></td>
                 <td className="file-info monospace hide-lt768"><span>{item.perms}</span></td>
                 <td className="file-info monospace hide-lt768"><span>{item.date}</span></td>

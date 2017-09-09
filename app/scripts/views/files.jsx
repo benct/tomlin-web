@@ -8,9 +8,11 @@ const PARENT_DIR = '..';
 export default class Files extends React.Component {
     constructor(props) {
         super(props);
+        this.handleKeyboard = this.handleKeyboard.bind(this);
         this.state = {
             cwd: '',
             content: [],
+            focused: null,
             preview: null,
             previewContents: null
         };
@@ -21,7 +23,11 @@ export default class Files extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener("keyup", this.handleKeyboard.bind(this), false);
+        document.addEventListener("keyup", this.handleKeyboard, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keyup", this.handleKeyboard, false);
     }
 
     refreshContent(cwd) {
@@ -39,7 +45,10 @@ export default class Files extends React.Component {
         } else {
             dir += (dir === '' ? '' : '/') + dirname;
         }
-        this.setState({ cwd: dir });
+        this.setState({
+            cwd: dir,
+            focused: null
+        });
         this.refreshContent(dir);
     }
 
@@ -69,13 +78,30 @@ export default class Files extends React.Component {
     }
 
     handleKeyboard(event) {
+        event.preventDefault();
         switch (event.keyCode) {
-            case 8:
+            case 8: // backspace
                 this.changeDirectory(PARENT_DIR);
                 break;
-            case 13:
-            case 27:
+            case 13: // enter
+            case 27: // escape
                 this.closePreview();
+                break;
+            case 38: // up
+                if (this.state.focused === null) {
+                    this.setState({ focused: (this.state.content.length - 1) });
+                }
+                if (this.state.focused > 0) {
+                    this.setState({ focused: --this.state.focused });
+                }
+                break;
+            case 40: // down
+                if (this.state.focused === null) {
+                    this.setState({ focused: 0 });
+                }
+                if (this.state.focused < (this.state.content.length - 1)) {
+                    this.setState({ focused: ++this.state.focused });
+                }
                 break;
         }
     }
@@ -100,7 +126,7 @@ export default class Files extends React.Component {
                 <div style={{textAlign: 'right'}}>
                     <input className="file-control" type="button" onClick={() => this.changeDirectory(PARENT_DIR)} value="UP" />
                 </div>
-                <Filelist content={this.state.content} handleClick={this.handleClick.bind(this)} />
+                <Filelist content={this.state.content} focused={this.state.focused} handleClick={this.handleClick.bind(this)} />
                 <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>
                     { this.renderPreview() }
                 </div>

@@ -57,6 +57,7 @@
     cursor: pointer;
 }
 
+.file-table .file-name span.focused,
 .file-table .file-name span:hover,
 .file-table .file-name span:active {
     color: #28a0c8;
