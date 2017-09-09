@@ -11,21 +11,19 @@ export default class App extends React.Component {
         super(props);
         this.toggleMenu = this.toggleMenu.bind(this);
         this.state = {
-            loggedIn: auth.loggedIn(),
+            loggedIn: false,
             showMenu: false,
             circleIcons: false
         };
     }
 
     updateAuth(loggedIn) {
-        this.setState({
-            loggedIn
-        });
+        this.setState({ loggedIn });
     }
 
     componentWillMount() {
         auth.onChange = this.updateAuth.bind(this);
-        auth.login();
+        auth.init();
     }
 
     toggleMenu() {
@@ -44,7 +42,9 @@ export default class App extends React.Component {
         return (
             <div className="borders">
                 <header>
-                    <h1 className="logo">Tomlin<span className="color no-upper">.no</span></h1>
+                    <h1 className="logo">
+                        <Link to="/">Tomlin<span className="color no-upper">.no</span></Link>
+                    </h1>
                     <img className="menu-icon" src={require('../../images/menu.svg')} alt="Menu" onClick={this.toggleMenu}/>
                 </header>
                 <nav className="menu-wrap" style={{left: (this.state.showMenu ? '0px' : '100%')}}>
@@ -53,7 +53,7 @@ export default class App extends React.Component {
                         <li><Link to="/about" onClick={this.toggleMenu}>About</Link></li>
                         <li><Link to="/files" onClick={this.toggleMenu}>Files</Link></li>
                         <li><a onClick={this.toggleIcons.bind(this)}>Toggle</a></li>
-                        { auth.loggedIn() ?
+                        { this.state.loggedIn ?
                             <li><Link to="/logout" onClick={this.toggleMenu}>Logout</Link></li> :
                             <li><Link to="/login" onClick={this.toggleMenu}>Login</Link></li> }
                     </ul>

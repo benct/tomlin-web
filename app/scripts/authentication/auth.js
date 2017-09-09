@@ -1,17 +1,26 @@
-module.exports = {
-    login(email, pass, cb) {
-        cb = arguments[arguments.length - 1];
-        if (localStorage.token) {
-            if (cb) cb(true);
-            this.onChange(true);
-            return;
-        }
-        pretendRequest(email, pass, (res) => {
+import { authenticate } from '../api/api.js'
+
+export default {
+    init() {
+        authenticate({ token: localStorage.token || '' }, (res) => {
+            if (res.authenticated) {
+                localStorage.token = res.token;
+                this.onChange(true);
+            } else {
+                delete localStorage.token;
+                this.onChange(false);
+            }
+        });
+    },
+
+    login(email, password, cb) {
+        authenticate({ user: email, pass: password }, (res) => {
             if (res.authenticated) {
                 localStorage.token = res.token;
                 if (cb) cb(true);
                 this.onChange(true);
             } else {
+                delete localStorage.token;
                 if (cb) cb(false);
                 this.onChange(false);
             }
@@ -22,9 +31,8 @@ module.exports = {
         return localStorage.token;
     },
 
-    logout(cb) {
+    logout() {
         delete localStorage.token;
-        if (cb) cb();
         this.onChange(false);
     },
 
@@ -34,16 +42,3 @@ module.exports = {
 
     onChange() {}
 };
-
-function pretendRequest(user, pass, cb) {
-    setTimeout(() => {
-        if (user === 'tomlin' && pass === 'admin') {
-            cb({
-                authenticated: true,
-                token: Math.random().toString(36).substring(7)
-            });
-        } else {
-            cb({ authenticated: false });
-        }
-    }, 0);
-}
