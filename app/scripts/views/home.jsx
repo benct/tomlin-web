@@ -13,6 +13,15 @@ export default class Home extends React.Component {
         };
     }
 
+    componentWillMount() {
+        this.calculateCountdown();
+        this.interval = setInterval(this.calculateCountdown, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
     timeComponent(x, v) {
         return Math.floor(x / v);
     }
@@ -25,15 +34,6 @@ export default class Home extends React.Component {
             minutes : this.timeComponent(timestamp,           60) % 60,
             seconds : this.timeComponent(timestamp,            1) % 60
         });
-    }
-
-    componentWillMount() {
-        this.calculateCountdown();
-        this.interval = setInterval(this.calculateCountdown, 1000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
     }
 
     render() {
