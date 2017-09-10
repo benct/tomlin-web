@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function FileList({ content, focused, handleClick, handleDelete }) {
+export default function FileList({ content, focused, handleClick, handleRename, handleDelete }) {
     const renderItem = (item, i) => {
         return (
             <tr key={i}>
@@ -9,6 +9,7 @@ export default function FileList({ content, focused, handleClick, handleDelete }
                 <td className="file-name">
                     <span onClick={() => handleClick(item)} className={i === focused ? 'focused' : ''}>{item.short}</span>
                     <span onClick={() => handleDelete(item)} className="file-info monospace fright">[x]</span>
+                    <span onClick={() => handleRename(item)} className="file-info monospace fright">[r]</span>
                 </td>
                 <td className="file-info monospace hide-lt600 rightify"><span>{item.size}</span></td>
                 <td className="file-info monospace hide-lt768"><span>{item.perms}</span></td>
@@ -39,5 +40,6 @@ FileList.propTypes = {
     content: PropTypes.array.isRequired,
     focused: PropTypes.number.isRequired,
     handleClick: PropTypes.func.isRequired,
+    handleRename: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired
 };

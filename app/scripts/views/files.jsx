@@ -66,6 +66,15 @@ export default class Files extends React.Component {
         }
     }
 
+    handleRename(item) {
+        const name = prompt('Enter new name of file:', item.name);
+        if (name) {
+            fetchContent({ action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name})
+                .then(this.handleSuccess.bind(this))
+                .catch(console.log);
+        }
+    }
+
     handleDelete(item) {
         const action = item.dir ? 'rmdir' : 'rm';
         fetchContent({ action: action, path: `${this.state.cwd}/${item.name}`})
@@ -164,6 +173,7 @@ export default class Files extends React.Component {
                 </div>
                 <FileList content={this.state.content} focused={this.state.focused}
                           handleClick={this.handleClick.bind(this)}
+                          handleRename={this.handleRename.bind(this)}
                           handleDelete={this.handleDelete.bind(this)}/>
                 <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>
                     { this.renderPreview() }
