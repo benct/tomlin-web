@@ -64,16 +64,6 @@ export default class Files extends React.Component {
         }
     }
 
-    previewFile(item) {
-        if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
-            this.setState({ preview: { src: item.href, image: true } });
-        } else {
-            fetchFile(item.href)
-                .then((data) => this.setState({ previewContents: data }));
-            this.setState({ preview: true });
-        }
-    }
-
     forceDownload(item) {
         setTimeout(() => {
             window.open(item.href);
@@ -133,6 +123,16 @@ export default class Files extends React.Component {
         }
     }
 
+    previewFile(item) {
+        if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
+            this.setState({ preview: { src: item.href, image: true } });
+        } else {
+            fetchFile(item.href)
+                .then((data) => this.setState({ previewContents: data }));
+            this.setState({ preview: true });
+        }
+    }
+
     closePreview() {
         this.setState({ preview: null, previewContents: null });
     }
@@ -153,7 +153,7 @@ export default class Files extends React.Component {
                 <div>
                     <div className="file-table-header">
                         <span className="mll mts">{this.state.cwd}</span>
-                        <div className="size1of2 rightify">
+                        <div className="rightify">
                             <input className="file-control" type="button" value="New"
                                    onClick={this.createDirectory.bind(this)}/>
                             <input className="file-control" type="button" value="RF"
