@@ -68,9 +68,9 @@ input[type=reset] {
     cursor: pointer;
 }
 
-input[type=button]:hover, input[type=button]:focus, input[type=button]:active,
-input[type=submit]:hover, input[type=submit]:focus, input[type=submit]:active,
-input[type=reset]:hover, input[type=reset]:focus, input[type=reset]:active {
+input[type=button]:hover, input[type=button]:active,
+input[type=submit]:hover, input[type=submit]:active,
+input[type=reset]:hover, input[type=reset]:active {
     color: #28a0c8;
     background-color: rgba(255, 255, 255, 0.3);
     border-color: #28a0c8;
