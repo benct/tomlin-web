@@ -1,5 +1,6 @@
 /** Based on https://github.com/misterfresh/react-easy-transition **/
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
 export default class Transition extends React.Component {
@@ -17,9 +18,7 @@ export default class Transition extends React.Component {
     }
 
     childDidLeave() {
-        this.setState({
-            visible: true
-        });
+        this.setState({ visible: true });
     }
 
     render() {
@@ -70,8 +69,16 @@ class TransitionChild extends React.Component {
     }
 
     render() {
-        return <div ref={(ref) => this.page = ref} style={this.props.initialStyle}>
+        return <div ref={(ref) => (this.page = ref)} style={this.props.initialStyle}>
             {this.props.children}
         </div>
     }
 }
+
+Transition.propTypes = {
+    path: PropTypes.string.isRequired,
+    className: PropTypes.string.isRequired,
+    transition: PropTypes.string.isRequired,
+    initialStyle: PropTypes.object.isRequired,
+    finalStyle: PropTypes.object.isRequired,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function FileList({ content, focused, handleClick }) {
     const renderItem = (item, i) => {
@@ -32,3 +33,9 @@ export default function FileList({ content, focused, handleClick }) {
         </table>
     );
 }
+
+FileList.propTypes = {
+    content: PropTypes.array.isRequired,
+    focused: PropTypes.number.isRequired,
+    handleClick: PropTypes.func.isRequired
+};
