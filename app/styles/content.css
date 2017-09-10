@@ -26,6 +26,14 @@
     color: cyan;
 }
 
+.fleft {
+    float: left;
+}
+
+.fright {
+    float: right;
+}
+
 .leftify {
     text-align: left;
 }
