@@ -95,7 +95,8 @@
 }
 
 input[type=button].file-control {
-    width: 10%;
+    min-width: 45px;
+    width: 15%;
     height: 32px;
     margin: 0 5px 5px;
     padding: 0 5px;

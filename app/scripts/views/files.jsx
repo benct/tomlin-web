@@ -129,8 +129,13 @@ export default class Files extends React.Component {
                 <div>
                     <div className="file-table-header">
                         <span className="mll mts">{this.state.cwd}</span>
-                        <input className="file-control" type="button" onClick={() => this.changeDirectory(PARENT_DIR)}
-                               value="UP" disabled={this.state.cwd === ''}/>
+                        <div className="size1of2 rightify">
+                            <input className="file-control" type="button" value="RF"
+                                   onClick={() => this.refreshContent(this.state.cwd)}/>
+                            <input className="file-control" type="button" value="UP"
+                                   onClick={() => this.changeDirectory(PARENT_DIR)}
+                                   disabled={this.state.cwd === ''}/>
+                        </div>
                     </div>
                 </div>
                 <FileList content={this.state.content} focused={this.state.focused} handleClick={this.handleClick.bind(this)} />

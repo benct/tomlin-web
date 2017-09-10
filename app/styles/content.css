@@ -55,6 +55,10 @@
 .mlm { margin-left: 10px !important; }
 .mll { margin-left: 20px !important; }
 
+.size1of2 {
+    width: 50%;
+}
+
 @media screen and (max-width: 480px) {
     .text {
         letter-spacing: 1px;
