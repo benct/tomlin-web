@@ -51,33 +51,25 @@ export default class Files extends React.Component {
         this.refreshContent(dir);
     }
 
-    createDirectory() {
+    handleSuccess(data) {
+        if (data.content === true) {
+            this.refreshContent(this.state.cwd);
+        }
+    }
+
+    handleCreateDirectory() {
         const name = prompt('Enter name of new folder:');
         if (name) {
             fetchContent({ action: 'mkdir', path: `${this.state.cwd}/${name}`})
-                .then((data) => {
-                    if (data.content === true) {
-                        this.refreshContent(this.state.cwd);
-                    }
-                })
+                .then(this.handleSuccess.bind(this))
                 .catch(console.log);
         }
     }
 
-    forceDownload(item) {
-        setTimeout(() => {
-            window.open(item.href);
-        }, 100);
-    }
-
     handleDelete(item) {
-        const action = item.dir ? 'rmdir' : 'remove';
+        const action = item.dir ? 'rmdir' : 'rm';
         fetchContent({ action: action, path: `${this.state.cwd}/${item.name}`})
-            .then((data) => {
-                if (data.content === true) {
-                    this.refreshContent(this.state.cwd);
-                }
-            })
+            .then(this.handleSuccess.bind(this))
             .catch(console.log);
     }
 
@@ -123,6 +115,12 @@ export default class Files extends React.Component {
         }
     }
 
+    forceDownload(item) {
+        setTimeout(() => {
+            window.open(item.href);
+        }, 100);
+    }
+
     previewFile(item) {
         if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
             this.setState({ preview: { src: item.href, image: true } });
@@ -155,7 +153,7 @@ export default class Files extends React.Component {
                         <span className="mll mts">{this.state.cwd}</span>
                         <div className="rightify">
                             <input className="file-control" type="button" value="New"
-                                   onClick={this.createDirectory.bind(this)}/>
+                                   onClick={this.handleCreateDirectory.bind(this)}/>
                             <input className="file-control" type="button" value="RF"
                                    onClick={() => this.refreshContent(this.state.cwd)}/>
                             <input className="file-control" type="button" value="UP"

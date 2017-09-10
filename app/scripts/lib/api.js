@@ -39,7 +39,6 @@ export function fetchContent(params = {}) {
         .then((data) => {
             if (data.status >= 300) {
                 console.log('API error (', data.status, '):', data.errors);
-                return {};
             }
             return data;
         });
