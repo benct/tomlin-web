@@ -63,8 +63,9 @@ export default class Files extends React.Component {
     }
 
     forceDownload(item) {
-        console.log(item);
-        console.log('Not yet implemented.');
+        setTimeout(() => {
+            window.open(item.href);
+        }, 100);
     }
 
     handleClick(item) {
