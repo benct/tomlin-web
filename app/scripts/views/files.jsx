@@ -32,7 +32,7 @@ export default class Files extends React.Component {
 
     refreshContent(cwd) {
         fetchContent({ action: 'ls', path: cwd })
-            .then((data) => this.setState({ content: data }))
+            .then((data) => this.setState({ content: data.content }))
             .catch(console.log);
     }
 

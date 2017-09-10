@@ -38,10 +38,10 @@ export function fetchContent(params = {}) {
         .then((response) =>  response.json())
         .then((data) => {
             if (data.status >= 300) {
-                console.log('API error (', data.status, '):', data.content);
+                console.log('API error (', data.status, '):', data.error);
                 return {};
             }
-            return data.content;
+            return data;
         });
 }
 
