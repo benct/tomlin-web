@@ -238,14 +238,14 @@ export default class Files extends React.Component {
                           handleRename={this.handleRename.bind(this)}
                           handleDelete={this.handleDelete.bind(this)}/>
                 { this.state.preview ?
-                    (<div className="file-overlay">
+                    (<div className="overlay">
                         { this.state.preview.image ?
                             <img src={this.state.preview.src} onClick={this.closePreview.bind(this)} alt="Preview" /> :
                             <pre onClick={this.closePreview.bind(this)}>{this.state.preview.content}</pre> }
                     </div>) : null }
                 { this.state.upload ?
-                    (<div className="file-overlay">
-                        <div className="file-upload">
+                    (<div className="overlay">
+                        <div className="overlay-inner file-upload">
                             <button className="file-control file-cancel" onClick={this.toggleUpload.bind(this)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 52 52" width="28" height="28">
                                     <path d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26
