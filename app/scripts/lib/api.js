@@ -49,3 +49,12 @@ export function fetchFile(path) {
         .then(checkStatus)
         .then((response) => response.text());
 }
+
+export function uploadFiles(path, files) {
+    return fetch(`${baseUrl}/api/?action=up&path=${path}&token=${auth.getToken()}`, {
+            method: 'POST',
+            body: files
+        })
+        .then(checkStatus)
+        .then((response) => response.json())
+}

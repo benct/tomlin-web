@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FileList from '../components/filelist.jsx';
-import { fetchContent, fetchFile } from '../lib/api.js';
+import { fetchContent, fetchFile, uploadFiles } from '../lib/api.js';
 
 const PARENT_DIR = '..';
 
@@ -60,7 +60,7 @@ export default class Files extends React.Component {
     handleCreateDirectory() {
         const name = prompt('Enter name of new folder:');
         if (name) {
-            fetchContent({ action: 'mkdir', path: `${this.state.cwd}/${name}`})
+            fetchContent({ action: 'mkdir', path: `${this.state.cwd}/${name}` })
                 .then(this.handleSuccess.bind(this))
                 .catch(console.log);
         }
@@ -69,7 +69,7 @@ export default class Files extends React.Component {
     handleRename(item) {
         const name = prompt('Enter new name of file:', item.name);
         if (name) {
-            fetchContent({ action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name})
+            fetchContent({ action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name })
                 .then(this.handleSuccess.bind(this))
                 .catch(console.log);
         }
@@ -77,7 +77,22 @@ export default class Files extends React.Component {
 
     handleDelete(item) {
         const action = item.dir ? 'rmdir' : 'rm';
-        fetchContent({ action: action, path: `${this.state.cwd}/${item.name}`})
+        fetchContent({ action: action, path: `${this.state.cwd}/${item.name}` })
+            .then(this.handleSuccess.bind(this))
+            .catch(console.log);
+    }
+
+    handleUpload() {
+        const formData = new FormData();
+        const files = this.fileInput.files;
+        for (let key in files) {
+            if (files.hasOwnProperty(key) && files[key] instanceof File) {
+                formData.append(key, files[key]);
+            }
+        }
+        this.fileInput.value = null;
+
+        uploadFiles(this.state.cwd, formData)
             .then(this.handleSuccess.bind(this))
             .catch(console.log);
     }
@@ -177,6 +192,10 @@ export default class Files extends React.Component {
                           handleDelete={this.handleDelete.bind(this)}/>
                 <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>
                     { this.renderPreview() }
+                </div>
+                <div>
+                    <input type="file" name="files[]" ref={(input) => (this.fileInput = input)} multiple/>
+                    <input type="submit" name="upload" value="Upload" onClick={this.handleUpload.bind(this)}/>
                 </div>
             </div>
         );
