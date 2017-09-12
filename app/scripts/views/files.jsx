@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FileList from '../components/filelist.jsx';
-import { fetchContent, fetchFile, uploadFiles } from '../lib/api.js';
+import { fetchContent, postContent, fetchFile } from '../lib/api.js';
 
 const PARENT_DIR = '..';
 
@@ -92,7 +92,7 @@ export default class Files extends React.Component {
         }
         this.fileInput.value = null;
 
-        uploadFiles(this.state.cwd, formData)
+        postContent({ action: 'up', path: this.state.cwd }, formData)
             .then(this.handleSuccess.bind(this))
             .catch(console.log);
     }
