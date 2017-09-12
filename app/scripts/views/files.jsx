@@ -13,7 +13,7 @@ export default class Files extends React.Component {
             content: [],
             focused: null,
             preview: null,
-            previewContents: null
+            upload: false
         };
     }
 
@@ -84,21 +84,6 @@ export default class Files extends React.Component {
         }
     }
 
-    handleUpload() {
-        const formData = new FormData();
-        const files = this.fileInput.files;
-        for (let key in files) {
-            if (files.hasOwnProperty(key) && files[key] instanceof File) {
-                formData.append(key, files[key]);
-            }
-        }
-        this.fileInput.value = null;
-
-        postContent({ action: 'up', path: this.state.cwd }, formData)
-            .then(this.handleSuccess.bind(this))
-            .catch(console.log);
-    }
-
     handleClick(item) {
         if (item.dir) {
             this.changeDirectory(item.name);
@@ -141,6 +126,37 @@ export default class Files extends React.Component {
         }
     }
 
+    handleUpload() {
+        const formData = new FormData();
+        const files = this.fileInput.files;
+        for (let key in files) {
+            if (files.hasOwnProperty(key) && files[key] instanceof File) {
+                formData.append(key, files[key]);
+            }
+        }
+        this.fileInput.value = null;
+
+        postContent({ action: 'up', path: this.state.cwd }, formData)
+            .then(this.handleSuccess.bind(this))
+            .catch(console.log);
+
+        this.toggleUpload();
+    }
+
+    handleFileChange(event) {
+        if (this.fileInput && this.fileInput.files.length > 1) {
+            this.fileLabel.innerHTML = `${this.fileInput.files.length} files selected`;
+        } else if (event.target.value) {
+            this.fileLabel.innerHTML = event.target.value.split('\\').pop();
+        } else {
+            this.fileLabel.innerHTML = 'Choose a file';
+        }
+    }
+
+    toggleUpload() {
+        this.setState({ upload: !this.state.upload });
+    }
+
     forceDownload(item) {
         setTimeout(() => {
             window.open(item.href);
@@ -152,23 +168,12 @@ export default class Files extends React.Component {
             this.setState({ preview: { src: item.href, image: true } });
         } else {
             fetchFile(item.href)
-                .then((data) => this.setState({ previewContents: data }));
-            this.setState({ preview: true });
+                .then((data) => this.setState({ preview: { content: data, image: false } }));
         }
     }
 
     closePreview() {
-        this.setState({ preview: null, previewContents: null });
-    }
-
-    renderPreview() {
-        if (this.state.preview) {
-            if (this.state.preview.image) {
-                return <img src={this.state.preview.src} onClick={this.closePreview.bind(this)} alt="Preview" />
-            } else {
-                return <pre onClick={this.closePreview.bind(this)}>{this.state.previewContents}</pre>
-            }
-        }
+        this.setState({ preview: null });
     }
 
     render() {
@@ -178,6 +183,8 @@ export default class Files extends React.Component {
                     <div className="file-table-header">
                         <span className="mll mts">{this.state.cwd}</span>
                         <div className="rightify">
+                            <input className="file-control" type="button" value="UL"
+                                   onClick={this.toggleUpload.bind(this)}/>
                             <input className="file-control" type="button" value="New"
                                    onClick={this.handleCreateDirectory.bind(this)}/>
                             <input className="file-control" type="button" value="RF"
@@ -192,13 +199,30 @@ export default class Files extends React.Component {
                           handleClick={this.handleClick.bind(this)}
                           handleRename={this.handleRename.bind(this)}
                           handleDelete={this.handleDelete.bind(this)}/>
-                <div className="file-overlay" style={{display: this.state.preview ? 'flex' : 'none'}}>
-                    { this.renderPreview() }
-                </div>
-                <div>
-                    <input type="file" name="files[]" ref={(input) => (this.fileInput = input)} multiple/>
-                    <input type="submit" name="upload" value="Upload" onClick={this.handleUpload.bind(this)}/>
-                </div>
+                { this.state.preview ?
+                    (<div className="file-overlay">
+                        { this.state.preview.image ?
+                            <img src={this.state.preview.src} onClick={this.closePreview.bind(this)} alt="Preview" /> :
+                            <pre onClick={this.closePreview.bind(this)}>{this.state.preview.content}</pre> }
+                    </div>) : null }
+                { this.state.upload ?
+                    (<div className="file-overlay">
+                        <div className="file-upload">
+                            <input type="file" name="files[]" id="file" onChange={this.handleFileChange.bind(this)}
+                                   ref={(input) => (this.fileInput = input)} multiple/>
+                            <label htmlFor="file">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1
+                                    0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7
+                                    1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>
+                                </svg>
+                                <span className="mlm" ref={(label) => (this.fileLabel = label)}>Choose a file</span>
+                            </label>
+                            <input type="submit" name="upload" value="Upload" className="mtn mbm"
+                                   onClick={this.handleUpload.bind(this)}/>
+                            <span className="file-cancel" onClick={this.toggleUpload.bind(this)}>Cancel</span>
+                        </div>
+                    </div>) : null }
             </div>
         );
     }
