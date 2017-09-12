@@ -65,3 +65,27 @@ a:focus, a:hover {
     overflow: hidden;
 }
 
+.man { margin: 0 !important; }
+.mas { margin: 5px !important; }
+.mam { margin: 10px !important; }
+.mal { margin: 20px !important; }
+.mtn { margin-top: 0 !important; }
+.mts { margin-top: 5px !important; }
+.mtm { margin-top: 10px !important; }
+.mtl { margin-top: 20px !important; }
+.mrn { margin-right: 0 !important; }
+.mrs { margin-right: 5px !important; }
+.mrm { margin-right: 10px !important; }
+.mrl { margin-right: 20px !important; }
+.mbn { margin-bottom: 0 !important; }
+.mbs { margin-bottom: 5px !important; }
+.mbm { margin-bottom: 10px !important; }
+.mbl { margin-bottom: 20px !important; }
+.mln { margin-left: 0 !important; }
+.mls { margin-left: 5px !important; }
+.mlm { margin-left: 10px !important; }
+.mll { margin-left: 20px !important; }
+
+.size1of2 {
+    width: 50%;
+}
