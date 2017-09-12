@@ -76,10 +76,12 @@ export default class Files extends React.Component {
     }
 
     handleDelete(item) {
-        const action = item.dir ? 'rmdir' : 'rm';
-        fetchContent({ action: action, path: `${this.state.cwd}/${item.name}` })
-            .then(this.handleSuccess.bind(this))
-            .catch(console.log);
+        if (confirm(`Are you sure you want to delete ${item.name}?`)) {
+            const action = item.dir ? 'rmdir' : 'rm';
+            fetchContent({ action: action, path: `${this.state.cwd}/${item.name}` })
+                .then(this.handleSuccess.bind(this))
+                .catch(console.log);
+        }
     }
 
     handleUpload() {
