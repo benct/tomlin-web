@@ -94,6 +94,7 @@ a:focus, a:hover {
 .overlay-preview {
     width: auto;
     height: auto;
+    max-height: 95%;
     overflow: auto;
     font-size: .6em;
     padding: 10px 20px;
