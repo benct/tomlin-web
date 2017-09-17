@@ -1,30 +1,12 @@
-import { authenticate } from '../lib/api.js'
+import { post } from '../lib/api.js';
 
 export default {
     init() {
-        authenticate({ token: localStorage.token || '' }, (res) => {
-            if (res.authenticated) {
-                localStorage.token = res.token;
-                this.onChange(true);
-            } else {
-                delete localStorage.token;
-                this.onChange(false);
-            }
-        });
+        this.authenticate();
     },
 
     login(email, password, cb) {
-        authenticate({ user: email, pass: password }, (res) => {
-            if (res.authenticated) {
-                localStorage.token = res.token;
-                if (cb) cb(true);
-                this.onChange(true);
-            } else {
-                delete localStorage.token;
-                if (cb) cb(false);
-                this.onChange(false);
-            }
-        });
+        this.authenticate({ user: email, pass: password }, cb);
     },
 
     getToken() {
@@ -40,5 +22,20 @@ export default {
         return !!localStorage.token;
     },
 
-    onChange() {}
+    onChange() {},
+
+    authenticate(data = {}, cb = null) {
+        post(data)
+            .then((response) => {
+                if (response.status === 200 && response.content) {
+                    localStorage.token = response.content;
+                    if (cb) cb(true);
+                    this.onChange(true);
+                } else {
+                    delete localStorage.token;
+                    if (cb) cb(false);
+                    this.onChange(false);
+                }
+            });
+    }
 };

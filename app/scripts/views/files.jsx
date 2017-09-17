@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FileList from '../components/filelist.jsx';
-import { fetchContent, postContent, fetchFile } from '../lib/api.js';
+import { post, fetchFile } from '../lib/api.js';
 
 const PARENT_DIR = '..';
 
@@ -30,9 +30,8 @@ export default class Files extends React.Component {
     }
 
     refreshContent(cwd) {
-        fetchContent({ action: 'ls', path: cwd })
-            .then((data) => this.setState({ content: data.content }))
-            .catch(console.log);
+        post({ action: 'ls', path: cwd })
+            .then((data) => this.setState({ content: data.content }));
     }
 
     changeDirectory(dirname) {
@@ -60,27 +59,24 @@ export default class Files extends React.Component {
     handleCreateDirectory() {
         const name = prompt('Enter name of new folder:');
         if (name) {
-            fetchContent({ action: 'mkdir', path: `${this.state.cwd}/${name}` })
-                .then(this.handleSuccess.bind(this))
-                .catch(console.log);
+            post({ action: 'mkdir', path: `${this.state.cwd}/${name}` })
+                .then(this.handleSuccess.bind(this));
         }
     }
 
     handleRename(item) {
         const name = prompt('Enter new name of file:', item.name);
         if (name) {
-            fetchContent({ action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name })
-                .then(this.handleSuccess.bind(this))
-                .catch(console.log);
+            post({ action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name })
+                .then(this.handleSuccess.bind(this));
         }
     }
 
     handleDelete(item) {
         if (confirm(`Are you sure you want to delete ${item.name}?`)) {
             const action = item.dir ? 'rmdir' : 'rm';
-            fetchContent({ action: action, path: `${this.state.cwd}/${item.name}` })
-                .then(this.handleSuccess.bind(this))
-                .catch(console.log);
+            post({ action: action, path: `${this.state.cwd}/${item.name}` })
+                .then(this.handleSuccess.bind(this));
         }
     }
 
@@ -136,9 +132,8 @@ export default class Files extends React.Component {
         }
         this.fileInput.value = null;
 
-        postContent({ action: 'up', path: this.state.cwd }, formData)
-            .then(this.handleSuccess.bind(this))
-            .catch(console.log);
+        post({ action: 'up', path: this.state.cwd }, formData)
+            .then(this.handleSuccess.bind(this));
 
         this.toggleUpload();
     }

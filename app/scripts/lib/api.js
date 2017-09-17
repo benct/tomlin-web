@@ -2,6 +2,7 @@ import 'whatwg-fetch';
 import auth from '../lib/auth.js';
 
 const baseUrl = 'https://tomlin.no';
+const baseApiUrl = 'https://tomlin.no/api/';
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -13,46 +14,21 @@ function checkStatus(response) {
     }
 }
 
-function buildQuery(params) {
-    params.token = auth.getToken();
-    return Object.keys(params)
-        .filter(k => params[k] !== null && typeof params[k] !== 'undefined')
-        .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
-        .join('&');
+function buildForm(data, files = null) {
+    const formData = files || new FormData();
+    for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+            formData.append(key, data[key]);
+        }
+    }
+    formData.append('token', auth.getToken());
+    return formData;
 }
 
-export function authenticate(data, cb) {
-    return fetch(`${baseUrl}/api/`, {
+export function post(data, files = null) {
+    return fetch(baseApiUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(checkStatus)
-        .then((response) => response.json())
-        .then((data) => cb({
-            authenticated: data.status === 200 && data.content,
-            token: data.content
-        }));
-}
-
-export function fetchContent(params = {}) {
-    const query = buildQuery(params);
-    return fetch(`${baseUrl}/api/?${query}`)
-        .then(checkStatus)
-        .then((response) =>  response.json())
-        .then((data) => {
-            if (data.status >= 300) {
-                console.log('API error (', data.status, '):', data.errors);
-            }
-            return data;
-        });
-}
-
-export function postContent(params = {}, body) {
-    const query = buildQuery(params);
-    return fetch(`${baseUrl}/api/?${query}`, {
-            method: 'POST',
-            body: body
+            body: buildForm(data, files)
         })
         .then(checkStatus)
         .then((response) => response.json())
