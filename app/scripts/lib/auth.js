@@ -2,11 +2,11 @@ import { post } from '../lib/api.js';
 
 export default {
     init() {
-        this.authenticate();
+        this._authenticate();
     },
 
     login(email, password, cb) {
-        this.authenticate({ user: email, pass: password }, cb);
+        this._authenticate({ user: email, pass: password }, cb);
     },
 
     getToken() {
@@ -24,7 +24,7 @@ export default {
 
     onChange() {},
 
-    authenticate(data = {}, cb = null) {
+    _authenticate(data = {}, cb = null) {
         post(data)
             .then((response) => {
                 if (response.status === 200 && response.content) {
