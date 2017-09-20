@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,400,700");
 
 body {
-    background: #202023 url(../images/bg-min.jpg) no-repeat fixed center center;
+    background: #202023 url(../images/bg-min-1.jpg) no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -ms-background-size: cover;
@@ -16,6 +16,14 @@ body {
     line-height: 1.5;
     color: #ffffff;
 }
+
+body.bg1 { background-image:  url(../images/bg-min-1.jpg); }
+body.bg2 { background-image:  url(../images/bg-min-2.jpg); }
+body.bg3 { background-image:  url(../images/bg-min-3.jpg); }
+body.bg4 { background-image:  url(../images/bg-min-4.jpg); }
+body.bg5 { background-image:  url(../images/bg-min-5.jpg); }
+body.bg6 { background-image:  url(../images/bg-min-6.jpg); }
+body.bg7 { background-image:  url(../images/bg-min-7.jpg); }
 
 h1 {
     font-family: "Raleway", Georgia, "Times New Roman", Times, serif;

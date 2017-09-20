@@ -13,7 +13,8 @@ export default class App extends React.Component {
         this.state = {
             loggedIn: false,
             showMenu: false,
-            circleIcons: false
+            circleIcons: false,
+            background: 2,
         };
     }
 
@@ -38,6 +39,13 @@ export default class App extends React.Component {
         });
     }
 
+    toggleBackground() {
+        document.body.className = `bg${this.state.background}`;
+        this.setState({
+            background: this.state.background >= 7 ? 1 : (this.state.background + 1)
+        });
+    }
+
     render() {
         return (
             <div className="borders">
@@ -52,7 +60,8 @@ export default class App extends React.Component {
                         <li><Link to="/" onClick={this.toggleMenu}>Home</Link></li>
                         <li><Link to="/about" onClick={this.toggleMenu}>About</Link></li>
                         <li><Link to="/files" onClick={this.toggleMenu}>Files</Link></li>
-                        <li><a onClick={this.toggleIcons.bind(this)}>Toggle</a></li>
+                        <li><a onClick={this.toggleIcons.bind(this)}>Icons</a></li>
+                        <li><a onClick={this.toggleBackground.bind(this)}>Background</a></li>
                         { this.state.loggedIn ?
                             <li><Link to="/logout" onClick={this.toggleMenu}>Logout</Link></li> :
                             <li><Link to="/login" onClick={this.toggleMenu}>Login</Link></li> }
