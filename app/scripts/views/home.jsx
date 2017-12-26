@@ -1,4 +1,6 @@
 import React from 'react';
+import Countdown from "../components/countdown.jsx";
+import About from "../components/about.jsx";
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -8,7 +10,9 @@ export default class Login extends React.Component {
     render() {
         return (
             <div>
-                Some content
+                <Countdown/>
+                <hr/>
+                <About/>
             </div>
         );
     }
