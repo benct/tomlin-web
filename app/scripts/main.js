@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from './views/app.jsx';
 import Home from './views/home.jsx';
-import About from './views/about.jsx';
+import About from './components/about.jsx';
 import Login from './views/login.jsx';
 import Logout from './views/logout.jsx';
 import Files from './views/files.jsx';
