@@ -58,7 +58,6 @@ export default class App extends React.Component {
                 <nav className="menu-wrap" style={{left: (this.state.showMenu ? '0px' : '100%')}}>
                     <ul className="menu" style={{opacity: (this.state.showMenu ? 1 : 0)}}>
                         <li><Link to="/" onClick={this.toggleMenu}>Home</Link></li>
-                        <li><Link to="/about" onClick={this.toggleMenu}>About</Link></li>
                         <li><Link to="/files" onClick={this.toggleMenu}>Files</Link></li>
                         <li><a onClick={this.toggleIcons.bind(this)}>Icons</a></li>
                         <li><a onClick={this.toggleBackground.bind(this)}>Background</a></li>
