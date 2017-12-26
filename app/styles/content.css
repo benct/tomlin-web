@@ -50,6 +50,10 @@
     font-family: monospace;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 480px) {
     .text {
         letter-spacing: 1px;
