@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Home extends React.Component {
+export default class Countdown extends React.Component {
     constructor(props) {
         super(props);
         this.calculateCountdown = this.calculateCountdown.bind(this);
