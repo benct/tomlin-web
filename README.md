@@ -5,6 +5,8 @@ about Webpack, Babel, Node/NPM and other underlying technologies.
 
 <sub><i>Keywords: React.js, ES6/ES2015, Hot Reloading, Babel, React Router, Node.js, NPM, HTML5, CSS3</i></sub>
 
+#### Version 2 currently under development
+
 ## Quick start
 
  - Clone repo using `git clone https://github.com/benct/tomlin-web.git`
@@ -17,5 +19,5 @@ about Webpack, Babel, Node/NPM and other underlying technologies.
 
 ## License
 
-This project is licensed under the MIT license, Copyright (c) 2016 Ben Christopher Tomlin.
+This project is licensed under the MIT license, Copyright (c) 2017 Ben Christopher Tomlin.
 For more information see `LICENSE`.
