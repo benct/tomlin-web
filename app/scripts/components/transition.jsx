@@ -1,7 +1,7 @@
 /** Based on https://github.com/misterfresh/react-easy-transition **/
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTransitionGroup from 'react-addons-transition-group';
+import TransitionGroup from 'react-transition-group/TransitionGroup'
 
 export default class Transition extends React.Component {
     constructor(props) {
@@ -23,12 +23,12 @@ export default class Transition extends React.Component {
 
     render() {
         return (
-            <ReactTransitionGroup transitionName="fade" className={this.props.className} component={this.props.component || "div"}>
+            <TransitionGroup transitionName="fade" className={this.props.className} component={this.props.component || "div"}>
                 { this.state.visible &&
                 <TransitionChild key={this.props.path} childDidLeave={this.childDidLeave.bind(this)} {...this.props}>
                     {this.props.children}
                 </TransitionChild> }
-            </ReactTransitionGroup>
+            </TransitionGroup>
         );
     }
 }
