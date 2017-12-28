@@ -5,8 +5,6 @@ about Webpack, Babel, Node/NPM and other underlying technologies.
 
 <sub><i>Keywords: React.js, ES6/ES2015, Hot Reloading, Babel, React Router, Node.js, NPM, HTML5, CSS3</i></sub>
 
-#### Version 2 currently under development
-
 ## Quick start
 
  - Clone repo using `git clone https://github.com/benct/tomlin-web.git`

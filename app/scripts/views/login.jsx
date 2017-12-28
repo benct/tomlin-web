@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import auth from '../lib/auth.js';
 
@@ -15,7 +16,7 @@ export default class Login extends React.Component {
 
         auth.login(this.username.value, this.password.value, (loggedIn) => {
             if (!loggedIn) {
-                return this.setState({error: true});
+                return this.setState({ error: true });
             }
 
             if (this.props.location.state && this.props.location.state.nextPathname) {
@@ -29,12 +30,19 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <form ref={(form) => (this.form = form)} onSubmit={this.handleSubmit.bind(this)}>
-                <input tabIndex="2" type="text" ref={(input) => (this.username = input)} placeholder="username" autoComplete="off"/>
-                <input tabIndex="3" type="password" ref={(input) => (this.password = input)} placeholder="********"/>
-                <input tabIndex="4" type="submit" value="login" />
-                {this.state.error && (<p tabIndex="1" className="text error">Incorrect username or password...</p>)}
-            </form>
+            <div className="wrapper">
+                <form ref={(form) => (this.form = form)} onSubmit={this.handleSubmit.bind(this)}>
+                    <input tabIndex="2" type="text" ref={(input) => (this.username = input)} placeholder="username" autoComplete="off"/>
+                    <input tabIndex="3" type="password" ref={(input) => (this.password = input)} placeholder="********"/>
+                    <input tabIndex="4" type="submit" value="login" />
+                    {this.state.error && (<p tabIndex="1" className="text error">Incorrect username or password...</p>)}
+                </form>
+            </div>
         );
     }
 }
+
+Login.propTypes = {
+    location: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
+};

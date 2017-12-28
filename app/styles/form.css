@@ -1,6 +1,6 @@
 form {
     max-width: 300px;
-    padding: 0 20px;
+    margin: 0 auto;
 }
 
 input[type=text],
@@ -11,8 +11,7 @@ input[type=password] {
     margin: 10px 0;
     padding: 0 35px;
     outline: none;
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 1px solid #28a0c8;
+    border: 1px solid #001888;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -24,8 +23,9 @@ input[type=password] {
     font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
+    text-align: center;
     letter-spacing: 2px;
-    color: #ffffff;
+    color: #001888;
 }
 
 input[type=text]:hover, input[type=text]:focus,
@@ -45,8 +45,8 @@ input[type=reset] {
     margin: 10px 0;
     padding: 0 35px;
     outline: none;
-    background-color: #28a0c8;
-    border: 1px solid #28a0c8;
+    background-color: #fff;
+    border: 1px solid #001888;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -62,7 +62,7 @@ input[type=reset] {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #ffffff;
+    color: #001888;
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
@@ -71,9 +71,9 @@ input[type=reset] {
 input[type=button]:hover, input[type=button]:active,
 input[type=submit]:hover, input[type=submit]:active,
 input[type=reset]:hover, input[type=reset]:active {
-    color: #28a0c8;
-    background-color: rgba(255, 255, 255, 0.825);
-    border-color: #28a0c8;
+    color: #fff;
+    background-color: #28a0c8;
+    border-color: #666;
 }
 
 input[type=file] {
@@ -87,13 +87,11 @@ input[type=file] {
 
 input[type=file] + label,
 button.file-button {
-    width: 100%;
     font-weight: 700;
     text-align: center;
-    color: #f1e5e6;
-    background-color: #d3394c;
-    border: 1px solid #d3394c;
-    display: inline-block;
+    color: #001888;
+    background-color: #fff;
+    border: 1px solid #001888;
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -114,7 +112,9 @@ button.file-button {
 input[type=file]:active + label,
 input[type=file] + label:hover,
 button.file-button:hover {
-    background-color: #722040;
+    color: #fff;
+    background-color: #28a0c8;
+    border-color: #666;
 }
 
 input[type=file] + label svg {

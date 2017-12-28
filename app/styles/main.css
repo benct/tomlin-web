@@ -2,28 +2,15 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,400,700");
 
 body {
-    background: #202023 url(../images/bg-min-1.jpg) no-repeat fixed center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -ms-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background-color: #fff;
     height: 100vh;
     font-family: "Open Sans Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 21px;
     font-weight: 400;
     letter-spacing: 1px;
     line-height: 1.5;
-    color: #ffffff;
+    color: #001888;
 }
-
-body.bg1 { background-image:  url(../images/bg-min-1.jpg); }
-body.bg2 { background-image:  url(../images/bg-min-2.jpg); }
-body.bg3 { background-image:  url(../images/bg-min-3.jpg); }
-body.bg4 { background-image:  url(../images/bg-min-4.jpg); }
-body.bg5 { background-image:  url(../images/bg-min-5.jpg); }
-body.bg6 { background-image:  url(../images/bg-min-6.jpg); }
-body.bg7 { background-image:  url(../images/bg-min-7.jpg); }
 
 h1 {
     font-family: "Raleway", Georgia, "Times New Roman", Times, serif;
@@ -31,7 +18,7 @@ h1 {
     letter-spacing: 0.15em;
     text-transform: uppercase;
     line-height: 1.3;
-    color: #ffffff;
+    color: #fff;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -43,41 +30,43 @@ a {
     transition: all 0.3s ease-in-out;
     text-decoration: none;
     background-color: transparent;
-    color: #ffffff;
+    color: #28a0c8;
     cursor: pointer;
 }
 
 a:focus, a:hover {
     text-decoration: none;
-    color: #ffffff;
+    color: cyan;
     outline: 0;
 }
 
-.borders {
-    position: absolute;
-    width: -webkit-calc(100% - 40px);
-    width: -moz-calc(100% - 40px);
-    width: calc(100% - 40px);
-    height: -webkit-calc(100% - 40px);
-    height: -moz-calc(100% - 40px);
-    height: calc(100% - 40px);
-    top: 20px;
-    left: 20px;
-    bottom: 20px;
-    right: 20px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 10px solid rgba(0, 0, 0, 0.5);
-    overflow: hidden;
+hr {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    margin: 0;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 30px;
 }
 
 .overlay {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;

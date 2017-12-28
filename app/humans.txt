@@ -13,7 +13,7 @@ Mom and Dad?
 
 /* SITE */
 
-Last update: 2017/11/17
+Last update: 2017/12/28
 Standards: HTML5, CSS3, ES6
 Components: Webpack, Babel, Node, Npm
 Software: IntelliJ IDEA, Notepad++

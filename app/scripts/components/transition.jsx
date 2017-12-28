@@ -23,12 +23,11 @@ export default class Transition extends React.Component {
 
     render() {
         return (
-            <ReactTransitionGroup transitionName="fade" className={this.props.className}
-                                  component={this.props.component || "div"}>
-                {this.state.visible &&
+            <ReactTransitionGroup transitionName="fade" className={this.props.className} component={this.props.component || "div"}>
+                { this.state.visible &&
                 <TransitionChild key={this.props.path} childDidLeave={this.childDidLeave.bind(this)} {...this.props}>
                     {this.props.children}
-                </TransitionChild>}
+                </TransitionChild> }
             </ReactTransitionGroup>
         );
     }
@@ -70,7 +69,7 @@ class TransitionChild extends React.Component {
 
     render() {
         return <div ref={(ref) => (this.page = ref)} style={this.props.initialStyle}>
-            {this.props.children}
+            { this.props.children }
         </div>
     }
 }

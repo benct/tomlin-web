@@ -9,9 +9,11 @@ export default class Logout extends React.Component {
 
     componentDidMount() {
         auth.logout();
+
+        setTimeout(() => this.props.router.push('/'), 3000);
     }
 
     render() {
-        return <div className="text">You have been logged out!</div>
+        return <div className="wrapper text">You have been logged out!</div>
     }
 }

@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 export default function Social({ circle }) {
     const prefix = circle ? 'circle-' : '';
     return (
-        <div className={'social' + (circle ? ' large' : '')}>
+        <div className={`social ${circle ? ' large' : ''}`}>
+            <a href="https://github.com/benct" target="_blank">
+                <img src={require(`../../images/social/${prefix}github.svg`)} alt="github" />
+            </a>
             <a href="https://www.facebook.com/ben.c.tomlin" target="_blank">
                 <img src={require(`../../images/social/${prefix}facebook.svg`)} alt="facebook" />
             </a>
@@ -13,9 +16,6 @@ export default function Social({ circle }) {
             </a>
             <a href="https://www.linkedin.com/in/bentomlin" target="_blank">
                 <img src={require(`../../images/social/${prefix}linkedin.svg`)} alt="linkedin" />
-            </a>
-            <a href="https://github.com/benct" target="_blank">
-                <img src={require(`../../images/social/${prefix}github.svg`)} alt="github" />
             </a>
             <a href="mailto:ben@tomlin.no" target="_blank">
                 <img src={require(`../../images/social/${prefix}email.svg`)} alt="email" />

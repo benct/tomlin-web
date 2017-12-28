@@ -34,11 +34,22 @@ const data = [
     ["It isn't premarital sex if you have no intention of getting married.", "Drew Carey"],
     ["I handed in a script last year and the studio didn't change one word. The word they didn't change was on page 87.", "Steve Martin"],
     ["I believe there would be many people alive today if there were a death penalty.", "Nancy Reagan"],
-    ["Oh it's something like spyware, like my stupidly downloaded por... music, my downloaded music.", "Rodney McKay"],
+    ["Behind every great man is a woman rolling her eyes.", "Jim Carrey"],
     ["My Mama always said; Life was like a box of chocolates; you never know what you're gonna get.", "Forrest Gump"],
     ["America will never be destroyed from the outside. If we falter and lose our freedoms, it will be because we destroyed ourselves.", "Abraham Lincoln"],
     ["Better to remain silent and be thought a fool than to speak out and remove all doubt.", "Abraham Lincoln"],
     ["What counts is not necessarily the size of the dog in the fight – it's the size of the fight in the dog.", "General Dwight D. Eisenhower"],
+    ["Always remember that you are absolutely unique. Just like everyone else.", "Margaret Mead"],
+    ["If you love something, set it free. Unless it's a tiger.", "Phil Dunphy"],
+    ["When life gives you lemonade, make lemons. Life will be like, what?!", "Phil Dunphy"],
+    ["No man has a good enough memory to be a successful liar.", "Abraham Lincoln"],
+    ["People who think they know everything are a great annoyance to those of us who do.", "Isaac Asimov"],
+    ["Roses are red, violets are blue, I'm schizophrenic, and so am I.", "Oscar Levant"],
+    ["Life is hard. After all, it kills you.", "Katharine Hepburn"],
+    ["I can resist everything except temptation.", "Oscar Wilde"],
+    ["If women ran the world we wouldn't have wars, just intense negotiations every 28 days.", "Robin Williams"],
+    ["All generalizations are false, including this one.", "Mark Twain"],
+    ["A government that robs Peter to pay Paul can always depend on the support of Paul.", "George Bernard Shaw"],
 ];
 
 export default class Quote extends React.Component {
@@ -69,9 +80,9 @@ export default class Quote extends React.Component {
 
     render() {
         return this.state.current ? (
-            <div className="pointer" onClick={this.refreshQuote.bind(this)}>
+            <div className="wrapper centerify pointer unselectable" onClick={this.refreshQuote.bind(this)}>
                 <div>{this.state.current.text}</div>
-                <div className="rightify">{this.state.current.author ? <i>- {this.state.current.author}</i> : null}</div>
+                <div>{this.state.current.author ? <i>- {this.state.current.author}</i> : null}</div>
             </div>
         ) : null;
     }
