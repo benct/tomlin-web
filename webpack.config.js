@@ -54,10 +54,9 @@ module.exports = {
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env':{
-        'NODE_ENV': JSON.stringify('production')
-      }
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
+    new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({ template: path.join(PATHS.app, 'index.html') }),
     new HtmlWebpackPlugin({ template: path.join(PATHS.app, '403.html'), filename: '403.html', inject: false }),
     new HtmlWebpackPlugin({ template: path.join(PATHS.app, '404.html'), filename: '404.html', inject: false }),
