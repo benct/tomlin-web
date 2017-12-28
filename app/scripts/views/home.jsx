@@ -33,5 +33,5 @@ export default function Home(props) {
 }
 
 Home.propTypes = {
-    loggedIn: PropTypes.bool.isRequired,
+    loggedIn: PropTypes.bool,
 };

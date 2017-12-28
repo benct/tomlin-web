@@ -38,7 +38,7 @@ export default function FileList({ content, focused, handleClick, handleRename, 
 
 FileList.propTypes = {
     content: PropTypes.array.isRequired,
-    focused: PropTypes.number.isRequired,
+    focused: PropTypes.number,
     handleClick: PropTypes.func.isRequired,
     handleRename: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired
