@@ -42,7 +42,7 @@ export default class App extends React.Component {
                 <footer className="wrapper">
                     <Social circle={this.state.circleIcons}/>
                     <div className="text mtl">
-                        <span className="pointer unselectable" onClick={this.toggleIcons}>Ben Tomlin © 2017</span>
+                        <span className="pointer unselectable" onClick={this.toggleIcons}>Ben Tomlin © 2018</span>
                     </div>
                 </footer>
             </div>

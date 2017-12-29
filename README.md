@@ -17,5 +17,5 @@ about Webpack, Babel, Node/NPM and other underlying technologies.
 
 ## License
 
-This project is licensed under the MIT license, Copyright (c) 2017 Ben Christopher Tomlin.
+This project is licensed under the MIT license, Copyright (c) 2018 Ben Christopher Tomlin.
 For more information see `LICENSE`.
