@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const error = {
     403: {
@@ -38,3 +39,7 @@ export default class Error extends React.Component {
         );
     }
 }
+
+Error.propTypes = {
+    route: PropTypes.object.isRequired
+};

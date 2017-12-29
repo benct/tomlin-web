@@ -13,7 +13,9 @@
     "camelcase": ["error", { "properties": "never" }],
     "comma-dangle": ["error"],
     "indent": 0,
-    "indent-legacy": ["error", 4, { "SwitchCase": 1 }]
+    "indent-legacy": ["error", 4, { "SwitchCase": 1 }],
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0
   },
   "parserOptions": {
     "sourceType": "module",
@@ -28,6 +30,8 @@
     "require": true,
     "setTimeout": true,
     "clearTimeout": true,
+    "setInterval": true,
+    "clearInterval": true,
     "__dirname": true,
     "localStorage": true,
     "window": true,

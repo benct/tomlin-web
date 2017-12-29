@@ -5,7 +5,7 @@ export default function FileList({ content, focused, handleClick, handleRename, 
     const renderItem = (item, i) => {
         return (
             <tr key={i}>
-                <td><img className="file-icon" src={require('../../images/file/' + item.icon)}/></td>
+                <td><img className="file-icon" src={require('../../images/file/' + item.icon)} alt={item.icon}/></td>
                 <td className="file-name">
                     <span onClick={() => handleClick(item)} className={i === focused ? 'focused' : ''}>{item.short}</span>
                     <span onClick={() => handleDelete(item)} className="file-info monospace fright">[x]</span>

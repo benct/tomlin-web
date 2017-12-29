@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Social from '../components/social.jsx';
 import Transition from '../components/transition.jsx';
@@ -11,7 +12,7 @@ export default class App extends React.Component {
         this.toggleIcons = this.toggleIcons.bind(this);
         this.state = {
             loggedIn: false,
-            circleIcons: true,
+            circleIcons: true
         };
     }
 
@@ -34,7 +35,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <header className="wrapper"/>
-                <Transition className="content" path={location.pathname} transition="opacity .5s ease-in"
+                <Transition className="content" path={this.props.location.pathname} transition="opacity .5s ease-in"
                             initialStyle={{opacity: 0}} finalStyle={{opacity: 1}}>
                     { React.cloneElement(this.props.children, { loggedIn: this.state.loggedIn }) }
                 </Transition>
@@ -48,3 +49,8 @@ export default class App extends React.Component {
         );
     }
 }
+
+App.propTypes = {
+    location: PropTypes.object.isRequired,
+    children: PropTypes.object.isRequired
+};

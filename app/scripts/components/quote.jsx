@@ -49,7 +49,7 @@ const data = [
     ["I can resist everything except temptation.", "Oscar Wilde"],
     ["If women ran the world we wouldn't have wars, just intense negotiations every 28 days.", "Robin Williams"],
     ["All generalizations are false, including this one.", "Mark Twain"],
-    ["A government that robs Peter to pay Paul can always depend on the support of Paul.", "George Bernard Shaw"],
+    ["A government that robs Peter to pay Paul can always depend on the support of Paul.", "George Bernard Shaw"]
 ];
 
 export default class Quote extends React.Component {
@@ -57,7 +57,7 @@ export default class Quote extends React.Component {
         super(props);
         this.state = {
             quotes: data,
-            current: null,
+            current: null
         };
     }
 

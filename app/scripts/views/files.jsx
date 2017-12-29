@@ -1,3 +1,4 @@
+/* global prompt, confirm, File, FormData */
 import React from 'react';
 import { Link } from 'react-router';
 
@@ -110,14 +111,14 @@ export default class Files extends React.Component {
                 if (this.state.focused === null) {
                     this.setState({ focused: 0 });
                 } else if (this.state.focused > 0) {
-                    this.setState({ focused: --this.state.focused });
+                    this.setState({ focused: this.state.focused - 1 });
                 }
                 break;
             case 40: // down
                 if (this.state.focused === null) {
                     this.setState({ focused: 0 });
                 } else if (this.state.focused < (this.state.content.length - 1)) {
-                    this.setState({ focused: ++this.state.focused });
+                    this.setState({ focused: this.state.focused + 1 });
                 }
                 break;
         }
@@ -166,7 +167,7 @@ export default class Files extends React.Component {
         this.setState({ preview: null });
     }
 
-    render() {
+    render() {
         return (
             <div className="wrapper centerify">
                 <div className="file-table-header">

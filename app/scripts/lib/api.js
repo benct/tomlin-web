@@ -1,3 +1,4 @@
+/* global fetch, FormData */
 import 'whatwg-fetch';
 import auth from '../lib/auth.js';
 
@@ -27,9 +28,9 @@ function buildForm(data, files = null) {
 
 export function post(data, files = null) {
     return fetch(baseApiUrl, {
-            method: 'POST',
-            body: buildForm(data, files)
-        })
+        method: 'POST',
+        body: buildForm(data, files)
+    })
         .then(checkStatus)
         .then((response) => response.json())
 }

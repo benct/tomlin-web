@@ -48,7 +48,7 @@ class TransitionChild extends React.Component {
         this.page.style.transition = this.props.transition;
         Object.assign(this.page.style, this.props.finalStyle);
         let transitionsRemaining = this.props.transition.split(',').length;
-        this.page.addEventListener("transitionend", (event) => {
+        this.page.addEventListener("transitionend", () => {
             transitionsRemaining--;
             if (transitionsRemaining) return;
             callback();
@@ -59,7 +59,7 @@ class TransitionChild extends React.Component {
         let leaveStyle = this.props.leaveStyle ? this.props.leaveStyle : this.props.initialStyle;
         Object.assign(this.page.style, leaveStyle);
         let transitionsRemaining = this.props.transition.split(',').length;
-        this.page.addEventListener("transitionend", (event) => {
+        this.page.addEventListener("transitionend", () => {
             transitionsRemaining--;
             if (transitionsRemaining) return;
             callback();
@@ -80,4 +80,15 @@ Transition.propTypes = {
     transition: PropTypes.string.isRequired,
     initialStyle: PropTypes.object.isRequired,
     finalStyle: PropTypes.object.isRequired,
+    component: PropTypes.string,
+    children: PropTypes.object
+};
+
+TransitionChild.propTypes = {
+    transition: PropTypes.string.isRequired,
+    initialStyle: PropTypes.object.isRequired,
+    leaveStyle: PropTypes.object,
+    finalStyle: PropTypes.object.isRequired,
+    childDidLeave: PropTypes.func.isRequired,
+    children: PropTypes.object
 };
