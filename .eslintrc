@@ -1,9 +1,36 @@
 {
-  "extends": "finn",
+  "plugins": [
+    "react",
+    "jsx-a11y"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
   "rules": {
     "no-shadow": ["error", { "builtinGlobals": false }],
-    "jsx-quotes": [2, "prefer-single"],
-    "react/jsx-curly-spacing": [2, "always"],
-    "react/prefer-stateless-function": [0]
+    "camelcase": ["error", { "properties": "never" }],
+    "comma-dangle": ["error"],
+    "indent": 0,
+    "indent-legacy": ["error", 4, { "SwitchCase": 1 }]
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "globals": {
+    "module": true,
+    "process": true,
+    "require": true,
+    "setTimeout": true,
+    "clearTimeout": true,
+    "__dirname": true,
+    "localStorage": true,
+    "window": true,
+    "document": true
   }
 }
