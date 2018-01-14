@@ -14,5 +14,8 @@ requireAll(require.context('../styles', true, /^\.\//));
 // Favicon assets
 requireAll(require.context('../images/icon', true, /^\.\//));
 
+// Other resources
+requireAll(require.context('../links', true, /^\.\//));
+
 // Javascript app entry
 import './main.js';
