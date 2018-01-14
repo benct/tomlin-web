@@ -23,3 +23,8 @@
     height: 16px;
     margin: 0 5px;
 }
+
+.link-message {
+    width: 100%;
+    text-align: center;
+}

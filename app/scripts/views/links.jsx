@@ -37,9 +37,13 @@ export default class Links extends React.Component {
     }
 
     render() {
-        return <div className="wrapper link-groups">
-            { this.state.links ? this.state.links.map((item, i) => this.renderGroup(item, i)) : this.state.loading }
-        </div>;
+        return (
+            <div className="wrapper link-groups">
+                { this.state.links ?
+                    this.state.links.map((item, i) => this.renderGroup(item, i)) :
+                    <div className="link-message">{ this.state.loading }</div> }
+            </div>
+        );
     }
 }
 
