@@ -9,8 +9,7 @@ export default function About() {
             <a href="https://babeljs.io/" target="_blank" rel="noopener noreferrer">Babel</a> and&nbsp;
             <a href="https://www.npmjs.com/" target="_blank" rel="noopener noreferrer">Node/NPM</a>,
             for the purpose of learning and testing it out. For more information about me, feel free to
-            follow the social links at the bottom of the page.<br/><br/>
-            Recently released version 2.0 of this site, while also upgrading to latest versions of React, ESlint, Babel, Webpack and more.
+            follow the social links at the bottom of the page.<br/><br/>Version 2.1
         </div>
     );
 }
