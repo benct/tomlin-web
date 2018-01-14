@@ -43,7 +43,8 @@ a:focus, a:hover {
 hr {
     border: none;
     border-bottom: 1px solid #ddd;
-    margin: 0;
+    max-width: 840px;
+    margin: 0 auto;
 }
 
 .content {

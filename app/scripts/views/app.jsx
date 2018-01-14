@@ -36,7 +36,7 @@ export default class App extends React.Component {
             <div>
                 <header className="wrapper"/>
                 <Transition className="content" path={this.props.location.pathname} transition="opacity .5s ease-in"
-                            initialStyle={{opacity: 0}} finalStyle={{opacity: 1}}>
+                            initialStyle={{opacity: 0, width: '100%'}} finalStyle={{opacity: 1}}>
                     { React.cloneElement(this.props.children, { loggedIn: this.state.loggedIn }) }
                 </Transition>
                 <footer className="wrapper">
