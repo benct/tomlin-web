@@ -1,4 +1,11 @@
 # www.robotstxt.org/
 
 User-agent: *
-Disallow: /
+Disallow: /files
+Disallow: /login
+Disallow: /logout
+Disallow: /finn
+Disallow: /links
+
+User-agent: *
+Allow: /
