@@ -13,6 +13,7 @@ about Webpack, Babel, Node/NPM and other underlying technologies.
  - Run `npm run build-prod` to build the app for production.
  - Run `npm run test` to start the app locally for testing.<br/>
    *At this point you can see the app at `http://localhost:8080`.*
+ - Run `npm run lint` to check for code style issues.
  - Run `npm run clean` to clean/delete the output directory.
 
 ## License
