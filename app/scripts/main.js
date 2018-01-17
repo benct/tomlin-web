@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from './views/app.jsx';
 import Home from './views/home.jsx';
-import Links from './views/links.jsx';
+import Finn from './views/finn.jsx';
 import Login from './views/login.jsx';
 import Logout from './views/logout.jsx';
 import Files from './views/files.jsx';
@@ -27,8 +27,7 @@ ReactDOM.render(
             <IndexRoute component={ Home } />
             <Route path="login" component={ Login } />
             <Route path="logout" component={ Logout } />
-            <Route path="links" component={ Links } file="default" />
-            <Route path="finn" component={ Links } file="finn" />
+            <Route path="finn" component={ Finn } />
             <Route path="files" component={ Files } onEnter={ requireAuthentication } />
         </Route>
         <Route path="*" component={ Error } code={ 404 } />

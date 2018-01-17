@@ -15,7 +15,7 @@ requireAll(require.context('../styles', true, /^\.\//));
 requireAll(require.context('../images/icon', true, /^\.\//));
 
 // Other resources
-requireAll(require.context('../links', true, /^\.\//));
+requireAll(require.context('../content', true, /^\.\//));
 
 // Javascript app entry
 import './main.js';

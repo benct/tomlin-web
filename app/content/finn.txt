@@ -1,0 +1,189 @@
+kill $(ps aux | grep <shit-to-kill> | awk '{print $2}')
+
+netstat -nlp | grep <port>
+host <ip/host>
+dpkg -L <name>
+head -c 10000 <file>
+
+
+####################
+###  GIT CONFIG  ###
+####################
+
+[user]
+    email = ben.tomlin@finn.no
+    name = bentomli
+[push]
+    default = simple
+[alias]
+    st = status
+    ci = commit
+    co = checkout
+    pr = pull --rebase
+    pra = pull --rebase --autostash
+[apply]
+    whitespace = strip
+[diff]
+    color = auto
+    rename = copy
+[pager]
+    color = true
+[color]
+    ui = auto
+[status]
+    color = auto
+[core]
+    autocrlf = input
+
+
+######################
+###  BASH PROFILE  ###
+######################
+
+export HISTCONTROL="erasedups:ignoreboth"
+export HISTFILESIZE=500000
+export HISTSIZE=100000
+export HISTIGNORE="&:[ ]*:exit"
+shopt -s histappend
+shopt -s cmdhist
+stty stop ""
+export FIGNORE="CVS:.svn:~:.git"
+
+alias java8="export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)"
+alias java9="export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-9.jdk/Contents/Home"
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias gr='$HOME/code/travel-app/tools/gr'
+alias trav='cd ~/code/travel-app/'
+alias travb='cd ~/code/travel-board/'
+alias mfinn='cd ~/code/mfinn/'
+
+alias kprod='kubectl --context="prod1"'
+alias kdev='kubectl --context="gke_fiaas-gke_europe-west1-d_dev"'
+
+if [ -f '/opt/google-cloud-sdk/path.bash.inc' ]; then source '/opt/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '/opt/google-cloud-sdk/completion.bash.inc' ]; then source '/opt/google-cloud-sdk/completion.bash.inc'; fi
+eval "$(kubectl completion bash)"
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
+export PS1='\[\e[47;1;34m\]\u@\h\[\e[0m\]\[\e[47;1;35m\]:\W\[\e[39m\]$(__git_ps1)\[\e[0;0;0m\]'
+
+export EDITOR=nano
+
+alias currency='./gradlew build -Ponly=currency'
+alias fhh='./gradlew build -Ponly=fhh'
+alias flight='./gradlew build -Ponly=flight'
+alias front='./gradlew build -Ponly=frontpage'
+alias pale='./gradlew build -Ponly=pale'
+alias shared='./gradlew build -Ponly=shared'
+alias theme='./gradlew build -Ponly=theme'
+
+alias runCurrency='./gradlew runTravelAppCurrency -Dtravelapp.debugport=5015'
+alias runFhh='./gradlew runTravelAppFhh -Dtravelapp.debugport=5015'
+alias runFlight='./gradlew runTravelAppFlight -Dtravelapp.debugport=5015'
+alias runFront='./gradlew runTravelAppFrontpage -Dtravelapp.debugport=5015'
+alias runPale='./gradlew runTravelAppPale -Dtravelapp.debugport=5015'
+alias runTheme='./gradlew runTravelAppTheme -Dtravelapp.debugport=5015'
+
+alias runFhhPing='./gradlew runTravelAppFhh -Dtravelapp.debugport=5015 -PrunWithPinger'
+alias runFlightPing='./gradlew runTravelAppFlight -Dtravelapp.debugport=5015 -PrunWithPinger'
+alias runPalePing='./gradlew runTravelAppPale -Dtravelapp.debugport=5015 -PrunWithPinger'
+
+alias bootFhh='./gradlew :fhh-api:bootRun'
+alias bootFhhPing='./gradlew :fhh-api:bootRun -PrunWithPinger'
+
+alias cuw='./gradlew :currency-web:build'
+alias cuw-b='./gradlew :currency-web:build'
+alias cuw-c='./gradlew :currency-web:clean'
+alias cuw-k='./gradlew :currency-web:karma'
+alias cuw-t='./gradlew :currency-web:test'
+alias cuw-m='./gradlew :currency-web:moduleTest'
+alias cuw-f='./gradlew :currency-web:featureTest'
+
+alias fha='./gradlew :fhh-api:build'
+alias fha-b='./gradlew :fhh-api:build'
+alias fha-c='./gradlew :fhh-api:clean'
+alias fha-t='./gradlew :fhh-api:test'
+alias fha-m='./gradlew :fhh-api:moduleTest'
+
+alias fhc='./gradlew :fhh-contentpush:build'
+alias fhc-b='./gradlew :fhh-contentpush:build'
+alias fhc-c='./gradlew :fhh-contentpush:clean'
+alias fhc-t='./gradlew :fhh-contentpush:test'
+alias fhc-m='./gradlew :fhh-contentpush:moduleTest'
+
+alias fhi='./gradlew :fhh-integration:build'
+alias fhi-b='./gradlew :fhh-integration:build'
+alias fhi-c='./gradlew :fhh-integration:clean'
+alias fhi-t='./gradlew :fhh-integration:test'
+alias fhi-m='./gradlew :fhh-integration:moduleTest'
+
+alias fhw='./gradlew :fhh-web:build'
+alias fhw-b='./gradlew :fhh-web:build'
+alias fhw-c='./gradlew :fhh-web:clean'
+alias fhw-k='./gradlew :fhh-web:karma'
+alias fhw-t='./gradlew :fhh-web:test'
+alias fhw-m='./gradlew :fhh-web:moduleTest'
+alias fhw-f='./gradlew :fhh-web:featureTest'
+
+alias fla='./gradlew :flight-api:build'
+alias fla-b='./gradlew :flight-api:build'
+alias fla-c='./gradlew :flight-api:clean'
+alias fla-t='./gradlew :flight-api:test'
+alias fla-m='./gradlew :flight-api:moduleTest'
+
+alias fsi='./gradlew :flight-supplier-integrations:build'
+alias fsi-b='./gradlew :flight-supplier-integrations:build'
+alias fsi-c='./gradlew :flight-supplier-integrations:clean'
+alias fsi-t='./gradlew :flight-supplier-integrations:test'
+alias fsi-m='./gradlew :flight-supplier-integrations:moduleTest'
+
+alias flw='./gradlew :flight-web:build'
+alias flw-b='./gradlew :flight-web:build'
+alias flw-c='./gradlew :flight-web:clean'
+alias flw-k='./gradlew :flight-web:karma'
+alias flw-t='./gradlew :flight-web:test'
+alias flw-m='./gradlew :flight-web:moduleTest'
+alias flw-f='./gradlew :flight-web:featureTest'
+
+alias frw='./gradlew :frontpage-web:build'
+alias frw-b='./gradlew :frontpage-web:build'
+alias frw-c='./gradlew :frontpage-web:clean'
+alias frw-k='./gradlew :frontpage-web:karma'
+alias frw-t='./gradlew :frontpage-web:test'
+alias frw-m='./gradlew :frontpage-web:moduleTest'
+alias frw-f='./gradlew :frontpage-web:featureTest'
+
+alias paa='./gradlew :pale-api:build'
+alias paa-b='./gradlew :pale-api:build'
+alias paa-c='./gradlew :pale-api:clean'
+alias paa-t='./gradlew :pale-api:test'
+alias paa-m='./gradlew :pale-api:moduleTest'
+
+alias pai='./gradlew :pale-integration:build'
+alias pai-b='./gradlew :pale-integration:build'
+alias pai-c='./gradlew :pale-integration:clean'
+alias pai-t='./gradlew :pale-integration:test'
+alias pai-m='./gradlew :pale-integration:moduleTest'
+
+alias paw='./gradlew :pale-web:build'
+alias paw-b='./gradlew :pale-web:build'
+alias paw-c='./gradlew :pale-web:clean'
+alias paw-k='./gradlew :pale-web:karma'
+alias paw-t='./gradlew :pale-web:test'
+alias paw-m='./gradlew :pale-web:moduleTest'
+alias paw-f='./gradlew :pale-web:featureTest'
+
+alias thw='./gradlew :theme-web:build'
+alias thw-b='./gradlew :theme-web:build'
+alias thw-c='./gradlew :theme-web:clean'
+alias thw-k='./gradlew :theme-web:karma'
+alias thw-t='./gradlew :theme-web:test'
+alias thw-m='./gradlew :theme-web:moduleTest'
+alias thw-f='./gradlew :theme-web:featureTest'

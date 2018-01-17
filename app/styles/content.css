@@ -45,6 +45,16 @@
     user-select: none;
 }
 
+pre {
+    font-size: 13px;
+    letter-spacing: normal;
+    border-left: 1px dashed #ddd;
+    border-right: 1px dashed #ddd;
+    padding: 0 10px;
+    margin: 0;
+    overflow: auto;
+}
+
 button.icon {
     background: transparent no-repeat;
     border: none;

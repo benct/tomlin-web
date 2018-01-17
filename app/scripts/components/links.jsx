@@ -13,11 +13,11 @@ export default class Links extends React.Component {
     }
 
     componentWillMount() {
-        this.loadContent(this.props.route.file);
+        this.loadContent(this.props.file);
     }
 
     loadContent(file) {
-        fetchFile(`/assets/links/${file}.json`)
+        fetchFile(`/assets/content/${file}.json`)
             .then((data) => this.setState({ links: JSON.parse(data) }))
             .catch(() => this.setState({ loading: 'Could not load link file...' }));
     }
@@ -48,5 +48,5 @@ export default class Links extends React.Component {
 }
 
 Links.propTypes = {
-    route: PropTypes.object.isRequired
+    file: PropTypes.string.isRequired
 };
