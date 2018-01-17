@@ -119,7 +119,7 @@ AddDefaultCharset utf-8
 
     # Make Apache serve the file types with the appropriate Content-Encoding response header
     <IfModule mod_mime.c>
-        AddEncoding gzip              svgz, svg
+        AddEncoding gzip              svgz
     </IfModule>
 </IfModule>
 
