@@ -8,7 +8,6 @@ export default function Navigation({ loggedIn, showMenu, hideMenu, hideHome, sim
             <ul className={`unselectable menu ${simple ? '' : 'menu-full'}`} style={{opacity: (showMenu ? 1 : 0)}}>
                 { hideHome ? null : <li><Link to="/">Home</Link></li> }
                 <li><Link to="/files">Files</Link></li>
-                <li><Link to="/links">Links</Link></li>
                 <li><Link to="/finn">FINN</Link></li>
                 { loggedIn ?
                     <li><Link to="/logout">Logout</Link></li> :
