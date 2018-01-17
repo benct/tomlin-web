@@ -61,7 +61,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpe?g|png|svg|xml|json|txt)$/,
+                test: /\.(xml|json|txt)$/,
                 include: /content|images|scripts|styles/,
                 use: {
                     loader: 'file-loader',
@@ -70,6 +70,20 @@ module.exports = {
                         outputPath: 'assets/'
                     }
                 }
+            },
+            {
+                test: /\.(jpe?g|png|svg|gif)$/,
+                include: /content|images|scripts|styles/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[ext]',
+                            outputPath: 'assets/'
+                        }
+                    },
+                    'image-webpack-loader'
+                ]
             }
         ]
     },
