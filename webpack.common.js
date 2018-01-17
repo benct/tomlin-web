@@ -29,6 +29,7 @@ module.exports = {
             },
             {
                 test: /\.html$/,
+                exclude: /node_modules/,
                 use: {
                     loader: 'html-loader'
                 }
@@ -42,7 +43,16 @@ module.exports = {
                 })
             },
             {
-                test: /\.(ico|txt|htaccess)$/,
+                test: /\.htaccess$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '.htaccess'
+                    }
+                }
+            },
+            {
+                test: /(favicon|humans|robots)\.(ico|txt)$/,
                 use: {
                     loader: 'file-loader',
                     options: {
@@ -51,7 +61,8 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpe?g|png|svg|xml|json)$/,
+                test: /\.(jpe?g|png|svg|xml|json|txt)$/,
+                include: /content|images|scripts|styles/,
                 use: {
                     loader: 'file-loader',
                     options: {
