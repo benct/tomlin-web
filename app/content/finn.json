@@ -228,7 +228,7 @@
     "links": [
       {
         "text": "[Flight] Solr - DEV",
-        "href": "http://dev-reisesolr1.sol0.finntech.no:12599/solr/#/"
+        "href": "http://dev-reisesolr2536.sol-osl01.host.finntech.no:12599/solr/#/"
       },
       {
         "text": "[Flight] Solr - PROD",
@@ -236,7 +236,7 @@
       },
       {
         "text": "[Flight] Solr AC - DEV",
-        "href": "http://dev-reisesolr1.sol0.finntech.no:12652/solr/#/"
+        "href": "http://dev-reisesolr2536.sol-osl01.host.finntech.no:12652/solr/#/"
       },
       {
         "text": "[Flight] Solr AC - PROD",
@@ -244,7 +244,7 @@
       },
       {
         "text": "[Flight] Solr Lowf. - DEV",
-        "href": "http://dev-reisesolr1.sol0.finntech.no:12655/solr/#/"
+        "href": "http://dev-reisesolr2536.sol-osl01.host.finntech.no:12655/solr/#/"
       },
       {
         "text": "[Flight] Solr Lowf. - PROD",
@@ -252,7 +252,7 @@
       },
       {
         "text": "[FHH] Solr - DEV",
-        "href": "http://dev-reisesolr1.sol0.finntech.no:12530/solr/#/"
+        "href": "http://dev-reisesolr2536.sol-osl01.host.finntech.no:12530/solr/#/"
       },
       {
         "text": "[FHH] Solr - PROD",
@@ -260,7 +260,7 @@
       },
       {
         "text": "[LMS] Solr - DEV",
-        "href": "http://dev-reisesolr1.sol0.finntech.no:12651/solr/#/"
+        "href": "http://dev-reisesolr2536.sol-osl01.host.finntech.no:12651/solr/#/"
       },
       {
         "text": "[LMS] Solr - PROD",
@@ -268,7 +268,7 @@
       },
       {
         "text": "[PP] Solr - DEV",
-        "href": "http://dev-reisesolr1.sol0.finntech.no:12621/solr/#/"
+        "href": "http://dev-reisesolr2536.sol-osl01.host.finntech.no:12621/solr/#/"
       },
       {
         "text": "[PP] Solr - PROD",
@@ -276,7 +276,7 @@
       },
       {
         "text": "[Travel] Solr Config - DEV",
-        "href": "http://dev-reisesolr1.sol0.finntech.no:12699/solr/#/"
+        "href": "http://dev-reisesolr2536.sol-osl01.host.finntech.no:12699/solr/#/"
       },
       {
         "text": "[Travel] Solr Config - PROD",
