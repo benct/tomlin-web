@@ -167,7 +167,7 @@
       },
       {
         "text": "Kibana - DEV",
-        "href": "http://kibana.k8s-gke.dev.finn.no/"
+        "href": "http://kibana.k8s-sol-osl01.dev.infra.finn.no/"
       },
       {
         "text": "FHH - Errors",
