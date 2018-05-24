@@ -1,4 +1,4 @@
-kill $(ps aux | grep <shit-to-kill> | awk '{print $2}')
+kill -9 $(ps aux | grep <name> | awk '{print $2}')
 
 netstat -nlp | grep <port>
 host <ip/host>
