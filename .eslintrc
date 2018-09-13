@@ -1,22 +1,24 @@
 {
   "plugins": [
     "react",
-    "jsx-a11y"
+    "jsx-a11y",
+    "prettier"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "no-shadow": ["error", { "builtinGlobals": false }],
     "camelcase": ["error", { "properties": "never" }],
-    "comma-dangle": ["error"],
     "indent": 0,
     "indent-legacy": ["error", 4, { "SwitchCase": 1 }],
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/no-noninteractive-element-interactions": 0,
-    "jsx-a11y/click-events-have-key-events": 0
+    "jsx-a11y/click-events-have-key-events": 0,
+    "prettier/prettier": "error"
   },
   "parserOptions": {
     "sourceType": "module",
