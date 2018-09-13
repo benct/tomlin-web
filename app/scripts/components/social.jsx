@@ -25,5 +25,5 @@ export default function Social({ circle }) {
 }
 
 Social.propTypes = {
-    circle: PropTypes.bool.isRequired
+    circle: PropTypes.bool.isRequired,
 };

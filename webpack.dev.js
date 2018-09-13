@@ -9,21 +9,16 @@ module.exports = merge(common, {
             {
                 test: /\.css$/,
                 exclude: /node_modules/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            }
-        ]
+                use: ['style-loader', 'css-loader'],
+            },
+        ],
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin()
-    ],
+    plugins: [new webpack.HotModuleReplacementPlugin()],
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist',
         historyApiFallback: true,
         inline: true,
-        hot: true
-    }
+        hot: true,
+    },
 });

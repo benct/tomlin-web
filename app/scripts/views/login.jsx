@@ -7,14 +7,14 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            error: false
+            error: false,
         };
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
-        auth.login(this.username.value, this.password.value, (loggedIn) => {
+        auth.login(this.username.value, this.password.value, loggedIn => {
             if (!loggedIn) {
                 return this.setState({ error: true });
             }
@@ -31,11 +31,11 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="wrapper">
-                <form ref={(form) => (this.form = form)} onSubmit={this.handleSubmit.bind(this)}>
-                    <input type="text" ref={(input) => (this.username = input)} placeholder="username" autoComplete="off"/>
-                    <input type="password" ref={(input) => (this.password = input)} placeholder="********"/>
+                <form ref={form => (this.form = form)} onSubmit={this.handleSubmit.bind(this)}>
+                    <input type="text" ref={input => (this.username = input)} placeholder="username" autoComplete="off" />
+                    <input type="password" ref={input => (this.password = input)} placeholder="********" />
                     <input type="submit" value="login" />
-                    {this.state.error && (<p className="text error">Incorrect username or password...</p>)}
+                    {this.state.error && <p className="text error">Incorrect username or password...</p>}
                 </form>
             </div>
         );
@@ -44,5 +44,5 @@ export default class Login extends React.Component {
 
 Login.propTypes = {
     location: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
 };

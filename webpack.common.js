@@ -3,19 +3,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PATHS = {
     app: path.join(__dirname, 'app'),
-    dist: path.join(__dirname, 'dist')
+    dist: path.join(__dirname, 'dist'),
 };
 
 module.exports = {
     context: PATHS.app,
-    entry: [ '@babel/polyfill', path.join(PATHS.app, 'scripts', 'entry.js') ],
+    entry: ['@babel/polyfill', path.join(PATHS.app, 'scripts', 'entry.js')],
     output: {
         path: PATHS.dist,
         filename: 'assets/scripts/bundle.js',
-        publicPath: '/'
+        publicPath: '/',
     },
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx'],
     },
     module: {
         rules: [
@@ -25,34 +25,34 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
-                    }
-                }
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
+                },
             },
             {
                 test: /\.html$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'html-loader'
-                }
+                    loader: 'html-loader',
+                },
             },
             {
                 test: /\.htaccess$/,
                 use: {
                     loader: 'file-loader',
                     options: {
-                        name: '.htaccess'
-                    }
-                }
+                        name: '.htaccess',
+                    },
+                },
             },
             {
                 test: /(favicon|humans|robots)\.(ico|txt)$/,
                 use: {
                     loader: 'file-loader',
                     options: {
-                        name: '[name].[ext]'
-                    }
-                }
+                        name: '[name].[ext]',
+                    },
+                },
             },
             {
                 test: /\.(xml|json|txt)$/,
@@ -62,9 +62,9 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         name: '[path][name].[ext]',
-                        outputPath: 'assets/'
-                    }
-                }
+                        outputPath: 'assets/',
+                    },
+                },
             },
             {
                 test: /\.(jpe?g|png|svg|gif)$/,
@@ -74,28 +74,28 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[path][name].[ext]',
-                            outputPath: 'assets/'
-                        }
+                            outputPath: 'assets/',
+                        },
                     },
-                    'image-webpack-loader'
-                ]
-            }
-        ]
+                    'image-webpack-loader',
+                ],
+            },
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(PATHS.app, 'index.html'),
-            filename: 'index.html'
+            filename: 'index.html',
         }),
         new HtmlWebpackPlugin({
             template: path.join(PATHS.app, '403.html'),
             filename: '403.html',
-            inject: false
+            inject: false,
         }),
         new HtmlWebpackPlugin({
             template: path.join(PATHS.app, '404.html'),
             filename: '404.html',
-            inject: false
-        })
-    ]
+            inject: false,
+        }),
+    ],
 };

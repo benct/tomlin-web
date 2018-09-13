@@ -9,7 +9,7 @@ export default class Countdown extends React.Component {
             days: 0,
             hours: 0,
             minutes: 0,
-            seconds: 0
+            seconds: 0,
         };
     }
 
@@ -29,10 +29,10 @@ export default class Countdown extends React.Component {
     calculateCountdown() {
         const timestamp = (this.state.countdownTo - Date.now()) / 1000;
         this.setState({
-            days    : this.timeComponent(timestamp, 24 * 60 * 60),
-            hours   : this.timeComponent(timestamp,      60 * 60) % 24,
-            minutes : this.timeComponent(timestamp,           60) % 60,
-            seconds : this.timeComponent(timestamp,            1) % 60
+            days: this.timeComponent(timestamp, 24 * 60 * 60),
+            hours: this.timeComponent(timestamp, 60 * 60) % 24,
+            minutes: this.timeComponent(timestamp, 60) % 60,
+            seconds: this.timeComponent(timestamp, 1) % 60,
         });
     }
 

@@ -15,7 +15,7 @@ export default class App extends React.Component {
         this.state = {
             loggedIn: false,
             showMenu: false,
-            circleIcons: true
+            circleIcons: true,
         };
     }
 
@@ -30,29 +30,35 @@ export default class App extends React.Component {
 
     toggleMenu() {
         this.setState({
-            showMenu: !this.state.showMenu
+            showMenu: !this.state.showMenu,
         });
     }
 
     toggleIcons() {
         this.setState({
-            circleIcons: !this.state.circleIcons
+            circleIcons: !this.state.circleIcons,
         });
     }
 
     render() {
         return (
             <div>
-                <header className="wrapper" onClick={this.toggleMenu}/>
-                <Navigation showMenu={this.state.showMenu} hideMenu={this.toggleMenu} loggedIn={this.state.loggedIn}/>
-                <Transition className="content" path={this.props.location.pathname} transition="opacity .5s ease-in"
-                            initialStyle={{opacity: 0, width: '100%'}} finalStyle={{opacity: 1}}>
-                    { React.cloneElement(this.props.children, { loggedIn: this.state.loggedIn }) }
+                <header className="wrapper" onClick={this.toggleMenu} />
+                <Navigation showMenu={this.state.showMenu} hideMenu={this.toggleMenu} loggedIn={this.state.loggedIn} />
+                <Transition
+                    className="content"
+                    path={this.props.location.pathname}
+                    transition="opacity .5s ease-in"
+                    initialStyle={{ opacity: 0, width: '100%' }}
+                    finalStyle={{ opacity: 1 }}>
+                    {React.cloneElement(this.props.children, { loggedIn: this.state.loggedIn })}
                 </Transition>
                 <footer className="wrapper">
-                    <Social circle={this.state.circleIcons}/>
+                    <Social circle={this.state.circleIcons} />
                     <div className="text mtl">
-                        <span className="pointer unselectable" onClick={this.toggleIcons}>Ben Tomlin © 2018</span>
+                        <span className="pointer unselectable" onClick={this.toggleIcons}>
+                            Ben Tomlin © 2018
+                        </span>
                     </div>
                 </footer>
             </div>
@@ -62,5 +68,5 @@ export default class App extends React.Component {
 
 App.propTypes = {
     location: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired
+    children: PropTypes.object.isRequired,
 };

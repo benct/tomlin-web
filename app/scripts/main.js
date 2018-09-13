@@ -16,21 +16,21 @@ function requireAuthentication(nextState, replace) {
     if (!auth.loggedIn()) {
         replace({
             pathname: '/login',
-            state: { nextPathname: nextState.location.pathname }
+            state: { nextPathname: nextState.location.pathname },
         });
     }
 }
 
 ReactDOM.render(
-    <Router history={ browserHistory }>
-        <Route path='/' component={ App }>
-            <IndexRoute component={ Home } />
-            <Route path="login" component={ Login } />
-            <Route path="logout" component={ Logout } />
-            <Route path="finn" component={ Finn } />
-            <Route path="files" component={ Files } onEnter={ requireAuthentication } />
+    <Router history={browserHistory}>
+        <Route path="/" component={App}>
+            <IndexRoute component={Home} />
+            <Route path="login" component={Login} />
+            <Route path="logout" component={Logout} />
+            <Route path="finn" component={Finn} />
+            <Route path="files" component={Files} onEnter={requireAuthentication} />
         </Route>
-        <Route path="*" component={ Error } code={ 404 } />
+        <Route path="*" component={Error} code={404} />
     </Router>,
     document.getElementById('root')
 );

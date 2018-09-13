@@ -15,10 +15,10 @@ export default class Logout extends React.Component {
     }
 
     render() {
-        return <div className="wrapper text">You have been logged out!</div>
+        return <div className="wrapper text">You have been logged out!</div>;
     }
 }
 
 Logout.propTypes = {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
 };

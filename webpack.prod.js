@@ -1,6 +1,6 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -11,17 +11,17 @@ module.exports = merge(common, {
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader
+                        loader: MiniCssExtractPlugin.loader,
                     },
-                    'css-loader'
-                ]
-            }
-        ]
+                    'css-loader',
+                ],
+            },
+        ],
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'assets/styles/main.css'
-        })
+            filename: 'assets/styles/main.css',
+        }),
     ],
-    devtool: 'source-map'
+    devtool: 'source-map',
 });

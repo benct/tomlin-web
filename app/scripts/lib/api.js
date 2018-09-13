@@ -29,14 +29,14 @@ function buildForm(data, files = null) {
 export function post(data, files = null) {
     return fetch(baseApiUrl, {
         method: 'POST',
-        body: buildForm(data, files)
+        body: buildForm(data, files),
     })
         .then(checkStatus)
-        .then((response) => response.json())
+        .then(response => response.json());
 }
 
 export function fetchFile(path) {
     return fetch(`${baseUrl}${path}`)
         .then(checkStatus)
-        .then((response) => response.text());
+        .then(response => response.text());
 }

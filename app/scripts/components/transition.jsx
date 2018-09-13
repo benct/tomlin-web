@@ -1,19 +1,19 @@
 /** Based on https://github.com/misterfresh/react-easy-transition **/
 import React from 'react';
 import PropTypes from 'prop-types';
-import TransitionGroup from 'react-transition-group/TransitionGroup'
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 export default class Transition extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: true
+            visible: true,
         };
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            visible: (this.props.path === nextProps.path || (typeof this.props.path === 'undefined'))
+            visible: this.props.path === nextProps.path || typeof this.props.path === 'undefined',
         });
     }
 
@@ -23,11 +23,12 @@ export default class Transition extends React.Component {
 
     render() {
         return (
-            <TransitionGroup transitionName="fade" className={this.props.className} component={this.props.component || "div"}>
-                { this.state.visible &&
-                <TransitionChild key={this.props.path} childDidLeave={this.childDidLeave.bind(this)} {...this.props}>
-                    {this.props.children}
-                </TransitionChild> }
+            <TransitionGroup transitionName="fade" className={this.props.className} component={this.props.component || 'div'}>
+                {this.state.visible && (
+                    <TransitionChild key={this.props.path} childDidLeave={this.childDidLeave.bind(this)} {...this.props}>
+                        {this.props.children}
+                    </TransitionChild>
+                )}
             </TransitionGroup>
         );
     }
@@ -48,29 +49,39 @@ class TransitionChild extends React.Component {
         this.page.style.transition = this.props.transition;
         Object.assign(this.page.style, this.props.finalStyle);
         let transitionsRemaining = this.props.transition.split(',').length;
-        this.page.addEventListener("transitionend", () => {
-            transitionsRemaining--;
-            if (transitionsRemaining) return;
-            callback();
-        }, false);
+        this.page.addEventListener(
+            'transitionend',
+            () => {
+                transitionsRemaining--;
+                if (transitionsRemaining) return;
+                callback();
+            },
+            false
+        );
     }
 
     componentWillLeave(callback) {
         let leaveStyle = this.props.leaveStyle ? this.props.leaveStyle : this.props.initialStyle;
         Object.assign(this.page.style, leaveStyle);
         let transitionsRemaining = this.props.transition.split(',').length;
-        this.page.addEventListener("transitionend", () => {
-            transitionsRemaining--;
-            if (transitionsRemaining) return;
-            callback();
-            this.props.childDidLeave();
-        }, false);
+        this.page.addEventListener(
+            'transitionend',
+            () => {
+                transitionsRemaining--;
+                if (transitionsRemaining) return;
+                callback();
+                this.props.childDidLeave();
+            },
+            false
+        );
     }
 
     render() {
-        return <div ref={(ref) => (this.page = ref)} style={this.props.initialStyle}>
-            { this.props.children }
-        </div>
+        return (
+            <div ref={ref => (this.page = ref)} style={this.props.initialStyle}>
+                {this.props.children}
+            </div>
+        );
     }
 }
 
@@ -81,7 +92,7 @@ Transition.propTypes = {
     initialStyle: PropTypes.object.isRequired,
     finalStyle: PropTypes.object.isRequired,
     component: PropTypes.string,
-    children: PropTypes.object
+    children: PropTypes.object,
 };
 
 TransitionChild.propTypes = {
@@ -90,5 +101,5 @@ TransitionChild.propTypes = {
     leaveStyle: PropTypes.object,
     finalStyle: PropTypes.object.isRequired,
     childDidLeave: PropTypes.func.isRequired,
-    children: PropTypes.object
+    children: PropTypes.object,
 };
