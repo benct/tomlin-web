@@ -25,7 +25,7 @@ export default function About() {
             {`For more information about me, feel free to follow the social links at the bottom of this page.`}
             <br />
             <br />
-            Version 2.3
+            Version 2.4
         </div>
     );
 }
