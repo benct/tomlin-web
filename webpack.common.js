@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const PATHS = {
     app: path.join(__dirname, 'app'),
@@ -9,7 +8,7 @@ const PATHS = {
 
 module.exports = {
     context: PATHS.app,
-    entry: [ 'babel-polyfill', path.join(PATHS.app, 'scripts', 'entry.js') ],
+    entry: [ '@babel/polyfill', path.join(PATHS.app, 'scripts', 'entry.js') ],
     output: {
         path: PATHS.dist,
         filename: 'assets/scripts/bundle.js',
@@ -24,7 +23,10 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react']
+                    }
                 }
             },
             {
@@ -33,14 +35,6 @@ module.exports = {
                 use: {
                     loader: 'html-loader'
                 }
-            },
-            {
-                test: /\.css$/,
-                exclude: /node_modules/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader'
-                })
             },
             {
                 test: /\.htaccess$/,
@@ -63,6 +57,7 @@ module.exports = {
             {
                 test: /\.(xml|json|txt)$/,
                 include: /content|images|scripts|styles/,
+                type: 'javascript/auto',
                 use: {
                     loader: 'file-loader',
                     options: {
@@ -101,10 +96,6 @@ module.exports = {
             template: path.join(PATHS.app, '404.html'),
             filename: '404.html',
             inject: false
-        }),
-        new ExtractTextPlugin({
-            filename: 'assets/styles/main.css',
-            disable: process.env.NODE_ENV !== 'production'
         })
     ]
 };
