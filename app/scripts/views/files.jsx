@@ -18,11 +18,9 @@ export default class Files extends React.Component {
         };
     }
 
-    componentWillMount() {
-        this.refreshContent(this.state.cwd);
-    }
-
     componentDidMount() {
+        this.refreshContent(this.state.cwd);
+
         document.addEventListener('keyup', this.handleKeyboard.bind(this), false);
     }
 

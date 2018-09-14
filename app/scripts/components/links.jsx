@@ -12,7 +12,7 @@ export default class Links extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.loadContent(this.props.file);
     }
 

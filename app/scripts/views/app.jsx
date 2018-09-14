@@ -23,7 +23,7 @@ export default class App extends React.Component {
         this.setState({ loggedIn });
     }
 
-    componentWillMount() {
+    componentDidMount() {
         auth.onChange = this.updateAuth.bind(this);
         auth.init();
     }

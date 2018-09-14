@@ -81,7 +81,7 @@ export default class Quote extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         if (this.state.quotes) {
             this.refreshQuote();
         }

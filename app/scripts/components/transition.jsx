@@ -11,7 +11,7 @@ export default class Transition extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line
         this.setState({
             visible: this.props.path === nextProps.path || typeof this.props.path === 'undefined',
         });
