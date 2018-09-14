@@ -1,12 +1,17 @@
-// Import all files in a folder
-function requireAll(requireContext) {
-    return requireContext.keys().map(requireContext);
-}
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import App from './views/app.jsx';
 
 // Static assets
 import '../.htaccess';
 import '../humans.txt';
 import '../robots.txt';
+
+// Import all files in a folder
+function requireAll(requireContext) {
+    return requireContext.keys().map(requireContext);
+}
 
 // CSS resources
 requireAll(require.context('../styles', true, /^\.\//));
@@ -17,5 +22,5 @@ requireAll(require.context('../images/icon', true, /^\.\//));
 // Other resources
 requireAll(require.context('../content', true, /^\.\//));
 
-// Javascript app entry
-import './main.js';
+// Render app
+ReactDOM.render(<App />, document.getElementById('root'));
