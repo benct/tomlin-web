@@ -8,7 +8,7 @@ const PATHS = {
 
 module.exports = {
     context: PATHS.app,
-    entry: ['@babel/polyfill', path.join(PATHS.app, 'scripts', 'entry.js')],
+    entry: ['@babel/polyfill', path.join(PATHS.app, 'scripts', 'index.js')],
     output: {
         path: PATHS.dist,
         filename: 'assets/scripts/bundle.js',
