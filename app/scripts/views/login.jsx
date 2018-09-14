@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import auth from '../lib/auth.js';
 
@@ -7,6 +8,7 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            redirectToReferrer: false,
             error: false,
         };
     }
@@ -14,22 +16,20 @@ export default class Login extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        auth.login(this.username.value, this.password.value, loggedIn => {
-            if (!loggedIn) {
-                return this.setState({ error: true });
-            }
-
-            if (this.props.location.state && this.props.location.state.nextPathname) {
-                this.props.router.replace(this.props.location.state.nextPathname);
-            } else {
-                this.props.router.replace('/');
-            }
-            this.form.style.display = 'none';
-        });
+        auth.login(this.username.value, this.password.value, loggedIn =>
+            this.setState({
+                redirectToReferrer: loggedIn,
+                error: !loggedIn,
+            })
+        );
     }
 
     render() {
-        return (
+        const { from } = this.props.location.state || { from: { pathname: '/' } };
+
+        return this.state.redirectToReferrer ? (
+            <Redirect to={from} />
+        ) : (
             <div className="wrapper">
                 <form ref={form => (this.form = form)} onSubmit={this.handleSubmit.bind(this)}>
                     <input type="text" ref={input => (this.username = input)} placeholder="username" autoComplete="off" />
@@ -44,5 +44,4 @@ export default class Login extends React.Component {
 
 Login.propTypes = {
     location: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
 };

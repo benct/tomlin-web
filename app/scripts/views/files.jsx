@@ -1,6 +1,6 @@
 /* global prompt, confirm, File, FormData */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import FileList from '../components/filelist.jsx';
 import { post, fetchFile } from '../lib/api.js';

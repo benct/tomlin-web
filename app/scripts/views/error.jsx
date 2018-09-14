@@ -19,27 +19,28 @@ const error = {
 export default class Error extends React.Component {
     constructor(props) {
         super(props);
+
+        this.title = document.title;
     }
 
     componentDidMount() {
-        document.title += ` - ${error[this.props.route.code].title}`;
-        document.body.classList.add('error-page');
+        document.title += ` - ${error[this.props.code].title}`;
     }
 
     componentWillUnmount() {
-        document.body.classList.remove('error-page');
+        document.title = this.title;
     }
 
     render() {
         return (
-            <div>
-                <h1>{error[this.props.route.code].title}</h1>
-                <p>{error[this.props.route.code].message}</p>
+            <div className="wrapper error-page">
+                <h1>{error[this.props.code].title}</h1>
+                <p>{error[this.props.code].message}</p>
             </div>
         );
     }
 }
 
 Error.propTypes = {
-    route: PropTypes.object.isRequired,
+    code: PropTypes.number.isRequired,
 };

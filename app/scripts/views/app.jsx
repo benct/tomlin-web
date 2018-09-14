@@ -1,11 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
-import Social from '../components/social.jsx';
-import Navigation from '../components/navigation.jsx';
-import Transition from '../components/transition.jsx';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import auth from '../lib/auth.js';
+
+import PrivateRoute from '../route/private.jsx';
+import Navigation from '../components/navigation.jsx';
+import Social from '../components/social.jsx';
+import Home from './home.jsx';
+import Finn from './finn.jsx';
+import Login from './login.jsx';
+import Logout from './logout.jsx';
+import Files from './files.jsx';
+import Error from './error.jsx';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -42,31 +48,28 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <header className="wrapper" onClick={this.toggleMenu} />
-                <Navigation showMenu={this.state.showMenu} hideMenu={this.toggleMenu} loggedIn={this.state.loggedIn} />
-                <Transition
-                    className="content"
-                    path={this.props.location.pathname}
-                    transition="opacity .5s ease-in"
-                    initialStyle={{ opacity: 0, width: '100%' }}
-                    finalStyle={{ opacity: 1 }}>
-                    {React.cloneElement(this.props.children, { loggedIn: this.state.loggedIn })}
-                </Transition>
-                <footer className="wrapper">
-                    <Social circle={this.state.circleIcons} />
-                    <div className="text mtl">
-                        <span className="pointer unselectable" onClick={this.toggleIcons}>
-                            Ben Tomlin © 2018
-                        </span>
-                    </div>
-                </footer>
-            </div>
+            <Router>
+                <>
+                    <header className="wrapper" onClick={this.toggleMenu} />
+                    <Navigation showMenu={this.state.showMenu} hideMenu={this.toggleMenu} loggedIn={this.state.loggedIn} />
+                    <Switch>
+                        <Route exact path="/" render={() => <Home loggedIn={this.state.loggedIn} />} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/logout" component={Logout} />
+                        <Route path="/finn" component={Finn} />
+                        <PrivateRoute path="/files" component={Files} />
+                        <Route render={() => <Error code={404} />} />
+                    </Switch>
+                    <footer className="wrapper">
+                        <Social circle={this.state.circleIcons} />
+                        <div className="text mtl">
+                            <span className="pointer unselectable" onClick={this.toggleIcons}>
+                                Ben Tomlin © 2018
+                            </span>
+                        </div>
+                    </footer>
+                </>
+            </Router>
         );
     }
 }
-
-App.propTypes = {
-    location: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired,
-};

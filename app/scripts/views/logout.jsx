@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import auth from '../lib/auth.js';
 
-export default class Logout extends React.Component {
+class Logout extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -11,7 +12,7 @@ export default class Logout extends React.Component {
     componentDidMount() {
         auth.logout();
 
-        setTimeout(() => this.props.router.push('/'), 3000);
+        setTimeout(() => this.props.history.push('/'), 3000);
     }
 
     render() {
@@ -20,5 +21,7 @@ export default class Logout extends React.Component {
 }
 
 Logout.propTypes = {
-    router: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
 };
+
+export default withRouter(Logout);

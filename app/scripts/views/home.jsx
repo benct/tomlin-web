@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Login from './login.jsx';
 import Navigation from '../components/navigation.jsx';
 import Countdown from '../components/countdown.jsx';
 import Quote from '../components/quote.jsx';
@@ -14,7 +13,7 @@ export default function Home(props) {
             <hr />
             <About />
             <hr />
-            {props.loggedIn ? <Navigation simple showMenu hideHome loggedIn={props.loggedIn} /> : <Login {...props} />}
+            <Navigation simple showMenu hideHome loggedIn={props.loggedIn} />
             <hr />
             <Quote />
         </div>
