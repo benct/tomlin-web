@@ -6,7 +6,7 @@ export default function FileList({ content, focused, handleClick, handleRename, 
         return (
             <tr key={i}>
                 <td>
-                    <img className="file-icon" src={require('../../images/file/' + item.icon)} alt={item.icon} />
+                    <img className="file-icon" src={require(`../../../images/file/${item.icon}`)} alt={item.icon} />
                 </td>
                 <td className="file-name">
                     <span onClick={() => handleClick(item)} className={i === focused ? 'focused' : ''}>

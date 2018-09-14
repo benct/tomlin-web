@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import auth from '../lib/auth.js';
+import auth from './util/auth.js';
 
-import PrivateRoute from '../route/private.jsx';
-import Navigation from '../components/navigation.jsx';
-import Social from '../components/social.jsx';
-import Home from './home.jsx';
-import Finn from './finn.jsx';
-import Login from './login.jsx';
-import Logout from './logout.jsx';
-import Files from './files.jsx';
-import Error from './error.jsx';
+import PrivateRoute from './route/private.jsx';
+import Navigation from './components/page/navigation.jsx';
+import Social from './components/page/social.jsx';
+import Error from './components/page/error.jsx';
+import Home from './components/home/home.jsx';
+import Finn from './components/data/finn.jsx';
+import Files from './components/files/files.jsx';
+import Login from './components/login.jsx';
+import Logout from './components/logout.jsx';
 
 export default class App extends React.Component {
     constructor(props) {

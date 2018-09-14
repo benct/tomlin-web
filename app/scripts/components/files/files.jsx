@@ -2,8 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import FileList from '../components/filelist.jsx';
-import { post, fetchFile } from '../lib/api.js';
+import { post, fetchFile } from '../../util/api.js';
+import FileList from './filelist.jsx';
 
 const PARENT_DIR = '..';
 

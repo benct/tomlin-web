@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import auth from '../lib/auth.js';
+import auth from '../util/auth.js';
 
 class Logout extends React.Component {
     constructor(props) {

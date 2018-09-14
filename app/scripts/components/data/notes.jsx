@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { fetchFile } from '../lib/api.js';
+import { fetchFile } from '../../util/api.js';
 
 export default class Notes extends React.Component {
     constructor(props) {

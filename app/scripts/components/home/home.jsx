@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Navigation from '../components/navigation.jsx';
-import Countdown from '../components/countdown.jsx';
-import Quote from '../components/quote.jsx';
-import About from '../components/about.jsx';
+import Navigation from '../page/navigation.jsx';
+import Countdown from './countdown.jsx';
+import Quote from './quote.jsx';
+import About from './about.jsx';
 
 export default function Home(props) {
     return (

@@ -1,6 +1,7 @@
 /* global fetch, FormData */
 import 'whatwg-fetch';
-import auth from '../lib/auth.js';
+
+import auth from './auth.js';
 
 const baseUrl = 'https://tomlin.no';
 const baseApiUrl = 'https://tomlin.no/api/';

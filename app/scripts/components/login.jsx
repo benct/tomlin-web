@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import auth from '../lib/auth.js';
+import auth from '../util/auth.js';
 
 export default class Login extends React.Component {
     constructor(props) {

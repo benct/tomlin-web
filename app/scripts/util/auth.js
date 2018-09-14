@@ -1,4 +1,4 @@
-import { post } from '../lib/api.js';
+import { post } from './api.js';
 
 export default {
     init() {

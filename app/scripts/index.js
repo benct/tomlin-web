@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './views/app.jsx';
+import App from './app.jsx';
 
 // Static assets
 import '../.htaccess';
