@@ -5,11 +5,12 @@
 
 .error-page h1 {
     color: #001888;
-    font-size: 1.8em;
-    font-weight: 400;
-    letter-spacing: normal;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    font-size: 28px;
+    letter-spacing: 3px;
     line-height: 1.5;
-    text-transform: none;
+    font-weight: 400;
     margin-bottom: 20px;
 }
 
