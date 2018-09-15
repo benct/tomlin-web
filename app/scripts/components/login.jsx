@@ -30,8 +30,9 @@ export default class Login extends React.Component {
         return this.state.redirectToReferrer ? (
             <Redirect to={from} />
         ) : (
-            <div className="wrapper">
-                <form ref={form => (this.form = form)} onSubmit={this.handleSubmit.bind(this)}>
+            <div className="wrapper text">
+                {this.props.location.state ? <div className="mbl">Sorry, you need to log in to view this page.</div> : null}
+                <form onSubmit={this.handleSubmit.bind(this)}>
                     <input type="text" ref={input => (this.username = input)} placeholder="username" autoComplete="off" />
                     <input type="password" ref={input => (this.password = input)} placeholder="********" />
                     <input type="submit" value="login" />
