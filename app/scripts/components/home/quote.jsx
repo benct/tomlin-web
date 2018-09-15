@@ -100,7 +100,7 @@ export default class Quote extends React.Component {
 
     render() {
         return this.state.current ? (
-            <div className="wrapper centerify pointer unselectable" onClick={this.refreshQuote.bind(this)}>
+            <div className="wrapper centerify pointer no-select" onClick={this.refreshQuote.bind(this)}>
                 <div>{this.state.current.text}</div>
                 <div>{this.state.current.author ? <i>- {this.state.current.author}</i> : null}</div>
             </div>

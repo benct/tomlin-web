@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-export default function Navigation({ loggedIn, showMenu, toggleMenu, simple }) {
+export default function Navigation({ loggedIn, showMenu, toggleMenu, simple, className }) {
     const menu = [
         { text: 'Home', path: '/', exact: true },
         { text: 'Media', path: '/media' },
@@ -15,13 +15,19 @@ export default function Navigation({ loggedIn, showMenu, toggleMenu, simple }) {
     const createLink = (item, idx) =>
         item.hide ? null : (
             <li key={`menuList${idx}`}>
-                <NavLink to={item.path} exact={!!item.exact}>{item.text}</NavLink>
+                <NavLink to={item.path} exact={!!item.exact}>
+                    {item.text}
+                </NavLink>
             </li>
         );
 
-    return (
-        <nav className={simple ? 'wrapper centerify' : 'menu-wrap'} style={{ left: showMenu ? '0px' : '100%' }} onClick={toggleMenu}>
-            <ul className={`unselectable menu ${simple ? 'menu-simple' : 'menu-full'}`} style={{ opacity: showMenu ? 1 : 0 }}>
+    return simple ? (
+        <nav className={`${className} menu-top`}>
+            <ul className={`no-select menu menu-simple`}>{menu.map(createLink)}</ul>
+        </nav>
+    ) : (
+        <nav className={`${className} menu-wrap`} style={{ left: showMenu ? '0px' : '100%' }} onClick={toggleMenu}>
+            <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
                 {menu.map(createLink)}
             </ul>
         </nav>
@@ -33,4 +39,5 @@ Navigation.propTypes = {
     toggleMenu: PropTypes.func,
     simple: PropTypes.bool,
     loggedIn: PropTypes.bool,
+    className: PropTypes.string,
 };

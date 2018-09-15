@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import auth from './util/auth.js';
 
+import { MenuIcon } from './components/page/icons.jsx';
 import PrivateRoute from './route/private.jsx';
 import Navigation from './components/page/navigation.jsx';
 import Social from './components/page/social.jsx';
@@ -49,10 +50,11 @@ export default class App extends React.Component {
         return (
             <Router>
                 <>
-                    <header className="wrapper" onClick={this.toggleMenu.bind(this)} />
+                    <header>
+                        <Navigation className="hide-lt480" simple showMenu loggedIn={this.state.loggedIn} />
+                        <MenuIcon className="hide-gt480 menu-icon" onClick={this.toggleMenu.bind(this)} />
+                    </header>
                     <Navigation showMenu={this.state.showMenu} toggleMenu={this.toggleMenu.bind(this)} loggedIn={this.state.loggedIn} />
-                    <Navigation simple showMenu loggedIn={this.state.loggedIn} />
-                    <hr />
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/login" component={Login} />
@@ -64,7 +66,7 @@ export default class App extends React.Component {
                     <footer className="wrapper">
                         <Social circle={this.state.circleIcons} />
                         <div className="text mtl">
-                            <span className="pointer unselectable" onClick={this.toggleIcons.bind(this)}>
+                            <span className="pointer no-select" onClick={this.toggleIcons.bind(this)}>
                                 Ben Tomlin © 2018
                             </span>
                         </div>

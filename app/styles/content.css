@@ -37,7 +37,7 @@
     cursor: pointer;
 }
 
-.unselectable {
+.no-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -90,6 +90,11 @@ button.icon:hover svg path {
     }
 }
 
+@media (min-width: 768px) {
+    .hide-lt768 {
+        display: none !important;
+    }
+}
 @media (max-width: 767px) {
     .hide-lt768 {
         display: none !important;
@@ -102,6 +107,11 @@ button.icon:hover svg path {
     }
 }
 
+@media (min-width: 481px) {
+    .hide-gt480 {
+        display: none !important;
+    }
+}
 @media (max-width: 480px) {
     .hide-lt480 {
         display: none !important;

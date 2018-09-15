@@ -1,15 +1,28 @@
 header {
+    position: relative;
+    height: 125px;
+    max-width: 840px;
+    margin: 0 auto;
+    border-bottom: 1px solid #ddd;
+}
+
+header::after {
+    content: "";
+    opacity: 0.3;
     background: #fff url(../images/header.jpg) no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -ms-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 0 !important;
-    position: relative;
-    cursor: pointer;
-    height: 85px;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
 }
 
 .menu-wrap {
@@ -27,6 +40,21 @@ header {
     -moz-transition: left .6s ease-in-out;
     -o-transition: left .6s ease-in-out;
     transition: left .6s ease-in-out;
+}
+
+.menu-top {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.menu-icon {
+    cursor: pointer;
+    float: right;
+    padding: 10px;
+    margin: 20px;
+    fill: #888;
 }
 
 .menu {
@@ -122,6 +150,20 @@ header {
 .menu-simple a.active {
     color: #001888;
     border-bottom: 1px solid #001888;
+}
+
+@media only screen and (max-width: 767px) {
+    .menu-simple a {
+        text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+        letter-spacing: 1px;
+        font-weight: 400;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    header {
+        height: 88px;
+    }
 }
 
 @-webkit-keyframes swing {
