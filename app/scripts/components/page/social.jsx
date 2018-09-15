@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default function Social({ circle }) {
     const prefix = circle ? 'circle-' : '';
     return (
-        <div className={`social ${circle ? ' large' : ''}`}>
+        <div className={`social${circle ? ' large' : ''}`}>
             <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">
                 <img src={require(`../../../images/social/${prefix}github.svg`)} alt="github" />
             </a>
