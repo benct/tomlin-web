@@ -16,8 +16,7 @@ import Logout from './components/logout.jsx';
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.toggleMenu = this.toggleMenu.bind(this);
-        this.toggleIcons = this.toggleIcons.bind(this);
+
         this.state = {
             loggedIn: false,
             showMenu: false,
@@ -50,8 +49,8 @@ export default class App extends React.Component {
         return (
             <Router>
                 <>
-                    <header className="wrapper" onClick={this.toggleMenu} />
-                    <Navigation showMenu={this.state.showMenu} hideMenu={this.toggleMenu} loggedIn={this.state.loggedIn} />
+                    <header className="wrapper" onClick={this.toggleMenu.bind(this)} />
+                    <Navigation showMenu={this.state.showMenu} hideMenu={this.toggleMenu.bind(this)} loggedIn={this.state.loggedIn} />
                     <Switch>
                         <Route exact path="/" render={() => <Home loggedIn={this.state.loggedIn} />} />
                         <Route path="/login" component={Login} />
@@ -63,7 +62,7 @@ export default class App extends React.Component {
                     <footer className="wrapper">
                         <Social circle={this.state.circleIcons} />
                         <div className="text mtl">
-                            <span className="pointer unselectable" onClick={this.toggleIcons}>
+                            <span className="pointer unselectable" onClick={this.toggleIcons.bind(this)}>
                                 Ben Tomlin © 2018
                             </span>
                         </div>
