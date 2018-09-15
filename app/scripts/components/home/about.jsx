@@ -5,6 +5,7 @@ export default function About() {
         <div className="wrapper text">
             {`There's really not that much interesting here...`}
             <br />
+            <br />
             {`This site was developed a while back using `}
             <a href="https://facebook.github.io/react/" target="_blank" rel="noopener noreferrer">
                 React

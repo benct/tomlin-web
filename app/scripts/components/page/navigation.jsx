@@ -1,31 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-export default function Navigation({ loggedIn, showMenu, hideMenu, hideHome, simple }) {
+export default function Navigation({ loggedIn, showMenu, toggleMenu, simple }) {
+    const menu = [
+        { text: 'Home', path: '/', exact: true },
+        { text: 'Media', path: '/media' },
+        { text: 'Files', path: '/files' },
+        { text: 'Finn', path: '/finn', hide: !loggedIn },
+        { text: 'Logout', path: '/logout', hide: !loggedIn },
+        { text: 'Login', path: '/login', hide: loggedIn },
+    ];
+
+    const createLink = (item, idx) =>
+        item.hide ? null : (
+            <li key={`menuList${idx}`}>
+                <NavLink to={item.path} exact={!!item.exact}>{item.text}</NavLink>
+            </li>
+        );
+
     return (
-        <nav className={simple ? 'wrapper centerify' : 'menu-wrap'} style={{ left: showMenu ? '0px' : '100%' }} onClick={hideMenu}>
-            <ul className={`unselectable menu ${simple ? '' : 'menu-full'}`} style={{ opacity: showMenu ? 1 : 0 }}>
-                {hideHome ? null : (
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                )}
-                <li>
-                    <Link to="/files">Files</Link>
-                </li>
-                <li>
-                    <Link to="/finn">FINN</Link>
-                </li>
-                {loggedIn ? (
-                    <li>
-                        <Link to="/logout">Logout</Link>
-                    </li>
-                ) : (
-                    <li>
-                        <Link to="/login">Login</Link>
-                    </li>
-                )}
+        <nav className={simple ? 'wrapper centerify' : 'menu-wrap'} style={{ left: showMenu ? '0px' : '100%' }} onClick={toggleMenu}>
+            <ul className={`unselectable menu ${simple ? 'menu-simple' : 'menu-full'}`} style={{ opacity: showMenu ? 1 : 0 }}>
+                {menu.map(createLink)}
             </ul>
         </nav>
     );
@@ -33,8 +30,7 @@ export default function Navigation({ loggedIn, showMenu, hideMenu, hideHome, sim
 
 Navigation.propTypes = {
     showMenu: PropTypes.bool.isRequired,
-    hideMenu: PropTypes.func,
-    hideHome: PropTypes.bool,
+    toggleMenu: PropTypes.func,
     simple: PropTypes.bool,
     loggedIn: PropTypes.bool,
 };

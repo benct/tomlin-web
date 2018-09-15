@@ -50,9 +50,11 @@ export default class App extends React.Component {
             <Router>
                 <>
                     <header className="wrapper" onClick={this.toggleMenu.bind(this)} />
-                    <Navigation showMenu={this.state.showMenu} hideMenu={this.toggleMenu.bind(this)} loggedIn={this.state.loggedIn} />
+                    <Navigation showMenu={this.state.showMenu} toggleMenu={this.toggleMenu.bind(this)} loggedIn={this.state.loggedIn} />
+                    <Navigation simple showMenu loggedIn={this.state.loggedIn} />
+                    <hr />
                     <Switch>
-                        <Route exact path="/" render={() => <Home loggedIn={this.state.loggedIn} />} />
+                        <Route exact path="/" component={Home} />
                         <Route path="/login" component={Login} />
                         <Route path="/logout" component={Logout} />
                         <Route path="/finn" component={Finn} />
