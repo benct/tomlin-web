@@ -17,8 +17,7 @@ export default function Me() {
                 <div className="cv-skills">
                     <div className="strong">Day-to-day</div>
                     <ul>
-                        <li>Java</li>
-                        <li>Kotlin</li>
+                        <li>Java / Kotlin</li>
                         <li>JavaScript / TypeScript</li>
                         <li>React.js / JSX</li>
                         <li>Webpack / Babel / Node.js</li>
@@ -42,7 +41,7 @@ export default function Me() {
                 </div>
             </div>
 
-            <div>See more through social links below</div>
+            <div>See more through social links below.</div>
         </div>
     );
 }
