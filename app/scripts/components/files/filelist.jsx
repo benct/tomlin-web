@@ -38,7 +38,7 @@ export default function FileList({ content, focused, handleClick, handleRename, 
                 <tr>
                     <th>&nbsp;</th>
                     <th className="text-left">Filename</th>
-                    <th className="hide-lt600">Size</th>
+                    <th className="hide-lt600 text-right">Size</th>
                     <th className="hide-lt768">Permissions</th>
                     <th className="hide-lt768">Uploaded</th>
                 </tr>
