@@ -1,0 +1,31 @@
+.cv-header {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.cv-position {
+    color: #888;
+    margin-bottom: 30px;
+}
+
+.cv-title {
+    color: #444;
+}
+
+.cv-skills-wrapper {
+    margin: 30px auto;
+}
+
+.cv-skills {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+.cv-skills ul {
+    list-style: none;
+    margin: 0;
+    padding: 5px 0;
+}

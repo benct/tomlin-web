@@ -8,6 +8,7 @@ import PrivateRoute from './route/private.jsx';
 import Navigation from './components/page/navigation.jsx';
 import Social from './components/page/social.jsx';
 import Error from './components/page/error.jsx';
+import Me from './components/page/me.jsx';
 import Home from './components/home/home.jsx';
 import Finn from './components/data/finn.jsx';
 import Files from './components/files/files.jsx';
@@ -60,6 +61,7 @@ export default class App extends React.Component {
                         <Route path="/login" component={Login} />
                         <Route path="/logout" component={Logout} />
                         <Route path="/finn" component={Finn} />
+                        <Route path="/me" component={Me} />
                         <PrivateRoute path="/files" component={Files} />
                         <Route render={() => <Error code={404} />} />
                     </Switch>

@@ -45,6 +45,14 @@
     user-select: none;
 }
 
+.strong {
+    font-weight: 700;
+}
+
+.clear-fix {
+    clear: both;
+}
+
 pre {
     font-size: 13px;
     letter-spacing: normal;
