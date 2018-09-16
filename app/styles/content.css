@@ -80,6 +80,12 @@
     margin: 20px 0;
 }
 
+.refresh-icon {
+    float: right;
+    width: 16px;
+    height: 16px;
+}
+
 button.icon {
     background: transparent no-repeat;
     border: none;

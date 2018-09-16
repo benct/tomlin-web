@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { RefreshIcon } from '../page/icons.jsx';
+
 const data = [
     ['The man who smiles when things go wrong has thought of someone to blame it on.'],
     [
@@ -108,6 +110,7 @@ export default class Quote extends React.Component {
             <div className="wrapper text-center pointer no-select" onClick={this.refreshQuote.bind(this)}>
                 <div>{this.state.current.text}</div>
                 <div>{this.state.current.author ? <i>- {this.state.current.author}</i> : null}</div>
+                <RefreshIcon className="refresh-icon" fill="#ddd" />
             </div>
         ) : null;
     }
