@@ -1,9 +1,8 @@
 /* global prompt, confirm, File, FormData */
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { post, fetchFile } from '../../util/api.js';
-import { BackIcon, CloseIcon, NewDirIcon, ParentDirIcon, RefreshIcon, UploadIcon } from '../page/icons.jsx';
+import { CloseIcon, NewDirIcon, ParentDirIcon, RefreshIcon, UploadIcon } from '../page/icons.jsx';
 import FileList from './filelist.jsx';
 
 const PARENT_DIR = '..';
@@ -163,10 +162,8 @@ export default class Files extends React.Component {
         return (
             <div className="wrapper text-center">
                 <div className="file-table-header">
-                    <button className="file-control">
-                        <Link to="/">
-                            <BackIcon />
-                        </Link>
+                    <button className="file-control" onClick={() => this.changeDirectory(PARENT_DIR)} disabled={this.state.cwd === ''}>
+                        <ParentDirIcon />
                     </button>
                     <div className="text-right">
                         <button className="file-control" onClick={this.handleCreateDirectory.bind(this)}>
@@ -174,9 +171,6 @@ export default class Files extends React.Component {
                         </button>
                         <button className="file-control" onClick={() => this.refreshContent(this.state.cwd)}>
                             <RefreshIcon />
-                        </button>
-                        <button className="file-control" onClick={() => this.changeDirectory(PARENT_DIR)} disabled={this.state.cwd === ''}>
-                            <ParentDirIcon />
                         </button>
                     </div>
                 </div>
