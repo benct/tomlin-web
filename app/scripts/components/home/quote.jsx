@@ -70,6 +70,11 @@ const data = [
     ["If women ran the world we wouldn't have wars, just intense negotiations every 28 days.", 'Robin Williams'],
     ['All generalizations are false, including this one.', 'Mark Twain'],
     ['A government that robs Peter to pay Paul can always depend on the support of Paul.', 'George Bernard Shaw'],
+    ['The secret of business is to know something that nobody else knows.'],
+    ["If you can't convince them, confuse them.", 'Harry S Truman'],
+    ['Engineering is achieving function while avoiding failure.', 'Henry Petroski'],
+    ['Software is a great combination between artistry and engineering.', 'Bill Gates'],
+    ['Engineers like to solve problems. If there are no problems handily available, they will create their own problems.', 'Scott Adams'],
 ];
 
 export default class Quote extends React.Component {
