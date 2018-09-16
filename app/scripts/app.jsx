@@ -67,7 +67,7 @@ export default class App extends React.Component {
                     </Switch>
                     <footer className="wrapper">
                         <Social circle={this.state.circleIcons} />
-                        <div className="text mtl">
+                        <div className="text color-light mtl">
                             <span className="pointer no-select" onClick={this.toggleIcons.bind(this)}>
                                 Ben Tomlin © 2018
                             </span>

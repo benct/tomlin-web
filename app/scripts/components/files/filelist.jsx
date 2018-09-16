@@ -35,7 +35,7 @@ export default function FileList({ content, focused, handleClick, handleRename, 
     return (
         <table className="file-table">
             <thead>
-                <tr>
+                <tr className="color-primary">
                     <th>&nbsp;</th>
                     <th className="text-left">Filename</th>
                     <th className="hide-lt600 text-right">Size</th>

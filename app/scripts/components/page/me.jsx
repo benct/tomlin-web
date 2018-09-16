@@ -3,19 +3,19 @@ import React from 'react';
 export default function Me() {
     return (
         <div className="wrapper text">
-            <div className="cv-header">Ben Christopher Tomlin</div>
+            <div className="cv-header color-primary">Ben Christopher Tomlin</div>
 
             <div className="cv-position">
-                <span className="cv-title">Senior Developer at FINN.no</span>
+                <span>Senior Developer at FINN.no</span>
                 <br />
-                <span className="cv-title">Full-stack Developer</span>
+                <span>Full-stack Developer</span>
                 <br />
-                Oslo, Norway
+                <span className="color-light">Oslo, Norway</span>
             </div>
 
-            <div className="cv-skills-wrapper">
+            <div>
                 <div className="cv-skills">
-                    <div className="strong">Day-to-day</div>
+                    <div className="color-primary strong">Day-to-day</div>
                     <ul>
                         <li>Java / Kotlin</li>
                         <li>JavaScript / TypeScript</li>
@@ -29,7 +29,7 @@ export default function Me() {
                     </ul>
                 </div>
                 <div className="cv-skills">
-                    <div className="strong">Experience with</div>
+                    <div className="color-primary strong">Experience with</div>
                     <ul>
                         <li>PHP</li>
                         <li>C / C++</li>

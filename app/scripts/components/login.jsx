@@ -31,7 +31,11 @@ export default class Login extends React.Component {
             <Redirect to={from} />
         ) : (
             <div className="wrapper text">
-                {this.props.location.state ? <div className="mbl">Sorry, you need to log in to view this page.</div> : null}
+                {this.props.location.state ? (
+                    <div className="mbl">Sorry, you need to log in to view this page.</div>
+                ) : (
+                    <div className="mbl">Fill out the form below to log in.</div>
+                )}
                 <form onSubmit={this.handleSubmit.bind(this)}>
                     <input type="text" ref={input => (this.username = input)} placeholder="username" autoComplete="off" />
                     <input type="password" ref={input => (this.password = input)} placeholder="********" />

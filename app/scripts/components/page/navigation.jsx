@@ -23,11 +23,11 @@ export default function Navigation({ loggedIn, showMenu, toggleMenu, simple, cla
         );
 
     return simple ? (
-        <nav className={`${className} menu-top`}>
+        <nav className={`${className || ''} menu-top`}>
             <ul className={`no-select menu menu-simple`}>{menu.map(createLink)}</ul>
         </nav>
     ) : (
-        <nav className={`${className} menu-wrap`} style={{ left: showMenu ? '0px' : '100%' }} onClick={toggleMenu}>
+        <nav className={`${className || ''} menu-wrap`} style={{ left: showMenu ? '0px' : '100%' }} onClick={toggleMenu}>
             <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
                 {menu.map(createLink)}
             </ul>

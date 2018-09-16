@@ -34,7 +34,7 @@ export default class Error extends React.Component {
     render() {
         return (
             <div className="wrapper error-page">
-                <h1>{error[this.props.code].title}</h1>
+                <h1 className="color-primary">{error[this.props.code].title}</h1>
                 <p>{error[this.props.code].message}</p>
             </div>
         );

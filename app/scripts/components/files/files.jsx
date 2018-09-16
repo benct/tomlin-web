@@ -188,7 +188,7 @@ export default class Files extends React.Component {
                     handleDelete={this.handleDelete.bind(this)}
                 />
                 <div>
-                    <label htmlFor="file">
+                    <label htmlFor="file" className="color-primary pointer">
                         <input
                             type="file"
                             name="files[]"
@@ -203,7 +203,7 @@ export default class Files extends React.Component {
                         </span>
                     </label>
                     <br />
-                    <button className="file-button mtl" onClick={this.handleUpload.bind(this)}>
+                    <button className="file-upload mtl" onClick={this.handleUpload.bind(this)}>
                         Upload
                     </button>
                 </div>
