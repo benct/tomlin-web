@@ -13,6 +13,18 @@ export default function Me() {
                 <span className="color-light">Oslo, Norway</span>
             </div>
 
+            <div className="social large">
+                <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">
+                    <img src={require('../../../images/social/github.svg')} alt="github" />
+                </a>
+                <a href="https://www.linkedin.com/in/bentomlin" target="_blank" rel="noopener noreferrer">
+                    <img src={require('../../../images/social/linkedin.svg')} alt="linkedin" />
+                </a>
+                <a href="mailto:ben@tomlin.no" target="_blank" rel="noopener noreferrer">
+                    <img src={require('../../../images/social/email.svg')} alt="email" />
+                </a>
+            </div>
+
             <div>
                 <div className="cv-skills">
                     <div className="color-primary strong">Day-to-day</div>
@@ -40,8 +52,6 @@ export default function Me() {
                     </ul>
                 </div>
             </div>
-
-            <div>See more through social links below.</div>
         </div>
     );
 }
