@@ -7,8 +7,8 @@ export default function Navigation({ loggedIn, showMenu, toggleMenu, simple, cla
         { text: 'Home', path: '/', exact: true },
         { text: 'Media', path: '/media' },
         { text: 'Files', path: '/files' },
-        { text: 'Me', path: '/me' },
         { text: 'Finn', path: '/finn', hide: !loggedIn },
+        { text: 'Me', path: '/me' },
         { text: 'Logout', path: '/logout', hide: !loggedIn },
         { text: 'Login', path: '/login', hide: loggedIn },
     ];
