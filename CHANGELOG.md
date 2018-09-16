@@ -1,9 +1,30 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.6.0] - 2018-09-16
+### Added
+- New navigation layout and styling
+- Menu icon for small screens
+- Warning above login when trying to access restricted page
+- Simple about me / CV component
+- Faded refresh icon on quotes component
+
+### Changed
+- Several code optimizations
+- Refactor and redesign navigation component
+- Move navigation in to header section
+- Extract SVGs to separate component
+- Clean up CSS content
+- New color palette
+- Rewrite about section
+
+### Removed
+- Unused CSS classes
+
 ## [2.5.0] - 2018-09-15
 ### Added
 - GitHub Badges in README.md
+- CHANGELOG.md
 
 ### Changed
 - Upgrade react-router and react-router-dom to version 4

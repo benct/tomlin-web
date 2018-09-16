@@ -14,7 +14,7 @@ export default function About() {
             <br />
             <br />
             <a href="https://github.com/benct/tomlin-web" target="_blank" rel="noopener noreferrer">
-                Version 2.5.0
+                Version 2.6.0
             </a>
         </div>
     );
