@@ -161,14 +161,14 @@ export default class Files extends React.Component {
 
     render() {
         return (
-            <div className="wrapper centerify">
+            <div className="wrapper text-center">
                 <div className="file-table-header">
                     <button className="file-control">
                         <Link to="/">
                             <BackIcon />
                         </Link>
                     </button>
-                    <div className="rightify">
+                    <div className="text-right">
                         <button className="file-control" onClick={this.handleCreateDirectory.bind(this)}>
                             <NewDirIcon />
                         </button>

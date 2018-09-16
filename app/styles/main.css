@@ -56,23 +56,23 @@ pre {
     overflow: auto;
 }
 
-.fleft {
+.float-left {
     float: left;
 }
 
-.fright {
+.float-right {
     float: right;
 }
 
-.leftify {
+.text-left {
     text-align: left;
 }
 
-.centerify {
+.text-center {
     text-align: center;
 }
 
-.rightify {
+.text-right {
     text-align: right;
 }
 

@@ -38,7 +38,7 @@ export default class Countdown extends React.Component {
 
     render() {
         return (
-            <div className="wrapper centerify">
+            <div className="wrapper text-center">
                 <div className="countdown-title">Under construction, coming &quot;soon&quot;</div>
                 <ul className="countdown">
                     <li className="time-wrap">

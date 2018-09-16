@@ -12,14 +12,14 @@ export default function FileList({ content, focused, handleClick, handleRename, 
                     <span onClick={() => handleClick(item)} className={i === focused ? 'focused' : ''}>
                         {item.short}
                     </span>
-                    <span onClick={() => handleDelete(item)} className="file-info monospace fright">
+                    <span onClick={() => handleDelete(item)} className="file-info monospace float-right">
                         [x]
                     </span>
-                    <span onClick={() => handleRename(item)} className="file-info monospace fright">
+                    <span onClick={() => handleRename(item)} className="file-info monospace float-right">
                         [r]
                     </span>
                 </td>
-                <td className="file-info monospace hide-lt600 rightify">
+                <td className="file-info monospace hide-lt600 text-right">
                     <span>{item.size}</span>
                 </td>
                 <td className="file-info monospace hide-lt768">
@@ -37,7 +37,7 @@ export default function FileList({ content, focused, handleClick, handleRename, 
             <thead>
                 <tr>
                     <th>&nbsp;</th>
-                    <th className="leftify">Filename</th>
+                    <th className="text-left">Filename</th>
                     <th className="hide-lt600">Size</th>
                     <th className="hide-lt768">Permissions</th>
                     <th className="hide-lt768">Uploaded</th>
