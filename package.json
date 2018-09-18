@@ -7,7 +7,7 @@
     "clean": "rm -rf ./dist",
     "lint": "./node_modules/.bin/eslint *.js \"app/**/*.js\" \"app/**/*.jsx\"",
     "lint-fix": "./node_modules/.bin/eslint --fix *.js \"app/**/*.js\" \"app/**/*.jsx\"",
-    "test": "webpack-dev-server --open --hot --inline --history-api-fallback --config webpack.dev.js",
+    "test": "webpack-dev-server --open --inline --history-api-fallback --config webpack.dev.js",
     "build": "webpack --progress --colors --config webpack.dev.js",
     "build-prod": "export NODE_ENV=production && webpack -p --progress --colors --config webpack.prod.js"
   },
