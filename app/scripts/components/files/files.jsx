@@ -10,6 +10,8 @@ const PARENT_DIR = '..';
 export default class Files extends React.Component {
     constructor(props) {
         super(props);
+        this.handleKeyboard = this.handleKeyboard.bind(this);
+
         this.state = {
             cwd: '',
             content: [],
@@ -21,11 +23,11 @@ export default class Files extends React.Component {
     componentDidMount() {
         this.refreshContent(this.state.cwd);
 
-        document.addEventListener('keyup', this.handleKeyboard.bind(this), false);
+        document.addEventListener('keyup', this.handleKeyboard, false);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('keyup', this.handleKeyboard.bind(this), false);
+        document.removeEventListener('keyup', this.handleKeyboard, false);
     }
 
     refreshContent(cwd) {
