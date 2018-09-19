@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+
+## [2.6.1] - 2018-09-18
+### Added
+- Social links on CV component
+
+### Changed
+- Fix hot module replacement (HMR)
+- Fix incorrect method binding
+- Fix minor CSS issues
+
+### Removed
+- Back button in file component
+
 ## [2.6.0] - 2018-09-16
 ### Added
 - New navigation layout and styling

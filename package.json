@@ -1,6 +1,6 @@
 {
   "name": "tomlin-web",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "tomlin.no website",
   "main": "main.js",
   "scripts": {
