@@ -13,7 +13,7 @@ export default function About() {
             &nbsp;or feel free to follow the social links at the bottom of this page.
             <br />
             <br />
-            <a href="https://github.com/benct/tomlin-web" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer">
                 Version 2.6.1
             </a>
         </div>
