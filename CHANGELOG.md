@@ -4,12 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [2.6.1] - 2018-09-18
 ### Added
-- Social links on CV component
+- Social links in CV component
 
 ### Changed
-- Fix hot module replacement (HMR)
-- Fix incorrect method binding
-- Fix minor CSS issues
+- Made quotes a little less random
+
+### Fixed
+- Hot module replacement (HMR)
+- Incorrect method binding
+- Minor CSS issues
 
 ### Removed
 - Back button in file component
