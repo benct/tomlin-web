@@ -56,6 +56,10 @@
     text-shadow: 0 0 15px rgba(255, 20, 20, 0.6);
 }
 
+.text-small {
+    font-size: 17px;
+}
+
 .error-page {
     text-align: center;
     padding: 100px 30px !important;

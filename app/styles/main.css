@@ -10,6 +10,8 @@ body {
     letter-spacing: 1px;
     line-height: 1.5;
     color: #292929;
+    margin: 0;
+    padding: 0;
 }
 
 a {
@@ -97,6 +99,10 @@ pre {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.no-wrap {
+    white-space: nowrap;
 }
 
 .strong {
