@@ -2,7 +2,7 @@ import React from 'react';
 
 import { RefreshIcon } from '../page/icons.jsx';
 
-const data = [
+const quotes = [
     ['The man who smiles when things go wrong has thought of someone to blame it on.'],
     [
         "It's true that we don't know what we've got until we lose it, but it's also true that we don't know what we've been missing until it arrives.",
@@ -82,26 +82,28 @@ const data = [
 export default class Quote extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            quotes: data,
             current: null,
+            index: Math.floor(Math.random() * quotes.length),
         };
     }
 
     componentDidMount() {
-        if (this.state.quotes) {
+        if (quotes.length) {
             this.refreshQuote();
         }
     }
 
     refreshQuote() {
-        const quote = this.state.quotes[Math.floor(Math.random() * this.state.quotes.length)];
+        const quote = quotes[this.state.index];
 
         this.setState({
             current: {
                 text: quote[0],
                 author: quote.length > 1 ? quote[1] : null,
             },
+            index: this.state.index === quotes.length - 1 ? 0 : this.state.index + 1,
         });
     }
 
