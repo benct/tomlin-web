@@ -87,32 +87,31 @@
     height: 16px;
 }
 
-button.icon {
-    background: transparent no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    width: 40px;
-    height: 32px;
-    margin: 5px;
-    padding: 2px;
+.toast {
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    z-index: 99;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-button.icon svg path {
-    -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
-}
-
-button.icon:hover svg path {
-    fill: #292929;
+@media screen and (max-width: 767px) {
+    .wrapper {
+        padding: 30px 20px;
+    }
 }
 
 @media screen and (max-width: 480px) {
-    .text {
-        letter-spacing: 1px;
+    .wrapper {
+        padding: 30px 15px;
     }
 }
 
@@ -123,4 +122,24 @@ button.icon:hover svg path {
     .error-page h1 {
         font-size: 24px;
     }
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }

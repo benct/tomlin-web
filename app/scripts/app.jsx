@@ -21,8 +21,10 @@ export default class App extends React.Component {
 
         this.state = {
             loggedIn: false,
-            showMenu: false,
             circleIcons: true,
+            showMenu: false,
+            showToast: false,
+            toast: '',
         };
     }
 
@@ -45,6 +47,12 @@ export default class App extends React.Component {
         this.setState({
             circleIcons: !this.state.circleIcons,
         });
+    }
+
+    showToast(text) {
+        this.setState({ showToast: true, toast: text });
+
+        setTimeout(() => this.setState({ showToast: false, toast: '' }), 3000);
     }
 
     render() {
@@ -73,6 +81,7 @@ export default class App extends React.Component {
                             </span>
                         </div>
                     </footer>
+                    {this.state.showToast ? <div className="toast">{this.state.toast}</div> : null}
                 </>
             </Router>
         );

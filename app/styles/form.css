@@ -20,7 +20,7 @@ input[type=password] {
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    font-family: "Open Sans Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Open Sans Condensed", Arial, sans-serif;
     font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
