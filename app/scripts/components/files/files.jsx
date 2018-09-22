@@ -31,7 +31,7 @@ export default class Files extends React.Component {
     }
 
     refreshContent(cwd) {
-        post({ action: 'ls', path: cwd }).then(data => this.setState({ content: data.content }));
+        post({ service: 'fs', action: 'ls', path: cwd }).then(data => this.setState({ content: data.content }));
     }
 
     changeDirectory(dirname) {
@@ -59,21 +59,21 @@ export default class Files extends React.Component {
     handleCreateDirectory() {
         const name = prompt('Enter name of new folder:');
         if (name) {
-            post({ action: 'mkdir', path: `${this.state.cwd}/${name}` }).then(this.handleSuccess.bind(this));
+            post({ service: 'fs', action: 'mkdir', path: `${this.state.cwd}/${name}` }).then(this.handleSuccess.bind(this));
         }
     }
 
     handleRename(item) {
         const name = prompt('Enter new name of file:', item.name);
         if (name) {
-            post({ action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name }).then(this.handleSuccess.bind(this));
+            post({ service: 'fs', action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name }).then(this.handleSuccess.bind(this));
         }
     }
 
     handleDelete(item) {
         if (confirm(`Are you sure you want to delete ${item.name}?`)) {
             const action = item.dir ? 'rmdir' : 'rm';
-            post({ action: action, path: `${this.state.cwd}/${item.name}` }).then(this.handleSuccess.bind(this));
+            post({ service: 'fs', action: action, path: `${this.state.cwd}/${item.name}` }).then(this.handleSuccess.bind(this));
         }
     }
 
@@ -129,7 +129,7 @@ export default class Files extends React.Component {
         }
         this.fileInput.value = null;
 
-        post({ action: 'up', path: this.state.cwd }, formData).then(this.handleSuccess.bind(this));
+        post({ service: 'fs', action: 'up', path: this.state.cwd }, formData).then(this.handleSuccess.bind(this));
     }
 
     handleFileChange(event) {
