@@ -164,14 +164,14 @@ export default class Files extends React.Component {
         return (
             <div className="wrapper text-center">
                 <div className="file-table-header">
-                    <button className="file-control" onClick={() => this.changeDirectory(PARENT_DIR)} disabled={this.state.cwd === ''}>
+                    <button className="button-icon" onClick={() => this.changeDirectory(PARENT_DIR)} disabled={this.state.cwd === ''}>
                         <ParentDirIcon />
                     </button>
                     <div className="text-right">
-                        <button className="file-control" onClick={this.handleCreateDirectory.bind(this)}>
+                        <button className="button-icon" onClick={this.handleCreateDirectory.bind(this)}>
                             <NewDirIcon />
                         </button>
-                        <button className="file-control" onClick={() => this.refreshContent(this.state.cwd)}>
+                        <button className="button-icon" onClick={() => this.refreshContent(this.state.cwd)}>
                             <RefreshIcon />
                         </button>
                     </div>
@@ -199,7 +199,7 @@ export default class Files extends React.Component {
                         </span>
                     </label>
                     <br />
-                    <button className="file-upload mtl" onClick={this.handleUpload.bind(this)}>
+                    <button className="button-default text-small mtl" onClick={this.handleUpload.bind(this)}>
                         Upload
                     </button>
                 </div>

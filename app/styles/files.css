@@ -61,34 +61,6 @@
     justify-content: space-between;
 }
 
-.file-upload {
-    font-size: 16px;
-}
-
-.file-control {
-    background: transparent no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    width: 40px;
-    height: 32px;
-    margin: 5px;
-    padding: 2px;
-}
-
-.file-control svg path {
-    -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
-    fill: #002080;
-}
-
-.file-control:hover svg path {
-    fill: #009fd4;
-}
-
 .file-close {
     position: absolute;
     right: 60px;
