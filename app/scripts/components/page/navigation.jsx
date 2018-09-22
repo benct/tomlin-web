@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-export default function Navigation({ loggedIn, showMenu, toggleMenu, simple, className }) {
+export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
     const menu = [
         { text: 'Home', path: '/', exact: true },
         { text: 'Media', path: '/media' },
@@ -11,6 +11,13 @@ export default function Navigation({ loggedIn, showMenu, toggleMenu, simple, cla
         { text: 'Me', path: '/me' },
         { text: 'Logout', path: '/logout', hide: !loggedIn },
         { text: 'Login', path: '/login', hide: loggedIn },
+    ];
+
+    const media = [
+        { text: 'Movies', path: '/media', exact: true },
+        { text: 'TV-Shows', path: '/media/tv' },
+        { text: 'Watchlist', path: '/media/watch' },
+        { text: 'Admin', path: '/media/admin' },
     ];
 
     const createLink = (item, idx) =>
@@ -22,23 +29,34 @@ export default function Navigation({ loggedIn, showMenu, toggleMenu, simple, cla
             </li>
         );
 
-    return simple ? (
-        <nav className={`${className || ''} menu-top`}>
-            <ul className={`no-select menu menu-simple`}>{menu.map(createLink)}</ul>
-        </nav>
-    ) : (
-        <nav className={`${className || ''} menu-wrap`} style={{ left: showMenu ? '0px' : '100%' }} onClick={toggleMenu}>
-            <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
-                {menu.map(createLink)}
-            </ul>
-        </nav>
-    );
+    switch (type) {
+        case 'simple':
+            return (
+                <nav className="menu-top hide-lt480">
+                    <ul className="no-select menu menu-simple">{menu.map(createLink)}</ul>
+                </nav>
+            );
+        case 'media':
+            return (
+                <nav className="media-navigation">
+                    <ul className="no-select menu menu-simple menu-sub">{media.map(createLink)}</ul>
+                </nav>
+            );
+        case 'full':
+        default:
+            return (
+                <nav className="menu-wrap" style={{ left: showMenu ? '0px' : '100%' }} onClick={toggleMenu}>
+                    <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
+                        {menu.map(createLink)}
+                    </ul>
+                </nav>
+            );
+    }
 }
 
 Navigation.propTypes = {
-    showMenu: PropTypes.bool.isRequired,
+    type: PropTypes.string,
+    showMenu: PropTypes.bool,
     toggleMenu: PropTypes.func,
-    simple: PropTypes.bool,
     loggedIn: PropTypes.bool,
-    className: PropTypes.string,
 };

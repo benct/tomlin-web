@@ -60,7 +60,7 @@ export default class App extends React.Component {
             <Router>
                 <>
                     <header>
-                        <Navigation className="hide-lt480" simple showMenu loggedIn={this.state.loggedIn} />
+                        <Navigation type="simple" loggedIn={this.state.loggedIn} />
                         <MenuIcon className="hide-gt480 menu-icon" onClick={this.toggleMenu.bind(this)} />
                     </header>
                     <Navigation showMenu={this.state.showMenu} toggleMenu={this.toggleMenu.bind(this)} loggedIn={this.state.loggedIn} />
