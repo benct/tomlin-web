@@ -7,13 +7,7 @@ const baseUrl = 'https://tomlin.no';
 const baseApiUrl = 'https://tomlin.no/api/';
 
 function checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-        return response;
-    } else {
-        let error = new Error(response.statusText);
-        error.response = response;
-        throw error;
-    }
+    return response.status >= 200 && response.status < 300 ? response : Promise.reject(response.statusText);
 }
 
 function buildForm(data, files = null) {

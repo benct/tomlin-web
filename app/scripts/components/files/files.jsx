@@ -1,5 +1,6 @@
 /* global prompt, confirm, File, FormData */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { post, fetchFile } from '../../util/api.js';
 import { CloseIcon, NewDirIcon, ParentDirIcon, RefreshIcon, UploadIcon } from '../page/icons.jsx';
@@ -31,7 +32,9 @@ export default class Files extends React.Component {
     }
 
     refreshContent(cwd) {
-        post({ service: 'fs', action: 'ls', path: cwd }).then(data => this.setState({ content: data.content }));
+        post({ service: 'fs', action: 'ls', path: cwd })
+            .then(data => this.setState({ content: data }))
+            .catch(() => this.props.showToast('Could not fetch content...'));
     }
 
     changeDirectory(dirname) {
@@ -49,31 +52,30 @@ export default class Files extends React.Component {
         this.refreshContent(dir);
     }
 
-    handleSuccess(data) {
-        if (data.content === true) {
-            this.refreshContent(this.state.cwd);
-            this.fileLabel.innerHTML = 'Choose a file';
-        }
-    }
-
     handleCreateDirectory() {
         const name = prompt('Enter name of new folder:');
         if (name) {
-            post({ service: 'fs', action: 'mkdir', path: `${this.state.cwd}/${name}` }).then(this.handleSuccess.bind(this));
+            post({ service: 'fs', action: 'mkdir', path: `${this.state.cwd}/${name}` })
+                .then(() => this.refreshContent(this.state.cwd))
+                .catch(() => this.props.showToast('Could not create directory...'));
         }
     }
 
     handleRename(item) {
         const name = prompt('Enter new name of file:', item.name);
         if (name) {
-            post({ service: 'fs', action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name }).then(this.handleSuccess.bind(this));
+            post({ service: 'fs', action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name })
+                .then(() => this.refreshContent(this.state.cwd))
+                .catch(() => this.props.showToast(`Could not rename ${item.dir ? 'directory' : 'file'}...`));
         }
     }
 
     handleDelete(item) {
         if (confirm(`Are you sure you want to delete ${item.name}?`)) {
             const action = item.dir ? 'rmdir' : 'rm';
-            post({ service: 'fs', action: action, path: `${this.state.cwd}/${item.name}` }).then(this.handleSuccess.bind(this));
+            post({ service: 'fs', action: action, path: `${this.state.cwd}/${item.name}` })
+                .then(() => this.refreshContent(this.state.cwd))
+                .catch(() => this.props.showToast(`Could not delete ${item.dir ? 'directory' : 'file'}...`));
         }
     }
 
@@ -129,7 +131,12 @@ export default class Files extends React.Component {
         }
         this.fileInput.value = null;
 
-        post({ service: 'fs', action: 'up', path: this.state.cwd }, formData).then(this.handleSuccess.bind(this));
+        post({ service: 'fs', action: 'up', path: this.state.cwd }, formData)
+            .then(() => {
+                this.refreshContent(this.state.cwd);
+                this.fileLabel.innerHTML = 'Choose a file';
+            })
+            .catch(() => this.props.showToast('An error occurred while uploading the file(s)...'));
     }
 
     handleFileChange(event) {
@@ -218,3 +225,7 @@ export default class Files extends React.Component {
         );
     }
 }
+
+Files.propTypes = {
+    showToast: PropTypes.func.isRequired,
+};

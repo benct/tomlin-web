@@ -70,7 +70,7 @@ export default class App extends React.Component {
                         <Route path="/logout" component={Logout} />
                         <Route path="/finn" component={Finn} />
                         <Route path="/me" component={Me} />
-                        <PrivateRoute path="/files" component={Files} />
+                        <PrivateRoute path="/files" component={Files} extraProps={{ showToast: this.showToast.bind(this) }} />
                         <Route render={() => <Error code={404} />} />
                     </Switch>
                     <footer className="wrapper">

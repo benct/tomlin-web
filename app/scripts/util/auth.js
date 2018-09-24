@@ -25,16 +25,16 @@ export default {
     onChange() {},
 
     _authenticate(data = {}, cb = null) {
-        post(data).then(response => {
-            if (response.status === 200 && response.content) {
-                localStorage.token = response.content;
+        post(data)
+            .then(response => {
+                localStorage.token = response;
                 if (cb) cb(true);
                 this.onChange(true);
-            } else {
+            })
+            .catch(() => {
                 delete localStorage.token;
                 if (cb) cb(false);
                 this.onChange(false);
-            }
-        });
+            });
     },
 };
