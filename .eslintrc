@@ -43,6 +43,8 @@
     "__dirname": true,
     "localStorage": true,
     "window": true,
-    "document": true
+    "document": true,
+    "console": true,
+    "Promise": true
   }
 }
