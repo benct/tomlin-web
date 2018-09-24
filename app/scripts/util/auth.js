@@ -26,8 +26,9 @@ export default {
 
     _authenticate(data = {}, cb = null) {
         post(data)
-            .then(response => {
-                localStorage.token = response;
+            .then(response => (response ? response : Promise.reject()))
+            .then(token => {
+                localStorage.token = token;
                 if (cb) cb(true);
                 this.onChange(true);
             })
