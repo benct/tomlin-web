@@ -127,7 +127,9 @@ pre {
     font-style: italic;
 }
 
-.clear-fix {
+.clear-fix:after {
+    content: "";
+    display: table;
     clear: both;
 }
 
