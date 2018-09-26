@@ -10,6 +10,13 @@ function checkStatus(response) {
     return response.status >= 200 && response.status < 300 ? response : Promise.reject(response.statusText);
 }
 
+function query(data = {}) {
+    return Object.keys(data)
+        .filter(key => typeof data[key] !== 'undefined' && data[key] !== null)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+        .join('&');
+}
+
 function buildForm(data, files = null) {
     const formData = files || new FormData();
     for (let key in data) {
@@ -26,6 +33,12 @@ export function post(data, files = null) {
         method: 'POST',
         body: buildForm(data, files),
     })
+        .then(checkStatus)
+        .then(response => response.json());
+}
+
+export function get(data) {
+    return fetch(`${baseApiUrl}?${query(data)}`)
         .then(checkStatus)
         .then(response => response.json());
 }
