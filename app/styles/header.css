@@ -1,6 +1,8 @@
 header {
     position: relative;
     height: 125px;
+    max-width: 840px;
+    margin: 0 auto;
     border-bottom: 1px solid #ddd;
 }
 
