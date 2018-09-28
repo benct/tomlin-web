@@ -14,10 +14,11 @@ export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
     ];
 
     const media = [
-        { text: 'Movies', path: '/media', exact: true },
+        { text: 'Overview', path: '/media', exact: true },
+        { text: 'Movies', path: '/media/movies' },
         { text: 'TV-Shows', path: '/media/tv' },
-        { text: 'Watchlist', path: '/media/watch' },
-        { text: 'Admin', path: '/media/admin' },
+        { text: 'Watchlist', path: '/media/watchlist' },
+        { text: 'Admin', path: '/media/admin', hide: !loggedIn },
     ];
 
     const createLink = (item, idx) =>
@@ -38,7 +39,7 @@ export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
             );
         case 'media':
             return (
-                <nav className="media-navigation">
+                <nav className="mvm">
                     <ul className="no-select menu menu-simple menu-sub">{media.map(createLink)}</ul>
                 </nav>
             );
