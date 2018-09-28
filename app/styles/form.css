@@ -20,7 +20,7 @@ input[type=password] {
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    font-family: "Open Sans Condensed", Arial, sans-serif;
+    font-family: "Open Sans Condensed", "PT Sans Narrow", sans-serif;
     font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
@@ -134,7 +134,7 @@ button.button-text-icon {
 }
 
 button.button-text-icon span {
-    font-family: "Open Sans Condensed", Arial, sans-serif;
+    font-family: "Open Sans Condensed", "PT Sans Narrow", sans-serif;
     vertical-align: middle;
 }
 

@@ -85,7 +85,6 @@ header::after {
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
     position: relative;
-    font-family: "Raleway", Georgia, "Times New Roman", Times, serif;
     font-size: 28px;
     font-weight: 900;
     letter-spacing: 3px;
