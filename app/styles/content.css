@@ -87,6 +87,55 @@
     height: 16px;
 }
 
+[data-tooltip] {
+    position: relative;
+    cursor: pointer;
+}
+
+[data-tooltip]:after {
+    position: absolute;
+    visibility: hidden;
+    z-index: 1000;
+    opacity: 0;
+    bottom: 100%;
+    left: 50%;
+    color: #fff;
+    background-color: #000;
+    background-color: hsla(0, 0%, 20%, 0.8);
+    border: 1px solid #292929;
+    border-radius: 3px;
+    padding: 4px 8px;
+    content: attr(data-tooltip);
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+    -webkit-transform: translate3d(-50%, 0, 0);
+    -moz-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+    -webkit-transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            -webkit-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    -moz-transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            -moz-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    pointer-events: none;
+}
+
+[data-tooltip]:hover:after,
+[data-tooltip]:focus:after {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: translateY(-6px) translateX(-50%);
+    -moz-transform: translateY(-6px) translateX(-50%);
+    transform: translateY(-6px) translateX(-50%);
+}
+
 .toast {
     min-width: 250px;
     margin-left: -125px;
