@@ -96,7 +96,7 @@ input[type=file] + svg {
     margin-right: 0.25em;
 }
 
-button.button-icon {
+.button-icon {
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
@@ -113,11 +113,11 @@ button.button-icon {
     padding: 2px;
 }
 
-button.button-icon:hover {
+.button-icon:hover {
     color: #009fd4;
 }
 
-button.button-icon svg path {
+.button-icon svg path {
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
@@ -125,20 +125,21 @@ button.button-icon svg path {
     fill: #002080;
 }
 
-button.button-icon:hover svg path {
+.button-icon:hover svg path {
     fill: #009fd4;
 }
 
-button.button-text-icon {
+.button-text-icon {
     width: auto;
 }
 
-button.button-text-icon span {
+.button-text-icon span {
     font-family: "Open Sans Condensed", "PT Sans Narrow", sans-serif;
     vertical-align: middle;
+    font-size: 16px;
 }
 
-button.button-text-icon svg {
+.button-text-icon svg {
     vertical-align: middle;
-    margin-left: 5px;
+    margin: 0 5px;
 }
