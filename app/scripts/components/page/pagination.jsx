@@ -6,9 +6,9 @@ import { ArrowIcon } from './icons.jsx';
 
 export default class Pagination extends React.Component {
     render() {
-        const currentPage = this.props.currentPage || 1;
+        const currentPage = this.props.current || 1;
         const prevPage = currentPage > 1 ? currentPage - 1 : 1;
-        const nextPage = currentPage + 1;
+        const nextPage = currentPage + (this.props.total && this.props.total <= currentPage ? 0 : 1);
 
         return (
             <div className="text-center clear ptl">
@@ -27,5 +27,6 @@ export default class Pagination extends React.Component {
 
 Pagination.propTypes = {
     basePath: PropTypes.string.isRequired,
-    currentPage: PropTypes.number,
+    current: PropTypes.number,
+    total: PropTypes.number,
 };
