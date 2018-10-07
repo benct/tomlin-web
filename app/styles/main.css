@@ -124,6 +124,10 @@ pre {
     font-style: italic;
 }
 
+.clear {
+    clear: both;
+}
+
 .clear-fix:after {
     content: "";
     display: table;
