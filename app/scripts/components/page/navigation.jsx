@@ -5,20 +5,18 @@ import { NavLink } from 'react-router-dom';
 export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
     const menu = [
         { text: 'Home', path: '/', exact: true },
+        { text: 'Me', path: '/me' },
         { text: 'Media', path: '/media' },
         { text: 'Files', path: '/files' },
-        { text: 'Finn', path: '/finn', hide: !loggedIn },
-        { text: 'Me', path: '/me' },
         { text: 'Logout', path: '/logout', hide: !loggedIn },
         { text: 'Login', path: '/login', hide: loggedIn },
     ];
 
     const media = [
-        { text: 'Overview', path: '/media', exact: true },
         { text: 'Movies', path: '/media/movie' },
         { text: 'TV-Shows', path: '/media/tv' },
         { text: 'Watchlist', path: '/media/watchlist' },
-        { text: 'Admin', path: '/media/admin', hide: !loggedIn },
+        { text: 'Admin', path: '/media/admin' },
     ];
 
     const createLink = (item, idx) =>
