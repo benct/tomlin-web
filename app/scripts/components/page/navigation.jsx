@@ -15,7 +15,7 @@ export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
 
     const media = [
         { text: 'Overview', path: '/media', exact: true },
-        { text: 'Movies', path: '/media/movies' },
+        { text: 'Movies', path: '/media/movie' },
         { text: 'TV-Shows', path: '/media/tv' },
         { text: 'Watchlist', path: '/media/watchlist' },
         { text: 'Admin', path: '/media/admin', hide: !loggedIn },
