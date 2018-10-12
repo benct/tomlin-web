@@ -6,12 +6,12 @@ import About from './about.jsx';
 
 export default function Home() {
     return (
-        <div>
+        <>
             <About />
             <hr />
             <Countdown />
             <hr />
             <Quote />
-        </div>
+        </>
     );
 }
