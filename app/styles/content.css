@@ -89,7 +89,7 @@
 
 [data-tooltip] {
     position: relative;
-    cursor: pointer;
+    cursor: help;
 }
 
 [data-tooltip]:after {
