@@ -25,6 +25,17 @@ header::after {
     z-index: -1;
 }
 
+.site-title {
+    color: white;
+    text-align: center;
+    text-shadow: #002080 0 0 5px;
+    text-indent: 60px;
+    letter-spacing: 60px;
+    font-size: 60px;
+    font-weight: 700;
+    opacity: 0.2;
+}
+
 .menu-wrap {
     display: table;
     table-layout: fixed;
@@ -51,7 +62,9 @@ header::after {
 
 .menu-icon {
     cursor: pointer;
-    float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
     padding: 10px;
     margin: 20px;
     fill: #939393;
@@ -158,6 +171,11 @@ header::after {
 }
 
 @media only screen and (max-width: 767px) {
+    .site-title {
+        text-indent: 40px;
+        font-size: 55px;
+        letter-spacing: 40px;
+    }
     .menu-simple a {
         text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
         font-weight: 400;
@@ -170,6 +188,10 @@ header::after {
 @media only screen and (max-width: 480px) {
     header {
         height: 88px;
+    }
+    .site-title {
+        text-indent: 20px;
+        letter-spacing: 20px;
     }
 }
 
