@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Me() {
+export default function About() {
     return (
         <div className="wrapper text">
             <div className="cv-header color-primary">Ben Christopher Tomlin</div>

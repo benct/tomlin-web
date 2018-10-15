@@ -8,14 +8,14 @@ export default function Home() {
     return (
         <>
             <div className="wrapper text">
-                Well <span className="strong">hello</span> there!
+                Well hello there!
                 <br />
                 Unfortunately, there&apos;s not that much interesting here...
                 <br />
                 <br />
                 This site was developed a while back using React, for the purpose of learning and testing new features, and acquiring basic
                 knowledge about Webpack, Babel, Node and other web development technologies. For more information about me, click&nbsp;
-                <Link to="/me">here</Link>
+                <Link to="/about">here</Link>
                 &nbsp;or feel free to follow the social links at the bottom of the page.
                 <br />
                 <br />

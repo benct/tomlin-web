@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
     const menu = [
         { text: 'Home', path: '/', exact: true },
-        { text: 'Me', path: '/me' },
+        { text: 'About', path: '/about' },
         { text: 'Media', path: '/media' },
         { text: 'Files', path: '/files' },
         { text: 'Logout', path: '/logout', hide: !loggedIn },
