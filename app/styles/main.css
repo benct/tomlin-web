@@ -116,6 +116,12 @@ pre {
     white-space: nowrap;
 }
 
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .strong {
     font-weight: 700;
 }

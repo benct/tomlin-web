@@ -60,6 +60,10 @@
     font-size: 17px;
 }
 
+.text-smaller {
+    font-size: 14px;
+}
+
 .error-page {
     text-align: center;
     padding: 100px 30px !important;
