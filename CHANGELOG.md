@@ -1,6 +1,32 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.7.0] - 2018-10-16
+### Added
+- Site title in header section
+- Media components
+    - Movies
+    - TV-Shows
+    - Watchlist
+    - Search (Admin)
+- Toast component
+- Pagination component
+- Tooltip functionality
+- API functions for querying [TMBd](https://developers.themoviedb.org)
+- Service tag on post requests
+- Packages: date-fns, iso-639-1
+
+### Changed
+- Substantial refactoring of backend API
+- Improved promise handling in client api
+- CSS cleanup of several components
+- Refactored navigation component
+- Refactored private routes
+- Renamed about-me section
+- Probably lots more...
+
+### Removed
+- Unnecessary extra font
 
 ## [2.6.1] - 2018-09-18
 ### Added
