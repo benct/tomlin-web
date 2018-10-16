@@ -12,7 +12,7 @@ All notable changes to this project will be documented in this file.
 - Toast component
 - Pagination component
 - Tooltip functionality
-- API functions for querying [TMBd](https://developers.themoviedb.org)
+- API functions for querying [TMDb](https://developers.themoviedb.org)
 - Service tag on post requests
 - Packages: date-fns, iso-639-1
 
