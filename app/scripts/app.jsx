@@ -71,7 +71,7 @@ export default class App extends React.Component {
                         <Route path="/logout" component={Logout} />
                         <Route path="/finn" component={Finn} />
                         <Route path="/about" component={About} />
-                        <PrivateRoute path="/files" component={Files} extraProps={{ showToast: this.showToast.bind(this) }} />
+                        <PrivateRoute path="/files" render={props => <Files {...props} showToast={this.showToast.bind(this)} />} />
                         <Route render={() => <Error code={404} />} />
                     </Switch>
                     <footer className="wrapper">
