@@ -65,19 +65,13 @@ export default class Search extends React.Component {
 
     save(type, id) {
         post({ service: 'media', action: 'save', type: type ? type : this.props.match.params.type, id })
-            .then(() => {
-                this.getMedia();
-                this.props.showToast('Media successfully added!');
-            })
+            .then(() => this.props.showToast('Media successfully added!'))
             .catch(() => this.props.showToast('Failed to add media...'));
     }
 
     delete(type, id) {
         post({ service: 'media', action: 'delete', type: type ? type : this.props.match.params.type, id })
-            .then(() => {
-                this.getMedia();
-                this.props.showToast('Media successfully removed!');
-            })
+            .then(() => this.props.showToast('Media successfully removed!'))
             .catch(() => this.props.showToast('Failed to remove media...'));
     }
 
