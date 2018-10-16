@@ -37,7 +37,7 @@ export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
             );
         case 'media':
             return (
-                <nav className="mvm">
+                <nav className="mvl">
                     <ul className="no-select menu menu-simple menu-sub">{media.map(createLink)}</ul>
                 </nav>
             );

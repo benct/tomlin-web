@@ -1,0 +1,118 @@
+.media-search div,
+.media-search a {
+    display: inline-block;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.media-item {
+    display: grid;
+    grid-template-columns: 120px minmax(auto, 7fr) 1fr;
+    grid-template-rows: 35px auto 1fr;
+    column-gap: 20px;
+    align-items: start;
+    text-align: left;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.media-item-small {
+    float: left;
+    width: 50%;
+    grid-template-columns: 40px auto 80px;
+    grid-template-rows: 30px 30px;
+    column-gap: 10px;
+}
+
+.media-item-small:nth-child(even) { padding-left: 10px; }
+.media-item-small:nth-child(odd) { padding-right: 10px; }
+
+.media-poster {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    position: relative;
+}
+
+.media-poster-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 36px 0;
+    border: 1px solid #292929;
+    background: rgba(0, 0, 0, 0.7);
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    text-align: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.media-poster img {
+    width: 100%;
+}
+
+.media-title {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.media-data {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.media-actions {
+    grid-column: 3;
+    grid-row: 1;
+    text-align: right;
+}
+
+.media-external {
+    grid-column: 3;
+    grid-row: 2;
+    text-align: right;
+}
+
+.media-overview {
+    grid-column: 2 / 4;
+    grid-row: 3;
+    text-align: justify;
+}
+
+@media (max-width: 767px) {
+    .media-item {
+        grid-template-columns: 80px 1fr;
+    }
+    .media-item-small {
+        float: none;
+        width: 100%;
+        grid-template-columns: 40px auto 70px;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .media-item:not(.media-item-small) .media-poster {
+        grid-row: 1 / 3;
+        width: 80px;
+        height: 120px;
+        cursor: pointer;
+    }
+    .media-item:not(.media-item-small) .media-actions,
+    .media-item:not(.media-item-small) .media-external {
+        display: none;
+    }
+    .media-poster-overlay {
+        display: block;
+    }
+    .media-title {
+        cursor: pointer;
+    }
+    .media-overview {
+        grid-column: 1 / -1;
+    }
+}

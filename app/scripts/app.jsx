@@ -14,6 +14,7 @@ import Finn from './components/data/finn.jsx';
 import Files from './components/files/files.jsx';
 import Login from './components/login.jsx';
 import Logout from './components/logout.jsx';
+import Media from './components/media/media.jsx';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -67,10 +68,14 @@ export default class App extends React.Component {
                     <Navigation showMenu={this.state.showMenu} toggleMenu={this.toggleMenu.bind(this)} loggedIn={this.state.loggedIn} />
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/logout" component={Logout} />
-                        <Route path="/finn" component={Finn} />
                         <Route path="/about" component={About} />
+                        <Route path="/finn" component={Finn} />
+                        <Route path="/logout" component={Logout} />
+                        <Route path="/login" component={Login} />
+                        <PrivateRoute // Temporarily restricted
+                            path="/media"
+                            render={props => <Media {...props} loggedIn={this.state.loggedIn} showToast={this.showToast.bind(this)} />}
+                        />
                         <PrivateRoute path="/files" render={props => <Files {...props} showToast={this.showToast.bind(this)} />} />
                         <Route render={() => <Error code={404} />} />
                     </Switch>
