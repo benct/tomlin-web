@@ -20,7 +20,7 @@ export default function Home() {
                 <br />
                 <br />
                 <a href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer">
-                    Version 2.6.1
+                    Version 2.7.0
                 </a>
             </div>
             <hr />
