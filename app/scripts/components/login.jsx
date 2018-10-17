@@ -37,7 +37,7 @@ export default class Login extends React.Component {
                     <div className="mbl">Fill out the form below to log in.</div>
                 )}
                 <form onSubmit={this.handleSubmit.bind(this)}>
-                    <input type="text" ref={input => (this.username = input)} placeholder="username" autoComplete="off" />
+                    <input type="email" ref={input => (this.username = input)} placeholder="e-mail" autoComplete="off" />
                     <input type="password" ref={input => (this.password = input)} placeholder="********" />
                     <input type="submit" value="login" />
                     {this.state.error && <p className="text error">Incorrect username or password...</p>}
