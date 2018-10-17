@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
-export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
+import actions from '../../redux/actions.js';
+
+function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
     const menu = [
         { text: 'Home', path: '/', exact: true },
         { text: 'About', path: '/about' },
         { text: 'Media', path: '/media' },
         { text: 'Files', path: '/files' },
-        { text: 'Logout', path: '/logout', hide: !loggedIn },
-        { text: 'Login', path: '/login', hide: loggedIn },
+        { text: 'Logout', path: '/logout', hide: !isLoggedIn },
+        { text: 'Login', path: '/login', hide: isLoggedIn },
     ];
 
     const media = [
@@ -44,7 +48,7 @@ export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
         case 'full':
         default:
             return (
-                <nav className="menu-wrap" style={{ left: showMenu ? '0px' : '100%' }} onClick={toggleMenu}>
+                <nav className="menu-wrap" style={{ left: showMenu ? '0px' : '100%' }} onClick={() => dispatch(actions.toggleMenu())}>
                     <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
                         {menu.map(createLink)}
                     </ul>
@@ -54,8 +58,15 @@ export default function Navigation({ type, loggedIn, showMenu, toggleMenu }) {
 }
 
 Navigation.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+    showMenu: PropTypes.bool.isRequired,
     type: PropTypes.string,
-    showMenu: PropTypes.bool,
-    toggleMenu: PropTypes.func,
-    loggedIn: PropTypes.bool,
 };
+
+export default withRouter(
+    connect(state => ({
+        isLoggedIn: state.isLoggedIn,
+        showMenu: state.showMenu,
+    }))(Navigation)
+);

@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { post } from '../../util/api.js';
 import debounce from '../../util/debounce.js';
+import toast from '../../util/toast.js';
 
 import SearchItem from './searchItem.jsx';
 import Pagination from '../page/pagination.jsx';
 
-export default class Search extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props);
 
@@ -22,18 +24,16 @@ export default class Search extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.match.params.type && this.props.match.params.action) {
+        if (this.props.type && this.props.action) {
             this.getMedia();
         }
     }
 
     componentDidUpdate(prevProps) {
         if (
-            this.props.match.params.type &&
-            this.props.match.params.action &&
-            (this.props.match.params.type !== prevProps.match.params.type ||
-                this.props.match.params.action !== prevProps.match.params.action ||
-                this.props.match.params.page !== prevProps.match.params.page)
+            this.props.type &&
+            this.props.action &&
+            (this.props.type !== prevProps.type || this.props.action !== prevProps.action || this.props.page !== prevProps.page)
         ) {
             this.getMedia();
         }
@@ -46,45 +46,45 @@ export default class Search extends React.Component {
     getMedia() {
         post({
             service: 'media',
-            action: this.props.match.params.action,
-            type: this.props.match.params.type,
-            page: +this.props.match.params.page || 1,
+            action: this.props.action,
+            type: this.props.type,
+            page: +this.props.page || 1,
         })
             .then(response => {
                 window.scrollTo(0, 0);
                 this.setState({ data: response.results, existing: response.existing, showPagination: true });
             })
-            .catch(() => this.props.showToast('Failed to fetch media...'));
+            .catch(() => toast('Failed to fetch media...'));
     }
 
     search(query) {
         post({ service: 'media', action: 'search', query: encodeURI(query) })
             .then(response => this.setState({ data: Search.filterResults(response.results), showPagination: false }))
-            .catch(() => this.props.showToast('Failed to execute search...'));
+            .catch(() => toast('Failed to execute search...'));
     }
 
     save(type, id) {
-        post({ service: 'media', action: 'save', type: type ? type : this.props.match.params.type, id })
-            .then(() => this.props.showToast('Media successfully added!'))
-            .catch(() => this.props.showToast('Failed to add media...'));
+        post({ service: 'media', action: 'save', type: type ? type : this.props.type, id })
+            .then(() => toast('Media successfully added!'))
+            .catch(() => toast('Failed to add media...'));
     }
 
     delete(type, id) {
-        post({ service: 'media', action: 'delete', type: type ? type : this.props.match.params.type, id })
-            .then(() => this.props.showToast('Media successfully removed!'))
-            .catch(() => this.props.showToast('Failed to remove media...'));
+        post({ service: 'media', action: 'delete', type: type ? type : this.props.type, id })
+            .then(() => toast('Media successfully removed!'))
+            .catch(() => toast('Failed to remove media...'));
     }
 
     goToIMDb(type, id) {
-        post({ service: 'media', action: 'external', type: type ? type : this.props.match.params.type, id })
+        post({ service: 'media', action: 'external', type: type ? type : this.props.type, id })
             .then(response => window.open(`https://www.imdb.com/title/${response}`, '_blank').focus())
-            .catch(() => this.props.showToast('Failed to get external ID...'));
+            .catch(() => toast('Failed to get external ID...'));
     }
 
     updatePosters() {
         post({ service: 'media', action: 'images', overwrite: false })
-            .then(response => this.props.showToast(`Successfully updated ${response} posters!`))
-            .catch(() => this.props.showToast('Failed to update posters...'));
+            .then(response => toast(`Successfully updated ${response} posters!`))
+            .catch(() => toast('Failed to update posters...'));
     }
 
     handleChange(event) {
@@ -135,10 +135,7 @@ export default class Search extends React.Component {
                 </div>
                 {this.state.data.map(this.renderItem.bind(this))}
                 {this.state.showPagination ? (
-                    <Pagination
-                        current={+this.props.match.params.page}
-                        basePath={`/media/admin/${this.props.match.params.type}/${this.props.match.params.action}/`}
-                    />
+                    <Pagination current={+this.props.page} basePath={`/media/admin/${this.props.type}/${this.props.action}/`} />
                 ) : null}
             </div>
         );
@@ -146,6 +143,15 @@ export default class Search extends React.Component {
 }
 
 Search.propTypes = {
-    showToast: PropTypes.func.isRequired,
-    match: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    type: PropTypes.string,
+    action: PropTypes.string,
+    page: PropTypes.number,
 };
+
+export default connect((state, ownProps) => ({
+    data: state.data,
+    type: ownProps.match.params.type,
+    action: ownProps.match.params.action,
+    page: +ownProps.match.params.page || 1,
+}))(Search);

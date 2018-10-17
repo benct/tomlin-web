@@ -4,18 +4,18 @@ import { Redirect, Route } from 'react-router-dom';
 
 import auth from '../util/auth.js';
 
-export default function PrivateRoute({ path, render }) {
+export default function PrivateRoute({ path, component: Component }) {
     return (
         <Route
             path={path}
-            render={routeProps =>
+            render={props =>
                 auth.loggedIn() ? (
-                    render(routeProps)
+                    <Component {...props} />
                 ) : (
                     <Redirect
                         to={{
                             pathname: '/login',
-                            state: { from: routeProps.location },
+                            state: { from: props.location },
                         }}
                     />
                 )
@@ -26,5 +26,5 @@ export default function PrivateRoute({ path, render }) {
 
 PrivateRoute.propTypes = {
     path: PropTypes.string.isRequired,
-    render: PropTypes.func.isRequired,
+    component: PropTypes.func.isRequired,
 };

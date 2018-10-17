@@ -1,8 +1,9 @@
 /* global prompt, confirm, File, FormData */
 import React from 'react';
-import PropTypes from 'prop-types';
 
+import toast from '../../util/toast.js';
 import { post, fetchFile } from '../../util/api.js';
+
 import { CloseIcon, NewDirIcon, ParentDirIcon, RefreshIcon, UploadIcon } from '../page/icons.jsx';
 import FileList from './filelist.jsx';
 
@@ -34,7 +35,7 @@ export default class Files extends React.Component {
     refreshContent(cwd) {
         post({ service: 'fs', action: 'ls', path: cwd })
             .then(data => this.setState({ content: data }))
-            .catch(() => this.props.showToast('Could not fetch content...'));
+            .catch(() => toast('Could not fetch content...'));
     }
 
     changeDirectory(dirname) {
@@ -57,7 +58,7 @@ export default class Files extends React.Component {
         if (name) {
             post({ service: 'fs', action: 'mkdir', path: `${this.state.cwd}/${name}` })
                 .then(() => this.refreshContent(this.state.cwd))
-                .catch(() => this.props.showToast('Could not create directory...'));
+                .catch(() => toast('Could not create directory...'));
         }
     }
 
@@ -66,7 +67,7 @@ export default class Files extends React.Component {
         if (name) {
             post({ service: 'fs', action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name })
                 .then(() => this.refreshContent(this.state.cwd))
-                .catch(() => this.props.showToast(`Could not rename ${item.dir ? 'directory' : 'file'}...`));
+                .catch(() => toast(`Could not rename ${item.dir ? 'directory' : 'file'}...`));
         }
     }
 
@@ -75,7 +76,7 @@ export default class Files extends React.Component {
             const action = item.dir ? 'rmdir' : 'rm';
             post({ service: 'fs', action: action, path: `${this.state.cwd}/${item.name}` })
                 .then(() => this.refreshContent(this.state.cwd))
-                .catch(() => this.props.showToast(`Could not delete ${item.dir ? 'directory' : 'file'}...`));
+                .catch(() => toast(`Could not delete ${item.dir ? 'directory' : 'file'}...`));
         }
     }
 
@@ -136,7 +137,7 @@ export default class Files extends React.Component {
                 this.refreshContent(this.state.cwd);
                 this.fileLabel.innerHTML = 'Choose a file';
             })
-            .catch(() => this.props.showToast('An error occurred while uploading the file(s)...'));
+            .catch(() => toast('An error occurred while uploading the file(s)...'));
     }
 
     handleFileChange(event) {
@@ -225,7 +226,3 @@ export default class Files extends React.Component {
         );
     }
 }
-
-Files.propTypes = {
-    showToast: PropTypes.func.isRequired,
-};

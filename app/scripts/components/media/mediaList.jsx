@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import toast from '../../util/toast.js';
 import { get, post } from '../../util/api.js';
 
 import MediaItem from './mediaItem.jsx';
 import Pagination from '../page/pagination.jsx';
 
-export default class MediaList extends React.Component {
+class MediaList extends React.Component {
     constructor(props) {
         super(props);
 
@@ -22,14 +24,14 @@ export default class MediaList extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.type !== prevProps.match.params.type || this.props.match.params.page !== prevProps.match.params.page) {
+        if (this.props.type !== prevProps.type || this.props.page !== prevProps.page) {
             this.getMedia();
             window.scrollTo(0, 0);
         }
     }
 
     getMedia() {
-        get({ service: 'media', action: this.props.match.params.type, page: +this.props.match.params.page || 1 })
+        get({ service: 'media', action: this.props.type, page: +this.props.page || 1 })
             .then(response =>
                 this.setState({
                     data: response.result,
@@ -39,26 +41,26 @@ export default class MediaList extends React.Component {
             )
             .catch(() => {
                 this.setState({ data: [], stats: null, pages: 0 });
-                this.props.showToast('Could not fetch media content...');
+                toast('Could not fetch media content...');
             });
     }
 
     setFavourite(type, id, set) {
-        post({ service: 'media', action: 'favourite', type: type || this.props.match.params.type, id, set })
+        post({ service: 'media', action: 'favourite', type: type || this.props.type, id, set })
             .then(() => {
                 this.getMedia();
-                this.props.showToast(`${set ? 'Added to' : 'Removed from'} favourites!`);
+                toast(`${set ? 'Added to' : 'Removed from'} favourites!`);
             })
-            .catch(() => this.props.showToast('Could not set favourite...'));
+            .catch(() => toast('Could not set favourite...'));
     }
 
     setSeen(type, id, set) {
-        post({ service: 'media', action: 'seen', type: type || this.props.match.params.type, id, set })
+        post({ service: 'media', action: 'seen', type: type || this.props.type, id, set })
             .then(() => {
                 this.getMedia();
-                this.props.showToast(`Set as ${set ? 'seen' : 'unseen'}!`);
+                toast(`Set as ${set ? 'seen' : 'unseen'}!`);
             })
-            .catch(() => this.props.showToast('Could not set seen...'));
+            .catch(() => toast('Could not set seen...'));
     }
 
     renderStats() {
@@ -74,7 +76,7 @@ export default class MediaList extends React.Component {
     renderRows(data) {
         return data.map(item => (
             <MediaItem
-                type={item.type || this.props.match.params.type}
+                type={item.type || this.props.type}
                 key={item.id + item.imdb_id}
                 id={item.id}
                 imdbId={item.imdb_id}
@@ -91,14 +93,14 @@ export default class MediaList extends React.Component {
                 episodes={item.number_of_episodes}
                 seen={!!item.seen}
                 favourite={!!item.favourite}
-                setSeen={this.props.loggedIn ? this.setSeen.bind(this, item.type, item.id, !item.seen) : null}
-                setFavourite={this.props.loggedIn ? this.setFavourite.bind(this, item.type, item.id, !item.favourite) : null}
+                setSeen={this.props.isLoggedIn ? this.setSeen.bind(this, item.type, item.id, !item.seen) : null}
+                setFavourite={this.props.isLoggedIn ? this.setFavourite.bind(this, item.type, item.id, !item.favourite) : null}
             />
         ));
     }
 
     render() {
-        return this.props.match.params.type === 'watchlist' ? (
+        return this.props.type === 'watchlist' ? (
             <>
                 <div>TV-Shows:</div>
                 <div className="clear-fix text-center">{this.renderRows(this.state.data.filter(item => item.type === 'tv'))}</div>
@@ -110,11 +112,7 @@ export default class MediaList extends React.Component {
                 {this.renderStats()}
                 <div className="clear-fix text-center">{this.renderRows(this.state.data)}</div>
                 {this.state.pages > 0 ? (
-                    <Pagination
-                        current={+this.props.match.params.page}
-                        total={this.state.pages}
-                        basePath={`/media/${this.props.match.params.type}/`}
-                    />
+                    <Pagination current={+this.props.page} total={this.state.pages} basePath={`/media/${this.props.type}/`} />
                 ) : null}
             </>
         );
@@ -122,7 +120,15 @@ export default class MediaList extends React.Component {
 }
 
 MediaList.propTypes = {
-    loggedIn: PropTypes.bool.isRequired,
-    showToast: PropTypes.func.isRequired,
-    match: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+    type: PropTypes.string.isRequired,
+    page: PropTypes.number,
 };
+
+export default connect((state, ownProps) => ({
+    isLoggedIn: state.isLoggedIn,
+    data: state.data,
+    type: ownProps.match.params.type,
+    page: +ownProps.match.params.page || 1,
+}))(MediaList);

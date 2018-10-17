@@ -1,7 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import auth from './util/auth.js';
+import actions from './redux/actions.js';
 
 import { MenuIcon } from './components/page/icons.jsx';
 import PrivateRoute from './route/private.jsx';
@@ -16,44 +19,10 @@ import Login from './components/login.jsx';
 import Logout from './components/logout.jsx';
 import Media from './components/media/media.jsx';
 
-export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            loggedIn: false,
-            circleIcons: true,
-            showMenu: false,
-            showToast: false,
-            toast: '',
-        };
-    }
-
-    updateAuth(loggedIn) {
-        this.setState({ loggedIn });
-    }
-
+class App extends React.Component {
     componentDidMount() {
-        auth.onChange = this.updateAuth.bind(this);
+        auth.onChange = isLoggedIn => this.props.dispatch(actions.setLoggedIn(isLoggedIn));
         auth.init();
-    }
-
-    toggleMenu() {
-        this.setState({
-            showMenu: !this.state.showMenu,
-        });
-    }
-
-    toggleIcons() {
-        this.setState({
-            circleIcons: !this.state.circleIcons,
-        });
-    }
-
-    showToast(text) {
-        this.setState({ showToast: true, toast: text });
-
-        setTimeout(() => this.setState({ showToast: false, toast: '' }), 3000);
     }
 
     render() {
@@ -62,10 +31,10 @@ export default class App extends React.Component {
                 <>
                     <header>
                         <div className="site-title no-select">TOMLIN</div>
-                        <Navigation type="simple" loggedIn={this.state.loggedIn} />
-                        <MenuIcon className="hide-gt480 menu-icon" onClick={this.toggleMenu.bind(this)} />
+                        <Navigation type="simple" />
+                        <MenuIcon className="hide-gt480 menu-icon" onClick={() => this.props.dispatch(actions.toggleMenu())} />
                     </header>
-                    <Navigation showMenu={this.state.showMenu} toggleMenu={this.toggleMenu.bind(this)} loggedIn={this.state.loggedIn} />
+                    <Navigation />
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/about" component={About} />
@@ -74,22 +43,35 @@ export default class App extends React.Component {
                         <Route path="/login" component={Login} />
                         <PrivateRoute // Temporarily restricted
                             path="/media"
-                            render={props => <Media {...props} loggedIn={this.state.loggedIn} showToast={this.showToast.bind(this)} />}
+                            component={Media}
                         />
-                        <PrivateRoute path="/files" render={props => <Files {...props} showToast={this.showToast.bind(this)} />} />
+                        <PrivateRoute path="/files" component={Files} />
                         <Route render={() => <Error code={404} />} />
                     </Switch>
                     <footer className="wrapper">
-                        <Social circle={this.state.circleIcons} />
+                        <Social circle={this.props.circleIcons} />
                         <div className="text color-light mtl">
-                            <span className="pointer no-select" onClick={this.toggleIcons.bind(this)}>
+                            <span className="pointer no-select" onClick={() => this.props.dispatch(actions.toggleIcons())}>
                                 Ben Tomlin © 2018
                             </span>
                         </div>
                     </footer>
-                    {this.state.showToast ? <div className="toast">{this.state.toast}</div> : null}
+                    {this.props.toast ? <div className="toast">{this.props.toast}</div> : null}
                 </>
             </Router>
         );
     }
 }
+
+App.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    showMenu: PropTypes.bool.isRequired,
+    circleIcons: PropTypes.bool.isRequired,
+    toast: PropTypes.string,
+};
+
+export default connect(state => ({
+    showMenu: state.showMenu,
+    circleIcons: state.circleIcons,
+    toast: state.toast,
+}))(App);
