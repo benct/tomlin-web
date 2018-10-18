@@ -11,7 +11,7 @@ about Webpack, Babel, Node/NPM/Yarn and other web development technologies.
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![GitHub](https://img.shields.io/github/license/benct/tomlin-web.svg)](https://github.com/benct/tomlin-web/blob/master/LICENCE)
 
-<sub><i>Keywords: React.js, ES6/ES2015, Hot Reloading, Babel, React Router, Node.js, NPM, Yarn, HTML5, CSS3</i></sub>
+<sub><i>Keywords: React.js, ES6/ES2015, Hot Reloading, Babel, React Router, Redux, Node.js, NPM, Yarn, HTML5, CSS3</i></sub>
 
 ## Quick start
 
