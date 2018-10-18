@@ -75,13 +75,7 @@ class MediaList extends React.Component {
             <>
                 {this.renderStats()}
                 <div className="clear-fix text-center">{this.renderRows(this.props.media.data)}</div>
-                {this.props.pagination.enabled ? (
-                    <Pagination
-                        current={this.props.pagination.current}
-                        total={this.props.pagination.total}
-                        basePath={`/media/${this.props.type}/`}
-                    />
-                ) : null}
+                <Pagination path={`/media/${this.props.type}/`} />
             </>
         );
     }

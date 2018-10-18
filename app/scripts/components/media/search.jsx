@@ -134,9 +134,7 @@ class Search extends React.Component {
                     </div>
                 </div>
                 {this.state.data.map(this.renderItem.bind(this))}
-                {this.state.showPagination ? (
-                    <Pagination current={+this.props.page} basePath={`/media/admin/${this.props.type}/${this.props.action}/`} />
-                ) : null}
+                <Pagination path={`/media/admin/${this.props.type}/${this.props.action}/`} />
             </div>
         );
     }
