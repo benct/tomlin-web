@@ -85,7 +85,6 @@ MediaList.propTypes = {
     dispatch: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     media: PropTypes.object.isRequired,
-    pagination: PropTypes.object.isRequired,
     type: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
 };
@@ -93,7 +92,6 @@ MediaList.propTypes = {
 export default connect((state, ownProps) => ({
     isLoggedIn: state.isLoggedIn,
     media: state.media,
-    pagination: state.pagination,
     type: ownProps.match.params.type,
     page: +ownProps.match.params.page || 1,
 }))(MediaList);
