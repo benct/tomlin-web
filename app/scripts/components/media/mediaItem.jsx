@@ -17,6 +17,14 @@ export default class MediaItem extends React.Component {
         );
     }
 
+    renderImageLink() {
+        return (
+            <a href={`https://www.imdb.com/title/${this.props.imdbId}`} target="_blank" rel="noopener noreferrer external">
+                {this.renderImage()}
+            </a>
+        );
+    }
+
     renderRating() {
         return (
             <>
@@ -50,11 +58,7 @@ export default class MediaItem extends React.Component {
     render() {
         return (
             <div className="media-item media-item-small pvm">
-                <div className="media-poster">
-                    <a href={`https://www.imdb.com/title/${this.props.imdbId}`} target="_blank" rel="noopener noreferrer external">
-                        {this.renderImage()}
-                    </a>
-                </div>
+                <div className="media-poster">{this.props.imdbId ? this.renderImageLink() : this.renderImage()}</div>
                 <div className="media-title color-primary truncate strong">{this.props.title}</div>
                 <div className="media-data text-small truncate">
                     {this.props.imdbId ? (
