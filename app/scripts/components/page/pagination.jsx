@@ -10,7 +10,7 @@ export class Pagination extends React.Component {
         const prevPage = this.props.current > 1 ? this.props.current - 1 : 1;
         const nextPage = this.props.current + (this.props.total <= this.props.current ? 0 : 1);
 
-        return (
+        return this.props.enabled ? (
             <div className="text-center clear ptl">
                 <Link to={this.props.path + prevPage} className="button-icon button-text-icon">
                     <ArrowIcon width={18} height={18} />
@@ -21,7 +21,7 @@ export class Pagination extends React.Component {
                     <ArrowIcon width={18} height={18} style={{ transform: 'rotate(180deg)' }} />
                 </Link>
             </div>
-        );
+        ) : null;
     }
 }
 
