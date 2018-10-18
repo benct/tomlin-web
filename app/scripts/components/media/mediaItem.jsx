@@ -72,10 +72,10 @@ export default class MediaItem extends React.Component {
                 </div>
                 <div className="media-actions strong text-small no-wrap">{this.props.release ? this.renderYears() : 'Unknown'}</div>
                 <div className="media-external">
-                    <span className={`mrm ${this.props.setSeen ? ' pointer' : ''}`} data-tooltip="Seen" onClick={this.props.setSeen}>
+                    <span className={`mrm ${this.props.isLoggedIn ? ' pointer' : ''}`} data-tooltip="Seen" onClick={this.props.setSeen}>
                         <ViewIcon width={24} seen={this.props.seen} className={this.props.seen ? '' : 'faded'} />
                     </span>
-                    <span className={this.props.setFavourite ? 'pointer' : ''} data-tooltip="Favourite" onClick={this.props.setFavourite}>
+                    <span className={this.props.isLoggedIn ? 'pointer' : ''} data-tooltip="Favourite" onClick={this.props.setFavourite}>
                         <StarIcon width={24} favourite={this.props.favourite} className={this.props.favourite ? '' : 'faded'} />
                     </span>
                 </div>
@@ -88,7 +88,7 @@ MediaItem.propTypes = {
     type: PropTypes.oneOf(['movie', 'tv']).isRequired,
     imdbId: PropTypes.string,
     title: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
+    poster: PropTypes.string,
     runtime: PropTypes.number,
     genres: PropTypes.string,
     rating: PropTypes.number,
@@ -99,7 +99,8 @@ MediaItem.propTypes = {
     seasons: PropTypes.number,
     episodes: PropTypes.number,
     seen: PropTypes.bool.isRequired,
-    setSeen: PropTypes.func,
+    setSeen: PropTypes.func.isRequired,
     favourite: PropTypes.bool.isRequired,
-    setFavourite: PropTypes.func,
+    setFavourite: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
 };
