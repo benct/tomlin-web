@@ -18,11 +18,11 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Substantial refactoring of backend API
-- Improved promise handling in client api
+- Improve promise handling in client api
 - CSS cleanup of several components
-- Refactored navigation component
-- Refactored private routes
-- Renamed about-me section
+- Refactor navigation component
+- Refactor private routes
+- Rename about-me section
 - Probably lots more...
 
 ### Removed
@@ -33,7 +33,7 @@ All notable changes to this project will be documented in this file.
 - Social links in CV component
 
 ### Changed
-- Made quotes a little less random
+- Make quotes a little less random
 
 ### Fixed
 - Hot module replacement (HMR)
