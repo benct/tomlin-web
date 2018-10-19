@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { post } from '../../util/api.js';
 import debounce from '../../util/debounce.js';
-import toast from '../../util/toast.js';
+import actions from '../../redux/actions.js';
 
 import SearchItem from './searchItem.jsx';
 import Pagination from '../page/pagination.jsx';
@@ -14,84 +13,33 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            data: [],
-            existing: [],
-            showPagination: false,
-        };
-
-        this.search = debounce(this.search.bind(this), 500);
+        this.search = debounce(query => props.dispatch(actions.searchMedia(query)), 500);
     }
 
     componentDidMount() {
-        if (this.props.type && this.props.action) {
+        if (this.props.action && this.props.type) {
             this.getMedia();
         }
     }
 
     componentDidUpdate(prevProps) {
-        if (
-            this.props.type &&
-            this.props.action &&
-            (this.props.type !== prevProps.type || this.props.action !== prevProps.action || this.props.page !== prevProps.page)
-        ) {
+        if (this.props.action !== prevProps.action || this.props.type !== prevProps.type || this.props.page !== prevProps.page) {
             this.getMedia();
         }
     }
 
-    static filterResults(data) {
-        return data && data.length ? data.filter(result => result.media_type === 'movie' || result.media_type === 'tv') : [];
+    componentWillUnmount() {
+        this.props.dispatch(actions.clearMedia());
     }
 
     getMedia() {
-        post({
-            service: 'media',
-            action: this.props.action,
-            type: this.props.type,
-            page: +this.props.page || 1,
-        })
-            .then(response => {
-                window.scrollTo(0, 0);
-                this.setState({ data: response.results, existing: response.existing, showPagination: true });
-            })
-            .catch(() => toast('Failed to fetch media...'));
-    }
-
-    search(query) {
-        post({ service: 'media', action: 'search', query: encodeURI(query) })
-            .then(response => this.setState({ data: Search.filterResults(response.results), showPagination: false }))
-            .catch(() => toast('Failed to execute search...'));
-    }
-
-    save(type, id) {
-        post({ service: 'media', action: 'save', type: type ? type : this.props.type, id })
-            .then(() => toast('Media successfully added!'))
-            .catch(() => toast('Failed to add media...'));
-    }
-
-    delete(type, id) {
-        post({ service: 'media', action: 'delete', type: type ? type : this.props.type, id })
-            .then(() => toast('Media successfully removed!'))
-            .catch(() => toast('Failed to remove media...'));
-    }
-
-    goToIMDb(type, id) {
-        post({ service: 'media', action: 'external', type: type ? type : this.props.type, id })
-            .then(response => window.open(`https://www.imdb.com/title/${response}`, '_blank').focus())
-            .catch(() => toast('Failed to get external ID...'));
-    }
-
-    updatePosters() {
-        post({ service: 'media', action: 'images', overwrite: false })
-            .then(response => toast(`Successfully updated ${response} posters!`))
-            .catch(() => toast('Failed to update posters...'));
+        this.props.dispatch(actions.postMedia({ action: this.props.action, type: this.props.type, page: this.props.page }));
+        window.scrollTo(0, 0);
     }
 
     handleChange(event) {
         if (event.target.value && event.target.value.length > 1) {
             this.search(event.target.value);
-        } else {
-            this.setState({ data: [] });
         }
     }
 
@@ -106,10 +54,10 @@ class Search extends React.Component {
                 rating={data.vote_average}
                 votes={data.vote_count || 0}
                 overview={data.overview}
-                stored={this.state.existing.includes(data.id)}
-                add={this.save.bind(this, data.media_type, data.id)}
-                remove={this.delete.bind(this, data.media_type, data.id)}
-                imdb={this.goToIMDb.bind(this, data.media_type, data.id)}
+                stored={this.props.search.existing.includes(data.id)}
+                add={() => this.props.dispatch(actions.addMedia({ type: data.media_type || this.props.type, id: data.id }))}
+                remove={() => this.props.dispatch(actions.removeMedia({ type: data.media_type || this.props.type, id: data.id }))}
+                imdb={() => this.props.dispatch(actions.goToIMDb({ type: data.media_type || this.props.type, id: data.id }))}
                 key={`mediaResult${idx}`}
             />
         );
@@ -129,11 +77,11 @@ class Search extends React.Component {
                     <Link to={'/media/admin/tv/popular/'}>Popular (TV)</Link>
                     <Link to={'/media/admin/tv/top/'}>Top Rated (TV)</Link>
                     <Link to={'/media/admin/tv/now/'}>Now Playing (TV)</Link>
-                    <div className="faded" onClick={this.updatePosters.bind(this)}>
+                    <div className="faded" onClick={() => this.props.dispatch(actions.updatePosters())}>
                         Update Posters (!)
                     </div>
                 </div>
-                {this.state.data.map(this.renderItem.bind(this))}
+                {this.props.search.data.map(this.renderItem.bind(this))}
                 <Pagination path={`/media/admin/${this.props.type}/${this.props.action}/`} />
             </div>
         );
@@ -142,13 +90,14 @@ class Search extends React.Component {
 
 Search.propTypes = {
     dispatch: PropTypes.func.isRequired,
+    search: PropTypes.object.isRequired,
     type: PropTypes.string,
     action: PropTypes.string,
     page: PropTypes.number,
 };
 
 export default connect((state, ownProps) => ({
-    data: state.data,
+    search: state.search,
     type: ownProps.match.params.type,
     action: ownProps.match.params.action,
     page: +ownProps.match.params.page || 1,

@@ -9,6 +9,10 @@ export default {
         data: [],
         stats: null,
     },
+    search: {
+        data: [],
+        existing: [],
+    },
 
     pagination: {
         enabled: false,
