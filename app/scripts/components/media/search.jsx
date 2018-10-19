@@ -66,7 +66,13 @@ class Search extends React.Component {
     render() {
         return (
             <div className="text-center">
-                <input type="text" name="query" className="mbl" onChange={this.handleChange.bind(this)} />
+                <input
+                    type="text"
+                    name="query"
+                    className="mbl"
+                    onChange={this.handleChange.bind(this)}
+                    onClick={event => event.target.select()}
+                />
                 <div className="media-search">
                     <Link to={'/media/admin/movie/popular/'}>Popular (Movie)</Link>
                     <Link to={'/media/admin/movie/top/'}>Top Rated (Movie)</Link>
