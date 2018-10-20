@@ -1,6 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.7.1] - 2018-10-21
+### Added
+- App-wide state handling using Redux
+- Proper pagination with page numbers
+- Upload notice while uploading file
+- Packages: redux, redux-thunk, react-redux, redux-devtools-extension
+
+### Changed
+- Refactor components to handle Redux state
+- Clean up countdown and quote component
+- Select media search field text on focus
+
+### Fixed
+- Handle missing external IDs for media
+
 ## [2.7.0] - 2018-10-16
 ### Added
 - Site title in header section
