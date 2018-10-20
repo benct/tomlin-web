@@ -23,27 +23,11 @@ actions.showToast = payload => dispatch => {
 
 actions.setToast = makeAction('SET_TOAST', 'toast');
 
-actions.setMedia = makeAction('SET_MEDIA', (state, { payload }) =>
-    merge(state, {
-        media: {
-            data: payload.results,
-            stats: payload.stats,
-        },
-    })
-);
+actions.setMedia = makeAction('MEDIA/SET', 'media');
 
-actions.setSearchMedia = makeAction('SET_SEARCH_MEDIA', (state, { payload }) =>
-    merge(state, {
-        search: {
-            data: payload.filter
-                ? payload.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv')
-                : payload.results,
-            existing: payload.existing,
-        },
-    })
-);
+actions.setSearch = makeAction('MEDIA/SEARCH', 'search');
 
-actions.clearMedia = makeAction('CLEAR_MEDIA', state =>
+actions.clearMedia = makeAction('MEDIA/CLEAR', state =>
     merge(state, {
         media: defaultState.media,
         search: defaultState.search,
@@ -51,17 +35,22 @@ actions.clearMedia = makeAction('CLEAR_MEDIA', state =>
     })
 );
 
-actions.setPagination = makeAction('SET_PAGINATION', (state, { payload }) =>
+actions.setPagination = makeAction('PAGINATION/SET', (state, { payload }) =>
     merge(state, { pagination: pagination(payload.total, payload.current) })
 );
 
-actions.resetPagination = makeAction('RESET_PAGINATION', state => merge(state, { pagination: defaultState.pagination }));
+actions.resetPagination = makeAction('PAGINATION/RESET', state => merge(state, { pagination: defaultState.pagination }));
 
 actions.getMedia = ({ action, page }) => (dispatch, getState) => {
     get({ service: 'media', action, page: page || getState().pagination.current })
         .then(response => {
-            dispatch(actions.setMedia(response));
-            dispatch(actions.setPagination(response));
+            dispatch(
+                actions.setMedia({
+                    data: response.results || [],
+                    stats: response.stats,
+                })
+            );
+            dispatch(actions.setPagination({ current: response.page, total: response.total_pages }));
         })
         .catch(() => {
             dispatch(actions.clearMedia());
@@ -72,8 +61,13 @@ actions.getMedia = ({ action, page }) => (dispatch, getState) => {
 actions.postMedia = ({ action, type, page }) => (dispatch, getState) => {
     post({ service: 'media', action, type, page: page || getState().pagination.current })
         .then(response => {
-            dispatch(actions.setSearchMedia(response));
-            dispatch(actions.setPagination(response));
+            dispatch(
+                actions.setSearch({
+                    data: response.results || [],
+                    existing: response.existing,
+                })
+            );
+            dispatch(actions.setPagination({ current: response.page, total: Math.min(response.total_pages, 1000) }));
         })
         .catch(() => {
             dispatch(actions.clearMedia());
@@ -84,9 +78,13 @@ actions.postMedia = ({ action, type, page }) => (dispatch, getState) => {
 actions.searchMedia = payload => dispatch => {
     post({ service: 'media', action: 'search', query: encodeURI(payload) })
         .then(response => {
-            response.filter = true;
-            dispatch(actions.setSearchMedia(response));
-            dispatch(actions.setPagination(response));
+            dispatch(
+                actions.setSearch({
+                    data: response.results ? response.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv') : [],
+                    existing: response.existing,
+                })
+            );
+            dispatch(actions.setPagination({ current: response.page, total: Math.min(response.total_pages, 1000) }));
         })
         .catch(() => dispatch(actions.showToast('Failed to execute search...')));
 };
