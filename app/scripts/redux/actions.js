@@ -125,7 +125,12 @@ actions.setSeen = ({ action, type, id, set }) => dispatch => {
 
 actions.goToIMDb = ({ type, id }) => dispatch => {
     post({ service: 'media', action: 'external', type, id })
-        .then(response => window.open(`https://www.imdb.com/title/${response}`, '_blank').focus())
+        .then(
+            response =>
+                response
+                    ? window.open(`https://www.imdb.com/title/${response}`, '_blank').focus()
+                    : dispatch(actions.showToast('No external ID found...'))
+        )
         .catch(() => dispatch(actions.showToast('Failed to get external ID...')));
 };
 
