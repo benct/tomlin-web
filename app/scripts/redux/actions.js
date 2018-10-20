@@ -10,11 +10,11 @@ import { get, post } from '../util/api.js';
 const merge = (state, payload) => Object.assign({}, state, payload);
 const actions = {};
 
-actions.setLoggedIn = makeAction('SET_LOGGED_IN', 'isLoggedIn');
+actions.setLoggedIn = makeAction('AUTH/SET_LOGGED_IN', 'isLoggedIn');
 
-actions.toggleIcons = makeAction('TOGGLE_ICONS', state => merge(state, { circleIcons: !state.circleIcons }));
+actions.toggleIcons = makeAction('BASE/TOGGLE_ICONS', state => merge(state, { circleIcons: !state.circleIcons }));
 
-actions.toggleMenu = makeAction('TOGGLE_MENU', state => merge(state, { showMenu: !state.showMenu }));
+actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', state => merge(state, { showMenu: !state.showMenu }));
 
 actions.showToast = payload => dispatch => {
     dispatch(actions.setToast(payload));
@@ -22,9 +22,9 @@ actions.showToast = payload => dispatch => {
     setTimeout(() => dispatch(actions.setToast(null)), 3000);
 };
 
-actions.setToast = makeAction('SET_TOAST', 'toast');
+actions.setToast = makeAction('BASE/SET_TOAST', 'toast');
 
-actions.refreshQuote = makeAction('REFRESH_QUOTE', state =>
+actions.refreshQuote = makeAction('BASE/REFRESH_QUOTE', state =>
     merge(state, {
         quote: {
             text: quotes[state.quote.current][0],
