@@ -68,7 +68,7 @@ actions.setPagination = makeAction('PAGINATION/SET', (state, { payload }) =>
 
 actions.resetPagination = makeAction('PAGINATION/RESET', state => merge(state, { pagination: defaultState.pagination }));
 
-actions.getMedia = ({ action, page }) => (dispatch, getState) => {
+actions.getMedia = ({ action, page }) => (dispatch, getState) =>
     get({ service: 'media', action, page: page || getState().pagination.current })
         .then(response => {
             dispatch(
@@ -83,9 +83,8 @@ actions.getMedia = ({ action, page }) => (dispatch, getState) => {
             dispatch(actions.clearMedia());
             dispatch(actions.showToast('Could not fetch media content...'));
         });
-};
 
-actions.postMedia = ({ action, type, page }) => (dispatch, getState) => {
+actions.postMedia = ({ action, type, page }) => (dispatch, getState) =>
     post({ service: 'media', action, type, page: page || getState().pagination.current })
         .then(response => {
             dispatch(
@@ -100,9 +99,8 @@ actions.postMedia = ({ action, type, page }) => (dispatch, getState) => {
             dispatch(actions.clearMedia());
             dispatch(actions.showToast('Could not fetch media content...'));
         });
-};
 
-actions.searchMedia = payload => dispatch => {
+actions.searchMedia = payload => dispatch =>
     post({ service: 'media', action: 'search', query: encodeURI(payload) })
         .then(response => {
             dispatch(
@@ -114,19 +112,16 @@ actions.searchMedia = payload => dispatch => {
             dispatch(actions.resetPagination());
         })
         .catch(() => dispatch(actions.showToast('Failed to execute search...')));
-};
 
-actions.addMedia = ({ type, id }) => dispatch => {
+actions.addMedia = ({ type, id }) => dispatch =>
     post({ service: 'media', action: 'save', type, id })
         .then(() => dispatch(actions.showToast('Media successfully added!')))
         .catch(() => dispatch(actions.showToast('Failed to add media...')));
-};
 
-actions.removeMedia = ({ type, id }) => dispatch => {
+actions.removeMedia = ({ type, id }) => dispatch =>
     post({ service: 'media', action: 'delete', type, id })
         .then(() => dispatch(actions.showToast('Media successfully removed!')))
         .catch(() => dispatch(actions.showToast('Failed to remove media...')));
-};
 
 actions.setFavourite = ({ action, type, id, set }) => dispatch => {
     if (auth.loggedIn()) {
@@ -150,7 +145,7 @@ actions.setSeen = ({ action, type, id, set }) => dispatch => {
     }
 };
 
-actions.goToIMDb = ({ type, id }) => dispatch => {
+actions.goToIMDb = ({ type, id }) => dispatch =>
     post({ service: 'media', action: 'external', type, id })
         .then(
             response =>
@@ -159,13 +154,11 @@ actions.goToIMDb = ({ type, id }) => dispatch => {
                     : dispatch(actions.showToast('No external ID found...'))
         )
         .catch(() => dispatch(actions.showToast('Failed to get external ID...')));
-};
 
-actions.updatePosters = () => dispatch => {
+actions.updatePosters = () => dispatch =>
     post({ service: 'media', action: 'images', overwrite: false })
         .then(response => dispatch(actions.showToast(`Successfully updated ${response} posters!`)))
         .catch(() => dispatch(actions.showToast('Failed to update posters...')));
-};
 
 export default actions;
 
