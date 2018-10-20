@@ -1,9 +1,10 @@
 import makeAction from './makeAction.js';
 import makeReducer from './makeReducer.js';
 
-import { get, post } from '../util/api.js';
-import auth from '../util/auth.js';
 import defaultState from './defaultState.js';
+import auth from '../util/auth.js';
+import { get, post } from '../util/api.js';
+import pagination from '../util/pagination.js';
 
 const merge = (state, payload) => Object.assign({}, state, payload);
 const actions = {};
@@ -51,13 +52,7 @@ actions.clearMedia = makeAction('CLEAR_MEDIA', state =>
 );
 
 actions.setPagination = makeAction('SET_PAGINATION', (state, { payload }) =>
-    merge(state, {
-        pagination: {
-            enabled: !!payload.page,
-            current: payload.page || 1,
-            total: payload.total_pages || 1,
-        },
-    })
+    merge(state, { pagination: pagination(payload.total, payload.current) })
 );
 
 actions.resetPagination = makeAction('RESET_PAGINATION', state => merge(state, { pagination: defaultState.pagination }));
