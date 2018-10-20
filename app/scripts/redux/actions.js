@@ -67,6 +67,10 @@ actions.setFileFocus = makeAction('FILES/SET_FOCUS', (state, { payload }) =>
     merge(state, { files: merge(state.files, { focused: payload }) })
 );
 
+actions.setFileUploading = makeAction('FILES/SET_UPLOADING', (state, { payload }) =>
+    merge(state, { files: merge(state.files, { uploading: payload }) })
+);
+
 actions.refreshFiles = cwd => (dispatch, getState) =>
     post({ service: 'fs', action: 'ls', path: cwd || getState().files.cwd })
         .then(data => dispatch(actions.setFileData(data)))
@@ -111,10 +115,19 @@ actions.deleteFile = item => (dispatch, getState) => {
     }
 };
 
-actions.uploadFile = data => (dispatch, getState) =>
+actions.uploadFile = data => (dispatch, getState) => {
+    dispatch(actions.setFileUploading(true));
+
     post({ service: 'fs', action: 'up', path: getState().files.cwd }, data)
-        .then(() => dispatch(actions.refreshFiles()))
-        .catch(() => dispatch(actions.showToast('An error occurred while uploading the file(s)...')));
+        .then(() => {
+            dispatch(actions.setFileUploading(false));
+            dispatch(actions.refreshFiles());
+        })
+        .catch(() => {
+            dispatch(actions.setFileUploading(false));
+            dispatch(actions.showToast('An error occurred while uploading the file(s)...'));
+        });
+};
 
 actions.showFile = item => dispatch =>
     fetchFile(item.href)

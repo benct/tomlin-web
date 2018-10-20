@@ -148,6 +148,7 @@ class Files extends React.Component {
                             id="file"
                             onChange={this.handleFileChange.bind(this)}
                             ref={input => (this.fileInput = input)}
+                            disabled={this.props.uploading}
                             multiple
                         />
                         <UploadIcon />
@@ -156,8 +157,11 @@ class Files extends React.Component {
                         </span>
                     </label>
                     <br />
-                    <button className="button-default text-small mtl" onClick={this.handleUpload.bind(this)}>
-                        Upload
+                    <button
+                        className="button-default text-small mtl"
+                        onClick={this.handleUpload.bind(this)}
+                        disabled={this.props.uploading}>
+                        {this.props.uploading ? 'Uploading...' : 'Upload'}
                     </button>
                 </div>
 
@@ -182,6 +186,7 @@ Files.propTypes = {
     content: PropTypes.array.isRequired,
     focused: PropTypes.number,
     preview: PropTypes.object,
+    uploading: PropTypes.bool,
 };
 
 export default connect(state => ({
@@ -189,4 +194,5 @@ export default connect(state => ({
     content: state.files.content,
     focused: state.files.focused,
     preview: state.files.preview,
+    uploading: state.files.uploading,
 }))(Files);
