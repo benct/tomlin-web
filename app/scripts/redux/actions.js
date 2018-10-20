@@ -84,7 +84,7 @@ actions.searchMedia = payload => dispatch => {
                     existing: response.existing,
                 })
             );
-            dispatch(actions.setPagination({ current: response.page, total: Math.min(response.total_pages, 1000) }));
+            dispatch(actions.resetPagination());
         })
         .catch(() => dispatch(actions.showToast('Failed to execute search...')));
 };
