@@ -26,7 +26,7 @@ export class Pagination extends React.Component {
                 <span className="hide-gt480">
                     <span className="valign-middle phm">Page {current}</span>
                 </span>
-                <span className="hide-lt480">
+                <span className="hide-lt480 phm">
                     {previousPages.map(page => this.renderPage(page))}
                     <span className="valign-middle phm strong">{current}</span>
                     {consecutivePages.map(page => this.renderPage(page))}
