@@ -3,8 +3,9 @@ import makeReducer from './makeReducer.js';
 
 import defaultState from './defaultState.js';
 import auth from '../util/auth.js';
-import { get, post } from '../util/api.js';
+import quotes from '../util/quotes.js';
 import pagination from '../util/pagination.js';
+import { get, post } from '../util/api.js';
 
 const merge = (state, payload) => Object.assign({}, state, payload);
 const actions = {};
@@ -22,6 +23,16 @@ actions.showToast = payload => dispatch => {
 };
 
 actions.setToast = makeAction('SET_TOAST', 'toast');
+
+actions.refreshQuote = makeAction('REFRESH_QUOTE', state =>
+    merge(state, {
+        quote: {
+            text: quotes[state.quote.current][0],
+            author: quotes[state.quote.current].length > 1 ? quotes[state.quote.current][1] : null,
+            current: state.quote.current === quotes.length - 1 ? 0 : state.quote.current + 1,
+        },
+    })
+);
 
 actions.setMedia = makeAction('MEDIA/SET', 'media');
 
