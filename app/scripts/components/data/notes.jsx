@@ -1,36 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { fetchFile } from '../../util/api.js';
+import actions from '../../redux/actions.js';
 
-export default class Notes extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            notes: null,
-            loading: 'Loading text file...',
-        };
-    }
-
+class Notes extends React.Component {
     componentDidMount() {
-        this.loadContent(this.props.file);
-    }
-
-    loadContent(file) {
-        fetchFile(`/assets/content/${file}.txt`)
-            .then(data => this.setState({ notes: data }))
-            .catch(() => this.setState({ loading: 'Could not load text file...' }));
+        this.props.dispatch(actions.loadContent({ type: 'notes', file: this.props.file }));
     }
 
     render() {
         return (
             <div className="wrapper">
-                {this.state.notes ? <pre>{this.state.notes}</pre> : <div className="link-message">{this.state.loading}</div>}
+                {this.props.content ? (
+                    <pre>{this.props.content}</pre>
+                ) : (
+                    <div className="link-message">{this.props.loading ? 'Loading...' : 'No data...'}</div>
+                )}
             </div>
         );
     }
 }
 
 Notes.propTypes = {
+    dispatch: PropTypes.func.isRequired,
     file: PropTypes.string.isRequired,
+    content: PropTypes.array,
+    loading: PropTypes.bool.isRequired,
 };
+
+export default connect(state => ({
+    content: state.notes.content,
+    loading: state.notes.loading,
+}))(Notes);

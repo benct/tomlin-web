@@ -6,9 +6,9 @@ import Notes from './notes.jsx';
 export default function Finn() {
     return (
         <>
-            <Links file="finn" />
+            <Links file="finn.json" />
             <hr />
-            <Notes file="finn" />
+            <Notes file="finn.txt" />
         </>
     );
 }

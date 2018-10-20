@@ -13,6 +13,15 @@ export default {
         current: Math.floor(Math.random() * quotes.length),
     },
 
+    links: {
+        content: null,
+        loading: false,
+    },
+    notes: {
+        content: null,
+        loading: false,
+    },
+
     media: {
         data: [],
         stats: null,

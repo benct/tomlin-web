@@ -1,28 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { fetchFile } from '../../util/api.js';
+import actions from '../../redux/actions.js';
 
-export default class Links extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            links: null,
-            loading: 'Loading link file...',
-        };
-    }
-
+class Links extends React.Component {
     componentDidMount() {
-        this.loadContent(this.props.file);
+        this.props.dispatch(actions.loadContent({ type: 'links', file: this.props.file }));
     }
 
-    loadContent(file) {
-        fetchFile(`/assets/content/${file}.json`)
-            .then(data => this.setState({ links: JSON.parse(data) }))
-            .catch(() => this.setState({ loading: 'Could not load link file...' }));
-    }
-
-    renderLink(link, idx, icon) {
+    static renderLink(link, idx, icon) {
         return (
             <a className="link-anchor" key={idx} href={link.href} target="_blank" rel="noopener noreferrer">
                 <img src={`https://www.google.com/s2/favicons?domain_url=${icon.enabled ? link.href : icon.default}`} alt="" />
@@ -31,11 +18,11 @@ export default class Links extends React.Component {
         );
     }
 
-    renderGroup(group, idx) {
+    static renderGroup(group, idx) {
         return (
             <div className="link-group" key={idx} style={{ flexOrder: idx }}>
                 <h4 className="link-group-title">{group.title}</h4>
-                {group.links.map((item, i) => this.renderLink(item, i, group.icon))}
+                {group.links.map((item, idx) => Links.renderLink(item, idx, group.icon))}
             </div>
         );
     }
@@ -43,10 +30,10 @@ export default class Links extends React.Component {
     render() {
         return (
             <div className="wrapper link-groups">
-                {this.state.links ? (
-                    this.state.links.map((item, i) => this.renderGroup(item, i))
+                {this.props.content ? (
+                    JSON.parse(this.props.content).map(Links.renderGroup)
                 ) : (
-                    <div className="link-message">{this.state.loading}</div>
+                    <div className="link-message">{this.props.loading ? 'Loading...' : 'No data...'}</div>
                 )}
             </div>
         );
@@ -54,5 +41,13 @@ export default class Links extends React.Component {
 }
 
 Links.propTypes = {
+    dispatch: PropTypes.func.isRequired,
     file: PropTypes.string.isRequired,
+    content: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
 };
+
+export default connect(state => ({
+    content: state.links.content,
+    loading: state.links.loading,
+}))(Links);

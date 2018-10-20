@@ -5,7 +5,7 @@ import defaultState from './defaultState.js';
 import auth from '../util/auth.js';
 import quotes from '../util/quotes.js';
 import pagination from '../util/pagination.js';
-import { get, post } from '../util/api.js';
+import { get, post, fetchFile } from '../util/api.js';
 
 const merge = (state, payload) => Object.assign({}, state, payload);
 const actions = {};
@@ -33,6 +33,22 @@ actions.refreshQuote = makeAction('BASE/REFRESH_QUOTE', state =>
         },
     })
 );
+
+actions.setLinkData = makeAction('CONTENT/SET_LINKS', 'links');
+actions.setNoteData = makeAction('CONTENT/SET_NOTES', 'notes');
+
+actions.loadContent = ({ type, file }) => dispatch => {
+    const action = type === 'links' ? actions.setLinkData : actions.setNoteData;
+
+    dispatch(action({ content: null, loading: true }));
+
+    fetchFile(`/assets/content/${file}`)
+        .then(data => dispatch(action({ content: data, loading: false })))
+        .catch(() => {
+            dispatch(action({ content: null, loading: false }));
+            dispatch(actions.showToast('Could not load file...'));
+        });
+};
 
 actions.setMedia = makeAction('MEDIA/SET', 'media');
 
