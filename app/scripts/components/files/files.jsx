@@ -1,29 +1,24 @@
-/* global prompt, confirm, File, FormData */
+/* global File, FormData */
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import toast from '../../util/toast.js';
-import { post, fetchFile } from '../../util/api.js';
+import actions from '../../redux/actions.js';
 
 import { CloseIcon, NewDirIcon, ParentDirIcon, RefreshIcon, UploadIcon } from '../page/icons.jsx';
 import FileList from './filelist.jsx';
 
 const PARENT_DIR = '..';
 
-export default class Files extends React.Component {
+class Files extends React.Component {
     constructor(props) {
         super(props);
-        this.handleKeyboard = this.handleKeyboard.bind(this);
 
-        this.state = {
-            cwd: '',
-            content: [],
-            focused: null,
-            preview: null,
-        };
+        this.handleKeyboard = this.handleKeyboard.bind(this);
     }
 
     componentDidMount() {
-        this.refreshContent(this.state.cwd);
+        this.props.dispatch(actions.refreshFiles());
 
         document.addEventListener('keyup', this.handleKeyboard, false);
     }
@@ -32,57 +27,9 @@ export default class Files extends React.Component {
         document.removeEventListener('keyup', this.handleKeyboard, false);
     }
 
-    refreshContent(cwd) {
-        post({ service: 'fs', action: 'ls', path: cwd })
-            .then(data => this.setState({ content: data }))
-            .catch(() => toast('Could not fetch content...'));
-    }
-
-    changeDirectory(dirname) {
-        let dir = this.state.cwd;
-        if (dirname === PARENT_DIR) {
-            if (dir === '') return;
-            dir = dir.substring(0, dir.lastIndexOf('/'));
-        } else {
-            dir += (dir === '' ? '' : '/') + dirname;
-        }
-        this.setState({
-            cwd: dir,
-            focused: null,
-        });
-        this.refreshContent(dir);
-    }
-
-    handleCreateDirectory() {
-        const name = prompt('Enter name of new folder:');
-        if (name) {
-            post({ service: 'fs', action: 'mkdir', path: `${this.state.cwd}/${name}` })
-                .then(() => this.refreshContent(this.state.cwd))
-                .catch(() => toast('Could not create directory...'));
-        }
-    }
-
-    handleRename(item) {
-        const name = prompt('Enter new name of file:', item.name);
-        if (name) {
-            post({ service: 'fs', action: 'mv', path: `${this.state.cwd}/${item.name}`, name: name })
-                .then(() => this.refreshContent(this.state.cwd))
-                .catch(() => toast(`Could not rename ${item.dir ? 'directory' : 'file'}...`));
-        }
-    }
-
-    handleDelete(item) {
-        if (confirm(`Are you sure you want to delete ${item.name}?`)) {
-            const action = item.dir ? 'rmdir' : 'rm';
-            post({ service: 'fs', action: action, path: `${this.state.cwd}/${item.name}` })
-                .then(() => this.refreshContent(this.state.cwd))
-                .catch(() => toast(`Could not delete ${item.dir ? 'directory' : 'file'}...`));
-        }
-    }
-
     handleClick(item) {
         if (item.dir) {
-            this.changeDirectory(item.name);
+            this.props.dispatch(actions.changeDirectory(item.name));
         } else if (item.preview) {
             this.previewFile(item);
         } else {
@@ -95,49 +42,50 @@ export default class Files extends React.Component {
 
         switch (event.keyCode) {
             case 8: // backspace
-                this.changeDirectory(PARENT_DIR);
+                this.props.dispatch(actions.changeDirectory(PARENT_DIR));
                 break;
             case 13: // enter
-                if (this.state.focused !== null) {
-                    this.handleClick(this.state.content[this.state.focused]);
+                if (this.props.focused !== null) {
+                    this.handleClick(this.props.content[this.props.focused]);
                 }
                 break;
             case 27: // escape
                 this.closePreview();
                 break;
             case 38: // up
-                if (this.state.focused === null) {
-                    this.setState({ focused: 0 });
-                } else if (this.state.focused > 0) {
-                    this.setState({ focused: this.state.focused - 1 });
+                if (this.props.focused === null) {
+                    this.props.dispatch(actions.setFileFocus(0));
+                } else if (this.props.focused > 0) {
+                    this.props.dispatch(actions.setFileFocus(this.props.focused - 1));
                 }
                 break;
             case 40: // down
-                if (this.state.focused === null) {
-                    this.setState({ focused: 0 });
-                } else if (this.state.focused < this.state.content.length - 1) {
-                    this.setState({ focused: this.state.focused + 1 });
+                if (this.props.focused === null) {
+                    this.props.dispatch(actions.setFileFocus(0));
+                } else if (this.props.focused < this.props.content.length - 1) {
+                    this.props.dispatch(actions.setFileFocus(this.props.focused + 1));
                 }
                 break;
         }
     }
 
     handleUpload() {
-        const formData = new FormData();
         const files = this.fileInput.files;
+        if (!files.length) {
+            return;
+        }
+
+        const formData = new FormData();
         for (let key in files) {
             if (files.hasOwnProperty(key) && files[key] instanceof File) {
                 formData.append(key, files[key]);
             }
         }
-        this.fileInput.value = null;
 
-        post({ service: 'fs', action: 'up', path: this.state.cwd }, formData)
-            .then(() => {
-                this.refreshContent(this.state.cwd);
-                this.fileLabel.innerHTML = 'Choose a file';
-            })
-            .catch(() => toast('An error occurred while uploading the file(s)...'));
+        this.props.dispatch(actions.uploadFile(formData));
+
+        this.fileInput.value = null;
+        this.fileLabel.innerHTML = 'Choose a file';
     }
 
     handleFileChange(event) {
@@ -151,45 +99,46 @@ export default class Files extends React.Component {
     }
 
     forceDownload(item) {
-        setTimeout(() => {
-            window.open(item.href);
-        }, 100);
+        setTimeout(() => window.open(item.href), 100);
     }
 
     previewFile(item) {
         if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
-            this.setState({ preview: { src: item.href, image: true } });
+            this.props.dispatch(actions.setFilePreview({ src: item.href, image: true }));
         } else {
-            fetchFile(item.href).then(data => this.setState({ preview: { content: data, image: false } }));
+            this.props.dispatch(actions.showFile(item.href));
         }
     }
 
     closePreview() {
-        this.setState({ preview: null });
+        this.props.dispatch(actions.setFilePreview(null));
     }
 
     render() {
         return (
             <div className="wrapper text-center">
                 <div className="file-table-header">
-                    <button className="button-icon" onClick={() => this.changeDirectory(PARENT_DIR)} disabled={this.state.cwd === ''}>
+                    <button
+                        className="button-icon"
+                        onClick={() => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
+                        disabled={this.props.cwd === ''}>
                         <ParentDirIcon />
                     </button>
                     <div className="text-right">
-                        <button className="button-icon" onClick={this.handleCreateDirectory.bind(this)}>
+                        <button className="button-icon" onClick={() => this.props.dispatch(actions.createDirectory())}>
                             <NewDirIcon />
                         </button>
-                        <button className="button-icon" onClick={() => this.refreshContent(this.state.cwd)}>
+                        <button className="button-icon" onClick={() => this.props.dispatch(actions.refreshFiles())}>
                             <RefreshIcon />
                         </button>
                     </div>
                 </div>
                 <FileList
-                    content={this.state.content}
-                    focused={this.state.focused}
+                    content={this.props.content}
+                    focused={this.props.focused}
                     handleClick={this.handleClick.bind(this)}
-                    handleRename={this.handleRename.bind(this)}
-                    handleDelete={this.handleDelete.bind(this)}
+                    handleRename={item => this.props.dispatch(actions.renameFile(item))}
+                    handleDelete={item => this.props.dispatch(actions.deleteFile(item))}
                 />
                 <div>
                     <label htmlFor="file" className="color-primary pointer">
@@ -212,13 +161,13 @@ export default class Files extends React.Component {
                     </button>
                 </div>
 
-                {this.state.preview ? (
+                {this.props.preview ? (
                     <div className="overlay">
                         <CloseIcon className="file-close" onClick={this.closePreview.bind(this)} />
-                        {this.state.preview.image ? (
-                            <img src={this.state.preview.src} alt="Preview" />
+                        {this.props.preview.image ? (
+                            <img src={this.props.preview.src} alt="Preview" />
                         ) : (
-                            <pre className="overlay-preview">{this.state.preview.content}</pre>
+                            <pre className="overlay-preview">{this.props.preview.content}</pre>
                         )}
                     </div>
                 ) : null}
@@ -226,3 +175,18 @@ export default class Files extends React.Component {
         );
     }
 }
+
+Files.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    cwd: PropTypes.string.isRequired,
+    content: PropTypes.array.isRequired,
+    focused: PropTypes.number,
+    preview: PropTypes.object,
+};
+
+export default connect(state => ({
+    cwd: state.files.cwd,
+    content: state.files.content,
+    focused: state.files.focused,
+    preview: state.files.preview,
+}))(Files);

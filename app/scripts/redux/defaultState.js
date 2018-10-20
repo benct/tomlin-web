@@ -13,6 +13,13 @@ export default {
         current: Math.floor(Math.random() * quotes.length),
     },
 
+    files: {
+        cwd: '',
+        content: [],
+        focused: null,
+        preview: null,
+    },
+
     links: {
         content: null,
         loading: false,

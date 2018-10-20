@@ -1,3 +1,4 @@
+/* global prompt, confirm */
 import makeAction from './makeAction.js';
 import makeReducer from './makeReducer.js';
 
@@ -49,6 +50,76 @@ actions.loadContent = ({ type, file }) => dispatch => {
             dispatch(actions.showToast('Could not load file...'));
         });
 };
+
+actions.setFileData = makeAction('FILES/SET_DATA', (state, { payload }) =>
+    merge(state, { files: merge(state.files, { content: payload }) })
+);
+
+actions.setDirectory = makeAction('FILES/CHANGE_DIR', (state, { payload }) =>
+    merge(state, { files: merge(state.files, { cwd: payload, focused: null }) })
+);
+
+actions.setFilePreview = makeAction('FILES/SET_PREVIEW', (state, { payload }) =>
+    merge(state, { files: merge(state.files, { preview: payload }) })
+);
+
+actions.setFileFocus = makeAction('FILES/SET_FOCUS', (state, { payload }) =>
+    merge(state, { files: merge(state.files, { focused: payload }) })
+);
+
+actions.refreshFiles = cwd => (dispatch, getState) =>
+    post({ service: 'fs', action: 'ls', path: cwd || getState().files.cwd })
+        .then(data => dispatch(actions.setFileData(data)))
+        .catch(() => dispatch(actions.showToast('Could not fetch content...')));
+
+actions.changeDirectory = dirname => (dispatch, getState) => {
+    let dir = getState().files.cwd;
+    if (dirname === '..') {
+        if (dir === '') return;
+        dir = dir.substring(0, dir.lastIndexOf('/'));
+    } else {
+        dir += (dir === '' ? '' : '/') + dirname;
+    }
+    dispatch(actions.setDirectory(dir));
+    dispatch(actions.refreshFiles(dir));
+};
+
+actions.createDirectory = () => (dispatch, getState) => {
+    const name = prompt('Enter name of new folder:');
+    if (name) {
+        post({ service: 'fs', action: 'mkdir', path: `${getState().files.cwd}/${name}` })
+            .then(() => dispatch(actions.refreshFiles()))
+            .catch(() => dispatch(actions.showToast('Could not create directory...')));
+    }
+};
+
+actions.renameFile = item => (dispatch, getState) => {
+    const name = prompt('Enter new name of file:', item.name);
+    if (name) {
+        post({ service: 'fs', action: 'mv', path: `${getState().files.cwd}/${item.name}`, name: name })
+            .then(() => dispatch(actions.refreshFiles()))
+            .catch(() => dispatch(actions.showToast(`Could not rename ${item.dir ? 'directory' : 'file'}...`)));
+    }
+};
+
+actions.deleteFile = item => (dispatch, getState) => {
+    if (confirm(`Are you sure you want to delete ${item.name}?`)) {
+        const action = item.dir ? 'rmdir' : 'rm';
+        post({ service: 'fs', action: action, path: `${getState().files.cwd}/${item.name}` })
+            .then(() => dispatch(actions.refreshFiles()))
+            .catch(() => dispatch(actions.showToast(`Could not delete ${item.dir ? 'directory' : 'file'}...`)));
+    }
+};
+
+actions.uploadFile = data => (dispatch, getState) =>
+    post({ service: 'fs', action: 'up', path: getState().files.cwd }, data)
+        .then(() => dispatch(actions.refreshFiles()))
+        .catch(() => dispatch(actions.showToast('An error occurred while uploading the file(s)...')));
+
+actions.showFile = item => dispatch =>
+    fetchFile(item.href)
+        .then(data => dispatch(actions.setFilePreview({ content: data, image: false })))
+        .catch(() => dispatch(actions.showToast('Could not fetch file...')));
 
 actions.setMedia = makeAction('MEDIA/SET', 'media');
 
