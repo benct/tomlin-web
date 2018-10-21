@@ -23,7 +23,11 @@ class Search extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.action !== prevProps.action || this.props.type !== prevProps.type || this.props.page !== prevProps.page) {
+        if (
+            this.props.action &&
+            this.props.type &&
+            (this.props.action !== prevProps.action || this.props.type !== prevProps.type || this.props.page !== prevProps.page)
+        ) {
             this.getMedia();
         }
     }
