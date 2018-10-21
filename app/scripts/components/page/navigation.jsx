@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
-import actions from '../../redux/actions.js';
+import actions from '../../actions/base.js';
 
 function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
     const menu = [

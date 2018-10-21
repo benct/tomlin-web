@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import auth from './util/auth.js';
-import actions from './redux/actions.js';
+import actions from './actions/base.js';
 
 import { MenuIcon } from './components/page/icons.jsx';
 import PrivateRoute from './route/private.jsx';

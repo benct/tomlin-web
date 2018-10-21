@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import debounce from '../../util/debounce.js';
-import actions from '../../redux/actions.js';
+import mediaActions from '../../actions/media.js';
+import paginationActions from '../../actions/pagination.js';
 
 import SearchItem from './searchItem.jsx';
 import Pagination from '../page/pagination.jsx';
@@ -13,7 +14,7 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
 
-        this.search = debounce(query => props.dispatch(actions.searchMedia(query)), 500);
+        this.search = debounce(query => props.dispatch(mediaActions.search(query)), 500);
     }
 
     componentDidMount() {
@@ -33,12 +34,12 @@ class Search extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.dispatch(actions.clearMedia());
-        this.props.dispatch(actions.resetPagination());
+        this.props.dispatch(mediaActions.clear());
+        this.props.dispatch(paginationActions.reset());
     }
 
     getMedia() {
-        this.props.dispatch(actions.postMedia({ action: this.props.action, type: this.props.type, page: this.props.page }));
+        this.props.dispatch(mediaActions.post({ action: this.props.action, type: this.props.type, page: this.props.page }));
         window.scrollTo(0, 0);
     }
 
@@ -60,9 +61,9 @@ class Search extends React.Component {
                 votes={data.vote_count || 0}
                 overview={data.overview}
                 stored={this.props.existing.includes(data.id)}
-                add={() => this.props.dispatch(actions.addMedia({ type: data.media_type || this.props.type, id: data.id }))}
-                remove={() => this.props.dispatch(actions.removeMedia({ type: data.media_type || this.props.type, id: data.id }))}
-                imdb={() => this.props.dispatch(actions.goToIMDb({ type: data.media_type || this.props.type, id: data.id }))}
+                add={() => this.props.dispatch(mediaActions.add({ type: data.media_type || this.props.type, id: data.id }))}
+                remove={() => this.props.dispatch(mediaActions.remove({ type: data.media_type || this.props.type, id: data.id }))}
+                imdb={() => this.props.dispatch(mediaActions.goToIMDb({ type: data.media_type || this.props.type, id: data.id }))}
                 key={`mediaResult${idx}`}
             />
         );
@@ -88,7 +89,7 @@ class Search extends React.Component {
                     <Link to={'/media/admin/tv/popular/'}>Popular (TV)</Link>
                     <Link to={'/media/admin/tv/top/'}>Top Rated (TV)</Link>
                     <Link to={'/media/admin/tv/now/'}>Now Playing (TV)</Link>
-                    <div className="faded" onClick={() => this.props.dispatch(actions.updatePosters())}>
+                    <div className="faded" onClick={() => this.props.dispatch(mediaActions.updatePosters())}>
                         Update Posters (!)
                     </div>
                 </div>

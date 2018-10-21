@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import actions from '../../redux/actions.js';
+import actions from '../../actions/base.js';
 
 class Links extends React.Component {
     componentDidMount() {

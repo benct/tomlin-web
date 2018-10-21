@@ -2,34 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import actions from '../../redux/actions.js';
+import mediaActions from '../../actions/media.js';
+import paginationActions from '../../actions/pagination.js';
 
 import MediaItem from './mediaItem.jsx';
 import Pagination from '../page/pagination.jsx';
 
 class MediaList extends React.Component {
     componentDidMount() {
-        this.props.dispatch(actions.getMedia({ action: this.props.type, page: this.props.page }));
+        this.props.dispatch(mediaActions.get({ action: this.props.type, page: this.props.page }));
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.type !== prevProps.type || this.props.page !== prevProps.page) {
-            this.props.dispatch(actions.getMedia({ action: this.props.type, page: this.props.page }));
+            this.props.dispatch(mediaActions.get({ action: this.props.type, page: this.props.page }));
             window.scrollTo(0, 0);
         }
     }
 
     componentWillUnmount() {
-        this.props.dispatch(actions.clearMedia());
-        this.props.dispatch(actions.resetPagination());
+        this.props.dispatch(mediaActions.clear());
+        this.props.dispatch(paginationActions.reset());
     }
 
     setFavourite(itemType, id, favourite) {
-        this.props.dispatch(actions.setFavourite({ action: this.props.type, type: itemType || this.props.type, id, set: !favourite }));
+        this.props.dispatch(mediaActions.favourite({ action: this.props.type, type: itemType || this.props.type, id, set: !favourite }));
     }
 
     setSeen(itemType, id, seen) {
-        this.props.dispatch(actions.setSeen({ action: this.props.type, type: itemType || this.props.type, id, set: !seen }));
+        this.props.dispatch(mediaActions.seen({ action: this.props.type, type: itemType || this.props.type, id, set: !seen }));
     }
 
     renderStats() {
