@@ -30,6 +30,7 @@ class Search extends React.Component {
 
     componentWillUnmount() {
         this.props.dispatch(actions.clearMedia());
+        this.props.dispatch(actions.resetPagination());
     }
 
     getMedia() {
@@ -54,7 +55,7 @@ class Search extends React.Component {
                 rating={data.vote_average}
                 votes={data.vote_count || 0}
                 overview={data.overview}
-                stored={this.props.search.existing.includes(data.id)}
+                stored={this.props.existing.includes(data.id)}
                 add={() => this.props.dispatch(actions.addMedia({ type: data.media_type || this.props.type, id: data.id }))}
                 remove={() => this.props.dispatch(actions.removeMedia({ type: data.media_type || this.props.type, id: data.id }))}
                 imdb={() => this.props.dispatch(actions.goToIMDb({ type: data.media_type || this.props.type, id: data.id }))}
@@ -87,7 +88,7 @@ class Search extends React.Component {
                         Update Posters (!)
                     </div>
                 </div>
-                {this.props.search.data.map(this.renderItem.bind(this))}
+                {this.props.data.map(this.renderItem.bind(this))}
                 <Pagination path={`/media/admin/${this.props.type}/${this.props.action}/`} />
             </div>
         );
@@ -96,14 +97,16 @@ class Search extends React.Component {
 
 Search.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    search: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    existing: PropTypes.array.isRequired,
     type: PropTypes.string,
     action: PropTypes.string,
     page: PropTypes.number,
 };
 
 export default connect((state, ownProps) => ({
-    search: state.search,
+    data: state.media.search,
+    existing: state.media.existing,
     type: ownProps.match.params.type,
     action: ownProps.match.params.action,
     page: +ownProps.match.params.page || 1,

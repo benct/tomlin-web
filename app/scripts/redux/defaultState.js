@@ -31,11 +31,10 @@ export default {
     },
 
     media: {
-        data: [],
+        list: [],
+        search: [],
+        item: {},
         stats: null,
-    },
-    search: {
-        data: [],
         existing: [],
     },
 

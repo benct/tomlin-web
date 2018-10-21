@@ -21,6 +21,7 @@ class MediaList extends React.Component {
 
     componentWillUnmount() {
         this.props.dispatch(actions.clearMedia());
+        this.props.dispatch(actions.resetPagination());
     }
 
     setFavourite(itemType, id, favourite) {
@@ -32,11 +33,11 @@ class MediaList extends React.Component {
     }
 
     renderStats() {
-        return this.props.media.stats ? (
+        return this.props.stats ? (
             <div className="text-center mbm">
-                Total: <span className="strong">{this.props.media.stats.total}</span>, Seen:&nbsp;
-                <span className="strong">{this.props.media.stats.seen}</span>, Favourite:&nbsp;
-                <span className="strong">{this.props.media.stats.favourite}</span>
+                Total: <span className="strong">{this.props.stats.total}</span>, Seen:&nbsp;
+                <span className="strong">{this.props.stats.seen}</span>, Favourite:&nbsp;
+                <span className="strong">{this.props.stats.favourite}</span>
             </div>
         ) : null;
     }
@@ -71,14 +72,14 @@ class MediaList extends React.Component {
         return this.props.type === 'watchlist' ? (
             <>
                 <div>TV-Shows:</div>
-                <div className="clear-fix text-center">{this.renderRows(this.props.media.data.filter(item => item.type === 'tv'))}</div>
+                <div className="clear-fix text-center">{this.renderRows(this.props.data.filter(item => item.type === 'tv'))}</div>
                 <div>Movies:</div>
-                <div className="clear-fix text-center">{this.renderRows(this.props.media.data.filter(item => item.type === 'movie'))}</div>
+                <div className="clear-fix text-center">{this.renderRows(this.props.data.filter(item => item.type === 'movie'))}</div>
             </>
         ) : (
             <>
                 {this.renderStats()}
-                <div className="clear-fix text-center">{this.renderRows(this.props.media.data)}</div>
+                <div className="clear-fix text-center">{this.renderRows(this.props.data)}</div>
                 <Pagination path={`/media/${this.props.type}/`} />
             </>
         );
@@ -88,14 +89,16 @@ class MediaList extends React.Component {
 MediaList.propTypes = {
     dispatch: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    media: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    stats: PropTypes.object,
     type: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
 };
 
 export default connect((state, ownProps) => ({
     isLoggedIn: state.isLoggedIn,
-    media: state.media,
+    data: state.media.list,
+    stats: state.media.stats,
     type: ownProps.match.params.type,
     page: +ownProps.match.params.page || 1,
 }))(MediaList);

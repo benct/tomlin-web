@@ -134,17 +134,9 @@ actions.showFile = item => dispatch =>
         .then(data => dispatch(actions.setFilePreview({ content: data, image: false })))
         .catch(() => dispatch(actions.showToast('Could not fetch file...')));
 
-actions.setMedia = makeAction('MEDIA/SET', 'media');
+actions.setMedia = makeAction('MEDIA/SET', (state, { payload }) => merge(state, { media: merge(state.media, payload) }));
 
-actions.setSearch = makeAction('MEDIA/SEARCH', 'search');
-
-actions.clearMedia = makeAction('MEDIA/CLEAR', state =>
-    merge(state, {
-        media: defaultState.media,
-        search: defaultState.search,
-        pagination: defaultState.pagination,
-    })
-);
+actions.clearMedia = makeAction('MEDIA/CLEAR', state => merge(state, { media: defaultState.media }));
 
 actions.setPagination = makeAction('PAGINATION/SET', (state, { payload }) =>
     merge(state, { pagination: pagination(payload.total, payload.current) })
@@ -157,7 +149,7 @@ actions.getMedia = ({ action, page }) => (dispatch, getState) =>
         .then(response => {
             dispatch(
                 actions.setMedia({
-                    data: response.results || [],
+                    list: response.results || [],
                     stats: response.stats,
                 })
             );
@@ -165,6 +157,7 @@ actions.getMedia = ({ action, page }) => (dispatch, getState) =>
         })
         .catch(() => {
             dispatch(actions.clearMedia());
+            dispatch(actions.resetPagination());
             dispatch(actions.showToast('Could not fetch media content...'));
         });
 
@@ -172,8 +165,8 @@ actions.postMedia = ({ action, type, page }) => (dispatch, getState) =>
     post({ service: 'media', action, type, page: page || getState().pagination.current })
         .then(response => {
             dispatch(
-                actions.setSearch({
-                    data: response.results || [],
+                actions.setMedia({
+                    search: response.results || [],
                     existing: response.existing,
                 })
             );
@@ -181,6 +174,7 @@ actions.postMedia = ({ action, type, page }) => (dispatch, getState) =>
         })
         .catch(() => {
             dispatch(actions.clearMedia());
+            dispatch(actions.resetPagination());
             dispatch(actions.showToast('Could not fetch media content...'));
         });
 
@@ -188,8 +182,10 @@ actions.searchMedia = payload => dispatch =>
     post({ service: 'media', action: 'search', query: encodeURI(payload) })
         .then(response => {
             dispatch(
-                actions.setSearch({
-                    data: response.results ? response.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv') : [],
+                actions.setMedia({
+                    search: response.results
+                        ? response.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv')
+                        : [],
                     existing: response.existing,
                 })
             );
