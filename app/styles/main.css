@@ -120,6 +120,11 @@ pre {
     white-space: nowrap;
 }
 
+.no-scroll {
+    overflow: hidden;
+    height: 100%;
+}
+
 .truncate {
     white-space: nowrap;
     overflow: hidden;
