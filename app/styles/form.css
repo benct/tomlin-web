@@ -98,6 +98,16 @@ input[type=file] + svg {
     margin-right: 0.25em;
 }
 
+.button-blank {
+    background: transparent no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
 .button-icon {
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
@@ -119,6 +129,7 @@ input[type=file] + svg {
     color: #009fd4;
 }
 
+.button-blank,
 .button-icon svg,
 .button-icon span {
     vertical-align: middle;
