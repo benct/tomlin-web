@@ -122,14 +122,14 @@ class Files extends React.Component {
                         className="button-icon"
                         onClick={() => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
                         disabled={this.props.cwd === ''}>
-                        <ParentDirIcon />
+                        <ParentDirIcon width="28" height="28" />
                     </button>
                     <div className="text-right">
                         <button className="button-icon" onClick={() => this.props.dispatch(actions.createDirectory())}>
-                            <NewDirIcon />
+                            <NewDirIcon width="28" height="28" />
                         </button>
                         <button className="button-icon" onClick={() => this.props.dispatch(actions.refresh())}>
-                            <RefreshIcon />
+                            <RefreshIcon width="28" height="28" />
                         </button>
                     </div>
                 </div>

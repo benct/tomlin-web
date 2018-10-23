@@ -79,7 +79,7 @@ export function LastIcon(props) {
 
 export function RefreshIcon(props) {
     return (
-        <svg {...props} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 489.711 489.711" width="28" height="28">
+        <svg {...props} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 489.711 489.711">
             <path
                 d="M112.156,97.111c72.3-65.4,180.5-66.4,253.8-6.7l-58.1,2.2c-7.5,0.3-13.3,6.5-13,14c0.3,7.3,6.3,13,13.5,13
                     c0.2,0,0.3,0,0.5,0l89.2-3.3c7.3-0.3,13-6.2,13-13.5v-1c0-0.2,0-0.3,0-0.5v-0.1l0,0l-3.3-88.2c-0.3-7.5-6.6-13.3-14-13
@@ -109,9 +109,9 @@ export function UploadIcon() {
     );
 }
 
-export function ParentDirIcon() {
+export function ParentDirIcon(props) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 129 129" width="28" height="28">
+        <svg {...props} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 129 129">
             <path
                 d="m121.4,61.6l-54-54c-0.7-0.7-1.8-1.2-2.9-1.2s-2.2,0.5-2.9,1.2l-54,54c-1.6,1.6-1.6,4.2 0,5.8 0.8,0.8
                     1.8,1.2 2.9,1.2s2.1-0.4 2.9-1.2l47-47v98.1c0,2.3 1.8,4.1 4.1,4.1s4.1-1.8 4.1-4.1v-98.1l47,47c1.6,1.6 4.2,1.6
@@ -122,9 +122,9 @@ export function ParentDirIcon() {
     );
 }
 
-export function NewDirIcon() {
+export function NewDirIcon(props) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 476.737 476.737" width="28" height="28">
+        <svg {...props} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 476.737 476.737">
             <path
                 d="M444.955,31.782H333.208c-17.576,0-37.758,8.931-47.165,31.782c0,0-4.132,29.145-31.782,31.782
                     H31.782C14.239,95.347,0,109.077,0,126.621v286.551c0,17.544,14.239,31.783,31.782,31.783h413.172
