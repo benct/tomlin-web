@@ -169,7 +169,7 @@ class Files extends React.Component {
                     <div className="overlay">
                         <CloseIcon className="file-close" onClick={this.closePreview.bind(this)} />
                         {this.props.preview.image ? (
-                            <img src={this.props.preview.src} alt="Preview" />
+                            <img className="overlay-image" src={this.props.preview.src} alt="Preview" />
                         ) : (
                             <pre className="overlay-preview">{this.props.preview.content}</pre>
                         )}
