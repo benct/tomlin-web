@@ -41,6 +41,8 @@
     "window": true,
     "document": true,
     "console": true,
-    "Promise": true
+    "Promise": true,
+    "confirm": true,
+    "prompt": true
   }
 }

@@ -1,4 +1,3 @@
-/* global prompt, confirm */
 import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
 
