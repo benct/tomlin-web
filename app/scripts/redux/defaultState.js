@@ -33,7 +33,7 @@ export default {
     media: {
         list: [],
         search: [],
-        item: {},
+        item: null,
         stats: null,
         existing: [],
     },

@@ -14,6 +14,10 @@ actions.set = makeAction('MEDIA/SET', (state, { payload }) => Object.assign({}, 
 
 actions.clear = makeAction('MEDIA/CLEAR', state => Object.assign({}, state, defaultState.media));
 
+actions.showItem = makeAction('MEDIA/SHOW', 'item');
+
+actions.hideItem = makeAction('MEDIA/HIDE', state => Object.assign({}, state, { item: null }));
+
 actions.get = ({ action, page }) => (dispatch, getState) =>
     get({ service: 'media', action, page: page || getState().pagination.current })
         .then(response => {
@@ -68,10 +72,21 @@ actions.add = ({ type, id }) => dispatch =>
         .then(() => dispatch(baseActions.showToast('Media successfully added!')))
         .catch(() => dispatch(baseActions.showToast('Failed to add media...')));
 
-actions.remove = ({ type, id }) => dispatch =>
-    post({ service: 'media', action: 'delete', type, id })
-        .then(() => dispatch(baseActions.showToast('Media successfully removed!')))
-        .catch(() => dispatch(baseActions.showToast('Failed to remove media...')));
+actions.update = ({ type, id }) => dispatch =>
+    post({ service: 'media', action: 'update', type, id })
+        .then(() => dispatch(baseActions.showToast('Media successfully updated!')))
+        .catch(() => dispatch(baseActions.showToast('Failed to update media...')));
+
+actions.remove = ({ type, id }) => dispatch => {
+    if (confirm(`Are you sure you want to delete this?`)) {
+        post({ service: 'media', action: 'delete', type, id })
+            .then(() => {
+                dispatch(actions.hideItem());
+                dispatch(baseActions.showToast('Media successfully removed!'));
+            })
+            .catch(() => dispatch(baseActions.showToast('Failed to remove media...')));
+    }
+};
 
 actions.favourite = ({ action, type, id, set }) => dispatch => {
     if (auth.loggedIn()) {

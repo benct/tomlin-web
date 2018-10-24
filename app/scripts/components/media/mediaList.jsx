@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import mediaActions from '../../actions/media.js';
 import paginationActions from '../../actions/pagination.js';
 
-import MediaItem from './mediaItem.jsx';
 import Pagination from '../page/pagination.jsx';
+import MediaModal from './mediaModal.jsx';
+import MediaItem from './mediaItem.jsx';
 
 class MediaList extends React.Component {
     componentDidMount() {
@@ -31,6 +32,14 @@ class MediaList extends React.Component {
 
     setSeen(itemType, id, seen) {
         this.props.dispatch(mediaActions.seen({ action: this.props.type, type: itemType || this.props.type, id, set: !seen }));
+    }
+
+    update(itemType, id) {
+        this.props.dispatch(mediaActions.update({ type: itemType || this.props.type, id }));
+    }
+
+    remove(itemType, id) {
+        this.props.dispatch(mediaActions.remove({ type: itemType || this.props.type, id }));
     }
 
     renderStats() {
@@ -64,12 +73,13 @@ class MediaList extends React.Component {
                 favourite={!!item.favourite}
                 setSeen={this.setSeen.bind(this, item.type, item.id, item.seen)}
                 setFavourite={this.setFavourite.bind(this, item.type, item.id, item.favourite)}
+                showItem={() => this.props.dispatch(mediaActions.showItem(item))}
                 isLoggedIn={this.props.isLoggedIn}
             />
         ));
     }
 
-    render() {
+    renderList() {
         return this.props.type === 'watchlist' ? (
             <>
                 <div>TV-Shows:</div>
@@ -85,6 +95,26 @@ class MediaList extends React.Component {
             </>
         );
     }
+
+    render() {
+        return (
+            <>
+                {this.renderList()}
+                {this.props.item ? (
+                    <MediaModal
+                        type={this.props.item.type || this.props.type}
+                        data={this.props.item}
+                        isLoggedIn={this.props.isLoggedIn}
+                        hide={() => this.props.dispatch(mediaActions.hideItem())}
+                        update={this.update.bind(this, this.props.item.type, this.props.item.id)}
+                        remove={this.remove.bind(this, this.props.item.type, this.props.item.id)}
+                        setSeen={this.setSeen.bind(this, this.props.item.type, this.props.item.id, this.props.item.seen)}
+                        setFavourite={this.setFavourite.bind(this, this.props.item.type, this.props.item.id, this.props.item.favourite)}
+                    />
+                ) : null}
+            </>
+        );
+    }
 }
 
 MediaList.propTypes = {
@@ -92,6 +122,7 @@ MediaList.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     data: PropTypes.array.isRequired,
     stats: PropTypes.object,
+    item: PropTypes.object,
     type: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
 };
@@ -100,6 +131,7 @@ export default connect((state, ownProps) => ({
     isLoggedIn: state.isLoggedIn,
     data: state.media.list,
     stats: state.media.stats,
+    item: state.media.item,
     type: ownProps.match.params.type,
     page: +ownProps.match.params.page || 1,
 }))(MediaList);

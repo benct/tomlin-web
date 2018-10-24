@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { formatDuration } from '../../util/formatting.js';
+import { formatDuration, formatYears } from '../../util/formatting.js';
 import { StarIcon, ViewIcon, ImdbIcon } from '../page/icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster.png');
@@ -10,18 +10,12 @@ export default class MediaItem extends React.Component {
     renderImage() {
         return (
             <img
+                className="pointer"
                 src={this.props.poster ? `/assets/images/media${this.props.poster}` : defaultPoster}
                 alt={this.props.poster ? `Poster: ${this.props.title}` : 'No poster'}
                 onError={event => (event.target.src = defaultPoster)}
+                onClick={this.props.showItem}
             />
-        );
-    }
-
-    renderImageLink() {
-        return (
-            <a href={`https://www.imdb.com/title/${this.props.imdbId}`} target="_blank" rel="noopener noreferrer external">
-                {this.renderImage()}
-            </a>
         );
     }
 
@@ -49,17 +43,13 @@ export default class MediaItem extends React.Component {
         );
     }
 
-    renderYears() {
-        return this.props.type === 'tv'
-            ? `${this.props.release}${this.props.end ? '-' + this.props.end : String.fromCharCode(8594)}`
-            : this.props.release;
-    }
-
     render() {
         return (
             <div className="media-item media-item-small pvm">
-                <div className="media-poster">{this.props.imdbId ? this.renderImageLink() : this.renderImage()}</div>
-                <div className="media-title color-primary truncate strong">{this.props.title}</div>
+                <div className="media-poster">{this.renderImage()}</div>
+                <div className="media-title color-primary truncate strong pointer" onClick={this.props.showItem}>
+                    {this.props.title}
+                </div>
                 <div className="media-data text-small truncate">
                     {this.props.imdbId ? (
                         <a href={`https://www.imdb.com/title/${this.props.imdbId}`} target="_blank" rel="noopener noreferrer external">
@@ -70,7 +60,9 @@ export default class MediaItem extends React.Component {
                     {this.props.rating ? this.renderRating() : ' | No rating'}
                     <span className="hide-lt480 hide-gt768"> | {this.props.genres}</span>
                 </div>
-                <div className="media-actions strong text-small no-wrap">{this.props.release ? this.renderYears() : 'Unknown'}</div>
+                <div className="media-actions strong text-small no-wrap">
+                    {formatYears(this.props.type, this.props.release, this.props.end)}
+                </div>
                 <div className="media-external">
                     <span className={`mrm ${this.props.isLoggedIn ? ' pointer' : ''}`} data-tooltip="Seen" onClick={this.props.setSeen}>
                         <ViewIcon width={24} seen={this.props.seen} className={this.props.seen ? '' : 'faded'} />
@@ -102,5 +94,6 @@ MediaItem.propTypes = {
     setSeen: PropTypes.func.isRequired,
     favourite: PropTypes.bool.isRequired,
     setFavourite: PropTypes.func.isRequired,
+    showItem: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
 };
