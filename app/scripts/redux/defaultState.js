@@ -31,11 +31,12 @@ export default {
     },
 
     media: {
-        list: [],
+        movie: null,
+        tv: null,
+        watchlist: null,
         search: [],
-        item: null,
-        stats: null,
         existing: [],
+        item: null,
     },
 
     pagination: {

@@ -11,18 +11,22 @@ import MediaItem from './mediaItem.jsx';
 
 class MediaList extends React.Component {
     componentDidMount() {
-        this.props.dispatch(mediaActions.get({ action: this.props.type, page: this.props.page }));
+        if (this.props.data) {
+            this.props.dispatch(paginationActions.set(this.props.data.page));
+        } else {
+            this.props.dispatch(mediaActions.get({ action: this.props.type, page: this.props.page }));
+            window.scrollTo(0, 0);
+        }
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.type !== prevProps.type || this.props.page !== prevProps.page) {
+        if (!this.props.data || this.props.type !== prevProps.type || this.props.page !== prevProps.page) {
             this.props.dispatch(mediaActions.get({ action: this.props.type, page: this.props.page }));
             window.scrollTo(0, 0);
         }
     }
 
     componentWillUnmount() {
-        this.props.dispatch(mediaActions.clear());
         this.props.dispatch(paginationActions.reset());
     }
 
@@ -35,21 +39,11 @@ class MediaList extends React.Component {
     }
 
     update(itemType, id) {
-        this.props.dispatch(mediaActions.update({ type: itemType || this.props.type, id }));
+        this.props.dispatch(mediaActions.update({ action: this.props.type, type: itemType || this.props.type, id }));
     }
 
     remove(itemType, id) {
-        this.props.dispatch(mediaActions.remove({ type: itemType || this.props.type, id }));
-    }
-
-    renderStats() {
-        return this.props.stats ? (
-            <div className="text-center mbm">
-                Total: <span className="strong">{this.props.stats.total}</span>, Seen:&nbsp;
-                <span className="strong">{this.props.stats.seen}</span>, Favourite:&nbsp;
-                <span className="strong">{this.props.stats.favourite}</span>
-            </div>
-        ) : null;
+        this.props.dispatch(mediaActions.remove({ action: this.props.type, type: itemType || this.props.type, id }));
     }
 
     renderRows(data) {
@@ -73,64 +67,82 @@ class MediaList extends React.Component {
                 favourite={!!item.favourite}
                 setSeen={this.setSeen.bind(this, item.type, item.id, item.seen)}
                 setFavourite={this.setFavourite.bind(this, item.type, item.id, item.favourite)}
-                showItem={() => this.props.dispatch(mediaActions.showItem(item))}
+                showItem={() => this.props.dispatch(mediaActions.showModal(item.id))}
                 isLoggedIn={this.props.isLoggedIn}
             />
         ));
     }
 
-    renderList() {
-        return this.props.type === 'watchlist' ? (
+    renderModal(item) {
+        return item ? (
+            <MediaModal
+                type={item.type || this.props.type}
+                data={item}
+                isLoggedIn={this.props.isLoggedIn}
+                hide={() => this.props.dispatch(mediaActions.hideModal())}
+                update={this.update.bind(this, item.type, item.id)}
+                remove={this.remove.bind(this, item.type, item.id)}
+                setSeen={this.setSeen.bind(this, item.type, item.id, item.seen)}
+                setFavourite={this.setFavourite.bind(this, item.type, item.id, item.favourite)}
+            />
+        ) : null;
+    }
+
+    renderStats() {
+        return (
+            <div className="text-center mbm">
+                Total: <span className="strong">{this.props.data.stats.total}</span>, Seen:&nbsp;
+                <span className="strong">{this.props.data.stats.seen}</span>, Favourite:&nbsp;
+                <span className="strong">{this.props.data.stats.favourite}</span>
+            </div>
+        );
+    }
+
+    renderWatchlist() {
+        return (
             <>
                 <div>TV-Shows:</div>
-                <div className="clear-fix text-center">{this.renderRows(this.props.data.filter(item => item.type === 'tv'))}</div>
+                <div className="clear-fix text-center">{this.renderRows(this.props.data.results.filter(item => item.type === 'tv'))}</div>
                 <div>Movies:</div>
-                <div className="clear-fix text-center">{this.renderRows(this.props.data.filter(item => item.type === 'movie'))}</div>
+                <div className="clear-fix text-center">
+                    {this.renderRows(this.props.data.results.filter(item => item.type === 'movie'))}
+                </div>
             </>
-        ) : (
+        );
+    }
+
+    renderList() {
+        return (
             <>
-                {this.renderStats()}
-                <div className="clear-fix text-center">{this.renderRows(this.props.data)}</div>
+                {this.props.data.stats ? this.renderStats() : null}
+                <div className="clear-fix text-center">{this.renderRows(this.props.data.results)}</div>
                 <Pagination path={`/media/${this.props.type}/`} />
             </>
         );
     }
 
     render() {
-        return (
+        return this.props.data ? (
             <>
-                {this.renderList()}
-                {this.props.item ? (
-                    <MediaModal
-                        type={this.props.item.type || this.props.type}
-                        data={this.props.item}
-                        isLoggedIn={this.props.isLoggedIn}
-                        hide={() => this.props.dispatch(mediaActions.hideItem())}
-                        update={this.update.bind(this, this.props.item.type, this.props.item.id)}
-                        remove={this.remove.bind(this, this.props.item.type, this.props.item.id)}
-                        setSeen={this.setSeen.bind(this, this.props.item.type, this.props.item.id, this.props.item.seen)}
-                        setFavourite={this.setFavourite.bind(this, this.props.item.type, this.props.item.id, this.props.item.favourite)}
-                    />
-                ) : null}
+                {this.props.type === 'watchlist' ? this.renderWatchlist() : this.renderList()}
+                {this.props.item ? this.renderModal(this.props.data.results.filter(item => item.id === this.props.item).pop()) : null}
             </>
-        );
+        ) : null;
     }
 }
 
 MediaList.propTypes = {
     dispatch: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    data: PropTypes.array.isRequired,
-    stats: PropTypes.object,
-    item: PropTypes.object,
-    type: PropTypes.string.isRequired,
+    data: PropTypes.object,
+    item: PropTypes.number,
+    type: PropTypes.oneOf(['movie', 'tv', 'watchlist']).isRequired,
     page: PropTypes.number.isRequired,
 };
 
 export default connect((state, ownProps) => ({
     isLoggedIn: state.isLoggedIn,
-    data: state.media.list,
-    stats: state.media.stats,
+    data: state.media[ownProps.match.params.type],
     item: state.media.item,
     type: ownProps.match.params.type,
     page: +ownProps.match.params.page || 1,

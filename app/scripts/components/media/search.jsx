@@ -34,7 +34,6 @@ class Search extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.dispatch(mediaActions.clear());
         this.props.dispatch(paginationActions.reset());
     }
 

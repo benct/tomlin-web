@@ -1,6 +1,5 @@
 import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
-import defaultState from '../redux/defaultState.js';
 
 import auth from '../util/auth.js';
 import { get, post } from '../util/api.js';
@@ -10,27 +9,58 @@ import paginationActions from './pagination.js';
 
 const actions = {};
 
-actions.set = makeAction('MEDIA/SET', (state, { payload }) => Object.assign({}, state, payload));
+actions.set = makeAction('MEDIA/SET', (state, { payload }) =>
+    Object.assign({}, state, {
+        [payload.key]: {
+            results: payload.results || [],
+            stats: payload.stats,
+            page: {
+                current: payload.page,
+                total: payload.total_pages,
+            },
+        },
+    })
+);
 
-actions.clear = makeAction('MEDIA/CLEAR', state => Object.assign({}, state, defaultState.media));
+actions.clear = makeAction('MEDIA/CLEAR', (state, { payload }) => Object.assign({}, state, { [payload.key]: null }));
 
-actions.showItem = makeAction('MEDIA/SHOW', 'item');
+actions.showModal = makeAction('MEDIA/SHOW_MODAL', 'item');
 
-actions.hideItem = makeAction('MEDIA/HIDE', state => Object.assign({}, state, { item: null }));
+actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => Object.assign({}, state, { item: null }));
+
+actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
+
+actions.setExisting = makeAction('MEDIA/SET_EXISTING', 'existing');
+
+actions.addExisting = makeAction('MEDIA/ADD_EXISTING', (state, { payload }) => {
+    const existing = state.existing.slice();
+    existing.push(payload);
+
+    return Object.assign({}, state, { existing });
+});
+
+actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }) =>
+    Object.assign({}, state, { existing: state.existing.filter(i => i !== payload) })
+);
+
+actions.updateItem = makeAction('MEDIA/UPDATE_ITEM', (state, { payload }) => {
+    const items = state[payload.key].slice().map(item => {
+        if (item.id === payload.id) {
+            return Object.assign(item, payload.data);
+        }
+        return item;
+    });
+    Object.assign({}, state, { [payload.key]: Object.assign({}, state[payload.key], { data: items }) });
+});
 
 actions.get = ({ action, page }) => (dispatch, getState) =>
     get({ service: 'media', action, page: page || getState().pagination.current })
         .then(response => {
-            dispatch(
-                actions.set({
-                    list: response.results || [],
-                    stats: response.stats,
-                })
-            );
+            dispatch(actions.set(Object.assign(response, { key: action })));
             dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
         })
         .catch(() => {
-            dispatch(actions.clear());
+            dispatch(actions.clear({ key: action }));
             dispatch(paginationActions.reset());
             dispatch(baseActions.showToast('Could not fetch media content...'));
         });
@@ -38,16 +68,12 @@ actions.get = ({ action, page }) => (dispatch, getState) =>
 actions.post = ({ action, type, page }) => (dispatch, getState) =>
     post({ service: 'media', action, type, page: page || getState().pagination.current })
         .then(response => {
-            dispatch(
-                actions.set({
-                    search: response.results || [],
-                    existing: response.existing,
-                })
-            );
+            dispatch(actions.setSearch(response.results || []));
+            dispatch(actions.setExisting(response.existing));
             dispatch(paginationActions.set({ current: response.page, total: Math.min(response.total_pages, 1000) }));
         })
         .catch(() => {
-            dispatch(actions.clear());
+            dispatch(actions.setSearch([]));
             dispatch(paginationActions.reset());
             dispatch(baseActions.showToast('Could not fetch media content...'));
         });
@@ -56,35 +82,46 @@ actions.search = payload => dispatch =>
     post({ service: 'media', action: 'search', query: encodeURI(payload) })
         .then(response => {
             dispatch(
-                actions.set({
-                    search: response.results
-                        ? response.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv')
-                        : [],
-                    existing: response.existing,
-                })
+                actions.setSearch(
+                    response.results ? response.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv') : []
+                )
             );
+            dispatch(actions.setExisting(response.existing));
             dispatch(paginationActions.reset());
         })
         .catch(() => dispatch(baseActions.showToast('Failed to execute search...')));
 
 actions.add = ({ type, id }) => dispatch =>
     post({ service: 'media', action: 'save', type, id })
-        .then(() => dispatch(baseActions.showToast('Media successfully added!')))
+        .then(() => {
+            dispatch(actions.addExisting(id));
+            dispatch(baseActions.showToast('Media successfully added!'));
+        })
         .catch(() => dispatch(baseActions.showToast('Failed to add media...')));
 
-actions.update = ({ type, id }) => dispatch =>
-    post({ service: 'media', action: 'update', type, id })
-        .then(() => dispatch(baseActions.showToast('Media successfully updated!')))
-        .catch(() => dispatch(baseActions.showToast('Failed to update media...')));
-
-actions.remove = ({ type, id }) => dispatch => {
-    if (confirm(`Are you sure you want to delete this?`)) {
+actions.remove = ({ action, type, id }) => dispatch => {
+    if (auth.loggedIn() && confirm(`Are you sure you want to remove this?`)) {
         post({ service: 'media', action: 'delete', type, id })
             .then(() => {
-                dispatch(actions.hideItem());
+                if (action) {
+                    dispatch(actions.get({ action }));
+                }
+                dispatch(actions.hideModal());
+                dispatch(actions.removeExisting(id));
                 dispatch(baseActions.showToast('Media successfully removed!'));
             })
             .catch(() => dispatch(baseActions.showToast('Failed to remove media...')));
+    }
+};
+
+actions.update = ({ action, type, id }) => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'media', action: 'update', type, id })
+            .then(() => {
+                dispatch(actions.get({ action }));
+                dispatch(baseActions.showToast('Media successfully updated!'));
+            })
+            .catch(() => dispatch(baseActions.showToast('Failed to update media...')));
     }
 };
 
