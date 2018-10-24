@@ -61,17 +61,17 @@ export default class MediaModal extends React.Component {
         ) : null;
     }
 
-    static renderTagline(tagline) {
-        return tagline ? (
-            <>
-                <span>Tagline</span>
-                <span>{tagline}</span>
-            </>
-        ) : null;
-    }
-
     static renderCost(value) {
         return <span>{value ? `$ ${formatThousands(value)}` : ' - '}</span>;
+    }
+
+    static renderOptional(key, value) {
+        return value ? (
+            <>
+                <span>{key}</span>
+                <span>{value}</span>
+            </>
+        ) : null;
     }
 
     render() {
@@ -101,20 +101,24 @@ export default class MediaModal extends React.Component {
                                 {MediaModal.renderCost(this.props.data.budget)}
                                 <span>Revenue</span>
                                 {MediaModal.renderCost(this.props.data.revenue)}
-                                {MediaModal.renderTagline(this.props.data.tagline)}
+                                {MediaModal.renderOptional('Tagline', this.props.data.tagline)}
                             </>
                         ) : (
                             <>
-                                <span>Seasons</span>
-                                <span>{this.props.data.number_of_seasons}</span>
-                                <span>Episodes</span>
-                                <span>{this.props.data.number_of_episodes}</span>
+                                {MediaModal.renderOptional('Seasons', this.props.data.number_of_seasons)}
+                                {MediaModal.renderOptional('Episodes', this.props.data.number_of_episodes)}
+                                {MediaModal.renderOptional('Type', this.props.data.series_type)}
                                 <span>Status</span>
-                                <span>{this.props.data.status}</span>
+                                <span>
+                                    {this.props.data.status}
+                                    {this.props.data.end_year ? <span className="text-small pls">({this.props.data.end_year})</span> : null}
+                                </span>
+                                {MediaModal.renderOptional('Network(s)', this.props.data.networks)}
+                                {MediaModal.renderOptional('Created by', this.props.data.created_by)}
+                                {MediaModal.renderOptional('Production', this.props.data.production_companies)}
                             </>
                         )}
-                        <span>Overview</span>
-                        <span>{this.props.data.overview}</span>
+                        {MediaModal.renderOptional('Overview', this.props.data.overview)}
                         <span>Poster</span>
                         {MediaModal.renderPoster(this.props.data.poster, this.props.data.title)}
                     </div>
