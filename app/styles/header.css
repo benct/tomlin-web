@@ -60,14 +60,12 @@ header::after {
     bottom: 0;
 }
 
-.menu-icon {
-    cursor: pointer;
+.menu-link {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 10px;
-    margin: 20px;
-    fill: #939393;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 
 .menu {

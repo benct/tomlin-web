@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import auth from './util/auth.js';
 import actions from './actions/base.js';
 
-import { MenuIcon } from './components/page/icons.jsx';
 import PrivateRoute from './route/private.jsx';
 import Navigation from './components/page/navigation.jsx';
 import Social from './components/page/social.jsx';
@@ -32,7 +31,9 @@ class App extends React.Component {
                     <header>
                         <div className="site-title no-select">TOMLIN</div>
                         <Navigation type="simple" />
-                        <MenuIcon className="hide-gt480 menu-icon" onClick={() => this.props.dispatch(actions.toggleMenu())} />
+                        <button className="button-blank menu-link hide-gt480" onClick={() => this.props.dispatch(actions.toggleMenu())}>
+                            &nbsp;
+                        </button>
                     </header>
                     <Navigation />
                     <Switch>
