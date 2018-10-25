@@ -12,38 +12,20 @@ import MediaItem from './mediaItem.jsx';
 class MediaList extends React.Component {
     componentDidMount() {
         if (this.props.data) {
-            this.props.dispatch(paginationActions.set(this.props.data.page));
+            this.props.setPagination(this.props.data.page);
         } else {
-            this.props.dispatch(mediaActions.get({ action: this.props.type, page: this.props.page }));
-            window.scrollTo(0, 0);
+            this.props.loadMedia();
         }
     }
 
     componentDidUpdate(prevProps) {
-        if (!this.props.data || this.props.type !== prevProps.type || this.props.page !== prevProps.page) {
-            this.props.dispatch(mediaActions.get({ action: this.props.type, page: this.props.page }));
-            window.scrollTo(0, 0);
+        if (this.props.type !== prevProps.type || this.props.page !== prevProps.page) {
+            this.props.loadMedia();
         }
     }
 
     componentWillUnmount() {
-        this.props.dispatch(paginationActions.reset());
-    }
-
-    setFavourite(itemType, id, favourite) {
-        this.props.dispatch(mediaActions.favourite({ action: this.props.type, type: itemType || this.props.type, id, set: !favourite }));
-    }
-
-    setSeen(itemType, id, seen) {
-        this.props.dispatch(mediaActions.seen({ action: this.props.type, type: itemType || this.props.type, id, set: !seen }));
-    }
-
-    update(itemType, id) {
-        this.props.dispatch(mediaActions.update({ action: this.props.type, type: itemType || this.props.type, id }));
-    }
-
-    remove(itemType, id) {
-        this.props.dispatch(mediaActions.remove({ action: this.props.type, type: itemType || this.props.type, id }));
+        this.props.resetPagination();
     }
 
     renderRows(data) {
@@ -65,9 +47,9 @@ class MediaList extends React.Component {
                 episodes={item.number_of_episodes}
                 seen={!!item.seen}
                 favourite={!!item.favourite}
-                setSeen={this.setSeen.bind(this, item.type, item.id, item.seen)}
-                setFavourite={this.setFavourite.bind(this, item.type, item.id, item.favourite)}
-                showItem={() => this.props.dispatch(mediaActions.showModal(item.id))}
+                setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}
+                setFavourite={this.props.setFavourite.bind(this, item.type, item.id, item.favourite)}
+                showItem={this.props.show.bind(this, item.id)}
                 isLoggedIn={this.props.isLoggedIn}
             />
         ));
@@ -79,11 +61,11 @@ class MediaList extends React.Component {
                 type={item.type || this.props.type}
                 data={item}
                 isLoggedIn={this.props.isLoggedIn}
-                hide={() => this.props.dispatch(mediaActions.hideModal())}
-                update={this.update.bind(this, item.type, item.id)}
-                remove={this.remove.bind(this, item.type, item.id)}
-                setSeen={this.setSeen.bind(this, item.type, item.id, item.seen)}
-                setFavourite={this.setFavourite.bind(this, item.type, item.id, item.favourite)}
+                hide={this.props.hide}
+                update={this.props.update.bind(this, item.type, item.id)}
+                remove={this.props.remove.bind(this, item.type, item.id)}
+                setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}
+                setFavourite={this.props.setFavourite.bind(this, item.type, item.id, item.favourite)}
             />
         ) : null;
     }
@@ -132,18 +114,51 @@ class MediaList extends React.Component {
 }
 
 MediaList.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
     data: PropTypes.object,
     item: PropTypes.number,
     type: PropTypes.oneOf(['movie', 'tv', 'watchlist']).isRequired,
     page: PropTypes.number.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+
+    loadMedia: PropTypes.func.isRequired,
+    setPagination: PropTypes.func.isRequired,
+    resetPagination: PropTypes.func.isRequired,
+    show: PropTypes.func.isRequired,
+    hide: PropTypes.func.isRequired,
+    update: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
+    setSeen: PropTypes.func.isRequired,
+    setFavourite: PropTypes.func.isRequired,
 };
 
-export default connect((state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
     isLoggedIn: state.isLoggedIn,
     data: state.media[ownProps.match.params.type],
     item: state.media.item,
     type: ownProps.match.params.type,
     page: +ownProps.match.params.page || 1,
-}))(MediaList);
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const { type, page } = ownProps.match.params;
+    return {
+        loadMedia: () => {
+            dispatch(mediaActions.get({ action: type, page: +page || 1 }));
+            window.scrollTo(0, 0);
+        },
+        setPagination: page => dispatch(paginationActions.set(page)),
+        resetPagination: () => dispatch(paginationActions.reset()),
+        show: id => dispatch(mediaActions.showModal(id)),
+        hide: () => dispatch(mediaActions.hideModal()),
+        update: (itemType, id) => dispatch(mediaActions.update({ action: type, type: itemType || type, id })),
+        remove: (itemType, id) => dispatch(mediaActions.remove({ action: type, type: itemType || type, id })),
+        setSeen: (itemType, id, seen) => dispatch(mediaActions.seen({ action: type, type: itemType || type, id, set: !seen })),
+        setFavourite: (itemType, id, favourite) =>
+            dispatch(mediaActions.favourite({ action: type, type: itemType || type, id, set: !favourite })),
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MediaList);
