@@ -43,16 +43,6 @@ actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }
     Object.assign({}, state, { existing: state.existing.filter(i => i !== payload) })
 );
 
-actions.updateItem = makeAction('MEDIA/UPDATE_ITEM', (state, { payload }) => {
-    const items = state[payload.key].slice().map(item => {
-        if (item.id === payload.id) {
-            return Object.assign(item, payload.data);
-        }
-        return item;
-    });
-    Object.assign({}, state, { [payload.key]: Object.assign({}, state[payload.key], { data: items }) });
-});
-
 actions.get = ({ action, page }) => (dispatch, getState) =>
     get({ service: 'media', action, page: page || getState().pagination.current })
         .then(response => {
