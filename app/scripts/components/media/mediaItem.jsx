@@ -23,9 +23,7 @@ export default class MediaItem extends React.Component {
         return (
             <>
                 &nbsp;|&nbsp;
-                <span className="strong" data-tooltip={`${this.props.data.votes} votes`}>
-                    {this.props.data.rating}
-                </span>
+                <span className="strong">{this.props.data.rating}</span>
                 <span className="text-smaller">/10</span>
             </>
         );
