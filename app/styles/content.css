@@ -152,10 +152,13 @@
     padding: 16px;
     position: fixed;
     left: 50%;
-    bottom: 30px;
+    bottom: 40px;
     z-index: 999;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 767px) {
