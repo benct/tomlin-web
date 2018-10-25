@@ -14,7 +14,7 @@ export default class MediaItem extends React.Component {
                 src={this.props.data.poster ? `/assets/images/media${this.props.data.poster}` : defaultPoster}
                 alt={this.props.data.poster ? `Poster: ${this.props.data.title}` : 'No poster'}
                 onError={event => (event.target.src = defaultPoster)}
-                onClick={this.props.data.showItem}
+                onClick={this.props.showItem}
             />
         );
     }
