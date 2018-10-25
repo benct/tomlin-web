@@ -74,12 +74,15 @@ export default class SearchItem extends React.Component {
                             {format(this.props.release, 'MMM do, YYY')}
                         </span>
                     ) : null}
-                    <ImdbIcon
-                        width={48}
-                        className="hide-gt768 pointer"
-                        style={{ margin: '-5px 0', display: 'block' }}
-                        onClick={this.props.imdb}
-                    />
+                    <div className="hide-gt768">
+                        <button className="button-blank" onClick={this.props.imdb}>
+                            <ImdbIcon width={48} />
+                        </button>
+                        <button className="button-icon button-text-icon float-right mtm" onClick={change}>
+                            <span>{this.props.stored ? 'Remove' : 'Add'}</span>
+                            <PlusIcon width={18} height={18} style={rotation} />
+                        </button>
+                    </div>
                 </div>
                 <div className="media-actions">
                     <button className="button-icon button-text-icon man" onClick={change}>
