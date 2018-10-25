@@ -11,10 +11,10 @@ export default class MediaItem extends React.Component {
         return (
             <img
                 className="pointer"
-                src={this.props.poster ? `/assets/images/media${this.props.poster}` : defaultPoster}
-                alt={this.props.poster ? `Poster: ${this.props.title}` : 'No poster'}
+                src={this.props.data.poster ? `/assets/images/media${this.props.data.poster}` : defaultPoster}
+                alt={this.props.data.poster ? `Poster: ${this.props.data.title}` : 'No poster'}
                 onError={event => (event.target.src = defaultPoster)}
-                onClick={this.props.showItem}
+                onClick={this.props.data.showItem}
             />
         );
     }
@@ -23,8 +23,8 @@ export default class MediaItem extends React.Component {
         return (
             <>
                 &nbsp;|&nbsp;
-                <span className="strong" data-tooltip={`${this.props.votes} votes`}>
-                    {this.props.rating}
+                <span className="strong" data-tooltip={`${this.props.data.votes} votes`}>
+                    {this.props.data.rating}
                 </span>
                 <span className="text-smaller">/10</span>
             </>
@@ -35,10 +35,10 @@ export default class MediaItem extends React.Component {
         return (
             <>
                 <span className="text-smaller">S </span>
-                {this.props.seasons}
+                {this.props.data.number_of_seasons}
                 &nbsp;|&nbsp;
                 <span className="text-smaller">E </span>
-                {this.props.episodes}
+                {this.props.data.number_of_episodes}
             </>
         );
     }
@@ -48,27 +48,30 @@ export default class MediaItem extends React.Component {
             <div className="media-item media-item-small pvm">
                 <div className="media-poster">{this.renderImage()}</div>
                 <div className="media-title color-primary truncate strong pointer" onClick={this.props.showItem}>
-                    {this.props.title}
+                    {this.props.data.title}
                 </div>
                 <div className="media-data text-small truncate">
-                    {this.props.imdbId ? (
-                        <a href={`https://www.imdb.com/title/${this.props.imdbId}`} target="_blank" rel="noopener noreferrer external">
+                    {this.props.data.imdb_id ? (
+                        <a
+                            href={`https://www.imdb.com/title/${this.props.data.imdb_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer external">
                             <ImdbIcon width={38} className="mrm" style={{ margin: '-12px 0' }} />
                         </a>
                     ) : null}
-                    <span>{this.props.type === 'tv' ? this.renderSeasons() : formatDuration(this.props.runtime)}</span>
-                    {this.props.rating ? this.renderRating() : ' | No rating'}
-                    <span className="hide-lt480 hide-gt768"> | {this.props.genres}</span>
+                    <span>{this.props.type === 'tv' ? this.renderSeasons() : formatDuration(this.props.data.runtime)}</span>
+                    {this.props.data.rating ? this.renderRating() : ' | No rating'}
+                    <span className="hide-lt480 hide-gt768"> | {this.props.data.genres}</span>
                 </div>
                 <div className="media-actions strong text-small no-wrap">
-                    {formatYears(this.props.type, this.props.release, this.props.end)}
+                    {formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)}
                 </div>
                 <div className="media-external">
                     <span className={`mrm ${this.props.isLoggedIn ? ' pointer' : ''}`} data-tooltip="Seen" onClick={this.props.setSeen}>
-                        <ViewIcon width={24} seen={this.props.seen} className={this.props.seen ? '' : 'faded'} />
+                        <ViewIcon width={24} seen={!!this.props.data.seen} className={this.props.data.seen ? '' : 'faded'} />
                     </span>
                     <span className={this.props.isLoggedIn ? 'pointer' : ''} data-tooltip="Favourite" onClick={this.props.setFavourite}>
-                        <StarIcon width={24} favourite={this.props.favourite} className={this.props.favourite ? '' : 'faded'} />
+                        <StarIcon width={24} favourite={!!this.props.data.favourite} className={this.props.data.favourite ? '' : 'faded'} />
                     </span>
                 </div>
             </div>
@@ -78,21 +81,8 @@ export default class MediaItem extends React.Component {
 
 MediaItem.propTypes = {
     type: PropTypes.oneOf(['movie', 'tv']).isRequired,
-    imdbId: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    poster: PropTypes.string,
-    runtime: PropTypes.number,
-    genres: PropTypes.string,
-    rating: PropTypes.number,
-    votes: PropTypes.number,
-    release: PropTypes.string,
-    end: PropTypes.string,
-    status: PropTypes.string,
-    seasons: PropTypes.number,
-    episodes: PropTypes.number,
-    seen: PropTypes.bool.isRequired,
+    data: PropTypes.object.isRequired,
     setSeen: PropTypes.func.isRequired,
-    favourite: PropTypes.bool.isRequired,
     setFavourite: PropTypes.func.isRequired,
     showItem: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,

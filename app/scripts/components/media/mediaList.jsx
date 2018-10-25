@@ -31,22 +31,9 @@ class MediaList extends React.Component {
     renderRows(data) {
         return data.map(item => (
             <MediaItem
-                type={item.type || this.props.type}
                 key={item.id + item.imdb_id}
-                imdbId={item.imdb_id}
-                title={item.title}
-                poster={item.poster}
-                rating={item.rating}
-                votes={item.votes}
-                genres={item.genres}
-                runtime={item.runtime}
-                release={item.release_year}
-                end={item.end_year}
-                status={item.status}
-                seasons={item.number_of_seasons}
-                episodes={item.number_of_episodes}
-                seen={!!item.seen}
-                favourite={!!item.favourite}
+                type={item.type || this.props.type}
+                data={item}
                 setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}
                 setFavourite={this.props.setFavourite.bind(this, item.type, item.id, item.favourite)}
                 showItem={this.props.show.bind(this, item.id)}
