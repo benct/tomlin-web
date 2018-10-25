@@ -1,6 +1,26 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.7.2] - 2018-10-25
+### Added
+- Media modal for more detailed information
+- Updating functionality for media items
+- Confirmation dialog when removing media
+- TMDb- and remove-icons
+- Link to media item at TMDb
+
+### Changed
+- Refactor actions in to separate files
+- Improve media state handling
+- Simplify several components
+
+### Fixed
+- Update UI properly on some media state changes
+- Prevent search on empty action or type
+
+### Removed
+- Menu icon on small screens
+
 ## [2.7.1] - 2018-10-21
 ### Added
 - App-wide state handling using Redux
