@@ -11,15 +11,10 @@ import SearchItem from './searchItem.jsx';
 import Pagination from '../page/pagination.jsx';
 
 class Search extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.search = debounce(query => props.dispatch(mediaActions.search(query)), 500);
-    }
-
     componentDidMount() {
         if (this.props.action && this.props.type) {
-            this.getMedia();
+            this.props.get();
+            window.scrollTo(0, 0);
         }
     }
 
@@ -29,22 +24,18 @@ class Search extends React.Component {
             this.props.type &&
             (this.props.action !== prevProps.action || this.props.type !== prevProps.type || this.props.page !== prevProps.page)
         ) {
-            this.getMedia();
+            this.props.get();
+            window.scrollTo(0, 0);
         }
     }
 
     componentWillUnmount() {
-        this.props.dispatch(paginationActions.reset());
-    }
-
-    getMedia() {
-        this.props.dispatch(mediaActions.post({ action: this.props.action, type: this.props.type, page: this.props.page }));
-        window.scrollTo(0, 0);
+        this.props.resetPagination();
     }
 
     handleChange(event) {
         if (event.target.value && event.target.value.length > 1) {
-            this.search(event.target.value);
+            this.props.search(event.target.value);
         }
     }
 
@@ -60,9 +51,9 @@ class Search extends React.Component {
                 votes={data.vote_count || 0}
                 overview={data.overview}
                 stored={this.props.existing.includes(data.id)}
-                add={() => this.props.dispatch(mediaActions.add({ type: data.media_type || this.props.type, id: data.id }))}
-                remove={() => this.props.dispatch(mediaActions.remove({ type: data.media_type || this.props.type, id: data.id }))}
-                imdb={() => this.props.dispatch(mediaActions.goToIMDb({ type: data.media_type || this.props.type, id: data.id }))}
+                add={this.props.add.bind(this, data.media_type, data.id)}
+                remove={this.props.remove.bind(this, data.media_type, data.id)}
+                imdb={this.props.goToIMDb.bind(this, data.media_type, data.id)}
                 key={`mediaResult${idx}`}
             />
         );
@@ -88,7 +79,7 @@ class Search extends React.Component {
                     <Link to={'/media/admin/tv/popular/'}>Popular (TV)</Link>
                     <Link to={'/media/admin/tv/top/'}>Top Rated (TV)</Link>
                     <Link to={'/media/admin/tv/now/'}>Now Playing (TV)</Link>
-                    <div className="faded" onClick={() => this.props.dispatch(mediaActions.updatePosters())}>
+                    <div className="faded" onClick={this.props.updatePosters}>
                         Update Posters (!)
                     </div>
                 </div>
@@ -100,18 +91,47 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-    dispatch: PropTypes.func.isRequired,
     data: PropTypes.array.isRequired,
     existing: PropTypes.array.isRequired,
     type: PropTypes.string,
     action: PropTypes.string,
     page: PropTypes.number,
+
+    search: PropTypes.func.isRequired,
+    get: PropTypes.func.isRequired,
+    add: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
+    goToIMDb: PropTypes.func.isRequired,
+    updatePosters: PropTypes.func.isRequired,
+    resetPagination: PropTypes.func.isRequired,
 };
 
-export default connect((state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
     data: state.media.search,
     existing: state.media.existing,
     type: ownProps.match.params.type,
     action: ownProps.match.params.action,
     page: +ownProps.match.params.page || 1,
-}))(Search);
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    search: debounce(query => dispatch(mediaActions.search(query)), 500),
+    get: () =>
+        dispatch(
+            mediaActions.post({
+                action: ownProps.match.params.action,
+                type: ownProps.match.params.type,
+                page: +ownProps.match.params.page || 1,
+            })
+        ),
+    add: (type, id) => dispatch(mediaActions.add({ type: type || ownProps.match.params.type, id })),
+    remove: (type, id) => dispatch(mediaActions.remove({ type: type || ownProps.match.params.type, id })),
+    goToIMDb: (type, id) => dispatch(mediaActions.goToIMDb({ type: type || ownProps.match.params.type, id })),
+    updatePosters: () => dispatch(mediaActions.updatePosters()),
+    resetPagination: () => dispatch(paginationActions.reset()),
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Search);
