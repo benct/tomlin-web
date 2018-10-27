@@ -4,7 +4,7 @@ export default {
     isLoggedIn: false,
 
     showMenu: false,
-    circleIcons: true,
+    circleIcons: false,
     toast: null,
 
     quote: {
