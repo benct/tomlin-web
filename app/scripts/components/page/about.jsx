@@ -15,13 +15,13 @@ export default function About() {
 
             <div className="social large">
                 <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">
-                    <img src={require('../../../images/social/github.svg')} alt="github" />
+                    <img src={require('../../../images/social/circle-github.svg')} alt="github" />
                 </a>
                 <a href="https://www.linkedin.com/in/bentomlin" target="_blank" rel="noopener noreferrer">
-                    <img src={require('../../../images/social/linkedin.svg')} alt="linkedin" />
+                    <img src={require('../../../images/social/circle-linkedin.svg')} alt="linkedin" />
                 </a>
                 <a href="mailto:ben@tomlin.no" target="_blank" rel="noopener noreferrer">
-                    <img src={require('../../../images/social/email.svg')} alt="email" />
+                    <img src={require('../../../images/social/circle-email.svg')} alt="email" />
                 </a>
             </div>
 
