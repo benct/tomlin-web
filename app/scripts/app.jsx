@@ -22,7 +22,7 @@ const Media = React.lazy(() => import('./components/media/media.jsx'));
 
 class App extends React.Component {
     componentDidMount() {
-        auth.onChange = isLoggedIn => this.props.dispatch(actions.setLoggedIn(isLoggedIn));
+        auth.onChange = this.props.setLoggedIn;
         auth.init();
     }
 
@@ -36,7 +36,7 @@ class App extends React.Component {
                         <button
                             className="button-blank menu-link hide-gt480"
                             aria-label="Menu"
-                            onClick={() => this.props.dispatch(actions.toggleMenu())}>
+                            onClick={this.props.toggleMenu}>
                             &nbsp;
                         </button>
                     </header>
@@ -65,7 +65,7 @@ class App extends React.Component {
                     <footer className="wrapper">
                         <Social circle={this.props.circleIcons} />
                         <div className="text color-light mtl">
-                            <span className="pointer no-select" onClick={() => this.props.dispatch(actions.toggleIcons())}>
+                            <span className="pointer no-select" onClick={this.props.toggleIcons}>
                                 Ben Tomlin © 2018
                             </span>
                         </div>
@@ -78,14 +78,27 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    dispatch: PropTypes.func.isRequired,
     showMenu: PropTypes.bool.isRequired,
     circleIcons: PropTypes.bool.isRequired,
     toast: PropTypes.string,
+    setLoggedIn: PropTypes.func.isRequired,
+    toggleMenu: PropTypes.func.isRequired,
+    toggleIcons: PropTypes.func.isRequired,
 };
 
-export default connect(state => ({
+const mapStateToProps = state => ({
     showMenu: state.showMenu,
     circleIcons: state.circleIcons,
     toast: state.toast,
-}))(App);
+});
+
+const mapDispatchToProps = dispatch => ({
+    setLoggedIn: isLoggedIn => dispatch(actions.setLoggedIn(isLoggedIn)),
+    toggleMenu: () => dispatch(actions.toggleMenu()),
+    toggleIcons: () => dispatch(actions.toggleIcons()),
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);
