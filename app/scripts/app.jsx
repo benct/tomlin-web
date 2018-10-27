@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import auth from './util/auth.js';
 import actions from './actions/base.js';
 
-import PrivateRoute from './route/private.jsx';
+import PrivateRoute from './components/route/private.jsx';
 import Navigation from './components/page/navigation.jsx';
 import Social from './components/page/social.jsx';
 import Error from './components/page/error.jsx';

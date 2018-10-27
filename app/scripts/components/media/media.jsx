@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import PrivateRoute from '../../route/private.jsx';
+import PrivateRoute from '../route/private.jsx';
 import Navigation from '../page/navigation.jsx';
 import Error from '../page/error.jsx';
 import MediaList from './mediaList.jsx';

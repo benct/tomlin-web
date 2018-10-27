@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 
-import auth from '../util/auth.js';
+import auth from '../../util/auth.js';
 
 export default function PrivateRoute({ path, component: Component }) {
     return (
