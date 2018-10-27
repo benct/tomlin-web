@@ -84,7 +84,7 @@ class Search extends React.Component {
                     </div>
                 </div>
                 {this.props.data.map(this.renderItem.bind(this))}
-                <Pagination path={`/media/admin/${this.props.type}/${this.props.action}/`} />
+                <Pagination path={`/media/admin/${this.props.type}/${this.props.action}/`} postfix={`/${this.props.id}`} />
             </div>
         );
     }
@@ -95,6 +95,7 @@ Search.propTypes = {
     existing: PropTypes.array.isRequired,
     type: PropTypes.string,
     action: PropTypes.string,
+    id: PropTypes.string,
     page: PropTypes.number,
 
     search: PropTypes.func.isRequired,
@@ -111,19 +112,13 @@ const mapStateToProps = (state, ownProps) => ({
     existing: state.media.existing,
     type: ownProps.match.params.type,
     action: ownProps.match.params.action,
+    id: ownProps.match.params.id,
     page: +ownProps.match.params.page || 1,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     search: debounce(query => dispatch(mediaActions.search(query)), 500),
-    get: () =>
-        dispatch(
-            mediaActions.post({
-                action: ownProps.match.params.action,
-                type: ownProps.match.params.type,
-                page: +ownProps.match.params.page || 1,
-            })
-        ),
+    get: () => dispatch(mediaActions.post(Object.assign({}, ownProps.match.params, { page: +ownProps.match.params.page || 1 }))),
     add: (type, id) => dispatch(mediaActions.add({ type: type || ownProps.match.params.type, id })),
     remove: (type, id) => dispatch(mediaActions.remove({ type: type || ownProps.match.params.type, id })),
     goToIMDb: (type, id) => dispatch(mediaActions.goToIMDb({ type: type || ownProps.match.params.type, id })),

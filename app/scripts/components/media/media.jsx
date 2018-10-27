@@ -15,7 +15,7 @@ export default function Media() {
                 <Switch>
                     <Route path="/media" exact render={() => <Redirect to="/media/movie" />} />
                     <Route path="/media/:type(movie|tv|watchlist)/:page?" component={MediaList} />
-                    <PrivateRoute path="/media/admin/:type?/:action?/:page?" component={Search} />
+                    <PrivateRoute path="/media/admin/:type?/:action?/:page?/:id?" component={Search} />
                     <Route render={() => <Error code={404} />} />
                 </Switch>
             </div>

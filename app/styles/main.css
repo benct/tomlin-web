@@ -104,6 +104,10 @@ pre {
     cursor: pointer;
 }
 
+.not-allowed {
+    cursor: not-allowed;
+}
+
 .faded {
     opacity: 0.5;
 }

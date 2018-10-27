@@ -55,8 +55,8 @@ actions.get = ({ action, page }) => (dispatch, getState) =>
             dispatch(baseActions.showToast('Could not fetch media content...'));
         });
 
-actions.post = ({ action, type, page }) => (dispatch, getState) =>
-    post({ service: 'media', action, type, page: page || getState().pagination.current })
+actions.post = ({ action, type, id, page }) => (dispatch, getState) =>
+    post({ service: 'media', action, type, id, page: page || getState().pagination.current })
         .then(response => {
             dispatch(actions.setSearch(response.results || []));
             dispatch(actions.setExisting(response.existing));

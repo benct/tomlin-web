@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
+import { Link } from 'react-router-dom';
 
 import { formatDuration, formatThousands, formatYears } from '../../util/formatting.js';
 
 import { ImdbIcon, RefreshIcon, RemoveIcon, StarIcon, TmdbIcon, ViewIcon } from '../page/icons.jsx';
+import { EqualsIcon, RecommendIcon } from '../page/icons';
 
 export default class MediaModal extends React.Component {
     componentDidMount() {
@@ -13,6 +15,45 @@ export default class MediaModal extends React.Component {
 
     componentWillUnmount() {
         document.body.classList.remove('no-scroll');
+    }
+
+    renderLinks(id, imdb) {
+        return (
+            <span>
+                <a
+                    href={`https://www.themoviedb.org/movie/${id}`}
+                    target="_blank"
+                    rel="noopener noreferrer external"
+                    className="pointer"
+                    data-tooltip="TMDb">
+                    <TmdbIcon width={24} height={24} className="valign-middle" />
+                </a>
+                {imdb ? (
+                    <a
+                        className="mlm pointer"
+                        href={`https://www.imdb.com/title/${imdb}`}
+                        target="_blank"
+                        rel="noopener noreferrer external"
+                        data-tooltip="IMDb">
+                        <ImdbIcon width={38} style={{ margin: '-12px 0' }} className="valign-middle" />
+                    </a>
+                ) : null}
+                <Link
+                    to={`/media/admin/${this.props.type}/similar/1/${id}`}
+                    className={`mlm ${this.props.isLoggedIn ? 'pointer' : 'not-allowed'}`}
+                    data-tooltip={this.props.isLoggedIn ? 'Find similar' : 'Log in to find similar'}
+                    onClick={this.props.hide}>
+                    <EqualsIcon width={24} height={24} className="color-primary valign-middle" />
+                </Link>
+                <Link
+                    to={`/media/admin/${this.props.type}/recommended/1/${id}`}
+                    className={`mlm ${this.props.isLoggedIn ? 'pointer' : 'not-allowed'}`}
+                    data-tooltip={this.props.isLoggedIn ? 'Recommendations' : 'Log in to find recommendations'}
+                    onClick={this.props.hide}>
+                    <RecommendIcon width={24} height={24} className="valign-middle" />
+                </Link>
+            </span>
+        );
     }
 
     static renderPoster(poster, title) {
@@ -24,21 +65,6 @@ export default class MediaModal extends React.Component {
             />
         ) : (
             <span>No poster</span>
-        );
-    }
-
-    static renderLinks(id, imdb) {
-        return (
-            <span>
-                <a href={`https://www.themoviedb.org/movie/${id}`} target="_blank" rel="noopener noreferrer external">
-                    <TmdbIcon width={24} height={24} style={{ margin: '-6px 0' }} />
-                </a>
-                {imdb ? (
-                    <a className="mlm" href={`https://www.imdb.com/title/${imdb}`} target="_blank" rel="noopener noreferrer external">
-                        <ImdbIcon width={38} style={{ margin: '-12px 0' }} />
-                    </a>
-                ) : null}
-            </span>
         );
     }
 
@@ -87,7 +113,7 @@ export default class MediaModal extends React.Component {
                         <span>Language</span>
                         <span>{this.props.data.language}</span>
                         <span>Links</span>
-                        {MediaModal.renderLinks(this.props.data.id, this.props.data.imdb_id)}
+                        {this.renderLinks(this.props.data.id, this.props.data.imdb_id)}
                         <span>Genre(s)</span>
                         <span>{this.props.data.genres}</span>
                         <span>Release</span>
