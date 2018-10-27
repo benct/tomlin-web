@@ -33,6 +33,7 @@
   "homepage": "https://github.com/benct/tomlin-web#readme",
   "devDependencies": {
     "@babel/core": "^7.0.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
