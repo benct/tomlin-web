@@ -9,13 +9,13 @@ function FileList({ content, focused, handleClick, handleRename, handleDelete })
                     <img className="file-icon" src={require(`../../../images/file/${item.icon}`)} alt={item.icon} />
                 </td>
                 <td className="file-name">
-                    <span onClick={() => handleClick(item)} className={i === focused ? 'focused' : ''}>
+                    <span onClick={() => handleClick(item)} className={i === focused ? 'focused' : ''} role="button" tabIndex="0">
                         {item.short}
                     </span>
-                    <span onClick={() => handleDelete(item)} className="file-info monospace float-right">
+                    <span onClick={() => handleDelete(item)} className="file-info monospace float-right" role="button" tabIndex="0">
                         [x]
                     </span>
-                    <span onClick={() => handleRename(item)} className="file-info monospace float-right">
+                    <span onClick={() => handleRename(item)} className="file-info monospace float-right" role="button" tabIndex="0">
                         [r]
                     </span>
                 </td>

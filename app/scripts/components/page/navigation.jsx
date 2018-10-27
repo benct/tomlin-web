@@ -48,7 +48,11 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
         case 'full':
         default:
             return (
-                <nav className="menu-wrap" style={{ left: showMenu ? '0px' : '100%' }} onClick={() => dispatch(actions.toggleMenu())}>
+                <nav
+                    className="menu-wrap"
+                    style={{ left: showMenu ? '0px' : '100%' }}
+                    onClick={() => dispatch(actions.toggleMenu())}
+                    role="dialog">
                     <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
                         {menu.map(createLink)}
                     </ul>

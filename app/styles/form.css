@@ -98,6 +98,13 @@ input[type=file] + svg {
     margin-right: 0.25em;
 }
 
+[role=button] {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font: inherit;
+}
+
 .button-blank {
     background: transparent no-repeat;
     border: none;
@@ -106,6 +113,7 @@ input[type=file] + svg {
     outline: none;
     margin: 0;
     padding: 0;
+    font: inherit;
 }
 
 .button-icon {
@@ -159,5 +167,5 @@ input[type=file] + svg {
 
 .button-text-icon svg {
     vertical-align: middle;
-    margin: 0 5px;
+    margin-left: 5px;
 }

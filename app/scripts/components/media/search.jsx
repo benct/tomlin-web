@@ -80,9 +80,9 @@ class Search extends React.Component {
                     <Link to={'/media/admin/tv/popular/'}>Popular (TV)</Link>
                     <Link to={'/media/admin/tv/top/'}>Top Rated (TV)</Link>
                     <Link to={'/media/admin/tv/now/'}>Now Playing (TV)</Link>
-                    <div className="faded" onClick={this.props.updatePosters}>
+                    <button className="button-blank faded" onClick={this.props.updatePosters}>
                         Update Posters (!)
-                    </div>
+                    </button>
                 </div>
                 {this.props.data.map(this.renderItem.bind(this))}
                 <Pagination path={`/media/admin/${this.props.type}/${this.props.action}/`} postfix={`/${this.props.id}`} />

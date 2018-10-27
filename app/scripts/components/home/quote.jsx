@@ -17,7 +17,7 @@ class Quote extends React.PureComponent {
 
     render() {
         return this.props.text ? (
-            <div className="wrapper text-center pointer no-select" onClick={this.refreshQuote.bind(this)}>
+            <div className="wrapper text-center pointer no-select" onClick={this.refreshQuote.bind(this)} role="button" tabIndex="0">
                 <div>{this.props.text}</div>
                 <div>{this.props.author ? <i>- {this.props.author}</i> : null}</div>
                 <RefreshIcon className="refresh-icon" fill="#ddd" />

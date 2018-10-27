@@ -7,18 +7,6 @@ import { StarIcon, ViewIcon, ImdbIcon } from '../page/icons.jsx';
 const defaultPoster = require('../../../images/media/poster.png');
 
 export default class MediaItem extends React.PureComponent {
-    renderImage() {
-        return (
-            <img
-                className="pointer"
-                src={this.props.data.poster ? `/assets/images/media${this.props.data.poster}` : defaultPoster}
-                alt={this.props.data.poster ? `Poster: ${this.props.data.title}` : 'No poster'}
-                onError={event => (event.target.src = defaultPoster)}
-                onClick={this.props.showItem}
-            />
-        );
-    }
-
     renderRating() {
         return (
             <>
@@ -44,8 +32,15 @@ export default class MediaItem extends React.PureComponent {
     render() {
         return (
             <div className="media-item media-item-small pvm">
-                <div className="media-poster">{this.renderImage()}</div>
-                <div className="media-title color-primary truncate strong pointer" onClick={this.props.showItem}>
+                <div className="media-poster" onClick={this.props.showItem} role="button" tabIndex="0">
+                    <img
+                        className="pointer"
+                        src={this.props.data.poster ? `/assets/images/media${this.props.data.poster}` : defaultPoster}
+                        alt={this.props.data.poster ? `Poster: ${this.props.data.title}` : 'No poster'}
+                        onError={event => (event.target.src = defaultPoster)}
+                    />
+                </div>
+                <div className="media-title truncate color-primary strong pointer" onClick={this.props.showItem} role="button" tabIndex="0">
                     {this.props.data.title}
                 </div>
                 <div className="media-data text-small truncate">
@@ -65,12 +60,18 @@ export default class MediaItem extends React.PureComponent {
                     {formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)}
                 </div>
                 <div className="media-external">
-                    <span className={`mrm ${this.props.isLoggedIn ? ' pointer' : ''}`} data-tooltip="Seen" onClick={this.props.setSeen}>
+                    <button
+                        className={`button-blank mrm ${this.props.isLoggedIn ? ' pointer' : ''}`}
+                        data-tooltip="Seen"
+                        onClick={this.props.setSeen}>
                         <ViewIcon width={24} seen={!!this.props.data.seen} className={this.props.data.seen ? '' : 'faded'} />
-                    </span>
-                    <span className={this.props.isLoggedIn ? 'pointer' : ''} data-tooltip="Favourite" onClick={this.props.setFavourite}>
+                    </button>
+                    <button
+                        className={`button-blank ${this.props.isLoggedIn ? 'pointer' : ''}`}
+                        data-tooltip="Favourite"
+                        onClick={this.props.setFavourite}>
                         <StarIcon width={24} favourite={!!this.props.data.favourite} className={this.props.data.favourite ? '' : 'faded'} />
-                    </span>
+                    </button>
                 </div>
             </div>
         );

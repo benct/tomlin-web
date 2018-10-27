@@ -102,7 +102,7 @@ export default class MediaModal extends React.PureComponent {
 
     render() {
         return (
-            <div className="overlay" onClick={event => (event.target === event.currentTarget ? this.props.hide() : null)}>
+            <div className="overlay" onClick={event => (event.target === event.currentTarget ? this.props.hide() : null)} role="dialog">
                 <div className="wrapper media-overlay">
                     <div className="media-overlay-title color-primary strong pbm">
                         {this.props.data.title} ({formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)})

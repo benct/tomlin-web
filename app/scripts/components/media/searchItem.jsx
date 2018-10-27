@@ -24,26 +24,21 @@ export default class SearchItem extends React.PureComponent {
         this.setState({ overview: !this.state.overview });
     }
 
-    renderImage() {
-        return (
-            <img
-                src={this.props.poster ? `https://image.tmdb.org/t/p/w200${this.props.poster}` : defaultPoster}
-                alt={this.props.poster ? `Poster: ${this.props.title}` : 'No poster'}
-                onError={event => (event.target.src = defaultPoster)}
-                onClick={this.toggleOverview.bind(this)}
-            />
-        );
-    }
-
     render() {
         const change = this.props.stored ? this.props.remove : this.props.add;
         const rotation = this.props.stored ? { transform: 'rotate(45deg)' } : null;
         return (
             <div className="media-item pvm">
                 <div className="media-poster">
-                    {this.renderImage()}
+                    <img
+                        src={this.props.poster ? `https://image.tmdb.org/t/p/w200${this.props.poster}` : defaultPoster}
+                        alt={this.props.poster ? `Poster: ${this.props.title}` : 'No poster'}
+                        onError={event => (event.target.src = defaultPoster)}
+                        onClick={this.toggleOverview.bind(this)}
+                    />
                     <div
                         className="media-poster-overlay"
+                        role="dialog"
                         style={{ opacity: this.state.overview ? 1 : 0, zIndex: this.state.overview ? 10 : -1 }}
                         onClick={this.state.overview ? change : null}>
                         <PlusIcon width={40} height={40} fill="white" style={rotation} />
