@@ -1,6 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.7.3] - 2018-10-27
+### Added
+- Lazy-loading using React.lazy() and Suspense
+- Memoization using React.memo() and PureComponent
+- Functionality for finding similar and recommended media
+- New icons for similar and recommendations
+- Tooltips on media links
+
+### Changed
+- Upgrade yarn and several packages
+- Optimize components using new react features
+- Support postfix on pagination path
+- Refactor some component prop mappings
+- Update manifest and favicon assets
+- Default to non-circle social icons
+- Improve accessibility
+
 ## [2.7.2] - 2018-10-25
 ### Added
 - Media modal for more detailed information
