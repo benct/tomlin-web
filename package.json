@@ -39,7 +39,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.2",
     "css-loader": "^1.0.0",
-    "eslint": "^5.5.0",
+    "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^3.0.0",
