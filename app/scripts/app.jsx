@@ -12,12 +12,13 @@ import Social from './components/page/social.jsx';
 import Error from './components/page/error.jsx';
 import About from './components/page/about.jsx';
 import Home from './components/home/home.jsx';
-import Links from './components/data/links.jsx';
-import Notes from './components/data/notes.jsx';
-import Files from './components/files/files.jsx';
 import Login from './components/login.jsx';
 import Logout from './components/logout.jsx';
-import Media from './components/media/media.jsx';
+
+const Links = React.lazy(() => import('./components/data/links.jsx'));
+const Notes = React.lazy(() => import('./components/data/notes.jsx'));
+const Files = React.lazy(() => import('./components/files/files.jsx'));
+const Media = React.lazy(() => import('./components/media/media.jsx'));
 
 class App extends React.Component {
     componentDidMount() {
@@ -43,19 +44,16 @@ class App extends React.Component {
                         <Route
                             path="/finn"
                             render={() => (
-                                <>
+                                <React.Suspense fallback={<div className="wrapper text-center">Loading...</div>}>
                                     <Links file="finn.json" />
                                     <hr />
                                     <Notes file="finn.txt" />
-                                </>
+                                </React.Suspense>
                             )}
                         />
                         <Route path="/logout" component={Logout} />
                         <Route path="/login" component={Login} />
-                        <PrivateRoute // Temporarily restricted
-                            path="/media"
-                            component={Media}
-                        />
+                        <PrivateRoute path="/media" component={Media} />
                         <PrivateRoute path="/files" component={Files} />
                         <Route render={() => <Error code={404} />} />
                     </Switch>

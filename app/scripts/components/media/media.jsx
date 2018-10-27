@@ -5,7 +5,8 @@ import PrivateRoute from '../../route/private.jsx';
 import Navigation from '../page/navigation.jsx';
 import Error from '../page/error.jsx';
 import MediaList from './mediaList.jsx';
-import Search from './search.jsx';
+
+const Search = React.lazy(() => import('./search.jsx'));
 
 export default function Media() {
     return (

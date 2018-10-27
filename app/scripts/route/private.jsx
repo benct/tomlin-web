@@ -10,7 +10,9 @@ export default function PrivateRoute({ path, component: Component }) {
             path={path}
             render={props =>
                 auth.loggedIn() ? (
-                    <Component {...props} />
+                    <React.Suspense fallback={<div className="wrapper text-center">Loading...</div>}>
+                        <Component {...props} />
+                    </React.Suspense>
                 ) : (
                     <Redirect
                         to={{
@@ -26,5 +28,5 @@ export default function PrivateRoute({ path, component: Component }) {
 
 PrivateRoute.propTypes = {
     path: PropTypes.string.isRequired,
-    component: PropTypes.func.isRequired,
+    component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
 };
