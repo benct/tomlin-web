@@ -8,7 +8,7 @@ import { LastIcon, NextIcon } from './icons.jsx';
 export class Pagination extends React.Component {
     renderPage(page, child) {
         return (
-            <Link to={this.props.path + page} className="button-icon" key={`pagination${page}`}>
+            <Link to={this.props.path + page + (this.props.postfix || '')} className="button-icon" key={`pagination${page}`}>
                 {child ? child : <span>{page}</span>}
             </Link>
         );
@@ -41,6 +41,7 @@ export class Pagination extends React.Component {
 Pagination.propTypes = {
     path: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
+    postfix: PropTypes.any,
 };
 
 export default connect(state => ({ data: state.pagination }))(Pagination);
