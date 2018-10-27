@@ -41,25 +41,27 @@ class App extends React.Component {
                         </button>
                     </header>
                     <Navigation />
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/about" component={About} />
-                        <Route
-                            path="/finn"
-                            render={() => (
-                                <React.Suspense fallback={<div className="wrapper text-center">Loading...</div>}>
-                                    <Links file="finn.json" />
-                                    <hr />
-                                    <Notes file="finn.txt" />
-                                </React.Suspense>
-                            )}
-                        />
-                        <Route path="/logout" component={Logout} />
-                        <Route path="/login" component={Login} />
-                        <PrivateRoute path="/media" component={Media} />
-                        <PrivateRoute path="/files" component={Files} />
-                        <Route render={() => <Error code={404} />} />
-                    </Switch>
+                    <main>
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route path="/about" component={About} />
+                            <Route
+                                path="/finn"
+                                render={() => (
+                                    <React.Suspense fallback={<div className="wrapper text-center">Loading...</div>}>
+                                        <Links file="finn.json" />
+                                        <hr />
+                                        <Notes file="finn.txt" />
+                                    </React.Suspense>
+                                )}
+                            />
+                            <Route path="/logout" component={Logout} />
+                            <Route path="/login" component={Login} />
+                            <PrivateRoute path="/media" component={Media} />
+                            <PrivateRoute path="/files" component={Files} />
+                            <Route render={() => <Error code={404} />} />
+                        </Switch>
+                    </main>
                     <footer className="wrapper">
                         <Social circle={this.props.circleIcons} />
                         <div className="text color-light mtl">
