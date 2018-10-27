@@ -33,7 +33,10 @@ class App extends React.Component {
                     <header>
                         <div className="site-title no-select">TOMLIN</div>
                         <Navigation type="simple" />
-                        <button className="button-blank menu-link hide-gt480" onClick={() => this.props.dispatch(actions.toggleMenu())}>
+                        <button
+                            className="button-blank menu-link hide-gt480"
+                            aria-label="Menu"
+                            onClick={() => this.props.dispatch(actions.toggleMenu())}>
                             &nbsp;
                         </button>
                     </header>

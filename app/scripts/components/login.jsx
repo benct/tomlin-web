@@ -37,9 +37,9 @@ export default class Login extends React.PureComponent {
                     <div className="mbl">Fill out the form below to log in.</div>
                 )}
                 <form onSubmit={this.handleSubmit.bind(this)}>
-                    <input type="email" ref={input => (this.username = input)} placeholder="e-mail" autoComplete="off" />
-                    <input type="password" ref={input => (this.password = input)} placeholder="********" />
-                    <input type="submit" value="login" />
+                    <input type="email" ref={it => (this.username = it)} placeholder="e-mail" aria-label="E-mail" autoComplete="off" />
+                    <input type="password" ref={it => (this.password = it)} placeholder="********" aria-label="Password" />
+                    <input type="submit" value="login" aria-label="Login" />
                     {this.state.error && <p className="text error">Incorrect username or password...</p>}
                 </form>
             </div>

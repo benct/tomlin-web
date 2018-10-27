@@ -146,6 +146,7 @@ class Files extends React.Component {
                             type="file"
                             name="files[]"
                             id="file"
+                            aria-label="Add files"
                             onChange={this.handleFileChange.bind(this)}
                             ref={input => (this.fileInput = input)}
                             disabled={this.props.uploading}

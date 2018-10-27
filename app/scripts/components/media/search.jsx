@@ -66,6 +66,7 @@ class Search extends React.Component {
                     type="text"
                     name="query"
                     className="mbl"
+                    aria-label="Search"
                     onChange={this.handleChange.bind(this)}
                     onClick={event => event.target.select()}
                 />
