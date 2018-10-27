@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import auth from './util/auth.js';
-import actions from './actions/base.js';
+import auth from '../util/auth.js';
+import actions from '../actions/base.js';
 
-import PrivateRoute from './components/route/private.jsx';
-import Navigation from './components/page/navigation.jsx';
-import Social from './components/page/social.jsx';
-import Error from './components/page/error.jsx';
-import About from './components/page/about.jsx';
-import Home from './components/home/home.jsx';
-import Login from './components/login.jsx';
-import Logout from './components/logout.jsx';
+import PrivateRoute from './route/private.jsx';
+import Navigation from './page/navigation.jsx';
+import Social from './page/social.jsx';
+import Error from './page/error.jsx';
+import About from './page/about.jsx';
+import Home from './home/home.jsx';
+import Login from './login.jsx';
+import Logout from './logout.jsx';
 
-const Links = React.lazy(() => import('./components/data/links.jsx'));
-const Notes = React.lazy(() => import('./components/data/notes.jsx'));
-const Files = React.lazy(() => import('./components/files/files.jsx'));
-const Media = React.lazy(() => import('./components/media/media.jsx'));
+const Links = React.lazy(() => import('./data/links.jsx'));
+const Notes = React.lazy(() => import('./data/notes.jsx'));
+const Files = React.lazy(() => import('./files/files.jsx'));
+const Media = React.lazy(() => import('./media/media.jsx'));
 
 class App extends React.Component {
     componentDidMount() {
