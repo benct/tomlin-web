@@ -19,8 +19,8 @@ function requireAll(requireContext) {
 // CSS resources
 requireAll(require.context('../styles', true, /^\.\//));
 
-// Favicon assets
-requireAll(require.context('../images/icon', true, /^\.\//));
+// Favicon/manifest assets
+requireAll(require.context('../manifest', true, /^\.\//));
 
 // Other resources
 requireAll(require.context('../content', true, /^\.\//));

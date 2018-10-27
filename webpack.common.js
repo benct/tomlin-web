@@ -57,7 +57,7 @@ module.exports = {
             },
             {
                 test: /\.(xml|json|txt)$/,
-                include: /content|images|scripts|styles/,
+                include: /content|images|manifest|scripts|styles/,
                 type: 'javascript/auto',
                 use: {
                     loader: 'file-loader',
@@ -69,7 +69,7 @@ module.exports = {
             },
             {
                 test: /\.(jpe?g|png|svg|gif)$/,
-                include: /content|images|scripts|styles/,
+                include: /content|images|manifest|scripts|styles/,
                 use: [
                     {
                         loader: 'file-loader',
