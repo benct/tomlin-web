@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import auth from '../util/auth.js';
 
-class Logout extends React.Component {
+class Logout extends React.PureComponent {
     constructor(props) {
         super(props);
     }

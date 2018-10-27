@@ -6,7 +6,7 @@ import { StarIcon, ViewIcon, ImdbIcon } from '../page/icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster.png');
 
-export default class MediaItem extends React.Component {
+export default class MediaItem extends React.PureComponent {
     renderImage() {
         return (
             <img

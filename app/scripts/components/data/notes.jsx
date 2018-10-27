@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions/base.js';
 
-class Notes extends React.Component {
+class Notes extends React.PureComponent {
     componentDidMount() {
         this.props.dispatch(actions.loadContent({ type: 'notes', file: this.props.file }));
     }

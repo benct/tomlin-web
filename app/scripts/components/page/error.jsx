@@ -16,7 +16,7 @@ const error = {
     },
 };
 
-export default class Error extends React.Component {
+export default class Error extends React.PureComponent {
     constructor(props) {
         super(props);
 

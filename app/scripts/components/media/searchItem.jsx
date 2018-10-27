@@ -7,7 +7,7 @@ import { ImdbIcon, PlusIcon } from '../page/icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster_small.png');
 
-export default class SearchItem extends React.Component {
+export default class SearchItem extends React.PureComponent {
     constructor(props) {
         super(props);
 

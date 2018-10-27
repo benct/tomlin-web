@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Social({ circle }) {
+function Social({ circle }) {
     const prefix = circle ? 'circle-' : '';
     return (
         <div className={`social${circle ? ' large' : ''}`}>
@@ -27,3 +27,5 @@ export default function Social({ circle }) {
 Social.propTypes = {
     circle: PropTypes.bool.isRequired,
 };
+
+export default React.memo(Social);

@@ -12,7 +12,8 @@ import Social from './components/page/social.jsx';
 import Error from './components/page/error.jsx';
 import About from './components/page/about.jsx';
 import Home from './components/home/home.jsx';
-import Finn from './components/data/finn.jsx';
+import Links from './components/data/links.jsx';
+import Notes from './components/data/notes.jsx';
 import Files from './components/files/files.jsx';
 import Login from './components/login.jsx';
 import Logout from './components/logout.jsx';
@@ -39,7 +40,16 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/about" component={About} />
-                        <Route path="/finn" component={Finn} />
+                        <Route
+                            path="/finn"
+                            render={() => (
+                                <>
+                                    <Links file="finn.json" />
+                                    <hr />
+                                    <Notes file="finn.txt" />
+                                </>
+                            )}
+                        />
                         <Route path="/logout" component={Logout} />
                         <Route path="/login" component={Login} />
                         <PrivateRoute // Temporarily restricted

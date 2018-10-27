@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function FileList({ content, focused, handleClick, handleRename, handleDelete }) {
+function FileList({ content, focused, handleClick, handleRename, handleDelete }) {
     const renderItem = (item, i) => {
         return (
             <tr key={i}>
@@ -63,3 +63,5 @@ FileList.propTypes = {
     handleRename: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired,
 };
+
+export default React.memo(FileList);

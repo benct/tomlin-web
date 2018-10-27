@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { LastIcon, NextIcon } from './icons.jsx';
 
-export class Pagination extends React.Component {
+export class Pagination extends React.PureComponent {
     renderPage(page, child) {
         return (
             <Link to={this.props.path + page + (this.props.postfix || '')} className="button-icon" key={`pagination${page}`}>

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import auth from '../util/auth.js';
 
-export default class Login extends React.Component {
+export default class Login extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {

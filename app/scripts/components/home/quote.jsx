@@ -6,7 +6,7 @@ import actions from '../../actions/base.js';
 
 import { RefreshIcon } from '../page/icons.jsx';
 
-class Quote extends React.Component {
+class Quote extends React.PureComponent {
     componentDidMount() {
         this.refreshQuote();
     }

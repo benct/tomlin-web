@@ -8,7 +8,7 @@ import { formatDuration, formatThousands, formatYears } from '../../util/formatt
 import { ImdbIcon, RefreshIcon, RemoveIcon, StarIcon, TmdbIcon, ViewIcon } from '../page/icons.jsx';
 import { EqualsIcon, RecommendIcon } from '../page/icons';
 
-export default class MediaModal extends React.Component {
+export default class MediaModal extends React.PureComponent {
     componentDidMount() {
         document.body.classList.add('no-scroll');
     }

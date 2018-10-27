@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Countdown extends React.Component {
+export default class Countdown extends React.PureComponent {
     constructor(props) {
         super(props);
 

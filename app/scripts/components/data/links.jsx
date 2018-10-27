@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions/base.js';
 
-class Links extends React.Component {
+class Links extends React.PureComponent {
     componentDidMount() {
         this.props.dispatch(actions.loadContent({ type: 'links', file: this.props.file }));
     }
