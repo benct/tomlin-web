@@ -43,7 +43,7 @@ export default class MediaModal extends React.Component {
                     className={`mlm ${this.props.isLoggedIn ? 'pointer' : 'not-allowed'}`}
                     data-tooltip={this.props.isLoggedIn ? 'Find similar' : 'Log in to find similar'}
                     onClick={this.props.hide}>
-                    <EqualsIcon width={24} height={24} className="color-primary valign-middle" />
+                    <EqualsIcon width={24} height={24} className="valign-middle" fill="#314159" />
                 </Link>
                 <Link
                     to={`/media/admin/${this.props.type}/recommended/1/${id}`}
