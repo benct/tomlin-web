@@ -98,6 +98,22 @@ input[type=file] + svg {
     margin-right: 0.25em;
 }
 
+select {
+    background: transparent;
+    border: 1px solid #dddddd;
+    border-radius: 0;
+    font-size: 15px;
+    height: 24px;
+    outline: none;
+    text-transform: none;
+    cursor: pointer;
+}
+
+select:hover,
+select:focus {
+    border-color: #002080;
+}
+
 [role=button] {
     cursor: pointer;
     outline: none;

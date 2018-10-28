@@ -37,6 +37,7 @@ export default {
         search: [],
         existing: [],
         item: null,
+        sort: 'rating-desc',
     },
 
     pagination: {

@@ -24,6 +24,8 @@ actions.set = makeAction('MEDIA/SET', (state, { payload }) =>
 
 actions.clear = makeAction('MEDIA/CLEAR', (state, { payload }) => Object.assign({}, state, { [payload.key]: null }));
 
+actions.setSort = makeAction('MEDIA/SET_SORT', 'sort');
+
 actions.showModal = makeAction('MEDIA/SHOW_MODAL', 'item');
 
 actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => Object.assign({}, state, { item: null }));
@@ -43,8 +45,8 @@ actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }
     Object.assign({}, state, { existing: state.existing.filter(i => i !== payload) })
 );
 
-actions.get = ({ action, page }) => (dispatch, getState) =>
-    get({ service: 'media', action, page: page || getState().pagination.current })
+actions.get = ({ action, sort, page }) => (dispatch, getState) =>
+    get({ service: 'media', action, page: page || getState().pagination.current, sort: sort || getState().media.sort })
         .then(response => {
             dispatch(actions.set(Object.assign(response, { key: action })));
             dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));

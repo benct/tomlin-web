@@ -28,6 +28,12 @@ class MediaList extends React.Component {
         this.props.resetPagination();
     }
 
+    handleSort(event) {
+        if (this.props.sort !== event.target.value) {
+            this.props.setSort(event.target.value);
+        }
+    }
+
     renderRows(data) {
         return data.map(item => (
             <MediaItem
@@ -59,7 +65,7 @@ class MediaList extends React.Component {
 
     renderStats() {
         return (
-            <div className="text-center mbm">
+            <div>
                 Total: <span className="strong">{this.props.data.stats.total}</span>, Seen:&nbsp;
                 <span className="strong">{this.props.data.stats.seen}</span>, Favourite:&nbsp;
                 <span className="strong">{this.props.data.stats.favourite}</span>
@@ -83,7 +89,22 @@ class MediaList extends React.Component {
     renderList() {
         return (
             <>
-                {this.props.data.stats ? this.renderStats() : null}
+                <div className="text-center">
+                    {this.props.data.stats ? this.renderStats() : null}
+                    <select
+                        className="mvm color-base"
+                        onChange={e => e.target.blur()}
+                        onBlur={this.handleSort.bind(this)}
+                        defaultValue={this.props.sort}>
+                        <option value="rating-desc">Rating (high-low)</option>
+                        <option value="rating-asc">Rating (low-high)</option>
+                        <option value="release-asc">Release (first-last)</option>
+                        <option value="release-desc">Release (last-first)</option>
+                        <option value="title-asc">Title (alphabetical)</option>
+                        <option value="title-desc">Title (reverse)</option>
+                        <option value="favourite">Favourite</option>
+                    </select>
+                </div>
                 <div className="clear-fix text-center">{this.renderRows(this.props.data.results)}</div>
                 <Pagination path={`/media/${this.props.type}/`} />
             </>
@@ -103,11 +124,13 @@ class MediaList extends React.Component {
 MediaList.propTypes = {
     data: PropTypes.object,
     item: PropTypes.number,
+    sort: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['movie', 'tv', 'watchlist']).isRequired,
     page: PropTypes.number.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
 
     loadMedia: PropTypes.func.isRequired,
+    setSort: PropTypes.func.isRequired,
     setPagination: PropTypes.func.isRequired,
     resetPagination: PropTypes.func.isRequired,
     show: PropTypes.func.isRequired,
@@ -122,6 +145,7 @@ const mapStateToProps = (state, ownProps) => ({
     isLoggedIn: state.isLoggedIn,
     data: state.media[ownProps.match.params.type],
     item: state.media.item,
+    sort: state.media.sort,
     type: ownProps.match.params.type,
     page: +ownProps.match.params.page || 1,
 });
@@ -132,6 +156,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         loadMedia: () => {
             dispatch(mediaActions.get({ action: type, page: +page || 1 }));
             window.scrollTo(0, 0);
+        },
+        setSort: sort => {
+            dispatch(mediaActions.setSort(sort));
+            dispatch(mediaActions.get({ action: type, sort, page: +page || 1 }));
         },
         setPagination: page => dispatch(paginationActions.set(page)),
         resetPagination: () => dispatch(paginationActions.reset()),
