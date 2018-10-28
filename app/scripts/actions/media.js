@@ -52,7 +52,7 @@ actions.get = ({ action, sort, page }) => (dispatch, getState) =>
             dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
         })
         .catch(() => {
-            dispatch(actions.clear({ key: action }));
+            // dispatch(actions.clear({ key: action }));
             dispatch(paginationActions.reset());
             dispatch(baseActions.showToast('Could not fetch media content...'));
         });
@@ -65,7 +65,7 @@ actions.post = ({ action, type, id, page }) => (dispatch, getState) =>
             dispatch(paginationActions.set({ current: response.page, total: Math.min(response.total_pages, 1000) }));
         })
         .catch(() => {
-            dispatch(actions.setSearch([]));
+            // dispatch(actions.setSearch([]));
             dispatch(paginationActions.reset());
             dispatch(baseActions.showToast('Could not fetch media content...'));
         });
