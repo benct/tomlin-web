@@ -66,7 +66,7 @@ class App extends React.Component {
                             <Route render={() => <Error code={404} />} />
                         </Switch>
                     </main>
-                    <footer className="wrapper">
+                    <footer>
                         <Social circle={this.props.circleIcons} />
                         <div className="text color-light mtl">
                             <span className="pointer no-select" onClick={this.props.toggleIcons}>
