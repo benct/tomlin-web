@@ -41,7 +41,7 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
             );
         case 'media':
             return (
-                <nav className="mvl">
+                <nav className="pvl">
                     <ul className="no-select menu menu-simple menu-sub">{media.map(createLink)}</ul>
                 </nav>
             );
