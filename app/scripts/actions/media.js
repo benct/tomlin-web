@@ -83,13 +83,16 @@ actions.search = payload => dispatch =>
         })
         .catch(() => dispatch(baseActions.showToast('Failed to execute search...')));
 
-actions.add = ({ type, id }) => dispatch =>
-    post({ service: 'media', action: 'save', type, id })
-        .then(() => {
-            dispatch(actions.addExisting(id));
-            dispatch(baseActions.showToast('Media successfully added!'));
-        })
-        .catch(() => dispatch(baseActions.showToast('Failed to add media...')));
+actions.add = ({ type, id }) => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'media', action: 'save', type, id })
+            .then(() => {
+                dispatch(actions.addExisting(id));
+                dispatch(baseActions.showToast('Media successfully added!'));
+            })
+            .catch(() => dispatch(baseActions.showToast('Failed to add media...')));
+    }
+};
 
 actions.remove = ({ action, type, id }) => dispatch => {
     if (auth.loggedIn() && confirm(`Are you sure you want to remove this?`)) {
@@ -139,6 +142,14 @@ actions.seen = ({ action, type, id, set }) => dispatch => {
     }
 };
 
+actions.updatePosters = () => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'media', action: 'images', overwrite: false })
+            .then(response => dispatch(baseActions.showToast(`Successfully updated ${response} posters!`)))
+            .catch(() => dispatch(baseActions.showToast('Failed to update posters...')));
+    }
+};
+
 actions.goToIMDb = ({ type, id }) => dispatch =>
     post({ service: 'media', action: 'external', type, id })
         .then(
@@ -148,11 +159,6 @@ actions.goToIMDb = ({ type, id }) => dispatch =>
                     : dispatch(baseActions.showToast('No external ID found...'))
         )
         .catch(() => dispatch(baseActions.showToast('Failed to get external ID...')));
-
-actions.updatePosters = () => dispatch =>
-    post({ service: 'media', action: 'images', overwrite: false })
-        .then(response => dispatch(baseActions.showToast(`Successfully updated ${response} posters!`)))
-        .catch(() => dispatch(baseActions.showToast('Failed to update posters...')));
 
 export default actions;
 
