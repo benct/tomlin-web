@@ -1,14 +1,12 @@
 /* global fetch, FormData */
 import 'whatwg-fetch';
 
+import actions from '../actions/base.js';
+import store from '../redux/store.js';
 import auth from './auth.js';
 
 const baseUrl = 'https://tomlin.no';
 const baseApiUrl = 'https://tomlin.no/api/';
-
-function checkStatus(response) {
-    return response.status >= 200 && response.status < 300 ? response : Promise.reject(response.statusText);
-}
 
 function query(data = {}) {
     return Object.keys(data)
@@ -28,23 +26,27 @@ function buildForm(data, files = null) {
     return formData;
 }
 
-export function post(data, files = null) {
+export function _post(data, files) {
     return fetch(baseApiUrl, {
         method: 'POST',
         body: buildForm(data, files),
-    })
-        .then(checkStatus)
-        .then(response => response.json());
+    }).then(response => response.json());
+}
+
+export function post(data, files = null) {
+    store.dispatch(actions.setLoading(true));
+
+    return _post(data, files).finally(() => store.dispatch(actions.setLoading(false)));
 }
 
 export function get(data) {
+    store.dispatch(actions.setLoading(true));
+
     return fetch(`${baseApiUrl}?${query(data)}`)
-        .then(checkStatus)
-        .then(response => response.json());
+        .then(response => response.json())
+        .finally(() => store.dispatch(actions.setLoading(false)));
 }
 
 export function fetchFile(path) {
-    return fetch(`${baseUrl}${path}`)
-        .then(checkStatus)
-        .then(response => response.text());
+    return fetch(`${baseUrl}${path}`).then(response => response.text());
 }

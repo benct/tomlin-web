@@ -5,7 +5,9 @@ export default {
 
     showMenu: false,
     circleIcons: false,
+
     toast: null,
+    loading: false,
 
     quote: {
         text: null,

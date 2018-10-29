@@ -33,15 +33,19 @@ class App extends React.Component {
                     <header>
                         <div className="site-title no-select">TOMLIN</div>
                         <Navigation type="simple" />
-                        <button
-                            className="button-blank menu-link hide-gt480"
-                            aria-label="Menu"
-                            onClick={this.props.toggleMenu}>
+                        <button className="button-blank menu-link hide-gt480" aria-label="Menu" onClick={this.props.toggleMenu}>
                             &nbsp;
                         </button>
                     </header>
                     <Navigation />
                     <main>
+                        {this.props.loading ? (
+                            <div className="overlay overlay-loading">
+                                <div className="loading-container shadow">
+                                    <div className="pac-man" />
+                                </div>
+                            </div>
+                        ) : null}
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/about" component={About} />
@@ -81,6 +85,7 @@ App.propTypes = {
     showMenu: PropTypes.bool.isRequired,
     circleIcons: PropTypes.bool.isRequired,
     toast: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
     setLoggedIn: PropTypes.func.isRequired,
     toggleMenu: PropTypes.func.isRequired,
     toggleIcons: PropTypes.func.isRequired,
@@ -90,6 +95,7 @@ const mapStateToProps = state => ({
     showMenu: state.showMenu,
     circleIcons: state.circleIcons,
     toast: state.toast,
+    loading: state.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

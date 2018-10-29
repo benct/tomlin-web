@@ -1,4 +1,4 @@
-import { post } from './api.js';
+import { _post } from './api.js';
 
 export default {
     init() {
@@ -25,7 +25,7 @@ export default {
     onChange() {},
 
     _authenticate(data = {}, cb = null) {
-        post(data)
+        _post(data)
             .then(response => (response ? response : Promise.reject()))
             .then(token => {
                 localStorage.token = token;

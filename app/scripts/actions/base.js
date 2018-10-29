@@ -14,6 +14,8 @@ actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', state => Object.assign({}, s
 
 actions.setToast = makeAction('BASE/SET_TOAST', 'toast');
 
+actions.setLoading = makeAction('BASE/SET_LOADING', 'loading');
+
 actions.showToast = payload => dispatch => {
     dispatch(actions.setToast(payload));
 
