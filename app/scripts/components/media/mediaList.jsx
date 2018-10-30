@@ -49,7 +49,7 @@ class MediaList extends React.Component {
     }
 
     renderModal(item) {
-        return item ? (
+        return (
             <MediaModal
                 type={item.type || this.props.type}
                 data={item}
@@ -60,7 +60,7 @@ class MediaList extends React.Component {
                 setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}
                 setFavourite={this.props.setFavourite.bind(this, item.type, item.id, item.favourite)}
             />
-        ) : null;
+        );
     }
 
     renderStats() {
@@ -115,7 +115,7 @@ class MediaList extends React.Component {
         return this.props.data ? (
             <>
                 {this.props.type === 'watchlist' ? this.renderWatchlist() : this.renderList()}
-                {this.props.item ? this.renderModal(this.props.data.results.filter(item => item.id === this.props.item).pop()) : null}
+                {this.props.item ? this.renderModal(this.props.item) : null}
             </>
         ) : null;
     }
@@ -123,7 +123,7 @@ class MediaList extends React.Component {
 
 MediaList.propTypes = {
     data: PropTypes.object,
-    item: PropTypes.number,
+    item: PropTypes.object,
     sort: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['movie', 'tv', 'watchlist']).isRequired,
     page: PropTypes.number.isRequired,
@@ -163,7 +163,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         setPagination: page => dispatch(paginationActions.set(page)),
         resetPagination: () => dispatch(paginationActions.reset()),
-        show: id => dispatch(mediaActions.showModal(id)),
+        show: id => dispatch(mediaActions.setItem({ type, id })),
         hide: () => dispatch(mediaActions.hideModal()),
         update: (itemType, id) => dispatch(mediaActions.update({ action: type, type: itemType || type, id })),
         remove: (itemType, id) => dispatch(mediaActions.remove({ action: type, type: itemType || type, id })),

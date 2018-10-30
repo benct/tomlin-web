@@ -45,6 +45,17 @@ actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }
     Object.assign({}, state, { existing: state.existing.filter(i => i !== payload) })
 );
 
+actions.setItem = ({ type, id }) => dispatch => {
+    get({ service: 'media', action: 'get', type, id })
+        .then(response => {
+            dispatch(actions.showModal(response));
+        })
+        .catch(() => {
+            dispatch(actions.hideModal());
+            dispatch(baseActions.showToast('Could not fetch media content...'));
+        });
+};
+
 actions.get = ({ action, sort, page }) => (dispatch, getState) =>
     get({ service: 'media', action, page: page || getState().pagination.current, sort: sort || getState().media.sort })
         .then(response => {
@@ -114,16 +125,20 @@ actions.update = ({ action, type, id }) => dispatch => {
         post({ service: 'media', action: 'update', type, id })
             .then(() => {
                 dispatch(actions.get({ action }));
+                dispatch(actions.setItem({ type, id }));
                 dispatch(baseActions.showToast('Media successfully updated!'));
             })
             .catch(() => dispatch(baseActions.showToast('Failed to update media...')));
     }
 };
 
-actions.favourite = ({ action, type, id, set }) => dispatch => {
+actions.favourite = ({ action, type, id, set }) => (dispatch, getState) => {
     if (auth.loggedIn()) {
         post({ service: 'media', action: 'favourite', type, id, set })
             .then(() => {
+                if (getState().media.item) {
+                    dispatch(actions.setItem({ type, id }));
+                }
                 dispatch(actions.get({ action }));
                 dispatch(baseActions.showToast(`${set ? 'Added to' : 'Removed from'} favourites!`));
             })
@@ -131,10 +146,13 @@ actions.favourite = ({ action, type, id, set }) => dispatch => {
     }
 };
 
-actions.seen = ({ action, type, id, set }) => dispatch => {
+actions.seen = ({ action, type, id, set }) => (dispatch, getState) => {
     if (auth.loggedIn()) {
         post({ service: 'media', action: 'seen', type, id, set })
             .then(() => {
+                if (getState().media.item) {
+                    dispatch(actions.setItem({ type, id }));
+                }
                 dispatch(actions.get({ action }));
                 dispatch(baseActions.showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
             })
