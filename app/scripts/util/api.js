@@ -1,12 +1,15 @@
 /* global fetch, FormData */
 import 'whatwg-fetch';
 
+import debounce from './debounce.js';
 import actions from '../actions/base.js';
 import store from '../redux/store.js';
 import auth from './auth.js';
 
 const baseUrl = 'https://tomlin.no';
 const baseApiUrl = 'https://tomlin.no/api/';
+
+const delayedLoading = debounce(value => store.dispatch(actions.setLoading(value)), 250);
 
 function query(data = {}) {
     return Object.keys(data)
@@ -34,17 +37,17 @@ export function _post(data, files) {
 }
 
 export function post(data, files = null) {
-    store.dispatch(actions.setLoading(true));
+    delayedLoading(true);
 
-    return _post(data, files).finally(() => store.dispatch(actions.setLoading(false)));
+    return _post(data, files).finally(() => delayedLoading(false));
 }
 
 export function get(data) {
-    store.dispatch(actions.setLoading(true));
+    delayedLoading(true);
 
     return fetch(`${baseApiUrl}?${query(data)}`)
         .then(response => response.json())
-        .finally(() => store.dispatch(actions.setLoading(false)));
+        .finally(() => delayedLoading(false));
 }
 
 export function fetchFile(path) {
