@@ -11,6 +11,8 @@ const baseApiUrl = 'https://tomlin.no/api/';
 
 const delayedLoading = debounce(value => store.dispatch(actions.setLoading(value)), 250);
 
+const checkStatus = response => (response.ok ? response : Promise.reject(response.statusText));
+
 function query(data = {}) {
     return Object.keys(data)
         .filter(key => typeof data[key] !== 'undefined' && data[key] !== null)
@@ -33,7 +35,9 @@ export function _post(data, files) {
     return fetch(baseApiUrl, {
         method: 'POST',
         body: buildForm(data, files),
-    }).then(response => response.json());
+    })
+        .then(checkStatus)
+        .then(response => response.json());
 }
 
 export function post(data, files = null) {
@@ -46,10 +50,13 @@ export function get(data) {
     delayedLoading(true);
 
     return fetch(`${baseApiUrl}?${query(data)}`)
+        .then(checkStatus)
         .then(response => response.json())
         .finally(() => delayedLoading(false));
 }
 
 export function fetchFile(path) {
-    return fetch(`${baseUrl}${path}`).then(response => response.text());
+    return fetch(`${baseUrl}${path}`)
+        .then(checkStatus)
+        .then(response => response.text());
 }
