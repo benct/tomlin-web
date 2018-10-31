@@ -3,7 +3,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: min-content 1fr min-content;
     row-gap: 5px;
-    width: 375px;
+    width: 460px;
     max-height: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
