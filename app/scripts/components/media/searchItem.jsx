@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ISO6391 from 'iso-639-1';
-import format from 'date-fns/format';
 
+import { formatDate } from '../../util/formatting.js';
 import { ImdbIcon, PlusIcon } from '../page/icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster_small.png');
@@ -45,7 +45,7 @@ export default class SearchItem extends React.PureComponent {
                     </div>
                 </div>
                 <h3 className="media-title color-primary truncate man" onClick={this.toggleOverview.bind(this)}>
-                    {this.props.title} {this.props.release && this.props.release !== '' ? `(${format(this.props.release, 'yyyy')})` : null}
+                    {this.props.title} {formatDate(this.props.release, '(yyyy)')}
                 </h3>
                 <div className="media-data text-small">
                     {this.props.title !== this.props.originalTitle ? (
@@ -66,7 +66,7 @@ export default class SearchItem extends React.PureComponent {
                         <span>
                             ,&nbsp;
                             <span className="hide-lt480">Release: </span>
-                            {format(this.props.release, 'MMM do, YYY')}
+                            {formatDate(this.props.release)}
                         </span>
                     ) : null}
                     <div className="hide-gt768">

@@ -1,3 +1,9 @@
+import dateFormat from 'date-fns/format';
+
+export function formatDate(date, format = 'MMM do, YYY') {
+    return date && date !== '' ? dateFormat(date, format) : null;
+}
+
 export function formatDuration(minutes) {
     if (typeof minutes !== 'number' || isNaN(minutes) || minutes <= 0) {
         return '-';
