@@ -42,7 +42,7 @@ class MediaList extends React.Component {
                 data={item}
                 setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}
                 setFavourite={this.props.setFavourite.bind(this, item.type, item.id, item.favourite)}
-                showItem={this.props.show.bind(this, item.id)}
+                showItem={this.props.show.bind(this, item.type, item.id)}
                 isLoggedIn={this.props.isLoggedIn}
             />
         ));
@@ -163,7 +163,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         setPagination: page => dispatch(paginationActions.set(page)),
         resetPagination: () => dispatch(paginationActions.reset()),
-        show: id => dispatch(mediaActions.setItem({ type, id })),
+        show: (itemType, id) => dispatch(mediaActions.setItem({ type: itemType || type, id })),
         hide: () => dispatch(mediaActions.hideModal()),
         update: (itemType, id) => dispatch(mediaActions.update({ action: type, type: itemType || type, id })),
         remove: (itemType, id) => dispatch(mediaActions.remove({ action: type, type: itemType || type, id })),
