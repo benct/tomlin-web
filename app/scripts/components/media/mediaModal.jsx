@@ -1,20 +1,80 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import format from 'date-fns/format';
 import { Link } from 'react-router-dom';
 
-import { formatDuration, formatThousands, formatYears } from '../../util/formatting.js';
+import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting.js';
 
-import { ImdbIcon, RefreshIcon, RemoveIcon, StarIcon, TmdbIcon, ViewIcon } from '../page/icons.jsx';
-import { EqualsIcon, RecommendIcon } from '../page/icons';
+import { ImdbIcon, RefreshIcon, RemoveIcon, StarIcon, TmdbIcon, ViewIcon, EqualsIcon, RecommendIcon } from '../page/icons.jsx';
+import Season from './season.jsx';
 
 export default class MediaModal extends React.PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showSeasons: false,
+        };
+    }
+
     componentDidMount() {
         document.body.classList.add('no-scroll');
     }
 
     componentWillUnmount() {
         document.body.classList.remove('no-scroll');
+    }
+
+    toggleSeasons() {
+        this.setState({ showSeasons: !this.state.showSeasons });
+    }
+
+    static renderPoster(poster, title) {
+        return poster ? (
+            <img
+                src={`/assets/images/media${poster}`}
+                alt={`Poster: ${title}`}
+                onError={event => (event.target.src = require('../../../images/media/poster.png'))}
+            />
+        ) : (
+            <span>No poster</span>
+        );
+    }
+
+    static renderRating(rating, votes) {
+        return rating ? (
+            <span>
+                {rating} <span className="text-smaller pls">({votes} votes)</span>
+            </span>
+        ) : (
+            <span className="color-light">No rating</span>
+        );
+    }
+
+    static renderRuntime(runtime) {
+        return runtime ? (
+            <>
+                <span>Runtime</span>
+                <span>{formatDuration(runtime)}</span>
+            </>
+        ) : null;
+    }
+
+    static renderCost(key, value) {
+        return (
+            <>
+                <span>{key}</span>
+                <span>{value ? `$ ${formatThousands(value)}` : ' - '}</span>
+            </>
+        );
+    }
+
+    static renderOptional(key, value, clazz) {
+        return value ? (
+            <>
+                <span>{key}</span>
+                <span className={clazz}>{value}</span>
+            </>
+        ) : null;
     }
 
     renderLinks(id, imdb) {
@@ -56,98 +116,86 @@ export default class MediaModal extends React.PureComponent {
         );
     }
 
-    static renderPoster(poster, title) {
-        return poster ? (
-            <img
-                src={`/assets/images/media${poster}`}
-                alt={`Poster: ${title}`}
-                onError={event => (event.target.src = require('../../../images/media/poster.png'))}
-            />
-        ) : (
-            <span>No poster</span>
-        );
-    }
-
-    static renderRating(rating, votes) {
-        return rating ? (
+    renderSeasonButton() {
+        return this.props.type === 'tv' ? (
             <span>
-                {rating} <span className="text-smaller pls">({votes} votes)</span>
+                <button className="button-default button-default-small" onClick={this.toggleSeasons.bind(this)}>
+                    {this.state.showSeasons
+                        ? 'Overview'
+                        : `${this.props.data.number_of_seasons} ${this.props.data.number_of_seasons !== 1 ? 'seasons' : 'season'}`}
+                </button>
             </span>
-        ) : (
-            <span className="color-light">No rating</span>
+        ) : null;
+    }
+
+    renderSeasons() {
+        return (
+            <div className="media-overlay-seasons">
+                {this.props.data.seasons.filter(s => s.season).map(season => (
+                    <Season key={`season${season.id}`} tvId={this.props.data.id} data={season} setSeen={this.props.setSeen} />
+                ))}
+            </div>
         );
     }
 
-    static renderRuntime(runtime) {
-        return runtime ? (
-            <>
-                <span>Runtime</span>
-                <span>{formatDuration(runtime)}</span>
-            </>
-        ) : null;
-    }
-
-    static renderCost(value) {
-        return <span>{value ? `$ ${formatThousands(value)}` : ' - '}</span>;
-    }
-
-    static renderOptional(key, value) {
-        return value ? (
-            <>
-                <span>{key}</span>
-                <span>{value}</span>
-            </>
-        ) : null;
+    renderContent() {
+        return (
+            <div className="media-overlay-overview">
+                <span>Original</span>
+                <span>{this.props.data.original_title || this.props.data.title}</span>
+                <span>Language</span>
+                <span>{this.props.data.language}</span>
+                <span>Links</span>
+                {this.renderLinks(this.props.data.id, this.props.data.imdb_id)}
+                <span>Genre(s)</span>
+                <span>{this.props.data.genres}</span>
+                <span>Release</span>
+                <span>{this.props.data.release_date ? formatDate(this.props.data.release_date) : 'Unknown'}</span>
+                <span>Rating</span>
+                {MediaModal.renderRating(this.props.data.rating, this.props.data.votes)}
+                {MediaModal.renderRuntime(this.props.data.runtime)}
+                {this.props.type === 'movie' ? (
+                    <>
+                        {MediaModal.renderCost('Budget', this.props.data.budget)}
+                        {MediaModal.renderCost('Revenue', this.props.data.revenue)}
+                        {MediaModal.renderOptional('Tagline', this.props.data.tagline, 'text-small')}
+                    </>
+                ) : (
+                    <>
+                        <span>Episodes</span>
+                        <span>
+                            {this.props.data.number_of_episodes} (Seen:&nbsp;
+                            {this.props.data.seasons.reduce((acc, cur) => acc + cur.episodes.reduce((acc, cur) => acc + cur.seen, 0), 0)})
+                        </span>
+                        {MediaModal.renderOptional('Type', this.props.data.series_type)}
+                        <span>Status</span>
+                        <span>
+                            {this.props.data.status}
+                            {this.props.data.end_year ? <span className="text-small pls">({this.props.data.end_year})</span> : null}
+                        </span>
+                        {MediaModal.renderOptional('Network(s)', this.props.data.networks)}
+                        {MediaModal.renderOptional('Created by', this.props.data.created_by)}
+                        {MediaModal.renderOptional('Production', this.props.data.production_companies)}
+                    </>
+                )}
+                {MediaModal.renderOptional('Overview', this.props.data.overview, 'text-small')}
+                <span>Poster</span>
+                {MediaModal.renderPoster(this.props.data.poster, this.props.data.title)}
+            </div>
+        );
     }
 
     render() {
         return (
             <div className="overlay" onClick={event => (event.target === event.currentTarget ? this.props.hide() : null)} role="dialog">
                 <div className="wrapper media-overlay shadow">
-                    <div className="media-overlay-title color-primary strong pbm">
-                        {this.props.data.title} ({formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)})
+                    <div className="media-overlay-title pbm">
+                        <span className="color-primary strong">
+                            {this.props.data.title} ({formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)})
+                        </span>
+                        {this.renderSeasonButton()}
                     </div>
-                    <div className="media-overlay-content">
-                        <span>Original</span>
-                        <span>{this.props.data.original_title || this.props.data.title}</span>
-                        <span>Language</span>
-                        <span>{this.props.data.language}</span>
-                        <span>Links</span>
-                        {this.renderLinks(this.props.data.id, this.props.data.imdb_id)}
-                        <span>Genre(s)</span>
-                        <span>{this.props.data.genres}</span>
-                        <span>Release</span>
-                        <span>{this.props.data.release_date ? format(this.props.data.release_date, 'MMM do, YYY') : 'Unknown'}</span>
-                        <span>Rating</span>
-                        {MediaModal.renderRating(this.props.data.rating, this.props.data.votes)}
-                        {MediaModal.renderRuntime(this.props.data.runtime)}
-                        {this.props.type === 'movie' ? (
-                            <>
-                                <span>Budget</span>
-                                {MediaModal.renderCost(this.props.data.budget)}
-                                <span>Revenue</span>
-                                {MediaModal.renderCost(this.props.data.revenue)}
-                                {MediaModal.renderOptional('Tagline', this.props.data.tagline)}
-                            </>
-                        ) : (
-                            <>
-                                {MediaModal.renderOptional('Seasons', this.props.data.number_of_seasons)}
-                                {MediaModal.renderOptional('Episodes', this.props.data.number_of_episodes)}
-                                {MediaModal.renderOptional('Type', this.props.data.series_type)}
-                                <span>Status</span>
-                                <span>
-                                    {this.props.data.status}
-                                    {this.props.data.end_year ? <span className="text-small pls">({this.props.data.end_year})</span> : null}
-                                </span>
-                                {MediaModal.renderOptional('Network(s)', this.props.data.networks)}
-                                {MediaModal.renderOptional('Created by', this.props.data.created_by)}
-                                {MediaModal.renderOptional('Production', this.props.data.production_companies)}
-                            </>
-                        )}
-                        {MediaModal.renderOptional('Overview', this.props.data.overview)}
-                        <span>Poster</span>
-                        {MediaModal.renderPoster(this.props.data.poster, this.props.data.title)}
-                    </div>
+                    <div className="media-overlay-content">{this.state.showSeasons ? this.renderSeasons() : this.renderContent()}</div>
                     <div className="media-overlay-buttons ptm">
                         <button className="button-blank mrl" data-tooltip="Remove" onClick={this.props.remove}>
                             <RemoveIcon width={22} height={22} />

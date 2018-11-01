@@ -72,6 +72,10 @@
     font-size: 14px;
 }
 
+.border-bottom {
+    border-bottom: 1px dotted #dddddd;
+}
+
 .error-page {
     text-align: center;
     padding: 100px 30px !important;

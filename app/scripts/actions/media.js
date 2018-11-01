@@ -160,6 +160,17 @@ actions.seen = ({ action, type, id, set }) => (dispatch, getState) => {
     }
 };
 
+actions.seenEpisode = ({ tvId, id, set }) => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'media', action: 'seen', type: 'episode', id, set })
+            .then(() => {
+                dispatch(actions.setItem({ type: 'tv', id: tvId }));
+                dispatch(baseActions.showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
+            })
+            .catch(() => dispatch(baseActions.showToast('Could not set seen...')));
+    }
+};
+
 actions.updatePosters = () => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'media', action: 'images', overwrite: false })
