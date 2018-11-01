@@ -30,6 +30,21 @@ actions.showModal = makeAction('MEDIA/SHOW_MODAL', 'item');
 
 actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => Object.assign({}, state, { item: null }));
 
+actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload: { seasonId, episodeId, set } }) => {
+    const item = Object.assign({}, state.item, {
+        seasons: state.item.seasons.map(season =>
+            Object.assign({}, season, {
+                episodes: season.episodes.map(episode =>
+                    Object.assign({}, episode, {
+                        seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
+                    })
+                ),
+            })
+        ),
+    });
+    return Object.assign({}, state, { item });
+});
+
 actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
 
 actions.setExisting = makeAction('MEDIA/SET_EXISTING', 'existing');
@@ -160,12 +175,23 @@ actions.seen = ({ action, type, id, set }) => (dispatch, getState) => {
     }
 };
 
-actions.seenEpisode = ({ tvId, id, set }) => dispatch => {
+actions.seenEpisode = ({ id, set }) => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'media', action: 'seen', type: 'episode', id, set })
             .then(() => {
-                dispatch(actions.setItem({ type: 'tv', id: tvId }));
+                dispatch(actions.setEpisodeSeen({ episodeId: id, set }));
                 dispatch(baseActions.showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
+            })
+            .catch(() => dispatch(baseActions.showToast('Could not set seen...')));
+    }
+};
+
+actions.seenEpisodes = ({ seasonId }) => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'media', action: 'seen', type: 'season', id: seasonId, set: true })
+            .then(() => {
+                dispatch(actions.setEpisodeSeen({ seasonId, set: true }));
+                dispatch(baseActions.showToast('All episodes set as seen'));
             })
             .catch(() => dispatch(baseActions.showToast('Could not set seen...')));
     }

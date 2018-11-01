@@ -132,7 +132,7 @@ export default class MediaModal extends React.PureComponent {
         return (
             <div className="media-overlay-seasons">
                 {this.props.data.seasons.filter(s => s.season).map(season => (
-                    <Season key={`season${season.id}`} tvId={this.props.data.id} data={season} setSeen={this.props.setSeen} />
+                    <Season key={`season${season.id}`} data={season} setSeen={this.props.setSeen} />
                 ))}
             </div>
         );
