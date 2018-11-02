@@ -20,11 +20,8 @@ export default class MediaItem extends React.PureComponent {
     renderSeasons() {
         return (
             <>
-                <span className="text-smaller">S </span>
-                {this.props.data.number_of_seasons}
-                &nbsp;|&nbsp;
-                <span className="text-smaller">E </span>
-                {this.props.data.number_of_episodes}
+                <span className="text-smaller">Ep. </span>
+                {this.props.data.seen_episodes}/{this.props.data.number_of_episodes}
             </>
         );
     }
