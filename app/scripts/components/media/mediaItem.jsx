@@ -21,7 +21,7 @@ export default class MediaItem extends React.PureComponent {
         return (
             <>
                 <span className="text-smaller">Ep. </span>
-                {this.props.data.seen_episodes}/{this.props.data.number_of_episodes}
+                <span className="strong">{this.props.data.seen_episodes || 0}</span>/{this.props.data.number_of_episodes}
             </>
         );
     }
