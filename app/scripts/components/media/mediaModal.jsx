@@ -81,7 +81,7 @@ export default class MediaModal extends React.PureComponent {
         return (
             <span>
                 <a
-                    href={`https://www.themoviedb.org/movie/${id}`}
+                    href={`https://www.themoviedb.org/${this.props.type}/${id}`}
                     target="_blank"
                     rel="noopener noreferrer external"
                     className="pointer"
