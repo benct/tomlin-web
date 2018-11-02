@@ -1,9 +1,8 @@
 import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
 
-import auth from '../util/auth.js';
 import { get, post } from '../util/api.js';
-
+import auth from '../util/auth.js';
 import baseActions from './base.js';
 import paginationActions from './pagination.js';
 
@@ -41,20 +40,19 @@ actions.showModal = makeAction('MEDIA/SHOW_MODAL', (state, { payload }) =>
 
 actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => Object.assign({}, state, { showModal: false }));
 
-actions.setItem = ({ type, id }) => (dispatch, getState) => {
-    if (getState().media.item && getState().media.item.id === id) {
+actions.setItem = ({ type, id, override }) => (dispatch, getState) => {
+    if (override || !getState().media.item || getState().media.item.id !== id) {
+        get({ service: 'media', action: 'get', type, id })
+            .then(response => {
+                dispatch(actions.showModal(response));
+            })
+            .catch(() => {
+                dispatch(actions.hideModal());
+                dispatch(baseActions.showToast('Could not fetch media content...'));
+            });
+    } else {
         dispatch(actions.showModal());
-        return;
     }
-
-    get({ service: 'media', action: 'get', type, id })
-        .then(response => {
-            dispatch(actions.showModal(response));
-        })
-        .catch(() => {
-            dispatch(actions.hideModal());
-            dispatch(baseActions.showToast('Could not fetch media content...'));
-        });
 };
 
 actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
@@ -128,7 +126,7 @@ actions.update = ({ action, type, id }) => dispatch => {
         post({ service: 'media', action: 'update', type, id })
             .then(() => {
                 dispatch(actions.get({ action }));
-                dispatch(actions.setItem({ type, id }));
+                dispatch(actions.setItem({ type, id, override: true }));
                 dispatch(baseActions.showToast('Media successfully updated!'));
             })
             .catch(() => dispatch(baseActions.showToast('Failed to update media...')));
