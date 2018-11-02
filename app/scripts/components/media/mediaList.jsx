@@ -115,7 +115,7 @@ class MediaList extends React.Component {
         return this.props.data ? (
             <>
                 {this.props.type === 'watchlist' ? this.renderWatchlist() : this.renderList()}
-                {this.props.item ? this.renderModal(this.props.item) : null}
+                {this.props.showModal && this.props.item ? this.renderModal(this.props.item) : null}
             </>
         ) : null;
     }
@@ -124,6 +124,7 @@ class MediaList extends React.Component {
 MediaList.propTypes = {
     data: PropTypes.object,
     item: PropTypes.object,
+    showModal: PropTypes.bool.isRequired,
     sort: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['movie', 'tv', 'watchlist']).isRequired,
     page: PropTypes.number.isRequired,
@@ -145,6 +146,7 @@ const mapStateToProps = (state, ownProps) => ({
     isLoggedIn: state.isLoggedIn,
     data: state.media[ownProps.match.params.type],
     item: state.media.item,
+    showModal: state.media.showModal,
     sort: state.media.sort,
     type: ownProps.match.params.type,
     page: +ownProps.match.params.page || 1,

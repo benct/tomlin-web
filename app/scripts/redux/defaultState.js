@@ -38,6 +38,7 @@ export default {
         watchlist: null,
         search: [],
         existing: [],
+        showModal: false,
         item: null,
         sort: 'rating-desc',
     },

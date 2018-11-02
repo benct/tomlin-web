@@ -22,45 +22,31 @@ actions.set = makeAction('MEDIA/SET', (state, { payload }) =>
     })
 );
 
-actions.clear = makeAction('MEDIA/CLEAR', (state, { payload }) => Object.assign({}, state, { [payload.key]: null }));
+actions.get = ({ action, sort, page }) => (dispatch, getState) =>
+    get({ service: 'media', action, page: page || getState().pagination.current, sort: sort || getState().media.sort })
+        .then(response => {
+            dispatch(actions.set(Object.assign(response, { key: action })));
+            dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
+        })
+        .catch(() => {
+            dispatch(paginationActions.reset());
+            dispatch(baseActions.showToast('Could not fetch media content...'));
+        });
 
 actions.setSort = makeAction('MEDIA/SET_SORT', 'sort');
 
-actions.showModal = makeAction('MEDIA/SHOW_MODAL', 'item');
-
-actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => Object.assign({}, state, { item: null }));
-
-actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload: { seasonId, episodeId, set } }) => {
-    const item = Object.assign({}, state.item, {
-        seasons: state.item.seasons.map(season =>
-            Object.assign({}, season, {
-                episodes: season.episodes.map(episode =>
-                    Object.assign({}, episode, {
-                        seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
-                    })
-                ),
-            })
-        ),
-    });
-    return Object.assign({}, state, { item });
-});
-
-actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
-
-actions.setExisting = makeAction('MEDIA/SET_EXISTING', 'existing');
-
-actions.addExisting = makeAction('MEDIA/ADD_EXISTING', (state, { payload }) => {
-    const existing = state.existing.slice();
-    existing.push(payload);
-
-    return Object.assign({}, state, { existing });
-});
-
-actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }) =>
-    Object.assign({}, state, { existing: state.existing.filter(i => i !== payload) })
+actions.showModal = makeAction('MEDIA/SHOW_MODAL', (state, { payload }) =>
+    Object.assign({}, state, { showModal: true, item: payload || state.item })
 );
 
-actions.setItem = ({ type, id }) => dispatch => {
+actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => Object.assign({}, state, { showModal: false }));
+
+actions.setItem = ({ type, id }) => (dispatch, getState) => {
+    if (getState().media.item && getState().media.item.id === id) {
+        dispatch(actions.showModal());
+        return;
+    }
+
     get({ service: 'media', action: 'get', type, id })
         .then(response => {
             dispatch(actions.showModal(response));
@@ -71,17 +57,7 @@ actions.setItem = ({ type, id }) => dispatch => {
         });
 };
 
-actions.get = ({ action, sort, page }) => (dispatch, getState) =>
-    get({ service: 'media', action, page: page || getState().pagination.current, sort: sort || getState().media.sort })
-        .then(response => {
-            dispatch(actions.set(Object.assign(response, { key: action })));
-            dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
-        })
-        .catch(() => {
-            // dispatch(actions.clear({ key: action }));
-            dispatch(paginationActions.reset());
-            dispatch(baseActions.showToast('Could not fetch media content...'));
-        });
+actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
 
 actions.post = ({ action, type, id, page }) => (dispatch, getState) =>
     post({ service: 'media', action, type, id, page: page || getState().pagination.current })
@@ -91,7 +67,6 @@ actions.post = ({ action, type, id, page }) => (dispatch, getState) =>
             dispatch(paginationActions.set({ current: response.page, total: Math.min(response.total_pages, 1000) }));
         })
         .catch(() => {
-            // dispatch(actions.setSearch([]));
             dispatch(paginationActions.reset());
             dispatch(baseActions.showToast('Could not fetch media content...'));
         });
@@ -108,6 +83,19 @@ actions.search = payload => dispatch =>
             dispatch(paginationActions.reset());
         })
         .catch(() => dispatch(baseActions.showToast('Failed to execute search...')));
+
+actions.setExisting = makeAction('MEDIA/SET_EXISTING', 'existing');
+
+actions.addExisting = makeAction('MEDIA/ADD_EXISTING', (state, { payload }) => {
+    const existing = state.existing.slice();
+    existing.push(payload);
+
+    return Object.assign({}, state, { existing });
+});
+
+actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }) =>
+    Object.assign({}, state, { existing: state.existing.filter(i => i !== payload) })
+);
 
 actions.add = ({ type, id }) => dispatch => {
     if (auth.loggedIn()) {
@@ -147,33 +135,70 @@ actions.update = ({ action, type, id }) => dispatch => {
     }
 };
 
-actions.favourite = ({ action, type, id, set }) => (dispatch, getState) => {
+actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload: { action, id, set } }) =>
+    Object.assign({}, state, {
+        item: state.item ? Object.assign({}, state.item, { favourite: set }) : null,
+        [action]: Object.assign({}, state[action], {
+            results: state[action].results.map(item => {
+                if (item.id === id) {
+                    item.favourite = set;
+                }
+                return item;
+            }),
+        }),
+    })
+);
+
+actions.favourite = ({ action, type, id, set }) => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'media', action: 'favourite', type, id, set })
             .then(() => {
-                if (getState().media.item) {
-                    dispatch(actions.setItem({ type, id }));
-                }
-                dispatch(actions.get({ action }));
+                dispatch(actions.setFavourite({ action, id, set }));
                 dispatch(baseActions.showToast(`${set ? 'Added to' : 'Removed from'} favourites!`));
             })
             .catch(() => dispatch(baseActions.showToast('Could not set favourite...')));
     }
 };
 
-actions.seen = ({ action, type, id, set }) => (dispatch, getState) => {
+actions.setSeen = makeAction('MEDIA/SET_SEEN', (state, { payload: { action, id, set } }) =>
+    Object.assign({}, state, {
+        item: state.item ? Object.assign({}, state.item, { seen: set }) : state.item,
+        [action]: Object.assign({}, state[action], {
+            results: state[action].results.map(item => {
+                if (item.id === id) {
+                    item.seen = set;
+                }
+                return item;
+            }),
+        }),
+    })
+);
+
+actions.seen = ({ action, type, id, set }) => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'media', action: 'seen', type, id, set })
             .then(() => {
-                if (getState().media.item) {
-                    dispatch(actions.setItem({ type, id }));
-                }
-                dispatch(actions.get({ action }));
+                dispatch(actions.setSeen({ action, id, set }));
                 dispatch(baseActions.showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
             })
             .catch(() => dispatch(baseActions.showToast('Could not set seen...')));
     }
 };
+
+actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload: { seasonId, episodeId, set } }) => {
+    const item = Object.assign({}, state.item, {
+        seasons: state.item.seasons.map(season =>
+            Object.assign({}, season, {
+                episodes: season.episodes.map(episode =>
+                    Object.assign({}, episode, {
+                        seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
+                    })
+                ),
+            })
+        ),
+    });
+    return Object.assign({}, state, { item });
+});
 
 actions.seenEpisode = ({ id, set }) => dispatch => {
     if (auth.loggedIn()) {

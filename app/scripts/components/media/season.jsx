@@ -58,7 +58,9 @@ class Season extends React.PureComponent {
                         </button>
                     ) : null}
                     <span className="text-small prl">{this.props.data.season}</span>
-                    <span className="border-bottom">{this.props.data.title}</span>
+                    <button className="button-blank border-bottom" onClick={this.toggleEpisodes.bind(this)}>
+                        {this.props.data.title}
+                    </button>
                     <span className="text-small plm">{formatDate(this.props.data.release_date, '(MMM do, YYY)')}</span>
                 </span>
                 {this.state.showEpisodes ? <div className="media-overlay-episodes">{this.renderEpisodes()}</div> : null}

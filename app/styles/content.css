@@ -73,7 +73,7 @@
 }
 
 .border-bottom {
-    border-bottom: 1px dotted #dddddd;
+    border-bottom: 1px dotted #dddddd !important;
 }
 
 .error-page {

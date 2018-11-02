@@ -61,13 +61,13 @@ export default class MediaItem extends React.PureComponent {
                 </div>
                 <div className="media-external">
                     <button
-                        className={`button-blank mrm ${this.props.isLoggedIn ? ' pointer' : ''}`}
+                        className={`button-blank mrm${this.props.isLoggedIn ? ' pointer' : ''}`}
                         data-tooltip="Seen"
                         onClick={this.props.setSeen}>
                         <ViewIcon width={24} seen={!!this.props.data.seen} className={this.props.data.seen ? '' : 'faded'} />
                     </button>
                     <button
-                        className={`button-blank ${this.props.isLoggedIn ? 'pointer' : ''}`}
+                        className={`button-blank${this.props.isLoggedIn ? ' pointer' : ''}`}
                         data-tooltip="Favourite"
                         onClick={this.props.setFavourite}>
                         <StarIcon width={24} favourite={!!this.props.data.favourite} className={this.props.data.favourite ? '' : 'faded'} />
