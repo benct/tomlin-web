@@ -66,9 +66,21 @@ class MediaList extends React.Component {
     renderStats() {
         return (
             <div>
-                Total: <span className="strong">{this.props.data.stats.total}</span>, Seen:&nbsp;
-                <span className="strong">{this.props.data.stats.seen}</span>, Favourite:&nbsp;
-                <span className="strong">{this.props.data.stats.favourite}</span>
+                Total: <span className="strong">{this.props.data.stats.total}</span>
+                ,&nbsp;
+                {this.props.type === 'movie' ? (
+                    <>
+                        Seen:&nbsp;
+                        <span className="strong">{this.props.data.stats.seen}</span>, Favourite:&nbsp;
+                        <span className="strong">{this.props.data.stats.favourite}</span>
+                    </>
+                ) : (
+                    <>
+                        Shows seen:&nbsp;
+                        <span className="strong">{this.props.data.stats.seen}</span>, Episodes seen:&nbsp;
+                        <span className="strong">{this.props.data.stats.episodes}</span>
+                    </>
+                )}
             </div>
         );
     }
