@@ -42,6 +42,16 @@
     display: grid;
     grid-template-columns: min-content 1fr auto min-content;
     grid-gap: 4px 12px;
+    position: relative;
+}
+
+.media-overlay-episode-overview {
+    display: grid;
+    row-gap: 5px;
+    position: absolute;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    cursor: pointer;
 }
 
 .media-overlay-buttons {
