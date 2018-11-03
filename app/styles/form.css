@@ -134,7 +134,6 @@ select:focus {
     background: transparent no-repeat;
     border: none;
     cursor: pointer;
-    overflow: hidden;
     outline: none;
     margin: 0;
     padding: 0;
