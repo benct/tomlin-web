@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { formatDate } from '../../util/formatting.js';
-import { ViewIcon } from '../page/icons.jsx';
-
 import mediaActions from '../../actions/media.js';
+import { formatDate, formatGradientHSL } from '../../util/formatting.js';
+
+import { ViewIcon } from '../page/icons.jsx';
 
 class Season extends React.PureComponent {
     constructor(props) {
@@ -57,7 +57,10 @@ class Season extends React.PureComponent {
         return (
             <>
                 <span className="pts">
-                    <button className="button-default button-default-small float-right" onClick={this.toggleEpisodes.bind(this)}>
+                    <button
+                        className="button-default button-default-small float-right"
+                        style={{ color: formatGradientHSL(episodesSeen, episodesTotal) }}
+                        onClick={this.toggleEpisodes.bind(this)}>
                         {episodesSeen}/{episodesTotal}
                     </button>
                     {episodesSeen === 0 ? (

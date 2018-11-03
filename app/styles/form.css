@@ -75,7 +75,7 @@ input[type=button]:hover, input[type=button]:active,
 input[type=submit]:hover, input[type=submit]:active,
 input[type=reset]:hover, input[type=reset]:active,
 button.button-default:hover, button.button-default:active {
-    color: #fff;
+    color: #fff !important;
     background-color: #28a0c8;
     border-color: #002080;
 }

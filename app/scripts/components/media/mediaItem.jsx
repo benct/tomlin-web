@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { formatDuration, formatYears } from '../../util/formatting.js';
+import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting.js';
 import { StarIcon, ViewIcon, ImdbIcon } from '../page/icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster.png');
@@ -18,10 +18,14 @@ export default class MediaItem extends React.PureComponent {
     }
 
     renderSeasons() {
+        const seen = this.props.data.seen_episodes || 0;
         return (
             <>
                 <span className="text-smaller">Ep. </span>
-                <span className="strong">{this.props.data.seen_episodes || 0}</span>/{this.props.data.number_of_episodes}
+                <span className="strong" style={{ color: formatGradientHSL(seen, this.props.data.number_of_episodes) }}>
+                    {seen}
+                </span>
+                /{this.props.data.number_of_episodes}
             </>
         );
     }

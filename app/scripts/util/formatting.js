@@ -21,3 +21,7 @@ export function formatYears(type, start, end) {
     }
     return type === 'tv' ? `${start}${end ? '-' + end : String.fromCharCode(8594)}` : start;
 }
+
+export function formatGradientHSL(count, total) {
+    return `hsl(${Math.ceil((total > 0 ? count / total : 0) * 120)}, 1000%, 30%)`;
+}
