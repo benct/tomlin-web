@@ -27,9 +27,7 @@ class Season extends React.PureComponent {
     }
 
     setAllSeen() {
-        this.props.dispatch(
-            mediaActions.seenEpisodes({ seasonId: this.props.data.id, episodeIds: this.props.data.episodes.map(episode => episode.id) })
-        );
+        this.props.dispatch(mediaActions.seenEpisodes({ seasonId: this.props.data.id }));
     }
 
     renderEpisodes() {
