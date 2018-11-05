@@ -1,6 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.7.4] - 2018-11-05
+### Added
+- Common media overview/stats page
+- Season and episode support for TV media
+- Track seen on TV episodes
+- Sorting functionality for media lists
+- Loading indicator during all async actions
+- Common suspense component for lazy loading
+
+### Changed
+- Move media components (except stats) behind login
+- Refactor media item/modal handling
+- Further improve accessibility
+
+### Removed
+- Stats in media lists
+
 ## [2.7.3] - 2018-10-27
 ### Added
 - Lazy-loading using React.lazy() and Suspense
