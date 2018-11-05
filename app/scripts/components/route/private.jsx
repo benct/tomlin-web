@@ -4,15 +4,17 @@ import { Redirect, Route } from 'react-router-dom';
 
 import auth from '../../util/auth.js';
 
+import Suspense from './suspense.jsx';
+
 export default function PrivateRoute({ path, component: Component }) {
     return (
         <Route
             path={path}
             render={props =>
                 auth.loggedIn() ? (
-                    <React.Suspense fallback={<div className="wrapper text-center">Loading...</div>}>
+                    <Suspense>
                         <Component {...props} />
-                    </React.Suspense>
+                    </Suspense>
                 ) : (
                     <Redirect
                         to={{

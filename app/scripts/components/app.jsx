@@ -7,6 +7,7 @@ import auth from '../util/auth.js';
 import actions from '../actions/base.js';
 
 import PrivateRoute from './route/private.jsx';
+import Suspense from './route/suspense.jsx';
 import Navigation from './page/navigation.jsx';
 import Social from './page/social.jsx';
 import Error from './page/error.jsx';
@@ -52,11 +53,11 @@ class App extends React.Component {
                             <Route
                                 path="/finn"
                                 render={() => (
-                                    <React.Suspense fallback={<div className="wrapper text-center">Loading...</div>}>
+                                    <Suspense>
                                         <Links file="finn.json" />
                                         <hr />
                                         <Notes file="finn.txt" />
-                                    </React.Suspense>
+                                    </Suspense>
                                 )}
                             />
                             <Route path="/logout" component={Logout} />
@@ -64,9 +65,9 @@ class App extends React.Component {
                             <Route
                                 path="/media"
                                 render={() => (
-                                    <React.Suspense fallback={<div className="wrapper text-center">Loading...</div>}>
+                                    <Suspense>
                                         <Media />
-                                    </React.Suspense>
+                                    </Suspense>
                                 )}
                             />
                             <PrivateRoute path="/files" component={Files} />
