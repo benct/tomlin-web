@@ -12,13 +12,13 @@ import Social from './page/social.jsx';
 import Error from './page/error.jsx';
 import About from './page/about.jsx';
 import Home from './home/home.jsx';
-import Media from './media/media.jsx';
 import Login from './login.jsx';
 import Logout from './logout.jsx';
 
 const Links = React.lazy(() => import('./data/links.jsx'));
 const Notes = React.lazy(() => import('./data/notes.jsx'));
 const Files = React.lazy(() => import('./files/files.jsx'));
+const Media = React.lazy(() => import('./media/media.jsx'));
 
 class App extends React.Component {
     componentDidMount() {
@@ -61,7 +61,14 @@ class App extends React.Component {
                             />
                             <Route path="/logout" component={Logout} />
                             <Route path="/login" component={Login} />
-                            <Route path="/media" component={Media} />
+                            <Route
+                                path="/media"
+                                render={() => (
+                                    <React.Suspense fallback={<div className="wrapper text-center">Loading...</div>}>
+                                        <Media />
+                                    </React.Suspense>
+                                )}
+                            />
                             <PrivateRoute path="/files" component={Files} />
                             <Route render={() => <Error code={404} />} />
                         </Switch>
