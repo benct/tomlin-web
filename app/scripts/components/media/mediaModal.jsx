@@ -100,15 +100,15 @@ export default class MediaModal extends React.PureComponent {
                 ) : null}
                 <Link
                     to={`/media/admin/${this.props.type}/similar/1/${id}`}
-                    className={`mlm ${this.props.isLoggedIn ? 'pointer' : 'not-allowed'}`}
-                    data-tooltip={this.props.isLoggedIn ? 'Find similar' : 'Log in to find similar'}
+                    className="mlm"
+                    data-tooltip="Find similar"
                     onClick={this.props.hide}>
                     <EqualsIcon width={24} height={24} className="valign-middle" fill="#314159" />
                 </Link>
                 <Link
                     to={`/media/admin/${this.props.type}/recommended/1/${id}`}
-                    className={`mlm ${this.props.isLoggedIn ? 'pointer' : 'not-allowed'}`}
-                    data-tooltip={this.props.isLoggedIn ? 'Recommendations' : 'Log in to find recommendations'}
+                    className="mlm"
+                    data-tooltip="Recommendations"
                     onClick={this.props.hide}>
                     <RecommendIcon width={24} height={24} className="valign-middle" />
                 </Link>
@@ -222,7 +222,6 @@ export default class MediaModal extends React.PureComponent {
 MediaModal.propTypes = {
     type: PropTypes.oneOf(['movie', 'tv']).isRequired,
     data: PropTypes.object.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
     hide: PropTypes.func.isRequired,
     update: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,

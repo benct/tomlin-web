@@ -61,16 +61,10 @@ export default class MediaItem extends React.PureComponent {
                     {formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)}
                 </div>
                 <div className="media-external">
-                    <button
-                        className={`button-blank mrm${this.props.isLoggedIn ? ' pointer' : ''}`}
-                        data-tooltip="Seen"
-                        onClick={this.props.setSeen}>
+                    <button className="button-blank mrm" data-tooltip="Seen" onClick={this.props.setSeen}>
                         <ViewIcon width={24} seen={!!this.props.data.seen} className={this.props.data.seen ? '' : 'faded'} />
                     </button>
-                    <button
-                        className={`button-blank${this.props.isLoggedIn ? ' pointer' : ''}`}
-                        data-tooltip="Favourite"
-                        onClick={this.props.setFavourite}>
+                    <button className="button-blank" data-tooltip="Favourite" onClick={this.props.setFavourite}>
                         <StarIcon width={24} favourite={!!this.props.data.favourite} className={this.props.data.favourite ? '' : 'faded'} />
                     </button>
                 </div>
@@ -85,5 +79,4 @@ MediaItem.propTypes = {
     setSeen: PropTypes.func.isRequired,
     setFavourite: PropTypes.func.isRequired,
     showItem: PropTypes.func.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
 };

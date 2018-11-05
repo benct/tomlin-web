@@ -43,7 +43,6 @@ class MediaList extends React.Component {
                 setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}
                 setFavourite={this.props.setFavourite.bind(this, item.type, item.id, item.favourite)}
                 showItem={this.props.show.bind(this, item.type, item.id)}
-                isLoggedIn={this.props.isLoggedIn}
             />
         ));
     }
@@ -53,7 +52,6 @@ class MediaList extends React.Component {
             <MediaModal
                 type={item.type || this.props.type}
                 data={item}
-                isLoggedIn={this.props.isLoggedIn}
                 hide={this.props.hide}
                 update={this.props.update.bind(this, item.type, item.id)}
                 remove={this.props.remove.bind(this, item.type, item.id)}
@@ -140,7 +138,6 @@ MediaList.propTypes = {
     sort: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['movie', 'tv', 'watchlist']).isRequired,
     page: PropTypes.number.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
 
     loadMedia: PropTypes.func.isRequired,
     setSort: PropTypes.func.isRequired,
@@ -155,7 +152,6 @@ MediaList.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    isLoggedIn: state.isLoggedIn,
     data: state.media[ownProps.match.params.type],
     item: state.media.item,
     showModal: state.media.showModal,
