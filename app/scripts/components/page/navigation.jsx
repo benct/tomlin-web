@@ -20,7 +20,7 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
         { text: 'Movies', path: '/media/movie' },
         { text: 'TV-Shows', path: '/media/tv' },
         { text: 'Watchlist', path: '/media/watchlist' },
-        { text: 'Admin', path: '/media/admin' },
+        { text: 'Search', path: '/media/search' },
     ];
 
     const createLink = (item, idx) =>

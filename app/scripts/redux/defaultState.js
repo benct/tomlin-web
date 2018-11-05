@@ -41,6 +41,10 @@ export default {
         showModal: false,
         item: null,
         sort: 'rating-desc',
+        stats: {
+            movie: {},
+            tv: {},
+        },
     },
 
     pagination: {

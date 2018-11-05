@@ -220,6 +220,13 @@ actions.seenEpisodes = ({ seasonId }) => dispatch => {
     }
 };
 
+actions.setStats = makeAction('MEDIA/SET_STATS', 'stats');
+
+actions.stats = () => dispatch =>
+    get({ service: 'media', action: 'stats' })
+        .then(response => dispatch(actions.setStats(response)))
+        .catch(() => dispatch(baseActions.showToast('Could not fetch stats...')));
+
 actions.updatePosters = () => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'media', action: 'images', overwrite: false })
