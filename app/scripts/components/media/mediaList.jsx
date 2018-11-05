@@ -61,28 +61,6 @@ class MediaList extends React.Component {
         );
     }
 
-    renderStats() {
-        return (
-            <div>
-                Total: <span className="strong">{this.props.data.stats.total}</span>
-                ,&nbsp;
-                {this.props.type === 'movie' ? (
-                    <>
-                        Seen:&nbsp;
-                        <span className="strong">{this.props.data.stats.seen}</span>, Favourite:&nbsp;
-                        <span className="strong">{this.props.data.stats.favourite}</span>
-                    </>
-                ) : (
-                    <>
-                        Shows seen:&nbsp;
-                        <span className="strong">{this.props.data.stats.seen}</span>, Episodes seen:&nbsp;
-                        <span className="strong">{this.props.data.stats.episodes}</span>
-                    </>
-                )}
-            </div>
-        );
-    }
-
     renderWatchlist() {
         return (
             <>
@@ -99,22 +77,19 @@ class MediaList extends React.Component {
     renderList() {
         return (
             <>
-                <div className="text-center">
-                    {this.props.data.stats ? this.renderStats() : null}
-                    <select
-                        className="mvm color-base"
-                        onChange={e => e.target.blur()}
-                        onBlur={this.handleSort.bind(this)}
-                        defaultValue={this.props.sort}>
-                        <option value="rating-desc">Rating (high-low)</option>
-                        <option value="rating-asc">Rating (low-high)</option>
-                        <option value="release-asc">Release (first-last)</option>
-                        <option value="release-desc">Release (last-first)</option>
-                        <option value="title-asc">Title (alphabetical)</option>
-                        <option value="title-desc">Title (reverse)</option>
-                        <option value="favourite">Favourite</option>
-                    </select>
-                </div>
+                <select
+                    className="mvm mha color-base"
+                    onChange={e => e.target.blur()}
+                    onBlur={this.handleSort.bind(this)}
+                    defaultValue={this.props.sort}>
+                    <option value="rating-desc">Rating (high-low)</option>
+                    <option value="rating-asc">Rating (low-high)</option>
+                    <option value="release-asc">Release (first-last)</option>
+                    <option value="release-desc">Release (last-first)</option>
+                    <option value="title-asc">Title (alphabetical)</option>
+                    <option value="title-desc">Title (reverse)</option>
+                    <option value="favourite">Favourite</option>
+                </select>
                 <div className="clear-fix text-center">{this.renderRows(this.props.data.results)}</div>
                 <Pagination path={`/media/${this.props.type}/`} />
             </>

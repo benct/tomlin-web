@@ -108,6 +108,7 @@ input[type=file] + svg {
 }
 
 select {
+    display: block;
     background: transparent;
     border: 1px solid #dddddd;
     border-radius: 0;

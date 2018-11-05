@@ -12,7 +12,6 @@ actions.set = makeAction('MEDIA/SET', (state, { payload }) =>
     Object.assign({}, state, {
         [payload.key]: {
             results: payload.results || [],
-            stats: payload.stats,
             page: {
                 current: payload.page,
                 total: payload.total_pages,
