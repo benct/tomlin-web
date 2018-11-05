@@ -99,14 +99,14 @@ export default class MediaModal extends React.PureComponent {
                     </a>
                 ) : null}
                 <Link
-                    to={`/media/admin/${this.props.type}/similar/1/${id}`}
+                    to={`/media/search/${this.props.type}/similar/1/${id}`}
                     className="mlm"
                     data-tooltip="Find similar"
                     onClick={this.props.hide}>
                     <EqualsIcon width={24} height={24} className="valign-middle" fill="#314159" />
                 </Link>
                 <Link
-                    to={`/media/admin/${this.props.type}/recommended/1/${id}`}
+                    to={`/media/search/${this.props.type}/recommended/1/${id}`}
                     className="mlm"
                     data-tooltip="Recommendations"
                     onClick={this.props.hide}>

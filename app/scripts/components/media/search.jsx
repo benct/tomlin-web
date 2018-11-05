@@ -71,21 +71,21 @@ class Search extends React.Component {
                     onClick={event => event.target.select()}
                 />
                 <div className="media-search">
-                    <Link to={'/media/admin/movie/popular/'}>Popular (Movie)</Link>
-                    <Link to={'/media/admin/movie/top/'}>Top Rated (Movie)</Link>
-                    <Link to={'/media/admin/movie/now/'}>Now Playing (Movie)</Link>
-                    <Link to={'/media/admin/movie/upcoming/'}>Upcoming (Movie)</Link>
+                    <Link to={'/media/search/movie/popular/'}>Popular (Movie)</Link>
+                    <Link to={'/media/search/movie/top/'}>Top Rated (Movie)</Link>
+                    <Link to={'/media/search/movie/now/'}>Now Playing (Movie)</Link>
+                    <Link to={'/media/search/movie/upcoming/'}>Upcoming (Movie)</Link>
                 </div>
                 <div className="media-search mbm">
-                    <Link to={'/media/admin/tv/popular/'}>Popular (TV)</Link>
-                    <Link to={'/media/admin/tv/top/'}>Top Rated (TV)</Link>
-                    <Link to={'/media/admin/tv/now/'}>Now Playing (TV)</Link>
+                    <Link to={'/media/search/tv/popular/'}>Popular (TV)</Link>
+                    <Link to={'/media/search/tv/top/'}>Top Rated (TV)</Link>
+                    <Link to={'/media/search/tv/now/'}>Now Playing (TV)</Link>
                     <button className="button-blank faded" onClick={this.props.updatePosters}>
                         Update Posters (!)
                     </button>
                 </div>
                 {this.props.data.map(this.renderItem.bind(this))}
-                <Pagination path={`/media/admin/${this.props.type}/${this.props.action}/`} postfix={`/${this.props.id}`} />
+                <Pagination path={`/media/search/${this.props.type}/${this.props.action}/`} postfix={`/${this.props.id}`} />
             </div>
         );
     }
