@@ -52,6 +52,12 @@ AddDefaultCharset utf-8
     RewriteRule "(^|/)\." - [F]
 </IfModule>
 
+# Pass authorization header to PHP environment
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
 # Block access to files that can expose sensitive information.
 <FilesMatch "(^#.*#|\.(bak|config|dist|fla|in[ci]|log|psd|sh|sql|sw[op])|~)$">
     # Apache < 2.3
