@@ -37,27 +37,24 @@ export default class Countdown extends React.PureComponent {
         });
     }
 
+    static renderTimeUnit(time, unit) {
+        return (
+            <li className="countdown-time-wrap">
+                <span className="countdown-time">{time}</span>
+                <p className="countdown-unit">{unit}</p>
+            </li>
+        );
+    }
+
     render() {
         return (
             <div className="wrapper text-center color-primary">
                 <div className="countdown-title">Under construction, coming &quot;soon&quot;</div>
                 <ul className="countdown">
-                    <li className="time-wrap">
-                        <span className="time">{this.state.days}</span>
-                        <p className="unit">days</p>
-                    </li>
-                    <li className="time-wrap">
-                        <span className="time">{this.state.hours}</span>
-                        <p className="unit">hours</p>
-                    </li>
-                    <li className="time-wrap">
-                        <span className="time">{this.state.minutes}</span>
-                        <p className="unit">minutes</p>
-                    </li>
-                    <li className="time-wrap">
-                        <span className="time">{this.state.seconds}</span>
-                        <p className="unit">seconds</p>
-                    </li>
+                    {Countdown.renderTimeUnit(this.state.days, 'days')}
+                    {Countdown.renderTimeUnit(this.state.hours, 'hours')}
+                    {Countdown.renderTimeUnit(this.state.minutes, 'minutes')}
+                    {Countdown.renderTimeUnit(this.state.seconds, 'seconds')}
                 </ul>
             </div>
         );

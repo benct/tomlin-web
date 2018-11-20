@@ -15,13 +15,13 @@
     max-width: 680px;
 }
 
-.time-wrap {
+.countdown-time-wrap {
     display: inline-block;
     width: 25%;
     padding: 0;
 }
 
-.time {
+.countdown-time {
     display: inline-block;
     font-size: 40px;
     font-weight: 700;
@@ -29,7 +29,7 @@
     line-height: 1;
 }
 
-.unit {
+.countdown-unit {
     text-transform: uppercase;
     margin-bottom: 0;
     font-size: 14px;
@@ -43,10 +43,10 @@
     .countdown-title {
         font-size: 28px;
     }
-    .time {
+    .countdown-time {
         font-size: 54px;
     }
-    .unit {
+    .countdown-unit {
         font-size: 20px;
     }
 }
