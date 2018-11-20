@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Countdown from './countdown.jsx';
+import State from './state.jsx';
 import Quote from './quote.jsx';
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
                 </a>
             </div>
             <hr />
-            <Countdown />
+            <State />
             <hr />
             <Quote />
         </>

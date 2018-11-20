@@ -2,7 +2,7 @@ import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
 
 import quotes from '../util/quotes.js';
-import { fetchFile } from '../util/api.js';
+import { fetchFile, _get } from '../util/api.js';
 
 const actions = {};
 
@@ -31,6 +31,11 @@ actions.refreshQuote = makeAction('BASE/REFRESH_QUOTE', state =>
         },
     })
 );
+
+actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
+
+actions.getHomeState = () => dispatch =>
+    _get({ service: 'hass', action: 'state' }).then(response => dispatch(actions.setHomeState(response)));
 
 actions.setLinkData = makeAction('CONTENT/SET_LINKS', 'links');
 actions.setNoteData = makeAction('CONTENT/SET_NOTES', 'notes');

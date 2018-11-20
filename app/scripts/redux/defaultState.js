@@ -15,6 +15,13 @@ export default {
         current: Math.floor(Math.random() * quotes.length),
     },
 
+    home: {
+        temperature: {},
+        consumption: {},
+        network: {},
+        day: true,
+    },
+
     files: {
         cwd: '',
         content: [],

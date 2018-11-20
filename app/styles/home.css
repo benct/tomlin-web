@@ -1,3 +1,58 @@
+.home-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    row-gap: 20px;
+    align-items: center;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.home-title {
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: 400;
+    padding: 10px 30px;
+}
+
+.home-state,
+.home-state > div {
+    display: inline-block;
+}
+
+.home-state {
+    padding: 0 10px;
+}
+
+.home-value {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.home-unit {
+    font-size: 14px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+.home-large {
+    font-size: 28px;
+}
+
+@media screen and (max-width: 767px) {
+    .home-container {
+        grid-template-columns: 1fr;
+    }
+    .home-title {
+        padding-top: 0;
+    }
+    .home-state {
+        padding: 0;
+    }
+}
+
 .countdown-title {
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
     text-transform: uppercase;
