@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions/base.js';
 
+import Time from './time.jsx';
+
 class State extends React.PureComponent {
     componentDidMount() {
         this.props.dispatch(actions.getHomeState());
@@ -29,7 +31,9 @@ class State extends React.PureComponent {
                     <div className="pbl">
                         <span className="home-unit">Oslo</span>
                         <br />
-                        <span className="home-value home-large">19:31:24</span>
+                        <span className="home-value">
+                            <Time locale="nb-NO" timeZone="Europe/Oslo" />
+                        </span>
                     </div>
                     <div className="ptm">
                         <img
