@@ -20,7 +20,7 @@ class Quote extends React.PureComponent {
             <div className="wrapper text-center pointer no-select" onClick={this.refreshQuote.bind(this)} role="button" tabIndex="0">
                 <div>{this.props.text}</div>
                 <div>{this.props.author ? <i>- {this.props.author}</i> : null}</div>
-                <RefreshIcon className="refresh-icon" fill="#ddd" />
+                <RefreshIcon className="right-icon" fill="#ddd" />
             </div>
         ) : null;
     }
