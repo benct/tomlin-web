@@ -46,13 +46,16 @@ export function post(data, files = null) {
     return _post(data, files).finally(() => delayedLoading(false));
 }
 
+export function _get(data) {
+    return fetch(`${baseApiUrl}?${query(data)}`)
+        .then(checkStatus)
+        .then(response => response.json());
+}
+
 export function get(data) {
     delayedLoading(true);
 
-    return fetch(`${baseApiUrl}?${query(data)}`)
-        .then(checkStatus)
-        .then(response => response.json())
-        .finally(() => delayedLoading(false));
+    return _get(data).finally(() => delayedLoading(false));
 }
 
 export function fetchFile(path) {
