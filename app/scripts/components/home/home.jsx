@@ -10,9 +10,6 @@ export default function Home() {
             <div className="wrapper text">
                 Well hello there!
                 <br />
-                Unfortunately, there&apos;s not that much interesting here...
-                <br />
-                <br />
                 This site was developed a while back using React, for the purpose of learning and testing new features and acquiring basic
                 knowledge about Webpack, Babel, Node and other web development technologies. More information about me can be found under
                 the <Link to="/about">about</Link> tab, or feel free to follow the social links at the bottom of the page.
