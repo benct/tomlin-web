@@ -66,8 +66,6 @@ class State extends React.PureComponent {
 
 State.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    text: PropTypes.string,
-    author: PropTypes.string,
     temperature: PropTypes.object.isRequired,
     consumption: PropTypes.object.isRequired,
     network: PropTypes.object.isRequired,
