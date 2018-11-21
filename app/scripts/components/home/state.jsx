@@ -13,9 +13,11 @@ class State extends React.PureComponent {
 
     static renderState(id, value, text, unit) {
         return (
-            <div className="home-state mhl mvm" data-tooltip={text}>
-                <img className="valign-middle" src={require(`../../../images/icon/${id}.svg`)} alt={text} width={48} height={48} />
-                <div className="mlm">
+            <div className="home-state" data-tooltip={text}>
+                <div className="text-right">
+                    <img className="valign-middle" src={require(`../../../images/icon/${id}.svg`)} alt={text} width={40} height={40} />
+                </div>
+                <div className="text-left">
                     <span className="home-value">{value || '?'}</span>
                     <span className="home-unit"> {unit}</span>
                 </div>
@@ -26,7 +28,7 @@ class State extends React.PureComponent {
     render() {
         return (
             <div className="wrapper text-center no-select color-primary home-container">
-                <div>
+                <div className="home-header">
                     <div className="home-title">
                         Home Status
                         <span
@@ -36,7 +38,7 @@ class State extends React.PureComponent {
                             <img className="help-icon" src={require(`../../../images/icon/info.svg`)} alt="Information" />
                         </span>
                     </div>
-                    <div className="pbl">
+                    <div className="">
                         <span className="home-unit">Oslo</span>
                         <br />
                         <span className="home-value">
@@ -51,19 +53,19 @@ class State extends React.PureComponent {
                             width={54}
                             height={54}
                         />
-                        <div className="home-state" data-tooltip="Outdoor temperature">
+                        <div className="phm" data-tooltip="Outdoor temperature" style={{ display: 'inline-block' }}>
                             <span className="home-value home-large">{this.props.temperature.outside || '?'}</span>
                             <span className="home-unit"> &deg;C</span>
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className="home-sensors">
                     {State.renderState('livingroom', this.props.temperature.livingroom, 'Living room temperature', '°C')}
                     {State.renderState('bedroom', this.props.temperature.bedroom, 'Bedroom temperature', '°C')}
-                    <br />
                     {State.renderState('kitchen', this.props.temperature.kitchen, 'Kitchen temperature', '°C')}
                     {State.renderState('bathroom', this.props.temperature.bathroom, 'Bathroom temperature', '°C')}
-                    <br />
+                    {State.renderState('network-down', this.props.network.download, 'Avg. download speed [1d]', ' Mbs')}
+                    {State.renderState('network-up', this.props.network.upload, 'Avg. upload speed [1d]', 'Mbs')}
                     {State.renderState('tv', this.props.consumption.tv, 'PC power consumption [30d]', 'kWh')}
                     {State.renderState('pc', this.props.consumption.pc, 'TV power consumption [30d]', 'kWh')}
                 </div>

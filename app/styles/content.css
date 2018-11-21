@@ -191,7 +191,7 @@
 
 [data-tooltip-large]:after {
     width: 300px;
-    white-space: normal;
+    white-space: pre-wrap;
 }
 
 @media screen and (max-width: 767px) {
