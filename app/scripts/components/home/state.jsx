@@ -27,7 +27,15 @@ class State extends React.PureComponent {
         return (
             <div className="wrapper text-center no-select color-primary home-container">
                 <div>
-                    <div className="home-title">Home Status</div>
+                    <div className="home-title">
+                        Home Status
+                        <span
+                            className="valign-middle mlm"
+                            data-tooltip="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
+                            data-tooltip-large>
+                            <img className="help-icon" src={require(`../../../images/icon/info.svg`)} alt="Information" />
+                        </span>
+                    </div>
                     <div className="pbl">
                         <span className="home-unit">Oslo</span>
                         <br />

@@ -97,8 +97,7 @@
     margin: 20px 0;
 }
 
-.right-icon {
-    float: right;
+.help-icon {
     width: 16px;
     height: 16px;
     opacity: 0.3;
@@ -160,6 +159,8 @@
     font-weight: 400;
     line-height: 1.2;
     text-align: center;
+    text-transform: initial;
+    letter-spacing: 1px;
     white-space: nowrap;
     -webkit-transform: translate3d(-50%, 0, 0);
     -moz-transform: translate3d(-50%, 0, 0);
@@ -188,6 +189,11 @@
     transform: translateY(-6px) translateX(-50%);
 }
 
+[data-tooltip-large]:after {
+    width: 300px;
+    white-space: normal;
+}
+
 @media screen and (max-width: 767px) {
     .wrapper {
         padding: 30px 20px;
@@ -197,6 +203,9 @@
 @media screen and (max-width: 480px) {
     .wrapper {
         padding: 30px 15px;
+    }
+    [data-tooltip-large]:after {
+        width: 200px;
     }
 }
 

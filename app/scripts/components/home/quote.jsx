@@ -18,7 +18,7 @@ class Quote extends React.PureComponent {
             <div className="wrapper text-center pointer no-select" onClick={this.refreshQuote.bind(this)} role="button" tabIndex="0">
                 <div>{this.props.text}</div>
                 <div>{this.props.author ? <i>- {this.props.author}</i> : null}</div>
-                <img className="right-icon" src={require(`../../../images/icon/refresh.svg`)} alt="Load new quote" />
+                <img className="help-icon float-right" src={require(`../../../images/icon/refresh.svg`)} alt="Load new quote" />
             </div>
         ) : null;
     }
