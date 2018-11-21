@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import ISO6391 from 'iso-639-1';
 
 import { formatDate } from '../../util/formatting.js';
-import { ImdbIcon, PlusIcon } from '../page/icons.jsx';
+
+import { PlusIcon } from '../page/icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster_small.png');
 
@@ -25,8 +26,9 @@ export default class SearchItem extends React.PureComponent {
     }
 
     render() {
+        const text = this.props.stored ? 'Remove' : 'Add';
         const change = this.props.stored ? this.props.remove : this.props.add;
-        const rotation = this.props.stored ? { transform: 'rotate(45deg)' } : null;
+
         return (
             <div className="media-item pvm">
                 <div className="media-poster">
@@ -41,7 +43,7 @@ export default class SearchItem extends React.PureComponent {
                         role="dialog"
                         style={{ opacity: this.state.overview ? 1 : 0, zIndex: this.state.overview ? 10 : -1 }}
                         onClick={this.state.overview ? change : null}>
-                        <PlusIcon width={40} height={40} fill="white" style={rotation} />
+                        <PlusIcon width={40} height={40} fill="white" rotate={this.props.stored} />
                     </div>
                 </div>
                 <h3 className="media-title color-primary truncate man" onClick={this.toggleOverview.bind(this)}>
@@ -71,22 +73,29 @@ export default class SearchItem extends React.PureComponent {
                     ) : null}
                     <div className="hide-gt768">
                         <button className="button-blank" onClick={this.props.imdb}>
-                            <ImdbIcon width={48} />
+                            <img src={require(`../../../images/icon/imdb.svg`)} alt="IMDb" width={48} />
                         </button>
                         <button className="button-icon button-text-icon float-right mtm" onClick={change}>
-                            <span>{this.props.stored ? 'Remove' : 'Add'}</span>
-                            <PlusIcon width={18} height={18} style={rotation} />
+                            <span>{text}</span>
+                            <PlusIcon width={18} height={18} rotate={this.props.stored} />
                         </button>
                     </div>
                 </div>
                 <div className="media-actions">
                     <button className="button-icon button-text-icon man" onClick={change}>
-                        <span>{this.props.stored ? 'Remove' : 'Add'}</span>
-                        <PlusIcon width={18} height={18} style={rotation} />
+                        <span>{text}</span>
+                        <PlusIcon width={18} height={18} rotate={this.props.stored} />
                     </button>
                 </div>
                 <div className="media-external">
-                    <ImdbIcon width={48} className="pointer" style={{ margin: '-15px 0' }} onClick={this.props.imdb} />
+                    <img
+                        className="pointer"
+                        src={require(`../../../images/icon/imdb.svg`)}
+                        alt="IMDb"
+                        width={48}
+                        style={{ margin: '-15px 0' }}
+                        onClick={this.props.imdb}
+                    />
                 </div>
                 <div className={`media-overview text-small mtm${this.state.overview ? '' : ' hide-lt768'}`}>
                     {this.props.overview === '' ? 'No description.' : this.props.overview}

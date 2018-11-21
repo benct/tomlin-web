@@ -175,10 +175,15 @@ select:focus {
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     fill: #002080;
+    opacity: 1;
 }
 
 .button-icon:hover svg path {
     fill: #009fd4;
+}
+
+.button-icon:hover img {
+    opacity: 0.5;
 }
 
 .button-text-icon {

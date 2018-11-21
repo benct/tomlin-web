@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions/files.js';
 
-import { CloseIcon, NewDirIcon, ParentDirIcon, RefreshIcon, UploadIcon } from '../page/icons.jsx';
 import FileList from './filelist.jsx';
 
 const PARENT_DIR = '..';
@@ -122,14 +121,14 @@ class Files extends React.Component {
                         className="button-icon"
                         onClick={() => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
                         disabled={this.props.cwd === ''}>
-                        <ParentDirIcon width="28" height="28" />
+                        <img src={require(`../../../images/icon/arrow.svg`)} alt="Parent directory" width={28} height={28} />
                     </button>
                     <div className="text-right">
                         <button className="button-icon" onClick={() => this.props.dispatch(actions.createDirectory())}>
-                            <NewDirIcon width="28" height="28" />
+                            <img src={require(`../../../images/icon/directory.svg`)} alt="New directory" width={28} height={28} />
                         </button>
                         <button className="button-icon" onClick={() => this.props.dispatch(actions.refresh())}>
-                            <RefreshIcon width="28" height="28" />
+                            <img src={require(`../../../images/icon/refresh.svg`)} alt="Refresh content" width={28} height={28} />
                         </button>
                     </div>
                 </div>
@@ -152,7 +151,7 @@ class Files extends React.Component {
                             disabled={this.props.uploading}
                             multiple
                         />
-                        <UploadIcon />
+                        <img src={require(`../../../images/icon/upload.svg`)} alt="Upload" />
                         <span className="mlm" ref={label => (this.fileLabel = label)}>
                             Choose a file
                         </span>
@@ -168,7 +167,12 @@ class Files extends React.Component {
 
                 {this.props.preview ? (
                     <div className="overlay">
-                        <CloseIcon className="file-close" onClick={this.closePreview.bind(this)} />
+                        <img
+                            className="file-close"
+                            src={require(`../../../images/icon/close.svg`)}
+                            alt="Close"
+                            onClick={this.closePreview.bind(this)}
+                        />
                         {this.props.preview.image ? (
                             <img className="overlay-image" src={this.props.preview.src} alt="Preview" />
                         ) : (

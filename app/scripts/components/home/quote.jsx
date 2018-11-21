@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions/base.js';
 
-import { RefreshIcon } from '../page/icons.jsx';
-
 class Quote extends React.PureComponent {
     componentDidMount() {
         this.refreshQuote();
@@ -20,7 +18,7 @@ class Quote extends React.PureComponent {
             <div className="wrapper text-center pointer no-select" onClick={this.refreshQuote.bind(this)} role="button" tabIndex="0">
                 <div>{this.props.text}</div>
                 <div>{this.props.author ? <i>- {this.props.author}</i> : null}</div>
-                <RefreshIcon className="right-icon" fill="#ddd" />
+                <img className="right-icon" src={require(`../../../images/icon/refresh.svg`)} alt="Load new quote" />
             </div>
         ) : null;
     }

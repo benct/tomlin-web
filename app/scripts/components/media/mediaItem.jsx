@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting.js';
-import { StarIcon, ViewIcon, ImdbIcon } from '../page/icons.jsx';
+import { StarIcon, ViewIcon } from '../page/icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster.png');
 
@@ -50,7 +50,13 @@ export default class MediaItem extends React.PureComponent {
                             href={`https://www.imdb.com/title/${this.props.data.imdb_id}`}
                             target="_blank"
                             rel="noopener noreferrer external">
-                            <ImdbIcon width={38} className="mrm" style={{ margin: '-12px 0' }} />
+                            <img
+                                className="mrm"
+                                src={require(`../../../images/icon/imdb.svg`)}
+                                alt="IMDb"
+                                width={38}
+                                style={{ margin: '-12px 0' }}
+                            />
                         </a>
                     ) : null}
                     <span>{this.props.type === 'tv' ? this.renderSeasons() : formatDuration(this.props.data.runtime)}</span>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting.js';
 
-import { ImdbIcon, RefreshIcon, RemoveIcon, StarIcon, TmdbIcon, ViewIcon, EqualsIcon, RecommendIcon } from '../page/icons.jsx';
+import { StarIcon, ViewIcon } from '../page/icons.jsx';
 import Season from './season.jsx';
 
 export default class MediaModal extends React.PureComponent {
@@ -86,7 +86,7 @@ export default class MediaModal extends React.PureComponent {
                     rel="noopener noreferrer external"
                     className="pointer"
                     data-tooltip="TMDb">
-                    <TmdbIcon width={24} height={24} className="valign-middle" />
+                    <img className="valign-middle" src={require(`../../../images/icon/tmdb.svg`)} alt="TMDb" width={24} height={24} />
                 </a>
                 {imdb ? (
                     <a
@@ -95,22 +95,40 @@ export default class MediaModal extends React.PureComponent {
                         target="_blank"
                         rel="noopener noreferrer external"
                         data-tooltip="IMDb">
-                        <ImdbIcon width={38} style={{ margin: '-12px 0' }} className="valign-middle" />
+                        <img
+                            className="valign-middle"
+                            src={require(`../../../images/icon/imdb.svg`)}
+                            alt="IMDb"
+                            width={38}
+                            style={{ margin: '-12px 0' }}
+                        />
                     </a>
                 ) : null}
                 <Link
                     to={`/media/search/${this.props.type}/similar/1/${id}`}
-                    className="mlm"
+                    className="mlm pointer"
                     data-tooltip="Find similar"
                     onClick={this.props.hide}>
-                    <EqualsIcon width={24} height={24} className="valign-middle" fill="#314159" />
+                    <img
+                        className="valign-middle"
+                        src={require(`../../../images/icon/similar.svg`)}
+                        alt="Find similar"
+                        width={24}
+                        height={24}
+                    />
                 </Link>
                 <Link
                     to={`/media/search/${this.props.type}/recommended/1/${id}`}
-                    className="mlm"
+                    className="mlm pointer"
                     data-tooltip="Recommendations"
                     onClick={this.props.hide}>
-                    <RecommendIcon width={24} height={24} className="valign-middle" />
+                    <img
+                        className="valign-middle"
+                        src={require(`../../../images/icon/recommend.svg`)}
+                        alt="Recommendations"
+                        width={24}
+                        height={24}
+                    />
                 </Link>
             </span>
         );
@@ -198,10 +216,10 @@ export default class MediaModal extends React.PureComponent {
                     <div className="media-overlay-content">{this.state.showSeasons ? this.renderSeasons() : this.renderContent()}</div>
                     <div className="media-overlay-buttons ptm">
                         <button className="button-blank mrl" data-tooltip="Remove" onClick={this.props.remove}>
-                            <RemoveIcon width={22} height={22} />
+                            <img src={require(`../../../images/icon/remove.svg`)} alt="Remove" width={22} height={22} />
                         </button>
                         <button className="button-blank mrl" data-tooltip="Update" onClick={this.props.update}>
-                            <RefreshIcon width={22} height={22} />
+                            <img src={require(`../../../images/icon/refresh.svg`)} alt="Update" width={22} height={22} />
                         </button>
                         <button className="button-blank mrl" data-tooltip="Favourite" onClick={this.props.setFavourite}>
                             <StarIcon width={24} height={24} favourite={!!this.props.data.favourite} />
