@@ -37,13 +37,13 @@ class State extends React.PureComponent {
                     </div>
                     <div className="ptm">
                         <img
-                            className="valign-middle mrl"
+                            className="valign-middle phm"
                             src={require(`../../../images/icon/${this.props.day ? 'day' : 'night'}.svg`)}
                             alt="Outside temperature"
                             width={54}
                             height={54}
                         />
-                        <div className="home-state mlm" data-tooltip="Outdoor temperature">
+                        <div className="home-state" data-tooltip="Outdoor temperature">
                             <span className="home-value home-large">{this.props.temperature.outside || '?'}</span>
                             <span className="home-unit"> &deg;C</span>
                         </div>
