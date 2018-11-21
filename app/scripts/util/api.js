@@ -9,7 +9,7 @@ import auth from './auth.js';
 const baseUrl = 'https://tomlin.no';
 const baseApiUrl = 'https://tomlin.no/api/';
 
-const delayedLoading = debounce(value => store.dispatch(actions.setLoading(value)), 250);
+const delayedLoading = debounce(value => store.dispatch(actions.setLoading(value)), 150);
 
 const checkStatus = response => (response.ok ? response : Promise.reject(response.statusText));
 
