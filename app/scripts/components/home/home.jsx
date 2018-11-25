@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Countdown from './countdown.jsx';
 import State from './state.jsx';
 import Quote from './quote.jsx';
 
@@ -23,6 +24,11 @@ export default function Home() {
             <State />
             <hr />
             <Quote />
+            <hr />
+            <div className="wrapper text-center color-primary countdown-container">
+                <Countdown day={3} month={8} year={2019} hour={13} title="Wedding" />
+                <Countdown day={25} month={12} title="Christmas" />
+            </div>
         </>
     );
 }
