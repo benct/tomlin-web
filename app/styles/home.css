@@ -1,7 +1,6 @@
-.home-container,
-.countdown-container {
+.home-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.2fr;
     row-gap: 20px;
     align-items: center;
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
@@ -53,14 +52,10 @@
     font-size: 28px;
 }
 
-.countdown-container > div {
-    padding: 0 30px;
-}
-
 .countdown {
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
     list-style: none;
-    margin: 20px auto 10px;
+    margin: 20px auto 0;
     padding: 0;
     max-width: 680px;
 }
@@ -99,14 +94,10 @@
     .countdown-unit {
         font-size: 12px;
     }
-    .countdown-container > div {
-        padding: 0 15px;
-    }
 }
 
 @media screen and (max-width: 480px) {
-    .home-container,
-    .countdown-container {
+    .home-container {
         grid-template-columns: 1fr;
         row-gap: 40px;
     }

@@ -58,7 +58,7 @@ export default class Countdown extends React.PureComponent {
 
     render() {
         return (
-            <div>
+            <div className="wrapper text-center color-primary">
                 <div className="countdown-title">{this.props.title}</div>
                 <ul className="countdown">
                     {Countdown.renderTimeUnit(this.state.days, 'days')}

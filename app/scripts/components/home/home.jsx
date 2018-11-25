@@ -22,12 +22,9 @@ export default function Home() {
             <hr />
             <State />
             <hr />
-            <Quote />
+            <Countdown day={3} month={8} year={2019} hour={13} title="Countdown to something..." />
             <hr />
-            <div className="wrapper text-center color-primary countdown-container">
-                <Countdown day={3} month={8} year={2019} hour={13} title="Wedding" />
-                <Countdown day={25} month={12} title="Christmas" />
-            </div>
+            <Quote />
         </>
     );
 }
