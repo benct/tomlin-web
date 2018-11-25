@@ -6,7 +6,9 @@ export default function About() {
             <div className="cv-header color-primary">Ben Christopher Tomlin</div>
 
             <div className="cv-position">
-                <span>Senior Developer at FINN.no</span>
+                <span>
+                    Senior Developer at <a href="https://finn.no">FINN.no</a>
+                </span>
                 <br />
                 <span>Full-stack Developer</span>
                 <br />
