@@ -1,6 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.8.0] - 2018-11-25
+### Added
+- Home status/state component
+- Several home status icons
+- Time component with locale and timezone support
+- Sensor values endpoint in backend API
+- Information icon and help text on home status
+- Link to employer in cv/about section
+- Countdown to something.. quite important
+
+### Changed
+- Slight alteration of front page text
+- Improve countdown and pagination components
+- Extract most icons in to separate SVG files
+- Reduce delay on loading indicator
+- Header html tags for title and header
+- Update several dependencies
+
 ## [2.7.4] - 2018-11-05
 ### Added
 - Common media overview/stats page
