@@ -32,7 +32,7 @@ class App extends React.Component {
             <Router>
                 <>
                     <header>
-                        <div className="site-title no-select">TOMLIN</div>
+                        <h1 className="site-title no-select">Tomlin</h1>
                         <Navigation type="simple" />
                         <button className="button-blank menu-link hide-gt480" aria-label="Menu" onClick={this.props.toggleMenu}>
                             &nbsp;

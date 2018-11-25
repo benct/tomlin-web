@@ -30,6 +30,7 @@ header::after {
     text-align: center;
     text-shadow: #002080 0 0 5px;
     text-indent: 60px;
+    text-transform: uppercase;
     letter-spacing: 60px;
     font-size: 60px;
     font-weight: 700;
