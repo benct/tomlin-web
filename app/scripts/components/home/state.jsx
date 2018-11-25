@@ -61,9 +61,9 @@ class State extends React.PureComponent {
                 </div>
                 <div className="home-sensors">
                     {State.renderState('livingroom', this.props.temperature.livingroom, 'Living room temperature', '°C')}
-                    {State.renderState('tv', this.props.consumption.tv, 'PC power consumption [30d]', 'kWh')}
+                    {State.renderState('tv', this.props.consumption.tv, 'TV/Sound consumption [30d]', 'kWh')}
                     {State.renderState('bedroom', this.props.temperature.bedroom, 'Bedroom temperature', '°C')}
-                    {State.renderState('pc', this.props.consumption.pc, 'TV power consumption [30d]', 'kWh')}
+                    {State.renderState('pc', this.props.consumption.pc, 'PC/Office consumption [30d]', 'kWh')}
                     {State.renderState('kitchen', this.props.temperature.kitchen, 'Kitchen temperature', '°C')}
                     {State.renderState('network-up', this.props.network.upload, 'Avg. upload speed [1d]', 'Mbs')}
                     {State.renderState('bathroom', this.props.temperature.bathroom, 'Bathroom temperature', '°C')}
