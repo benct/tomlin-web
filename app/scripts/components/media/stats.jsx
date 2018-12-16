@@ -70,10 +70,16 @@ class Stats extends React.PureComponent {
 
     static renderStats(stats) {
         return (
-            <div className="text-small mbl">
+            <div className="text-small mbl" style={{ height: '60px' }}>
                 Total <span className="strong prl">{stats.total || '-'}</span>
                 Seen <span className="strong prl">{stats.seen || '-'}</span>
                 Favourite <span className="strong">{stats.favourite || '-'}</span>
+                {stats.episodes ? (
+                    <div className="text-smaller mts">
+                        Episodes <span className="strong prl">{stats.episodes || '-'}</span>
+                        Seen <span className="strong prl">{stats.seen_episodes || '-'}</span>
+                    </div>
+                ) : null}
             </div>
         );
     }
