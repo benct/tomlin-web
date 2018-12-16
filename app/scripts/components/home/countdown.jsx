@@ -59,7 +59,18 @@ export default class Countdown extends React.PureComponent {
     render() {
         return (
             <div className="wrapper text-center color-primary">
-                <div className="countdown-title">{this.props.title}</div>
+                <div className="countdown-title">
+                    {this.props.title}{' '}
+                    {this.props.icon ? (
+                        <img
+                            src={require(`../../../images/icon/${this.props.icon}.svg`)}
+                            alt="countdown"
+                            width={26}
+                            height={26}
+                            style={{ verticalAlign: 'top' }}
+                        />
+                    ) : null}
+                </div>
                 <ul className="countdown">
                     {Countdown.renderTimeUnit(this.state.days, 'days')}
                     {Countdown.renderTimeUnit(this.state.hours, 'hours')}
@@ -77,4 +88,5 @@ Countdown.propTypes = {
     month: PropTypes.number.isRequired,
     year: PropTypes.number,
     hour: PropTypes.number,
+    icon: PropTypes.string,
 };

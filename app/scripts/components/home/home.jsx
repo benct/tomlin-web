@@ -22,7 +22,7 @@ export default function Home() {
             <hr />
             <State />
             <hr />
-            <Countdown day={3} month={8} year={2019} hour={13} title="Countdown to something..." />
+            <Countdown day={3} month={8} year={2019} hour={13} title="Countdown to something..." icon="wedding" />
             <hr />
             <Quote />
         </>
