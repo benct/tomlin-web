@@ -2,7 +2,7 @@
   "name": "tomlin-web",
   "version": "2.8.0",
   "description": "tomlin.no website",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "clean": "rm -rf ./dist",
     "lint": "./node_modules/.bin/eslint *.js \"app/**/*.js\" \"app/**/*.jsx\"",
