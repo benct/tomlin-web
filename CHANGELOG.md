@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.8.1] - 2019-01-29
+### Added
+- Episode stats in media overview
+- Icon support in countdown title
+
+### Changed
+- Upgrade dependencies
+- Set correct main file in package.json
+- Update footer/copyright
+
 ## [2.8.0] - 2018-11-25
 ### Added
 - Home status/state component
