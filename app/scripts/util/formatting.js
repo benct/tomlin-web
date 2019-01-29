@@ -1,7 +1,8 @@
+import dateParse from 'date-fns/parseISO';
 import dateFormat from 'date-fns/format';
 
 export function formatDate(date, format = 'MMM do, YYY') {
-    return date && date !== '' ? dateFormat(date, format) : null;
+    return date && date !== '' ? dateFormat(dateParse(date), format) : null;
 }
 
 export function formatDuration(minutes) {
