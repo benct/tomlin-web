@@ -31,4 +31,5 @@ export default function PrivateRoute({ path, component: Component }) {
 PrivateRoute.propTypes = {
     path: PropTypes.string.isRequired,
     component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+    location: PropTypes.object,
 };

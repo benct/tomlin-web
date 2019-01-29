@@ -236,11 +236,10 @@ actions.updatePosters = () => dispatch => {
 
 actions.goToIMDb = ({ type, id }) => dispatch =>
     post({ service: 'media', action: 'external', type, id })
-        .then(
-            response =>
-                response
-                    ? window.open(`https://www.imdb.com/title/${response}`, '_blank').focus()
-                    : dispatch(baseActions.showToast('No external ID found...'))
+        .then(response =>
+            response
+                ? window.open(`https://www.imdb.com/title/${response}`, '_blank').focus()
+                : dispatch(baseActions.showToast('No external ID found...'))
         )
         .catch(() => dispatch(baseActions.showToast('Failed to get external ID...')));
 
