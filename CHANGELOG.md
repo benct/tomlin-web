@@ -11,6 +11,10 @@ All notable changes to this project will be documented in this file.
 - Set correct main file in package.json
 - Update footer/copyright
 
+### Fixed
+- Date formatting error after lib update
+- Bug in text file previews
+
 ## [2.8.0] - 2018-11-25
 ### Added
 - Home status/state component
