@@ -105,7 +105,7 @@ class Files extends React.Component {
         if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
             this.props.dispatch(actions.setPreview({ src: item.href, image: true }));
         } else {
-            this.props.dispatch(actions.open(item.href));
+            this.props.dispatch(actions.open(item));
         }
     }
 
