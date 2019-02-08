@@ -11,7 +11,7 @@ class State extends React.PureComponent {
         this.props.dispatch(actions.getHomeState());
     }
 
-    static renderState(id, value, text, unit) {
+    static renderState(id, value, text, unit = '°C') {
         return (
             <div className="home-state" data-tooltip={text}>
                 <div className="text-right">
@@ -60,13 +60,13 @@ class State extends React.PureComponent {
                     </div>
                 </div>
                 <div className="home-sensors">
-                    {State.renderState('livingroom', this.props.temperature.livingroom, 'Living room temperature', '°C')}
-                    {State.renderState('office', this.props.temperature.office, 'Office temperature', '°C')}
-                    {State.renderState('bedroom', this.props.temperature.bedroom, 'Bedroom temperature', '°C')}
-                    {State.renderState('storeroom', this.props.temperature.storeroom, 'Storage room temperature', '°C')}
-                    {State.renderState('kitchen', this.props.temperature.kitchen, 'Kitchen temperature', '°C')}
+                    {State.renderState('livingroom', this.props.temperature.livingroom, 'Living room temperature')}
+                    {State.renderState('office', this.props.temperature.office, 'Office temperature')}
+                    {State.renderState('bedroom', this.props.temperature.bedroom, 'Bedroom temperature')}
+                    {State.renderState('storeroom', this.props.temperature.storeroom, 'Storage room temperature')}
+                    {State.renderState('kitchen', this.props.temperature.kitchen, 'Kitchen temperature')}
                     {State.renderState('computer', this.props.consumption.pc, 'PC consumption [30d]', 'kWh')}
-                    {State.renderState('bathroom', this.props.temperature.bathroom, 'Bathroom temperature', '°C')}
+                    {State.renderState('bathroom', this.props.temperature.bathroom, 'Bathroom temperature')}
                     {State.renderState('tv', this.props.consumption.tv, 'TV/Sound consumption [30d]', 'kWh')}
                 </div>
             </div>
