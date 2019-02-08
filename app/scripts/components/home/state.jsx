@@ -11,6 +11,10 @@ class State extends React.PureComponent {
         this.props.dispatch(actions.getHomeState());
     }
 
+    static format(number) {
+        return Number(number).toFixed(1);
+    }
+
     static renderState(id, value, text, unit) {
         return (
             <div className="home-state" data-tooltip={text}>
@@ -60,14 +64,14 @@ class State extends React.PureComponent {
                     </div>
                 </div>
                 <div className="home-sensors">
-                    {State.renderState('livingroom', this.props.temperature.livingroom, 'Living room temperature', '°C')}
-                    {State.renderState('office', this.props.temperature.office, 'Office temperature', '°C')}
-                    {State.renderState('bedroom', this.props.temperature.bedroom, 'Bedroom temperature', '°C')}
-                    {State.renderState('storeroom', this.props.temperature.storeroom, 'Storage room temperature', '°C')}
-                    {State.renderState('kitchen', this.props.temperature.kitchen, 'Kitchen temperature', '°C')}
-                    {State.renderState('computer', this.props.consumption.pc, 'PC consumption [30d]', 'kWh')}
-                    {State.renderState('bathroom', this.props.temperature.bathroom, 'Bathroom temperature', '°C')}
-                    {State.renderState('tv', this.props.consumption.tv, 'TV/Sound consumption [30d]', 'kWh')}
+                    {State.renderState('livingroom', State.format(this.props.temperature.livingroom), 'Living room temperature', '°C')}
+                    {State.renderState('office', State.format(this.props.temperature.office), 'Office temperature', '°C')}
+                    {State.renderState('bedroom', State.format(this.props.temperature.bedroom), 'Bedroom temperature', '°C')}
+                    {State.renderState('storeroom', State.format(this.props.temperature.storeroom), 'Storage room temperature', '°C')}
+                    {State.renderState('kitchen', State.format(this.props.temperature.kitchen), 'Kitchen temperature', '°C')}
+                    {State.renderState('computer', State.format(this.props.consumption.pc), 'PC consumption [30d]', 'kWh')}
+                    {State.renderState('bathroom', State.format(this.props.temperature.bathroom), 'Bathroom temperature', '°C')}
+                    {State.renderState('tv', State.format(this.props.consumption.tv), 'TV/Sound consumption [30d]', 'kWh')}
                 </div>
             </div>
         );
