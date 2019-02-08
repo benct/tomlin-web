@@ -3,7 +3,7 @@
 This app is really just intended for myself, to test out React features and acquire some basic knowledge
 about Webpack, Babel, Node/NPM/Yarn and other web development technologies.
 
-[![Website](https://img.shields.io/website-up-down-green-red/http/tomlin.no.svg?label=website)](https://tomlin.no)
+[![Website](https://img.shields.io/website-up-down-green-red/https/tomlin.no.svg?label=website)](https://tomlin.no)
 [![Dependencies](https://img.shields.io/david/benct/tomlin-web.svg)](https://github.com/benct/tomlin-web/blob/master/package.json)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/benct/tomlin-web.svg)](https://github.com/benct/tomlin-web)
 [![GitHub last commit](https://img.shields.io/github/last-commit/benct/tomlin-web.svg)](https://github.com/benct/tomlin-web)
