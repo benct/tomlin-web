@@ -42,7 +42,7 @@ class State extends React.PureComponent {
                             <img className="help-icon" src={require(`../../../images/icon/info.svg`)} alt="Information" />
                         </span>
                     </div>
-                    <div className="">
+                    <div>
                         <span className="home-unit">Oslo</span>
                         <br />
                         <span className="home-value">
