@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.8.2] - 2019-02-12
+### Added
+- Office and storage temperatures
+
+### Changed
+- Format home state values
+- Small cleanup of home state component
+- Upgrade minor dependencies
+
+### Removed
+- Upload and download speeds
+
 ## [2.8.1] - 2019-01-29
 ### Added
 - Episode stats in media overview
@@ -31,7 +43,7 @@ All notable changes to this project will be documented in this file.
 - Extract most icons in to separate SVG files
 - Reduce delay on loading indicator
 - Header html tags for title and header
-- Update several dependencies
+- Upgrade several dependencies
 
 ## [2.7.4] - 2018-11-05
 ### Added
