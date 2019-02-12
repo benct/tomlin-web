@@ -11,7 +11,7 @@ module.exports = {
     entry: ['@babel/polyfill', path.join(PATHS.app, 'scripts', 'index.js')],
     output: {
         path: PATHS.dist,
-        filename: 'assets/scripts/bundle.js',
+        filename: 'assets/scripts/bundle.[hash].js',
         publicPath: '/',
     },
     resolve: {
