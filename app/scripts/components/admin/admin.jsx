@@ -24,7 +24,9 @@ class Admin extends React.PureComponent {
                         onClick={() => this.props.dispatch(mediaActions.updatePosters())}>
                         Run
                     </button>
-                    <span>Number of log messages</span>
+                    <span>Clear all log messages</span>
+                    <button className="button-default button-default-small">Clear</button>
+                    <span>Show number of log messages</span>
                     <select
                         defaultValue={defaultNumberOfLogs}
                         onChange={event => event.target.blur()}
