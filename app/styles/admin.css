@@ -4,6 +4,10 @@
     grid-gap: 10px;
 }
 
+.admin-list select {
+    height: auto;
+}
+
 .admin-logs {
     display: grid;
     grid-template-columns: auto 1fr;
