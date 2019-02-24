@@ -80,9 +80,6 @@ class Search extends React.Component {
                     <Link to={'/media/search/tv/popular/'}>Popular (TV)</Link>
                     <Link to={'/media/search/tv/top/'}>Top Rated (TV)</Link>
                     <Link to={'/media/search/tv/now/'}>Now Playing (TV)</Link>
-                    <button className="button-blank faded" onClick={this.props.updatePosters}>
-                        Update Posters (!)
-                    </button>
                 </div>
                 {this.props.data.map(this.renderItem.bind(this))}
                 <Pagination path={`/media/search/${this.props.type}/${this.props.action}/`} postfix={`/${this.props.id}`} />
@@ -104,7 +101,6 @@ Search.propTypes = {
     add: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
     goToIMDb: PropTypes.func.isRequired,
-    updatePosters: PropTypes.func.isRequired,
     resetPagination: PropTypes.func.isRequired,
 };
 
@@ -123,7 +119,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     add: (type, id) => dispatch(mediaActions.add({ type: type || ownProps.match.params.type, id })),
     remove: (type, id) => dispatch(mediaActions.remove({ type: type || ownProps.match.params.type, id })),
     goToIMDb: (type, id) => dispatch(mediaActions.goToIMDb({ type: type || ownProps.match.params.type, id })),
-    updatePosters: () => dispatch(mediaActions.updatePosters()),
     resetPagination: () => dispatch(paginationActions.reset()),
 });
 
