@@ -48,7 +48,8 @@ hr {
     margin: 0 auto;
 }
 
-pre {
+pre,
+code {
     font-size: 13px;
     letter-spacing: normal;
     border-left: 1px dashed #ddd;

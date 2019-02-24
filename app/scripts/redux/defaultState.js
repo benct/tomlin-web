@@ -54,6 +54,10 @@ export default {
         },
     },
 
+    admin: {
+        logs: [],
+    },
+
     pagination: {
         enabled: false,
         current: 1,

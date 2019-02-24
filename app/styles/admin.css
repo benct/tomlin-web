@@ -1,0 +1,32 @@
+.admin-list {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-gap: 10px;
+}
+
+.admin-logs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.admin-logs code {
+    box-sizing: border-box;
+    border-right: none;
+    padding: 5px 10px;
+    height: 100%;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .admin-logs {
+        grid-template-columns: auto;
+        margin-bottom: 15px;
+    }
+    .admin-logs:last-child {
+        margin-bottom: 0;
+    }
+    .admin-logs code {
+        padding: 0;
+        border: none;
+    }
+}
