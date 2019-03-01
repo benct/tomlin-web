@@ -55,16 +55,20 @@ class Admin extends React.PureComponent {
                 </div>
                 <hr />
                 <div className="wrapper">
-                    {this.props.logs.map((log, idx) => (
-                        <div className="admin-logs" key={`logs${idx}`}>
-                            <code>{log.timestamp}</code>
-                            <code>
-                                {log.message}
-                                <br />
-                                {log.details}
-                            </code>
-                        </div>
-                    ))}
+                    {this.props.logs.length ? (
+                        this.props.logs.map((log, idx) => (
+                            <div className="admin-logs" key={`logs${idx}`}>
+                                <code>{log.timestamp}</code>
+                                <code>
+                                    {log.message}
+                                    <br />
+                                    {log.details}
+                                </code>
+                            </div>
+                        ))
+                    ) : (
+                        <span>Server log is empty...</span>
+                    )}
                 </div>
             </>
         );
