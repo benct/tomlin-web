@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import mediaActions from '../../actions/media.js';
 import adminActions from '../../actions/admin.js';
 
 const defaultNumberOfLogs = 10;
@@ -21,11 +20,28 @@ class Admin extends React.PureComponent {
                     <span>Import missing media poster images</span>
                     <button
                         className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(mediaActions.updatePosters())}>
-                        Run
+                        onClick={() => this.props.dispatch(adminActions.updatePosters())}>
+                        Import
                     </button>
+                    <span>Run update script (movies)</span>
+                    <button
+                        className="button-default button-default-small"
+                        onClick={() => this.props.dispatch(adminActions.updateMedia('movie'))}>
+                        Update
+                    </button>
+                    <span>Run update script (tv-shows)</span>
+                    <button
+                        className="button-default button-default-small"
+                        onClick={() => this.props.dispatch(adminActions.updateMedia('tv'))}>
+                        Update
+                    </button>
+                </div>
+                <hr />
+                <div className="wrapper admin-list">
                     <span>Clear all log messages</span>
-                    <button className="button-default button-default-small">Clear</button>
+                    <button className="button-default button-default-small" onClick={() => this.props.dispatch(adminActions.clearLogs())}>
+                        Clear
+                    </button>
                     <span>Show number of log messages</span>
                     <select
                         defaultValue={defaultNumberOfLogs}

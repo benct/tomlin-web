@@ -226,14 +226,6 @@ actions.stats = () => dispatch =>
         .then(response => dispatch(actions.setStats(response)))
         .catch(() => dispatch(baseActions.showToast('Could not fetch stats...')));
 
-actions.updatePosters = () => dispatch => {
-    if (auth.loggedIn()) {
-        post({ service: 'media', action: 'images', overwrite: false })
-            .then(response => dispatch(baseActions.showToast(`Successfully updated ${response} posters!`)))
-            .catch(() => dispatch(baseActions.showToast('Failed to update posters...')));
-    }
-};
-
 actions.goToIMDb = ({ type, id }) => dispatch =>
     post({ service: 'media', action: 'external', type, id })
         .then(response =>

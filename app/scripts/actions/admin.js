@@ -17,6 +17,30 @@ actions.getLogs = count => dispatch => {
     }
 };
 
+actions.clearLogs = () => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'db', action: 'clear' })
+            .then(response => (response ? dispatch(actions.setLogs([])) : null))
+            .catch(() => dispatch(baseActions.showToast('Could not clear log data...')));
+    }
+};
+
+actions.updatePosters = () => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'media', action: 'images', overwrite: false })
+            .then(response => dispatch(baseActions.showToast(`Successfully updated ${response} posters!`)))
+            .catch(() => dispatch(baseActions.showToast('Failed to update posters...')));
+    }
+};
+
+actions.updateMedia = type => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'media', action: 'update', type, id: 'all' })
+            .then(() => dispatch(baseActions.showToast('Media successfully updated!')))
+            .catch(() => dispatch(baseActions.showToast('Failed to update posters...')));
+    }
+};
+
 export default actions;
 
 export const reducer = makeReducer(actions);
