@@ -35,9 +35,9 @@ actions.updatePosters = () => dispatch => {
 
 actions.updateMedia = type => dispatch => {
     if (auth.loggedIn()) {
-        post({ service: 'media', action: 'update', type, id: 'all' })
-            .then(() => dispatch(baseActions.showToast('Media successfully updated!')))
-            .catch(() => dispatch(baseActions.showToast('Failed to update posters...')));
+        post({ service: 'media', action: 'update', type })
+            .then(response => dispatch(baseActions.showToast(`Successfully updated ${response} items!`)))
+            .catch(() => dispatch(baseActions.showToast('Failed to update media content...')));
     }
 };
 
