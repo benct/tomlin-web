@@ -4,6 +4,10 @@
     grid-gap: 10px;
 }
 
+.admin-list-ext {
+    grid-template-columns: 1fr auto auto;
+}
+
 .admin-list select {
     height: auto;
 }
