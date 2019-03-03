@@ -21,6 +21,11 @@
     width: 100%;
 }
 
+.admin-logs code:nth-child(1) {
+    border-left: none;
+    padding-left: 0;
+}
+
 @media (max-width: 600px) {
     .admin-logs {
         grid-template-columns: auto;
