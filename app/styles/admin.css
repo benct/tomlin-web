@@ -1,11 +1,7 @@
 .admin-list {
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-gap: 10px;
-}
-
-.admin-list-ext {
     grid-template-columns: 1fr auto auto;
+    grid-gap: 10px;
 }
 
 .admin-list select {

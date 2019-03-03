@@ -4,26 +4,25 @@ import { connect } from 'react-redux';
 
 import adminActions from '../../actions/admin.js';
 
-const defaultNumberOfLogs = 10;
-
 class Admin extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        this.logCount = React.createRef();
         this.updateMovieCount = React.createRef();
         this.updateTvCount = React.createRef();
     }
 
     componentDidMount() {
         if (!this.props.logs.length) {
-            this.props.dispatch(adminActions.getLogs(defaultNumberOfLogs));
+            this.props.dispatch(adminActions.getLogs(25));
         }
     }
 
     render() {
         return (
             <>
-                <div className="wrapper admin-list admin-list-ext">
+                <div className="wrapper admin-list">
                     <span className="truncate">Import missing media poster images</span>
                     <span />
                     <button
@@ -60,14 +59,12 @@ class Admin extends React.PureComponent {
                 <hr />
                 <div className="wrapper admin-list">
                     <span className="truncate">Clear all log messages</span>
+                    <span />
                     <button className="button-default button-default-small" onClick={() => this.props.dispatch(adminActions.clearLogs())}>
                         Clear
                     </button>
                     <span className="truncate">Show number of log messages</span>
-                    <select
-                        defaultValue={defaultNumberOfLogs}
-                        onChange={event => event.target.blur()}
-                        onBlur={event => this.props.dispatch(adminActions.getLogs(event.target.value))}>
+                    <select defaultValue={25} ref={this.logCount}>
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>
@@ -75,6 +72,11 @@ class Admin extends React.PureComponent {
                         <option value={250}>250</option>
                         <option value={500}>500</option>
                     </select>
+                    <button
+                        className="button-default button-default-small"
+                        onClick={() => this.props.dispatch(adminActions.getLogs(this.logCount.current.value))}>
+                        Refresh
+                    </button>
                 </div>
                 <hr />
                 <div className="wrapper">
