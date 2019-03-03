@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.9.0] - 2019-03-03
+### Added
+- Administration page
+- Server logging view
+- Media data batch updating functionality
+- JS and CSS asset name hashing
+
+### Changed
+- Less bold navigation menu
+- Move poster update to admin page
+- Upgrade dependencies
+
 ## [2.8.2] - 2019-02-12
 ### Added
 - Office and storage temperatures
