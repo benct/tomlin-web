@@ -7,7 +7,7 @@ import store from '../redux/store.js';
 import auth from './auth.js';
 
 const baseUrl = 'https://tomlin.no';
-const baseApiUrl = 'https://tomlin.no/api/';
+const baseApiUrl = 'https://api.tomlin.no';
 
 const delayedLoading = debounce(value => store.dispatch(actions.setLoading(value)), 150);
 
@@ -47,7 +47,7 @@ export function post(data, files = null) {
 }
 
 export function _get(data) {
-    return fetch(`${baseApiUrl}?${query(data)}`)
+    return fetch(`${baseApiUrl}/?${query(data)}`)
         .then(checkStatus)
         .then(response => response.json());
 }
