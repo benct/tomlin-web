@@ -2,11 +2,11 @@ import { _post } from './api.js';
 
 export default {
     init() {
-        this._authenticate({ service: 'validate' });
+        this._authenticate({ service: 'auth', action: 'validate' });
     },
 
     login(email, password, cb) {
-        this._authenticate({ service: 'login', user: email, pass: password }, cb);
+        this._authenticate({ service: 'auth', action: 'login', user: email, pass: password }, cb);
     },
 
     getToken() {
