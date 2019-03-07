@@ -28,9 +28,9 @@ class Admin extends React.PureComponent {
                     <button
                         className="button-default button-default-small"
                         onClick={() => this.props.dispatch(adminActions.updatePosters())}>
-                        Import
+                        Run
                     </button>
-                    <span className="truncate">Run update script (movies)</span>
+                    <span className="truncate">Update number of stored movies</span>
                     <select defaultValue={50} ref={this.updateMovieCount}>
                         <option value={10}>10</option>
                         <option value={50}>50</option>
@@ -41,9 +41,9 @@ class Admin extends React.PureComponent {
                     <button
                         className="button-default button-default-small"
                         onClick={() => this.props.dispatch(adminActions.updateMedia('movie', this.updateMovieCount.current.value))}>
-                        Update
+                        Run
                     </button>
-                    <span className="truncate">Run update script (tv-shows)</span>
+                    <span className="truncate">Update number of stored tv-shows</span>
                     <select defaultValue={10} ref={this.updateTvCount}>
                         <option value={5}>5</option>
                         <option value={10}>10</option>
@@ -53,7 +53,7 @@ class Admin extends React.PureComponent {
                     <button
                         className="button-default button-default-small"
                         onClick={() => this.props.dispatch(adminActions.updateMedia('tv', this.updateTvCount.current.value))}>
-                        Update
+                        Run
                     </button>
                 </div>
                 <hr />
@@ -92,7 +92,7 @@ class Admin extends React.PureComponent {
                     <button
                         className="button-default button-default-small"
                         onClick={() => this.props.dispatch(adminActions.getLogs(this.logCount.current.value))}>
-                        Refresh
+                        Load
                     </button>
                 </div>
                 <hr />
