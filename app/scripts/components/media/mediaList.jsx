@@ -28,6 +28,12 @@ class MediaList extends React.Component {
         this.props.resetPagination();
     }
 
+    handleKey(event) {
+        if ((event.keyCode === 13 || event.key === 'Enter') && event.target.value.length) {
+            this.props.loadMedia(event.target.value);
+        }
+    }
+
     handleSort(event) {
         if (this.props.sort !== event.target.value) {
             this.props.setSort(event.target.value);
@@ -77,19 +83,22 @@ class MediaList extends React.Component {
     renderList() {
         return (
             <>
-                <select
-                    className="mvm mha color-base"
-                    onChange={e => e.target.blur()}
-                    onBlur={this.handleSort.bind(this)}
-                    defaultValue={this.props.sort}>
-                    <option value="rating-desc">Rating (high-low)</option>
-                    <option value="rating-asc">Rating (low-high)</option>
-                    <option value="release-asc">Release (first-last)</option>
-                    <option value="release-desc">Release (last-first)</option>
-                    <option value="title-asc">Title (alphabetical)</option>
-                    <option value="title-desc">Title (reverse)</option>
-                    <option value="favourite">Favourite</option>
-                </select>
+                <div className="mvm text-center">
+                    <select
+                        className="color-base"
+                        onChange={e => e.target.blur()}
+                        onBlur={this.handleSort.bind(this)}
+                        defaultValue={this.props.sort}>
+                        <option value="rating-desc">Rating (high-low)</option>
+                        <option value="rating-asc">Rating (low-high)</option>
+                        <option value="release-asc">Release (first-last)</option>
+                        <option value="release-desc">Release (last-first)</option>
+                        <option value="title-asc">Title (alphabetical)</option>
+                        <option value="title-desc">Title (reverse)</option>
+                        <option value="favourite">Favourite</option>
+                    </select>
+                    <input type="text" placeholder="Search" aria-label="Search" onKeyPress={this.handleKey.bind(this)} />
+                </div>
                 <div className="clear-fix text-center">{this.renderRows(this.props.data.results)}</div>
                 <Pagination path={`/media/${this.props.type}/`} />
             </>
@@ -138,8 +147,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => {
     const { type, page } = ownProps.match.params;
     return {
-        loadMedia: () => {
-            dispatch(mediaActions.get({ action: type, page: +page || 1 }));
+        loadMedia: query => {
+            dispatch(mediaActions.get({ action: type, query, page: +page || 1 }));
             window.scrollTo(0, 0);
         },
         setSort: sort => {

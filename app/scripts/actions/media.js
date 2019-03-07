@@ -20,8 +20,8 @@ actions.set = makeAction('MEDIA/SET', (state, { payload }) =>
     })
 );
 
-actions.get = ({ action, sort, page }) => (dispatch, getState) =>
-    get({ service: 'media', action, page: page || getState().pagination.current, sort: sort || getState().media.sort })
+actions.get = ({ action, sort, page, query }) => (dispatch, getState) =>
+    get({ service: 'media', action, query, page: page || getState().pagination.current, sort: sort || getState().media.sort })
         .then(response => {
             dispatch(actions.set(Object.assign(response, { key: action })));
             dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
