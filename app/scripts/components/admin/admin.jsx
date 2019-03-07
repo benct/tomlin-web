@@ -58,6 +58,23 @@ class Admin extends React.PureComponent {
                 </div>
                 <hr />
                 <div className="wrapper admin-list">
+                    <span className="truncate">Update IATA airline entries</span>
+                    <span />
+                    <button
+                        className="button-default button-default-small"
+                        onClick={() => this.props.dispatch(adminActions.updateIata('airlines'))}>
+                        Run
+                    </button>
+                    <span className="truncate">Update IATA location entries</span>
+                    <span />
+                    <button
+                        className="button-default button-default-small"
+                        onClick={() => this.props.dispatch(adminActions.updateIata('locations'))}>
+                        Run
+                    </button>
+                </div>
+                <hr />
+                <div className="wrapper admin-list">
                     <span className="truncate">Clear all log messages</span>
                     <span />
                     <button className="button-default button-default-small" onClick={() => this.props.dispatch(adminActions.clearLogs())}>

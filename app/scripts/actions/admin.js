@@ -41,6 +41,14 @@ actions.updateMedia = (type, count) => dispatch => {
     }
 };
 
+actions.updateIata = type => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'iata', action: type })
+            .then(response => dispatch(baseActions.showToast(`Successfully updated ${response} entries!`)))
+            .catch(() => dispatch(baseActions.showToast('Failed to update IATA entries...')));
+    }
+};
+
 export default actions;
 
 export const reducer = makeReducer(actions);
