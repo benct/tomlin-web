@@ -211,4 +211,7 @@
     .media-overlay-content {
         height: auto;
     }
+    .media-input {
+        width: 150px;
+    }
 }

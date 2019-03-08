@@ -22,7 +22,7 @@ class Admin extends React.PureComponent {
     render() {
         return (
             <>
-                <div className="wrapper admin-list">
+                <div className="wrapper admin-list text text-left">
                     <span className="truncate">Import missing media poster images</span>
                     <span />
                     <button
@@ -57,7 +57,7 @@ class Admin extends React.PureComponent {
                     </button>
                 </div>
                 <hr />
-                <div className="wrapper admin-list">
+                <div className="wrapper admin-list text text-left">
                     <span className="truncate">Update IATA airline entries</span>
                     <span />
                     <button
@@ -74,7 +74,7 @@ class Admin extends React.PureComponent {
                     </button>
                 </div>
                 <hr />
-                <div className="wrapper admin-list">
+                <div className="wrapper admin-list text text-left">
                     <span className="truncate">Clear all log messages</span>
                     <span />
                     <button className="button-default button-default-small" onClick={() => this.props.dispatch(adminActions.clearLogs())}>
