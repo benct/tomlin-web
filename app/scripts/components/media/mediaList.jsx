@@ -29,8 +29,8 @@ class MediaList extends React.Component {
     }
 
     handleKey(event) {
-        if ((event.keyCode === 13 || event.key === 'Enter') && event.target.value.length) {
-            this.props.loadMedia(event.target.value);
+        if (event.keyCode === 13 || event.key === 'Enter') {
+            this.props.loadMedia(event.target.value.length ? event.target.value : undefined);
         }
     }
 
