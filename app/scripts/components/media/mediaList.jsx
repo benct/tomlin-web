@@ -83,9 +83,9 @@ class MediaList extends React.Component {
     renderList() {
         return (
             <>
-                <div className="mvm text-center">
+                <div className="text-center mbl">
                     <select
-                        className="color-base"
+                        className="media-input input-small color-light mrs"
                         onChange={e => e.target.blur()}
                         onBlur={this.handleSort.bind(this)}
                         defaultValue={this.props.sort}>
@@ -97,7 +97,13 @@ class MediaList extends React.Component {
                         <option value="title-desc">Title (reverse)</option>
                         <option value="favourite">Favourite</option>
                     </select>
-                    <input type="text" placeholder="Search" aria-label="Search" onKeyPress={this.handleKey.bind(this)} />
+                    <input
+                        className="media-input input-small mls"
+                        type="text"
+                        placeholder="Search"
+                        aria-label="Search"
+                        onKeyPress={this.handleKey.bind(this)}
+                    />
                 </div>
                 <div className="clear-fix text-center">{this.renderRows(this.props.data.results)}</div>
                 <Pagination path={`/media/${this.props.type}/`} />

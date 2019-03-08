@@ -153,6 +153,18 @@
     text-align: justify;
 }
 
+.media-input {
+    height: 28px;
+    width: 180px;
+    font-weight: initial;
+}
+
+.media-input:hover,
+.media-input:active {
+    color: #002080 !important;
+    background-color: #fff;
+}
+
 @media (max-width: 767px) {
     .media-stats {
         grid-template-columns: 1fr;

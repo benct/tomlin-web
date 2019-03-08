@@ -31,7 +31,7 @@ class Admin extends React.PureComponent {
                         Run
                     </button>
                     <span className="truncate">Update number of stored movies</span>
-                    <select defaultValue={50} ref={this.updateMovieCount}>
+                    <select className="input-small" defaultValue={50} ref={this.updateMovieCount}>
                         <option value={10}>10</option>
                         <option value={50}>50</option>
                         <option value={100}>100</option>
@@ -44,7 +44,7 @@ class Admin extends React.PureComponent {
                         Run
                     </button>
                     <span className="truncate">Update number of stored tv-shows</span>
-                    <select defaultValue={10} ref={this.updateTvCount}>
+                    <select className="input-small" defaultValue={10} ref={this.updateTvCount}>
                         <option value={5}>5</option>
                         <option value={10}>10</option>
                         <option value={50}>50</option>
@@ -81,7 +81,7 @@ class Admin extends React.PureComponent {
                         Clear
                     </button>
                     <span className="truncate">Show number of log messages</span>
-                    <select defaultValue={25} ref={this.logCount}>
+                    <select className="input-small" defaultValue={25} ref={this.logCount}>
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>

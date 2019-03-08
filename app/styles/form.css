@@ -1,92 +1,46 @@
-form {
+form.login {
     max-width: 300px;
     margin: 0 auto;
 }
 
-input[type=text],
-input[type=email],
-input[type=password] {
-    width: 100%;
-    height: 44px;
-    line-height: 42px;
-    margin: 10px 0;
-    padding: 0 35px;
-    outline: none;
-    color: #737373;
-    border: 1px solid #292929;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    font-family: "Open Sans Condensed", "PT Sans Narrow", sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-align: center;
-    letter-spacing: 2px;
-}
-
-input[type=text]:hover, input[type=text]:focus,
-input[type=email]:hover, input[type=email]:focus,
-input[type=password]:hover, input[type=password]:focus {
-    color: #006080;
-    border-color: #002080;
-    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-}
-
-input[type=button],
-input[type=submit],
-input[type=reset],
-button.button-default {
+input,
+select,
+.button-default {
     height: 44px;
     line-height: 42px;
     margin: 10px 0;
     padding: 0 35px;
     outline: none;
     color: #002080;
-    border: 1px solid #292929;
+    border: 1px solid #aaa;
+    border-radius: 5px;
     background-color: #fff;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
-    -webkit-box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
     box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    font-family: inherit;
+    font-family: "Open Sans Condensed", "PT Sans Narrow", sans-serif;
     font-size: 15px;
     font-weight: 700;
+    text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-align: center;
     vertical-align: middle;
-    cursor: pointer;
 }
 
-input[type=button]:hover, input[type=button]:active,
-input[type=submit]:hover, input[type=submit]:active,
-input[type=reset]:hover, input[type=reset]:active,
-button.button-default:hover, button.button-default:active {
+input:hover,
+input:active,
+select:hover,
+select:active,
+.button-default:hover,
+.button-default:active {
     color: #fff !important;
+    border-color: #292929;
     background-color: #28a0c8;
-    border-color: #002080;
 }
 
-button.button-default-small {
-    height: auto;
-    line-height: initial;
-    margin: 0;
-    padding: 3px 8px;
-    font-size: 13px;
-    letter-spacing: 1px;
+select, button,
+input[type=submit] {
+    cursor: pointer;
 }
 
 input[type=file] {
@@ -107,28 +61,14 @@ input[type=file] + svg {
     margin-right: 0.25em;
 }
 
-select {
-    display: block;
-    background: transparent;
-    border: 1px solid #dddddd;
-    border-radius: 0;
-    font-size: 15px;
-    height: 24px;
-    outline: none;
-    text-transform: none;
-    cursor: pointer;
-}
-
-select:hover,
-select:focus {
-    border-color: #002080;
-}
-
-[role=button] {
-    cursor: pointer;
-    outline: none;
-    border: none;
-    font: inherit;
+.input-small,
+.button-default-small {
+    height: auto;
+    line-height: initial;
+    margin: 0;
+    padding: 3px 8px;
+    font-size: 13px;
+    letter-spacing: 1px;
 }
 
 .button-blank {
@@ -144,9 +84,6 @@ select:focus {
 }
 
 .button-icon {
-    -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     background: transparent no-repeat;
     color: #002080;
@@ -170,9 +107,6 @@ select:focus {
 }
 
 .button-icon svg path {
-    -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     fill: #002080;
     opacity: 1;
@@ -199,4 +133,11 @@ select:focus {
 .button-text-icon svg {
     vertical-align: middle;
     margin-left: 5px;
+}
+
+[role=button] {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font: inherit;
 }
