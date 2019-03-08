@@ -61,13 +61,14 @@ header::after {
     bottom: 0;
 }
 
-.menu-link {
+.menu-overlay {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
     outline: none;
+    background: transparent;
 }
 
 .menu {

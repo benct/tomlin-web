@@ -35,7 +35,7 @@ class App extends React.Component {
                     <header>
                         <h1 className="site-title no-select">Tomlin</h1>
                         <Navigation type="simple" />
-                        <button className="menu-link hide-gt480" aria-label="Menu" onClick={this.props.toggleMenu}>
+                        <button className="menu-overlay hide-gt480" aria-label="Menu" onClick={this.props.toggleMenu}>
                             &nbsp;
                         </button>
                     </header>
