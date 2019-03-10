@@ -4,6 +4,12 @@
     grid-gap: 10px;
 }
 
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px 10px;
+}
+
 .admin-logs {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -23,6 +29,9 @@
 }
 
 @media (max-width: 600px) {
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
     .admin-logs {
         grid-template-columns: auto;
         margin-bottom: 15px;

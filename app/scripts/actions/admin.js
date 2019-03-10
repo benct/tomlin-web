@@ -9,6 +9,19 @@ const actions = {};
 
 actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
 
+actions.setStats = makeAction('ADMIN/SET_STATS', 'stats');
+
+actions.stats = () => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'db', action: 'stats' })
+            .then(response => {
+                dispatch(actions.setLogs(response.logs || []));
+                dispatch(actions.setStats(response.stats || {}));
+            })
+            .catch(() => dispatch(baseActions.showToast('Could not fetch admin data...')));
+    }
+};
+
 actions.getLogs = count => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'db', action: 'log', count })

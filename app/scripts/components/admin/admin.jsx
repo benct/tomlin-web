@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { formatThousands } from '../../util/formatting.js';
 import adminActions from '../../actions/admin.js';
 
 class Admin extends React.PureComponent {
@@ -15,13 +16,36 @@ class Admin extends React.PureComponent {
 
     componentDidMount() {
         if (!this.props.logs.length) {
-            this.props.dispatch(adminActions.getLogs(25));
+            this.props.dispatch(adminActions.stats());
         }
     }
 
     render() {
         return (
             <>
+                <div className="wrapper admin-stats text-center text-small">
+                    <div>
+                        Movies: {formatThousands(this.props.stats.movie || '-')}
+                        <br />
+                        TV: {formatThousands(this.props.stats.tv || '-')}
+                    </div>
+                    <div>
+                        Seasons: {formatThousands(this.props.stats.season || '-')}
+                        <br />
+                        Episodes: {formatThousands(this.props.stats.episode || '-')}
+                    </div>
+                    <div>
+                        Airlines: {formatThousands(this.props.stats.airline || '-')}
+                        <br />
+                        Locations: {formatThousands(this.props.stats.location || '-')}
+                    </div>
+                    <div>
+                        HA Events: {formatThousands(this.props.stats.hass || '-')}
+                        <br />
+                        Logs: {formatThousands(this.props.stats.log || '-')}
+                    </div>
+                </div>
+                <hr />
                 <div className="wrapper admin-list text text-left">
                     <span className="truncate">Import missing media poster images</span>
                     <span />
@@ -120,6 +144,7 @@ class Admin extends React.PureComponent {
 Admin.propTypes = {
     dispatch: PropTypes.func.isRequired,
     logs: PropTypes.array.isRequired,
+    stats: PropTypes.object.isRequired,
 };
 
-export default connect(state => ({ logs: state.admin.logs }))(Admin);
+export default connect(state => ({ logs: state.admin.logs, stats: state.admin.stats }))(Admin);
