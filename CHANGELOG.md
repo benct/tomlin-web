@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.9.1] - 2019-03-10
+### Added
+- General DB stats in admin view
+- IATA data administration
+- Stored media search functionality
+
+### Changed
+- New API url `api.tomlin.no`
+- Update files and auth service parameters
+- Minor text changes in admin view
+- Simplify and clean up form CSS
+
 ## [2.9.0] - 2019-03-03
 ### Added
 - Administration page
