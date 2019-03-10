@@ -20,29 +20,54 @@ class Admin extends React.PureComponent {
         }
     }
 
+    formatStat(key) {
+        return formatThousands(this.props.stats[key] || '-');
+    }
+
+    static renderOptions(values) {
+        return values.map((opt, idx) => (
+            <option key={`opt${idx}`} value={opt}>
+                {opt}
+            </option>
+        ));
+    }
+
+    static renderLog(log, idx) {
+        return (
+            <div className="admin-logs" key={`logs${idx}`}>
+                <code>{log.timestamp}</code>
+                <code>
+                    {log.message}
+                    <br />
+                    {log.details}
+                </code>
+            </div>
+        );
+    }
+
     render() {
         return (
             <>
                 <div className="wrapper admin-stats text-center text-small">
                     <div>
-                        Movies: {formatThousands(this.props.stats.movie || '-')}
+                        Movies: {this.formatStat('movie')}
                         <br />
-                        TV: {formatThousands(this.props.stats.tv || '-')}
+                        TV: {this.formatStat('tv')}
                     </div>
                     <div>
-                        Seasons: {formatThousands(this.props.stats.season || '-')}
+                        Seasons: {this.formatStat('season')}
                         <br />
-                        Episodes: {formatThousands(this.props.stats.episode || '-')}
+                        Episodes: {this.formatStat('episode')}
                     </div>
                     <div>
-                        Airlines: {formatThousands(this.props.stats.airline || '-')}
+                        Airlines: {this.formatStat('airline')}
                         <br />
-                        Locations: {formatThousands(this.props.stats.location || '-')}
+                        Locations: {this.formatStat('location')}
                     </div>
                     <div>
-                        HA Events: {formatThousands(this.props.stats.hass || '-')}
+                        HA Events: {this.formatStat('hass')}
                         <br />
-                        Logs: {formatThousands(this.props.stats.log || '-')}
+                        Logs: {this.formatStat('log')}
                     </div>
                 </div>
                 <hr />
@@ -56,11 +81,7 @@ class Admin extends React.PureComponent {
                     </button>
                     <span className="truncate">Update number of stored movies</span>
                     <select className="input-small" defaultValue={50} ref={this.updateMovieCount}>
-                        <option value={10}>10</option>
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
-                        <option value={250}>250</option>
-                        <option value={500}>500</option>
+                        {Admin.renderOptions([10, 50, 100, 250, 500])}
                     </select>
                     <button
                         className="button-default button-default-small"
@@ -69,10 +90,7 @@ class Admin extends React.PureComponent {
                     </button>
                     <span className="truncate">Update number of stored tv-shows</span>
                     <select className="input-small" defaultValue={10} ref={this.updateTvCount}>
-                        <option value={5}>5</option>
-                        <option value={10}>10</option>
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
+                        {Admin.renderOptions([5, 10, 50, 100])}
                     </select>
                     <button
                         className="button-default button-default-small"
@@ -106,12 +124,7 @@ class Admin extends React.PureComponent {
                     </button>
                     <span className="truncate">Show number of log messages</span>
                     <select className="input-small" defaultValue={25} ref={this.logCount}>
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
-                        <option value={250}>250</option>
-                        <option value={500}>500</option>
+                        {Admin.renderOptions([10, 25, 50, 100, 250, 500])}
                     </select>
                     <button
                         className="button-default button-default-small"
@@ -121,20 +134,7 @@ class Admin extends React.PureComponent {
                 </div>
                 <hr />
                 <div className="wrapper">
-                    {this.props.logs.length ? (
-                        this.props.logs.map((log, idx) => (
-                            <div className="admin-logs" key={`logs${idx}`}>
-                                <code>{log.timestamp}</code>
-                                <code>
-                                    {log.message}
-                                    <br />
-                                    {log.details}
-                                </code>
-                            </div>
-                        ))
-                    ) : (
-                        <span>Server log is empty...</span>
-                    )}
+                    {this.props.logs.length ? this.props.logs.map(Admin.renderLog) : <span>Server log is empty...</span>}
                 </div>
             </>
         );
