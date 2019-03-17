@@ -2,7 +2,7 @@ import { _post } from './api.js';
 
 export default {
     init() {
-        this._authenticate({ service: 'auth', action: 'validate' });
+        this._authenticate({ service: 'auth', action: 'validate', referrer: document.referrer });
     },
 
     login(email, password, cb) {
