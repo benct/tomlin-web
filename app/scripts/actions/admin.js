@@ -2,22 +2,19 @@ import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
 
 import { post } from '../util/api.js';
+import auth from '../util/auth.js';
 import baseActions from './base.js';
-import auth from '../util/auth';
 
 const actions = {};
 
-actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
+actions.setData = makeAction('ADMIN/SET_DATA', (state, { payload }) => Object.assign({}, state, payload));
 
-actions.setStats = makeAction('ADMIN/SET_STATS', 'stats');
+actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
 
 actions.stats = () => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'db', action: 'stats' })
-            .then(response => {
-                dispatch(actions.setLogs(response.logs || []));
-                dispatch(actions.setStats(response.stats || {}));
-            })
+            .then(response => dispatch(actions.setData(response)))
             .catch(() => dispatch(baseActions.showToast('Could not fetch admin data...')));
     }
 };

@@ -45,6 +45,25 @@ class Admin extends React.PureComponent {
         );
     }
 
+    static renderVisit(visit, idx) {
+        return (
+            <div className="admin-logs" key={`visits${idx}`}>
+                <code>
+                    {visit.timestamp}
+                    <br />
+                    {visit.visits}
+                </code>
+                <code>
+                    {visit.ip} / {visit.host}
+                    <br />
+                    {visit.agent}
+                    <br />
+                    {visit.page} {visit.referer}
+                </code>
+            </div>
+        );
+    }
+
     render() {
         return (
             <>
@@ -136,6 +155,10 @@ class Admin extends React.PureComponent {
                 <div className="wrapper">
                     {this.props.logs.length ? this.props.logs.map(Admin.renderLog) : <span>Server log is empty...</span>}
                 </div>
+                <hr />
+                <div className="wrapper">
+                    {this.props.visits.length ? this.props.visits.map(Admin.renderVisit) : <span>No tracking data...</span>}
+                </div>
             </>
         );
     }
@@ -144,7 +167,8 @@ class Admin extends React.PureComponent {
 Admin.propTypes = {
     dispatch: PropTypes.func.isRequired,
     logs: PropTypes.array.isRequired,
+    visits: PropTypes.array.isRequired,
     stats: PropTypes.object.isRequired,
 };
 
-export default connect(state => ({ logs: state.admin.logs, stats: state.admin.stats }))(Admin);
+export default connect(state => ({ ...state.admin }))(Admin);
