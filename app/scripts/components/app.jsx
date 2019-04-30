@@ -31,7 +31,7 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <>
+                <React.StrictMode>
                     <header>
                         <h1 className="site-title no-select">Tomlin</h1>
                         <Navigation type="simple" />
@@ -85,7 +85,7 @@ class App extends React.Component {
                         </div>
                     </footer>
                     {this.props.toast ? <div className="toast">{this.props.toast}</div> : null}
-                </>
+                </React.StrictMode>
             </Router>
         );
     }
