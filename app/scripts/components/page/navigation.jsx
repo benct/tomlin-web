@@ -24,6 +24,13 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
         { text: 'Search', path: '/media/search' },
     ];
 
+    const admin = [
+        { text: 'Logs', path: '/admin/logs' },
+        { text: 'Visits', path: '/admin/visits' },
+        { text: 'Notes', path: '/admin/notes' },
+        { text: 'Todo', path: '/admin/todo' },
+    ];
+
     const createLink = (item, idx) =>
         item.hide ? null : (
             <li key={`menuList${idx}`}>
@@ -33,6 +40,12 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
             </li>
         );
 
+    const subMenu = items => (
+        <nav className="pvl">
+            <ul className="no-select menu menu-simple menu-sub">{items.map(createLink)}</ul>
+        </nav>
+    );
+
     switch (type) {
         case 'simple':
             return (
@@ -41,11 +54,9 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
                 </nav>
             );
         case 'media':
-            return (
-                <nav className="pvl">
-                    <ul className="no-select menu menu-simple menu-sub">{media.map(createLink)}</ul>
-                </nav>
-            );
+            return subMenu(media);
+        case 'admin':
+            return subMenu(admin);
         case 'full':
         default:
             return (

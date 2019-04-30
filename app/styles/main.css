@@ -48,6 +48,10 @@ hr {
     margin: 0 auto;
 }
 
+hr.divider {
+    margin: 30px auto;
+}
+
 pre,
 code {
     font-size: 13px;

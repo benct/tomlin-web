@@ -1,174 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 
-import { formatThousands } from '../../util/formatting.js';
-import adminActions from '../../actions/admin.js';
+import Navigation from '../page/navigation.jsx';
+import Error from '../page/error.jsx';
+import Control from './control.jsx';
+import Logs from './logs.jsx';
+import Visits from './visits.jsx';
 
-class Admin extends React.PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.logCount = React.createRef();
-        this.updateMovieCount = React.createRef();
-        this.updateTvCount = React.createRef();
-    }
-
-    componentDidMount() {
-        if (!this.props.logs.length) {
-            this.props.dispatch(adminActions.stats());
-        }
-    }
-
-    formatStat(key) {
-        return formatThousands(this.props.stats[key] || '-');
-    }
-
-    static renderOptions(values) {
-        return values.map((opt, idx) => (
-            <option key={`opt${idx}`} value={opt}>
-                {opt}
-            </option>
-        ));
-    }
-
-    static renderLog(log, idx) {
-        return (
-            <div className="admin-logs" key={`logs${idx}`}>
-                <code>{log.timestamp}</code>
-                <code>
-                    {log.message}
-                    <br />
-                    {log.details}
-                </code>
+export default function Admin() {
+    return (
+        <>
+            {/* TODO create admin nav content here */}
+            <Navigation type="admin" />
+            <div className="wrapper ptm">
+                <Switch>
+                    <Route path="/admin" exact component={Control} />
+                    <Route path="/admin/logs" component={Logs} />
+                    <Route path="/admin/visits" component={Visits} />
+                    <Route render={() => <Error code={404} />} />
+                </Switch>
             </div>
-        );
-    }
-
-    static renderVisit(visit, idx) {
-        return (
-            <div className="admin-logs" key={`visits${idx}`}>
-                <code>
-                    {visit.timestamp}
-                    <br />
-                    {visit.visits}
-                </code>
-                <code>
-                    {visit.ip} / {visit.host}
-                    <br />
-                    {visit.agent}
-                    <br />
-                    {visit.page} {visit.referer}
-                </code>
-            </div>
-        );
-    }
-
-    render() {
-        return (
-            <>
-                <div className="wrapper admin-stats text-center text-small">
-                    <div>
-                        Movies: {this.formatStat('movie')}
-                        <br />
-                        TV: {this.formatStat('tv')}
-                    </div>
-                    <div>
-                        Seasons: {this.formatStat('season')}
-                        <br />
-                        Episodes: {this.formatStat('episode')}
-                    </div>
-                    <div>
-                        Airlines: {this.formatStat('airline')}
-                        <br />
-                        Locations: {this.formatStat('location')}
-                    </div>
-                    <div>
-                        HA Events: {this.formatStat('hass')}
-                        <br />
-                        Logs: {this.formatStat('log')}
-                    </div>
-                </div>
-                <hr />
-                <div className="wrapper admin-list text text-left">
-                    <span className="truncate">Import missing media poster images</span>
-                    <span />
-                    <button
-                        className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updatePosters())}>
-                        Run
-                    </button>
-                    <span className="truncate">Update number of stored movies</span>
-                    <select className="input-small" defaultValue={50} ref={this.updateMovieCount}>
-                        {Admin.renderOptions([10, 50, 100, 250, 500])}
-                    </select>
-                    <button
-                        className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updateMedia('movie', this.updateMovieCount.current.value))}>
-                        Run
-                    </button>
-                    <span className="truncate">Update number of stored tv-shows</span>
-                    <select className="input-small" defaultValue={10} ref={this.updateTvCount}>
-                        {Admin.renderOptions([5, 10, 50, 100])}
-                    </select>
-                    <button
-                        className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updateMedia('tv', this.updateTvCount.current.value))}>
-                        Run
-                    </button>
-                </div>
-                <hr />
-                <div className="wrapper admin-list text text-left">
-                    <span className="truncate">Update IATA airline entries</span>
-                    <span />
-                    <button
-                        className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updateIata('airlines'))}>
-                        Run
-                    </button>
-                    <span className="truncate">Update IATA location entries</span>
-                    <span />
-                    <button
-                        className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updateIata('locations'))}>
-                        Run
-                    </button>
-                </div>
-                <hr />
-                <div className="wrapper admin-list text text-left">
-                    <span className="truncate">Clear all log messages</span>
-                    <span />
-                    <button className="button-default button-default-small" onClick={() => this.props.dispatch(adminActions.clearLogs())}>
-                        Clear
-                    </button>
-                    <span className="truncate">Show number of log messages</span>
-                    <select className="input-small" defaultValue={25} ref={this.logCount}>
-                        {Admin.renderOptions([10, 25, 50, 100, 250, 500])}
-                    </select>
-                    <button
-                        className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.getLogs(this.logCount.current.value))}>
-                        Load
-                    </button>
-                </div>
-                <hr />
-                <div className="wrapper">
-                    {this.props.logs.length ? this.props.logs.map(Admin.renderLog) : <span>Server log is empty...</span>}
-                </div>
-                <hr />
-                <div className="wrapper">
-                    {this.props.visits.length ? this.props.visits.map(Admin.renderVisit) : <span>No tracking data...</span>}
-                </div>
-            </>
-        );
-    }
+        </>
+    );
 }
-
-Admin.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    logs: PropTypes.array.isRequired,
-    visits: PropTypes.array.isRequired,
-    stats: PropTypes.object.isRequired,
-};
-
-export default connect(state => ({ ...state.admin }))(Admin);

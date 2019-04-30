@@ -7,21 +7,31 @@ import baseActions from './base.js';
 
 const actions = {};
 
-actions.setData = makeAction('ADMIN/SET_DATA', (state, { payload }) => Object.assign({}, state, payload));
+actions.setStats = makeAction('ADMIN/SET_STATS', 'stats');
+
+actions.setVisits = makeAction('ADMIN/SET_VISITS', 'visits');
 
 actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
 
-actions.stats = () => dispatch => {
+actions.getStats = () => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'db', action: 'stats' })
-            .then(response => dispatch(actions.setData(response)))
-            .catch(() => dispatch(baseActions.showToast('Could not fetch admin data...')));
+            .then(response => dispatch(actions.setStats(response || {})))
+            .catch(() => dispatch(baseActions.showToast('Could not fetch stats...')));
+    }
+};
+
+actions.getVisits = () => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'db', action: 'visits' })
+            .then(response => dispatch(actions.setVisits(response || [])))
+            .catch(() => dispatch(baseActions.showToast('Could not fetch visiting data...')));
     }
 };
 
 actions.getLogs = count => dispatch => {
     if (auth.loggedIn()) {
-        post({ service: 'db', action: 'log', count })
+        post({ service: 'db', action: 'logs', count })
             .then(response => dispatch(actions.setLogs(response || [])))
             .catch(() => dispatch(baseActions.showToast('Could not fetch log data...')));
     }
