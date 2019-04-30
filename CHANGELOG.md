@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.9.2] - 2019-04-30
+### Added
+- Tracking of page views / visits
+- Administration view for visits
+- Navigation sub menu for administration
+
+### Changed
+- Separate administration views
+- Include referrer in auth query
+- Extract sub menu data from nav component
+- Upgrade dependencies
+
 ## [2.9.1] - 2019-03-10
 ### Added
 - General DB stats in admin view
