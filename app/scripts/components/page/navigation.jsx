@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 import actions from '../../actions/base.js';
 
-function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
+function Navigation({ type, data, isLoggedIn, showMenu, dispatch }) {
     const menu = [
         { text: 'Home', path: '/', exact: true },
         { text: 'About', path: '/about' },
@@ -15,20 +15,6 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
         { text: 'Admin', path: '/admin', hide: !isLoggedIn },
         { text: 'Logout', path: '/logout', hide: !isLoggedIn },
         { text: 'Login', path: '/login', hide: isLoggedIn },
-    ];
-
-    const media = [
-        { text: 'Movies', path: '/media/movie' },
-        { text: 'TV-Shows', path: '/media/tv' },
-        { text: 'Watchlist', path: '/media/watchlist' },
-        { text: 'Search', path: '/media/search' },
-    ];
-
-    const admin = [
-        { text: 'Logs', path: '/admin/logs' },
-        { text: 'Visits', path: '/admin/visits' },
-        { text: 'Notes', path: '/admin/notes' },
-        { text: 'Todo', path: '/admin/todo' },
     ];
 
     const createLink = (item, idx) =>
@@ -40,12 +26,6 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
             </li>
         );
 
-    const subMenu = items => (
-        <nav className="pvl">
-            <ul className="no-select menu menu-simple menu-sub">{items.map(createLink)}</ul>
-        </nav>
-    );
-
     switch (type) {
         case 'simple':
             return (
@@ -53,10 +33,12 @@ function Navigation({ type, isLoggedIn, showMenu, dispatch }) {
                     <ul className="no-select menu menu-simple">{menu.map(createLink)}</ul>
                 </nav>
             );
-        case 'media':
-            return subMenu(media);
-        case 'admin':
-            return subMenu(admin);
+        case 'sub':
+            return (
+                <nav className="pvl">
+                    <ul className="no-select menu menu-simple menu-sub">{data.map(createLink)}</ul>
+                </nav>
+            );
         case 'full':
         default:
             return (
@@ -78,6 +60,7 @@ Navigation.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     showMenu: PropTypes.bool.isRequired,
     type: PropTypes.string,
+    data: PropTypes.array,
 };
 
 export default withRouter(

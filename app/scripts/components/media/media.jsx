@@ -9,10 +9,17 @@ import Stats from './stats.jsx';
 const Search = React.lazy(() => import('./search.jsx'));
 const MediaList = React.lazy(() => import('./mediaList.jsx'));
 
+const menu = [
+    { text: 'Movies', path: '/media/movie' },
+    { text: 'TV-Shows', path: '/media/tv' },
+    { text: 'Watchlist', path: '/media/watchlist' },
+    { text: 'Search', path: '/media/search' },
+];
+
 export default function Media() {
     return (
         <>
-            <Navigation type="media" />
+            <Navigation type="sub" data={menu} />
             <div className="wrapper ptm">
                 <Switch>
                     <Route path="/media" exact component={Stats} />

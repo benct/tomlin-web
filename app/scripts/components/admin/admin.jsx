@@ -7,11 +7,17 @@ import Control from './control.jsx';
 import Logs from './logs.jsx';
 import Visits from './visits.jsx';
 
+const menu = [
+    { text: 'Logs', path: '/admin/logs' },
+    { text: 'Visits', path: '/admin/visits' },
+    { text: 'Notes', path: '/admin/notes' },
+    { text: 'Todo', path: '/admin/todo' },
+];
+
 export default function Admin() {
     return (
         <>
-            {/* TODO create admin nav content here */}
-            <Navigation type="admin" />
+            <Navigation type="sub" data={menu} />
             <div className="wrapper ptm">
                 <Switch>
                     <Route path="/admin" exact component={Control} />
