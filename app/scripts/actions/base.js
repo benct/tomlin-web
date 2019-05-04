@@ -37,18 +37,15 @@ actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 actions.getHomeState = () => dispatch =>
     _get({ service: 'hass', action: 'state' }).then(response => dispatch(actions.setHomeState(response)));
 
-actions.setLinkData = makeAction('CONTENT/SET_LINKS', 'links');
-actions.setNoteData = makeAction('CONTENT/SET_NOTES', 'notes');
+actions.setContent = makeAction('CONTENT/SET_DATA', (state, { payload }) => Object.assign({}, state, { [payload.field]: payload }));
 
-actions.loadContent = ({ type, file }) => dispatch => {
-    const action = type === 'links' ? actions.setLinkData : actions.setNoteData;
-
-    dispatch(action({ content: null, loading: true }));
+actions.loadContent = ({ field, file }) => dispatch => {
+    dispatch(actions.setContent({ field, content: null, loading: true }));
 
     fetchFile(`/assets/content/${file}`)
-        .then(data => dispatch(action({ content: data, loading: false })))
+        .then(data => dispatch(actions.setContent({ field, content: data, loading: false })))
         .catch(() => {
-            dispatch(action({ content: null, loading: false }));
+            dispatch(actions.setContent({ field, content: null, loading: false }));
             dispatch(actions.showToast('Could not load file...'));
         });
 };

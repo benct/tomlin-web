@@ -17,7 +17,6 @@ import Login from './login.jsx';
 import Logout from './logout.jsx';
 
 const Links = React.lazy(() => import('./data/links.jsx'));
-const Notes = React.lazy(() => import('./data/notes.jsx'));
 const Files = React.lazy(() => import('./files/files.jsx'));
 const Media = React.lazy(() => import('./media/media.jsx'));
 const Admin = React.lazy(() => import('./admin/admin.jsx'));
@@ -56,8 +55,6 @@ class App extends React.Component {
                                 render={() => (
                                     <Suspense>
                                         <Links file="finn.json" />
-                                        <hr />
-                                        <Notes file="finn.txt" />
                                     </Suspense>
                                 )}
                             />

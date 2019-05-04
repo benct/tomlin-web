@@ -34,10 +34,6 @@ export default {
         content: null,
         loading: false,
     },
-    notes: {
-        content: null,
-        loading: false,
-    },
 
     media: {
         movie: null,

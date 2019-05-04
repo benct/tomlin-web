@@ -6,7 +6,7 @@ import actions from '../../actions/base.js';
 
 class Links extends React.PureComponent {
     componentDidMount() {
-        this.props.dispatch(actions.loadContent({ type: 'links', file: this.props.file }));
+        this.props.dispatch(actions.loadContent({ field: 'links', file: this.props.file }));
     }
 
     static renderLink(link, idx, icon) {
