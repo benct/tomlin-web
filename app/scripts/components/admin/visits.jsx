@@ -17,7 +17,7 @@ class Visits extends React.PureComponent {
                 <code>
                     {visit.timestamp}
                     <br />
-                    {visit.visits}
+                    <span className="strong">{visit.visits}</span>
                 </code>
                 <code>
                     {visit.ip} / {visit.host}
