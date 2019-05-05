@@ -13,6 +13,8 @@ actions.setVisits = makeAction('ADMIN/SET_VISITS', 'visits');
 
 actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
 
+actions.setNotes = makeAction('ADMIN/SET_NOTES', 'notes');
+
 actions.getStats = () => dispatch => {
     if (auth.loggedIn()) {
         post({ service: 'db', action: 'stats' })
@@ -66,6 +68,36 @@ actions.updateIata = type => dispatch => {
         post({ service: 'iata', action: type })
             .then(response => dispatch(baseActions.showToast(`Successfully updated ${response} entries!`)))
             .catch(() => dispatch(baseActions.showToast('Failed to update IATA entries...')));
+    }
+};
+
+actions.getNotes = () => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'notes', action: 'get' })
+            .then(response => dispatch(actions.setNotes(response || [])))
+            .catch(() => dispatch(baseActions.showToast('Could not fetch notes...')));
+    }
+};
+
+actions.saveNote = (id, title, content) => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'notes', action: 'store', id, title, content })
+            .then(() => {
+                dispatch(baseActions.showToast('Successfully saved note!'));
+                dispatch(actions.getNotes());
+            })
+            .catch(() => dispatch(baseActions.showToast('Could not store note...')));
+    }
+};
+
+actions.deleteNote = id => dispatch => {
+    if (auth.loggedIn()) {
+        post({ service: 'notes', action: 'delete', id })
+            .then(() => {
+                dispatch(baseActions.showToast('Successfully deleted note!'));
+                dispatch(actions.getNotes());
+            })
+            .catch(() => dispatch(baseActions.showToast('Could not delete note...')));
     }
 };
 

@@ -51,9 +51,10 @@ export default {
     },
 
     admin: {
+        stats: {},
         logs: [],
         visits: [],
-        stats: {},
+        notes: [],
     },
 
     pagination: {

@@ -12,20 +12,35 @@
 
 .admin-logs {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 170px auto;
 }
 
-.admin-logs code {
+.admin-logs code,
+.admin-logs pre {
     box-sizing: border-box;
     border-right: none;
     padding: 5px 10px;
-    height: 100%;
-    width: 100%;
 }
 
-.admin-logs code:nth-child(1) {
+.admin-logs code:nth-child(1),
+.admin-logs pre:nth-child(1) {
     border-left: none;
     padding-left: 0;
+}
+
+.admin-overlay {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr min-content;
+    row-gap: 5px;
+    max-height: 100%;
+    box-sizing: border-box;
+}
+
+.admin-overlay input,
+.admin-overlay textarea {
+    text-transform: initial;
+    font-size: initial;
 }
 
 @media (max-width: 600px) {
@@ -34,13 +49,15 @@
     }
     .admin-logs {
         grid-template-columns: auto;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
     .admin-logs:last-child {
         margin-bottom: 0;
     }
-    .admin-logs code {
+    .admin-logs code,
+    .admin-logs pre {
         padding: 0;
+        margin-bottom: 5px;
         border: none;
     }
 }
