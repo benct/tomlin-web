@@ -229,7 +229,7 @@ export default class MediaModal extends React.PureComponent {
                     <button className="button-blank" data-tooltip="Seen" onClick={this.props.setSeen}>
                         <ViewIcon width={24} height={24} seen={!!this.props.data.seen} />
                     </button>
-                    <button className="button-icon button-text-icon float-right text-small man" onClick={this.props.close}>
+                    <button className="button-text float-right text-small man" onClick={this.props.close}>
                         Close
                     </button>
                 </div>

@@ -83,6 +83,7 @@ input[type=file] + svg {
     letter-spacing: inherit;
 }
 
+.button-text,
 .button-icon {
     transition: all 0.4s ease-in-out;
     background: transparent no-repeat;
@@ -97,6 +98,7 @@ input[type=file] + svg {
     padding: 2px;
 }
 
+.button-text:hover,
 .button-icon:hover {
     color: #009fd4;
 }
@@ -120,6 +122,7 @@ input[type=file] + svg {
     opacity: 0.5;
 }
 
+.button-text,
 .button-text-icon {
     width: auto;
 }
