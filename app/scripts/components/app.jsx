@@ -42,7 +42,7 @@ class App extends React.Component {
                     <main>
                         {this.props.loading ? (
                             <div className="overlay overlay-loading">
-                                <div className="loading-container shadow">
+                                <div className="overlay-container shadow">
                                     <div className="pac-man" />
                                 </div>
                             </div>

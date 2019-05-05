@@ -58,7 +58,7 @@ class MediaList extends React.Component {
             <MediaModal
                 type={item.type || this.props.type}
                 data={item}
-                hide={this.props.hide}
+                close={this.props.hide}
                 update={this.props.update.bind(this, item.type, item.id)}
                 remove={this.props.remove.bind(this, item.type, item.id)}
                 setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}

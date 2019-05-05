@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting.js';
 
 import { StarIcon, ViewIcon } from '../page/icons.jsx';
+import Modal from '../page/modal.jsx';
 import Season from './season.jsx';
 
 export default class MediaModal extends React.PureComponent {
@@ -108,7 +109,7 @@ export default class MediaModal extends React.PureComponent {
                     to={`/media/search/${this.props.type}/similar/1/${id}`}
                     className="mlm pointer"
                     data-tooltip="Find similar"
-                    onClick={this.props.hide}>
+                    onClick={this.props.close}>
                     <img
                         className="valign-middle"
                         src={require(`../../../images/icon/similar.svg`)}
@@ -121,7 +122,7 @@ export default class MediaModal extends React.PureComponent {
                     to={`/media/search/${this.props.type}/recommended/1/${id}`}
                     className="mlm pointer"
                     data-tooltip="Recommendations"
-                    onClick={this.props.hide}>
+                    onClick={this.props.close}>
                     <img
                         className="valign-middle"
                         src={require(`../../../images/icon/recommend.svg`)}
@@ -207,34 +208,32 @@ export default class MediaModal extends React.PureComponent {
 
     render() {
         return (
-            <div className="overlay" onClick={event => (event.target === event.currentTarget ? this.props.hide() : null)} role="dialog">
-                <div className="wrapper media-overlay shadow">
-                    <div className="media-overlay-title pbm">
-                        <span className="color-primary strong">
-                            {this.props.data.title} ({formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)})
-                        </span>
-                        {this.renderSeasonButton()}
-                    </div>
-                    <div className="media-overlay-content">{this.state.showSeasons ? this.renderSeasons() : this.renderContent()}</div>
-                    <div className="media-overlay-buttons ptm">
-                        <button className="button-blank mrl" data-tooltip="Remove" onClick={this.props.remove}>
-                            <img src={require(`../../../images/icon/remove.svg`)} alt="Remove" width={22} height={22} />
-                        </button>
-                        <button className="button-blank mrl" data-tooltip="Update" onClick={this.props.update}>
-                            <img src={require(`../../../images/icon/refresh.svg`)} alt="Update" width={22} height={22} />
-                        </button>
-                        <button className="button-blank mrl" data-tooltip="Favourite" onClick={this.props.setFavourite}>
-                            <StarIcon width={24} height={24} favourite={!!this.props.data.favourite} />
-                        </button>
-                        <button className="button-blank" data-tooltip="Seen" onClick={this.props.setSeen}>
-                            <ViewIcon width={24} height={24} seen={!!this.props.data.seen} />
-                        </button>
-                        <button className="button-icon button-text-icon float-right text-small man" onClick={this.props.hide}>
-                            Close
-                        </button>
-                    </div>
+            <Modal close={this.props.close} className="media-overlay">
+                <div className="media-overlay-title pbm">
+                    <span className="color-primary strong">
+                        {this.props.data.title} ({formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)})
+                    </span>
+                    {this.renderSeasonButton()}
                 </div>
-            </div>
+                <div className="media-overlay-content">{this.state.showSeasons ? this.renderSeasons() : this.renderContent()}</div>
+                <div className="media-overlay-buttons ptm">
+                    <button className="button-blank mrl" data-tooltip="Remove" onClick={this.props.remove}>
+                        <img src={require(`../../../images/icon/remove.svg`)} alt="Remove" width={22} height={22} />
+                    </button>
+                    <button className="button-blank mrl" data-tooltip="Update" onClick={this.props.update}>
+                        <img src={require(`../../../images/icon/refresh.svg`)} alt="Update" width={22} height={22} />
+                    </button>
+                    <button className="button-blank mrl" data-tooltip="Favourite" onClick={this.props.setFavourite}>
+                        <StarIcon width={24} height={24} favourite={!!this.props.data.favourite} />
+                    </button>
+                    <button className="button-blank" data-tooltip="Seen" onClick={this.props.setSeen}>
+                        <ViewIcon width={24} height={24} seen={!!this.props.data.seen} />
+                    </button>
+                    <button className="button-icon button-text-icon float-right text-small man" onClick={this.props.close}>
+                        Close
+                    </button>
+                </div>
+            </Modal>
         );
     }
 }
@@ -242,7 +241,7 @@ export default class MediaModal extends React.PureComponent {
 MediaModal.propTypes = {
     type: PropTypes.oneOf(['movie', 'tv']).isRequired,
     data: PropTypes.object.isRequired,
-    hide: PropTypes.func.isRequired,
+    close: PropTypes.func.isRequired,
     update: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
     setSeen: PropTypes.func.isRequired,
