@@ -13,6 +13,9 @@ class Files extends React.Component {
     constructor(props) {
         super(props);
 
+        this.fileInput = React.createRef();
+        this.fileLabel = React.createRef();
+
         this.handleKeyboard = this.handleKeyboard.bind(this);
     }
 
@@ -69,7 +72,7 @@ class Files extends React.Component {
     }
 
     handleUpload() {
-        const files = this.fileInput.files;
+        const files = this.fileInput.current.files;
         if (!files.length) {
             return;
         }
@@ -83,17 +86,17 @@ class Files extends React.Component {
 
         this.props.dispatch(actions.upload(formData));
 
-        this.fileInput.value = null;
-        this.fileLabel.innerHTML = 'Choose a file';
+        this.fileInput.current.value = null;
+        this.fileLabel.current.innerHTML = 'Choose a file';
     }
 
     handleFileChange(event) {
-        if (this.fileInput && this.fileInput.files.length > 1) {
-            this.fileLabel.innerHTML = `${this.fileInput.files.length} files selected`;
+        if (this.fileInput.current && this.fileInput.current.files.length > 1) {
+            this.fileLabel.current.innerHTML = `${this.fileInput.current.files.length} files selected`;
         } else if (event.target.value) {
-            this.fileLabel.innerHTML = event.target.value.split('\\').pop();
+            this.fileLabel.current.innerHTML = event.target.value.split('\\').pop();
         } else {
-            this.fileLabel.innerHTML = 'Choose a file';
+            this.fileLabel.current.innerHTML = 'Choose a file';
         }
     }
 
@@ -147,12 +150,12 @@ class Files extends React.Component {
                             id="file"
                             aria-label="Add files"
                             onChange={this.handleFileChange.bind(this)}
-                            ref={input => (this.fileInput = input)}
+                            ref={this.fileInput}
                             disabled={this.props.uploading}
                             multiple
                         />
                         <img src={require(`../../../images/icon/upload.svg`)} alt="Upload" />
-                        <span className="mlm" ref={label => (this.fileLabel = label)}>
+                        <span className="mlm" ref={this.fileLabel}>
                             Choose a file
                         </span>
                     </label>

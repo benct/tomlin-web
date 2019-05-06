@@ -7,6 +7,10 @@ import auth from '../util/auth.js';
 export default class Login extends React.PureComponent {
     constructor(props) {
         super(props);
+
+        this.username = React.createRef();
+        this.password = React.createRef();
+
         this.state = {
             redirectToReferrer: false,
             error: false,
@@ -16,7 +20,7 @@ export default class Login extends React.PureComponent {
     handleSubmit(event) {
         event.preventDefault();
 
-        auth.login(this.username.value, this.password.value, loggedIn =>
+        auth.login(this.username.current.value, this.password.current.value, loggedIn =>
             this.setState({
                 redirectToReferrer: loggedIn,
                 error: !loggedIn,
@@ -37,8 +41,8 @@ export default class Login extends React.PureComponent {
                     <div className="mbl">Fill out the form below to log in.</div>
                 )}
                 <form className="login" onSubmit={this.handleSubmit.bind(this)}>
-                    <input type="email" ref={it => (this.username = it)} placeholder="e-mail" aria-label="E-mail" autoComplete="off" />
-                    <input type="password" ref={it => (this.password = it)} placeholder="********" aria-label="Password" />
+                    <input type="email" ref={this.username} placeholder="e-mail" aria-label="E-mail" autoComplete="off" />
+                    <input type="password" ref={this.password} placeholder="********" aria-label="Password" />
                     <input type="submit" value="login" aria-label="Login" />
                     {this.state.error && <p className="text error">Incorrect username or password...</p>}
                 </form>
