@@ -14,17 +14,21 @@ export default class Login extends React.PureComponent {
         this.state = {
             redirectToReferrer: false,
             error: false,
+            loading: false,
         };
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
-        auth.login(this.username.current.value, this.password.current.value, loggedIn =>
-            this.setState({
-                redirectToReferrer: loggedIn,
-                error: !loggedIn,
-            })
+        this.setState({ loading: true }, () =>
+            auth.login(this.username.current.value, this.password.current.value, loggedIn =>
+                this.setState({
+                    redirectToReferrer: loggedIn,
+                    error: !loggedIn,
+                    loading: false,
+                })
+            )
         );
     }
 
@@ -45,6 +49,7 @@ export default class Login extends React.PureComponent {
                     <input type="password" ref={this.password} placeholder="********" aria-label="Password" />
                     <input type="submit" value="login" aria-label="Login" />
                     {this.state.error && <p className="text error">Incorrect username or password...</p>}
+                    {this.state.loading && <p className="text">Logging in...</p>}
                 </form>
             </div>
         );
