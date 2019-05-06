@@ -74,7 +74,7 @@ class App extends React.Component {
                     <footer>
                         <Social circle={this.props.circleIcons} />
                         <div className="text color-light mtl">
-                            <span className="pointer no-select" onClick={this.props.toggleIcons}>
+                            <span className="pointer no-select" onClick={this.props.toggleIcons} role="button" tabIndex="-1">
                                 Ben Tomlin © 2019
                             </span>
                         </div>
