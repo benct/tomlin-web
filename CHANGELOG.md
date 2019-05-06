@@ -1,6 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.9.3] - 2019-05-06
+### Added
+- Administration notes component
+- CRUD functionality for notes
+
+### Changed
+- Enable React strict mode
+- Move file handling under administration
+- Refactor common modal component
+- Refactor file loading actions
+- Upgrade dependencies
+
+### Removed
+- Simple file note component
+
 ## [2.9.2] - 2019-04-30
 ### Added
 - Tracking of page views / visits
