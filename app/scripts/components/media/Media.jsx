@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import PrivateRoute from '../route/private.jsx';
-import Navigation from '../page/navigation.jsx';
-import Error from '../page/error.jsx';
-import Stats from './stats.jsx';
+import PrivateRoute from '../route/Private.jsx';
+import Navigation from '../page/Navigation.jsx';
+import Error from '../page/Error.jsx';
+import Stats from './MediaStats.jsx';
 
-const Search = React.lazy(() => import('./search.jsx'));
-const MediaList = React.lazy(() => import('./mediaList.jsx'));
+const Search = React.lazy(() => import('./MediaSearch.jsx'));
+const MediaList = React.lazy(() => import('./MediaList.jsx'));
 
 const menu = [
     { text: 'Movies', path: '/media/movie' },

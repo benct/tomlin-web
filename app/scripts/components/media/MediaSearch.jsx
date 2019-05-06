@@ -7,10 +7,10 @@ import debounce from '../../util/debounce.js';
 import mediaActions from '../../actions/media.js';
 import paginationActions from '../../actions/pagination.js';
 
-import SearchItem from './searchItem.jsx';
-import Pagination from '../page/pagination.jsx';
+import Pagination from '../page/Pagination.jsx';
+import MediaSearchItem from './MediaSearchItem.jsx';
 
-class Search extends React.Component {
+class MediaSearch extends React.Component {
     componentDidMount() {
         if (this.props.action && this.props.type) {
             this.props.get();
@@ -41,7 +41,7 @@ class Search extends React.Component {
 
     renderItem(data, idx) {
         return (
-            <SearchItem
+            <MediaSearchItem
                 title={data.title ? data.title : data.name}
                 originalTitle={data.original_title ? data.original_title : data.original_name}
                 poster={data.poster_path}
@@ -88,7 +88,7 @@ class Search extends React.Component {
     }
 }
 
-Search.propTypes = {
+MediaSearch.propTypes = {
     data: PropTypes.array.isRequired,
     existing: PropTypes.array.isRequired,
     type: PropTypes.string,
@@ -125,4 +125,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Search);
+)(MediaSearch);

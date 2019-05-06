@@ -4,11 +4,11 @@ import ISO6391 from 'iso-639-1';
 
 import { formatDate } from '../../util/formatting.js';
 
-import { PlusIcon } from '../page/icons.jsx';
+import { PlusIcon } from '../page/Icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster_small.png');
 
-export default class SearchItem extends React.PureComponent {
+export default class MediaSearchItem extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -53,7 +53,7 @@ export default class SearchItem extends React.PureComponent {
                     {this.props.title !== this.props.originalTitle ? (
                         <div className="text-small italic">Orig: {this.props.originalTitle}</div>
                     ) : null}
-                    <span className={SearchItem.validLanguage(this.props.language) ? 'color-success' : 'color-warn'}>
+                    <span className={MediaSearchItem.validLanguage(this.props.language) ? 'color-success' : 'color-warn'}>
                         {ISO6391.getName(this.props.language)}
                     </span>
                     {this.props.rating && this.props.votes > 3 ? (
@@ -104,7 +104,7 @@ export default class SearchItem extends React.PureComponent {
         );
     }
 }
-SearchItem.propTypes = {
+MediaSearchItem.propTypes = {
     title: PropTypes.string.isRequired,
     originalTitle: PropTypes.string.isRequired,
     overview: PropTypes.string.isRequired,

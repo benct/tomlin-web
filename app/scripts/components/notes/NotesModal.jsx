@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import adminActions from '../../actions/admin.js';
 
-import { PlusIcon } from '../page/icons.jsx';
-import Modal from '../page/modal.jsx';
+import { PlusIcon } from '../page/Icons.jsx';
+import Modal from '../page/Modal.jsx';
 
 class NotesModal extends React.PureComponent {
     constructor(props) {

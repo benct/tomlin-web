@@ -6,19 +6,19 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import auth from '../util/auth.js';
 import actions from '../actions/base.js';
 
-import PrivateRoute from './route/private.jsx';
-import Suspense from './route/suspense.jsx';
-import Navigation from './page/navigation.jsx';
-import Social from './page/social.jsx';
-import Error from './page/error.jsx';
-import About from './page/about.jsx';
-import Home from './home/home.jsx';
-import Login from './login.jsx';
-import Logout from './logout.jsx';
+import PrivateRoute from './route/Private.jsx';
+import Suspense from './route/Suspense.jsx';
+import Navigation from './page/Navigation.jsx';
+import Social from './page/Social.jsx';
+import Error from './page/Error.jsx';
+import About from './page/About.jsx';
+import Home from './home/Home.jsx';
+import Login from './Login.jsx';
+import Logout from './Logout.jsx';
 
-const Links = React.lazy(() => import('./data/links.jsx'));
-const Media = React.lazy(() => import('./media/media.jsx'));
-const Admin = React.lazy(() => import('./admin/admin.jsx'));
+const Links = React.lazy(() => import('./data/Links.jsx'));
+const Media = React.lazy(() => import('./media/Media.jsx'));
+const Admin = React.lazy(() => import('./admin/Admin.jsx'));
 
 class App extends React.Component {
     componentDidMount() {

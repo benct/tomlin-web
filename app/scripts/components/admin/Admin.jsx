@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Suspense from '../route/suspense.jsx';
-import Navigation from '../page/navigation.jsx';
-import Error from '../page/error.jsx';
-import Control from './control.jsx';
-import Logs from './logs.jsx';
-import Visits from './visits.jsx';
+import Suspense from '../route/Suspense.jsx';
+import Navigation from '../page/Navigation.jsx';
+import Error from '../page/Error.jsx';
+import Control from './Control.jsx';
+import Logs from './Logs.jsx';
+import Visits from './Visits.jsx';
 
-const Notes = React.lazy(() => import('../notes/notes.jsx'));
-const Files = React.lazy(() => import('../files/files.jsx'));
+const Notes = React.lazy(() => import('../notes/Notes.jsx'));
+const Files = React.lazy(() => import('../files/Files.jsx'));
 
 const menu = [
     { text: 'Logs', path: '/admin/logs' },

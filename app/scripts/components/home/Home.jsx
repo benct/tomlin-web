@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Countdown from './countdown.jsx';
-import State from './state.jsx';
-import Quote from './quote.jsx';
+import Countdown from './Countdown.jsx';
+import State from './State.jsx';
+import Quote from './Quote.jsx';
 
 export default function Home() {
     return (

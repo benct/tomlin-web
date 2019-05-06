@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import mediaActions from '../../actions/media.js';
 import { formatDate, formatGradientHSL } from '../../util/formatting.js';
 
-import { ViewIcon } from '../page/icons.jsx';
+import { ViewIcon } from '../page/Icons.jsx';
 
-class Season extends React.PureComponent {
+class MediaSeason extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -90,9 +90,9 @@ class Season extends React.PureComponent {
     }
 }
 
-Season.propTypes = {
+MediaSeason.propTypes = {
     data: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
 };
 
-export default connect()(Season);
+export default connect()(MediaSeason);

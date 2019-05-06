@@ -4,7 +4,7 @@ import { Redirect, Route } from 'react-router-dom';
 
 import auth from '../../util/auth.js';
 
-import Suspense from './suspense.jsx';
+import Suspense from './Suspense.jsx';
 
 export default function PrivateRoute({ path, component: Component }) {
     return (

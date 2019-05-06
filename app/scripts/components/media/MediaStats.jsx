@@ -15,7 +15,7 @@ import 'react-vis/dist/style.css';
 
 import mediaActions from '../../actions/media.js';
 
-class Stats extends React.PureComponent {
+class MediaStats extends React.PureComponent {
     componentDidMount() {
         if (!this.props.stats.movie.total) {
             this.props.dispatch(mediaActions.stats());
@@ -94,23 +94,23 @@ class Stats extends React.PureComponent {
                 <div className="media-stats text-center">
                     <div>
                         <div className="border-bottom pbs mam">Tracked Movies</div>
-                        {Stats.renderStats(this.props.stats.movie)}
-                        {Stats.renderLineChart(
+                        {MediaStats.renderStats(this.props.stats.movie)}
+                        {MediaStats.renderLineChart(
                             `Rating (avg: ${this.props.stats.movie.rating || '-'})`,
                             '#006080',
-                            Stats.mapRatings(this.props.stats.movie.ratings)
+                            MediaStats.mapRatings(this.props.stats.movie.ratings)
                         )}
-                        {Stats.renderBarChart('Release (decade)', '#006080', Stats.mapYears(this.props.stats.movie.years))}
+                        {MediaStats.renderBarChart('Release (decade)', '#006080', MediaStats.mapYears(this.props.stats.movie.years))}
                     </div>
                     <div>
                         <div className="border-bottom pbs mam">Tracked TV-Shows</div>
-                        {Stats.renderStats(this.props.stats.tv)}
-                        {Stats.renderLineChart(
+                        {MediaStats.renderStats(this.props.stats.tv)}
+                        {MediaStats.renderLineChart(
                             `Rating (avg: ${this.props.stats.tv.rating || '-'})`,
                             '#008060',
-                            Stats.mapRatings(this.props.stats.tv.ratings)
+                            MediaStats.mapRatings(this.props.stats.tv.ratings)
                         )}
-                        {Stats.renderBarChart('First aired (decade)', '#008060', Stats.mapYears(this.props.stats.tv.years))}
+                        {MediaStats.renderBarChart('First aired (decade)', '#008060', MediaStats.mapYears(this.props.stats.tv.years))}
                     </div>
                 </div>
             </>
@@ -118,7 +118,7 @@ class Stats extends React.PureComponent {
     }
 }
 
-Stats.propTypes = {
+MediaStats.propTypes = {
     dispatch: PropTypes.func.isRequired,
     stats: PropTypes.object.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
@@ -127,4 +127,4 @@ Stats.propTypes = {
 export default connect(state => ({
     stats: state.media.stats,
     isLoggedIn: state.isLoggedIn,
-}))(Stats);
+}))(MediaStats);

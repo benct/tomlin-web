@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions/files.js';
 
-import FileList from './filelist.jsx';
+import FileList from './FileList.jsx';
 
 const PARENT_DIR = '..';
 

@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting.js';
-import { StarIcon, ViewIcon } from '../page/icons.jsx';
+
+import { StarIcon, ViewIcon } from '../page/Icons.jsx';
 
 const defaultPoster = require('../../../images/media/poster.png');
 

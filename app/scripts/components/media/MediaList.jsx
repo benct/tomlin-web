@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import mediaActions from '../../actions/media.js';
 import paginationActions from '../../actions/pagination.js';
 
-import Pagination from '../page/pagination.jsx';
-import MediaModal from './mediaModal.jsx';
-import MediaItem from './mediaItem.jsx';
+import Pagination from '../page/Pagination.jsx';
+import MediaModal from './MediaModal.jsx';
+import MediaItem from './MediaItem.jsx';
 
 class MediaList extends React.Component {
     componentDidMount() {
