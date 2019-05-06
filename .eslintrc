@@ -12,7 +12,7 @@
   ],
   "settings": {
     "react": {
-      "version": "16.6"
+      "version": "16.8"
     }
   },
   "rules": {
@@ -20,6 +20,7 @@
     "jsx-a11y/click-events-have-key-events": 0,
     "prettier/prettier": "error"
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
