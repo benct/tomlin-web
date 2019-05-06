@@ -6,7 +6,7 @@ import Error from '../page/error.jsx';
 import Control from './control.jsx';
 import Logs from './logs.jsx';
 import Visits from './visits.jsx';
-import Notes from './notes.jsx';
+import Notes from '../notes/notes.jsx';
 
 const menu = [
     { text: 'Logs', path: '/admin/logs' },
