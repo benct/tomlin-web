@@ -11,8 +11,7 @@ function Navigation({ type, data, isLoggedIn, showMenu, dispatch }) {
         { text: 'Home', path: '/', exact: true },
         { text: 'About', path: '/about' },
         { text: 'Media', path: '/media' },
-        { text: 'Files', path: '/files' },
-        { text: 'Admin', path: '/admin', hide: !isLoggedIn },
+        { text: 'Admin', path: '/admin' },
         { text: 'Logout', path: '/logout', hide: !isLoggedIn },
         { text: 'Login', path: '/login', hide: isLoggedIn },
     ];

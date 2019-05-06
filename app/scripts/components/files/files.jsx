@@ -115,7 +115,7 @@ class Files extends React.Component {
 
     render() {
         return (
-            <div className="wrapper text-center">
+            <>
                 <div className="file-table-header">
                     <button
                         className="button-icon"
@@ -139,7 +139,7 @@ class Files extends React.Component {
                     handleRename={item => this.props.dispatch(actions.rename(item))}
                     handleDelete={item => this.props.dispatch(actions.delete(item))}
                 />
-                <div>
+                <div className="text-center">
                     <label htmlFor="file" className="color-primary pointer">
                         <input
                             type="file"
@@ -180,7 +180,7 @@ class Files extends React.Component {
                         )}
                     </div>
                 ) : null}
-            </div>
+            </>
         );
     }
 }

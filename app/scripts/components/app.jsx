@@ -17,7 +17,6 @@ import Login from './login.jsx';
 import Logout from './logout.jsx';
 
 const Links = React.lazy(() => import('./data/links.jsx'));
-const Files = React.lazy(() => import('./files/files.jsx'));
 const Media = React.lazy(() => import('./media/media.jsx'));
 const Admin = React.lazy(() => import('./admin/admin.jsx'));
 
@@ -68,7 +67,6 @@ class App extends React.Component {
                                     </Suspense>
                                 )}
                             />
-                            <PrivateRoute path="/files" component={Files} />
                             <PrivateRoute path="/admin" component={Admin} />
                             <Route render={() => <Error code={404} />} />
                         </Switch>
