@@ -22,20 +22,12 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
-                        plugins: ['@babel/plugin-syntax-dynamic-import'],
-                    },
-                },
+                loader: 'babel-loader',
             },
             {
                 test: /\.html$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'html-loader',
-                },
+                loader: 'html-loader',
             },
             {
                 test: /\.htaccess$/,
