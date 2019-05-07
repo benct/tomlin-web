@@ -1,0 +1,22 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "strict": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "noImplicitAny": true,
+    "target": "esnext",
+    "module": "esnext",
+    "jsx": "react"
+  },
+  "include": [
+    "./app/scripts/**/*"
+  ]
+}
