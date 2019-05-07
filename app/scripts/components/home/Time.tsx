@@ -1,9 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-export default class Time extends React.PureComponent {
-    constructor(props) {
+interface TimeProps {
+    locale: string;
+    timeZone: string;
+}
+
+interface TimeState {
+    time: string;
+}
+
+export default class Time extends React.PureComponent<TimeProps, TimeState> {
+    interval: number;
+
+    constructor(props: TimeProps) {
         super(props);
+
+        this.interval = 0;
 
         this.state = {
             time: new Date().toLocaleTimeString(props.locale, { timeZone: props.timeZone }),
@@ -27,8 +39,3 @@ export default class Time extends React.PureComponent {
         return <>{this.state.time}</>;
     }
 }
-
-Time.propTypes = {
-    locale: PropTypes.string.isRequired,
-    timeZone: PropTypes.string.isRequired,
-};

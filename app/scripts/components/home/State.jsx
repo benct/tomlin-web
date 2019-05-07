@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions/base.js';
 
-import Time from './time.jsx';
+import Time from './time.tsx';
 
 class State extends React.PureComponent {
     componentDidMount() {
