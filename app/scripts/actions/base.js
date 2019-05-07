@@ -19,7 +19,7 @@ actions.setLoading = makeAction('BASE/SET_LOADING', 'loading');
 actions.showToast = payload => dispatch => {
     dispatch(actions.setToast(payload));
 
-    setTimeout(() => dispatch(actions.setToast(null)), 3000);
+    window.setTimeout(() => dispatch(actions.setToast(null)), 3000);
 };
 
 actions.refreshQuote = makeAction('BASE/REFRESH_QUOTE', state =>

@@ -101,7 +101,7 @@ class Files extends React.Component {
     }
 
     forceDownload(item) {
-        setTimeout(() => window.open(item.href), 100);
+        window.setTimeout(() => window.open(item.href), 100);
     }
 
     previewFile(item) {

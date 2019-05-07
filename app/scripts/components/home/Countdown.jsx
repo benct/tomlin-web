@@ -19,11 +19,11 @@ export default class Countdown extends React.PureComponent {
 
     componentDidMount() {
         this.calculateCountdown();
-        this.interval = setInterval(this.calculateCountdown.bind(this), 1000);
+        this.interval = window.setInterval(this.calculateCountdown.bind(this), 1000);
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        window.clearInterval(this.interval);
     }
 
     static toDate(day, month) {

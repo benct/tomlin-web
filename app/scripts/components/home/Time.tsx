@@ -12,11 +12,11 @@ export default class Time extends React.PureComponent {
 
     componentDidMount() {
         this.tick();
-        this.interval = setInterval(this.tick.bind(this), 1000);
+        this.interval = window.setInterval(this.tick.bind(this), 1000);
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        window.clearInterval(this.interval);
     }
 
     tick() {

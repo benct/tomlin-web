@@ -8,7 +8,7 @@ class Logout extends React.PureComponent {
     componentDidMount() {
         auth.logout();
 
-        setTimeout(() => this.props.history.push('/'), 3000);
+        window.setTimeout(() => this.props.history.push('/'), 3000);
     }
 
     render() {

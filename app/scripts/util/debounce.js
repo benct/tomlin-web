@@ -1,8 +1,8 @@
 export default function debounce(callback, time) {
     let interval;
     return (...args) => {
-        clearTimeout(interval);
-        interval = setTimeout(() => {
+        window.clearTimeout(interval);
+        interval = window.setTimeout(() => {
             interval = null;
             callback(...args);
         }, time);
