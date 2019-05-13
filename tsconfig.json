@@ -12,9 +12,10 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "noImplicitAny": true,
+    "jsx": "react",
     "target": "esnext",
     "module": "esnext",
-    "jsx": "react"
+    "moduleResolution": "node"
   },
   "include": [
     "./app/scripts/**/*"
