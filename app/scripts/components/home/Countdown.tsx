@@ -1,10 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-export default class Countdown extends React.PureComponent {
-    constructor(props) {
+interface CountdownProps {
+    title: string;
+    day: number;
+    month: number;
+    year?: number;
+    hour?: number;
+    icon?: string;
+}
+
+interface CountdownState {
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+}
+
+export default class Countdown extends React.PureComponent<CountdownProps, CountdownState> {
+    interval: number;
+    countdownTo: Date;
+
+    constructor(props: CountdownProps) {
         super(props);
 
+        this.interval = 0;
         this.countdownTo = props.year
             ? new Date(props.year, props.month - 1, props.day, props.hour || 0)
             : Countdown.toDate(props.day, props.month - 1);
@@ -17,27 +36,27 @@ export default class Countdown extends React.PureComponent {
         };
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.calculateCountdown();
         this.interval = window.setInterval(this.calculateCountdown.bind(this), 1000);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         window.clearInterval(this.interval);
     }
 
-    static toDate(day, month) {
+    static toDate(day: number, month: number): Date {
         const now = new Date();
         const year = now.getFullYear() + (month > now.getMonth() || (month === now.getMonth() && day > now.getDate()) ? 0 : 1);
         return new Date(year, month, day);
     }
 
-    static timeComponent(x, v) {
+    static timeComponent(x: number, v: number): number {
         return Math.floor(x / v);
     }
 
-    calculateCountdown() {
-        const timestamp = (this.countdownTo - Date.now()) / 1000;
+    calculateCountdown(): void {
+        const timestamp = (this.countdownTo.getTime() - Date.now()) / 1000;
 
         this.setState({
             days: Countdown.timeComponent(timestamp, 24 * 60 * 60),
@@ -47,7 +66,7 @@ export default class Countdown extends React.PureComponent {
         });
     }
 
-    static renderTimeUnit(time, unit) {
+    static renderTimeUnit(time: number, unit: string): React.ReactElement {
         return (
             <li className="countdown-time-wrap">
                 <span className="countdown-time">{time}</span>
@@ -56,7 +75,7 @@ export default class Countdown extends React.PureComponent {
         );
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <div className="wrapper text-center color-primary">
                 <div className="countdown-title">
@@ -81,12 +100,3 @@ export default class Countdown extends React.PureComponent {
         );
     }
 }
-
-Countdown.propTypes = {
-    title: PropTypes.string.isRequired,
-    day: PropTypes.number.isRequired,
-    month: PropTypes.number.isRequired,
-    year: PropTypes.number,
-    hour: PropTypes.number,
-    icon: PropTypes.string,
-};

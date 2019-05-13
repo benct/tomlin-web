@@ -1,17 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import actions from '../../actions/base.js';
 
-import Time from './time.tsx';
+import { DefaultState, HomeState } from '../../interfaces';
+import Time from './time';
 
-class State extends React.PureComponent {
-    componentDidMount() {
+interface StateProps {
+    dispatch: Dispatch;
+}
+
+class State extends React.PureComponent<StateProps & HomeState> {
+    componentDidMount(): void {
         this.props.dispatch(actions.getHomeState());
     }
 
-    static renderState(id, value, text, unit = '°C') {
+    static renderState(id: string, value?: number, text?: string, unit: string = '°C'): React.ReactElement {
         return (
             <div className="home-state" data-tooltip={text}>
                 <div className="text-right">
@@ -25,7 +30,7 @@ class State extends React.PureComponent {
         );
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <div className="wrapper text-center no-select color-primary home-container">
                 <div className="home-header">
@@ -74,17 +79,10 @@ class State extends React.PureComponent {
     }
 }
 
-State.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    temperature: PropTypes.object.isRequired,
-    consumption: PropTypes.object.isRequired,
-    network: PropTypes.object.isRequired,
-    day: PropTypes.bool.isRequired,
-};
-
-export default connect(state => ({
-    temperature: state.home.temperature,
-    consumption: state.home.consumption,
-    network: state.home.network,
-    day: state.home.day,
-}))(State);
+export default connect(
+    (state: DefaultState): HomeState => ({
+        temperature: state.home.temperature,
+        consumption: state.home.consumption,
+        day: state.home.day,
+    })
+)(State);

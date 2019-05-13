@@ -12,7 +12,7 @@ import Navigation from './page/Navigation.jsx';
 import Social from './page/Social.jsx';
 import Error from './page/Error.jsx';
 import About from './page/About.jsx';
-import Home from './home/Home.jsx';
+import Home from './home/Home.tsx';
 import Login from './Login.jsx';
 import Logout from './Logout.jsx';
 

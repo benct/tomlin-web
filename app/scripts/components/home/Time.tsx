@@ -22,20 +22,20 @@ export default class Time extends React.PureComponent<TimeProps, TimeState> {
         };
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.tick();
         this.interval = window.setInterval(this.tick.bind(this), 1000);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         window.clearInterval(this.interval);
     }
 
-    tick() {
+    tick(): void {
         this.setState({ time: new Date().toLocaleTimeString(this.props.locale, { timeZone: this.props.timeZone }) });
     }
 
-    render() {
-        return <>{this.state.time}</>;
+    render(): string {
+        return this.state.time;
     }
 }

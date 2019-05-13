@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Countdown from './Countdown.jsx';
-import State from './State.jsx';
-import Quote from './Quote.jsx';
+import Countdown from './Countdown';
+import State from './State';
+import Quote from './Quote';
 
-export default function Home() {
+export default function Home(): React.ReactElement {
     return (
         <>
             <div className="wrapper text">
