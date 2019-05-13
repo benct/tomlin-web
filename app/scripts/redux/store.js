@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-import defaultState from './defaultState.js';
+import defaultState from './defaultState.ts';
 import { reducer as baseReducer } from '../actions/base.js';
 import { reducer as fileReducer } from '../actions/files.js';
 import { reducer as mediaReducer } from '../actions/media.js';

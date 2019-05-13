@@ -1,6 +1,8 @@
 import quotes from '../util/quotes.js';
 
-export default {
+import { DefaultState } from '../interfaces';
+
+const defaultState: DefaultState = {
     isLoggedIn: false,
 
     showMenu: false,
@@ -18,7 +20,6 @@ export default {
     home: {
         temperature: {},
         consumption: {},
-        network: {},
         day: true,
     },
 
@@ -63,3 +64,5 @@ export default {
         total: 1,
     },
 };
+
+export default defaultState;
