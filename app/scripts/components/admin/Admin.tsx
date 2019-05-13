@@ -18,7 +18,7 @@ const menu = [
     { text: 'Files', path: '/admin/files' },
 ];
 
-export default function Admin() {
+export default function Admin(): React.ReactElement {
     return (
         <>
             <Navigation type="sub" data={menu} />
@@ -29,7 +29,7 @@ export default function Admin() {
                     <Route path="/admin/visits" component={Visits} />
                     <Route
                         path="/admin/notes"
-                        render={() => (
+                        render={(): React.ReactNode => (
                             <Suspense>
                                 <Notes />
                             </Suspense>
@@ -37,13 +37,13 @@ export default function Admin() {
                     />
                     <Route
                         path="/admin/files"
-                        render={() => (
+                        render={(): React.ReactNode => (
                             <Suspense>
                                 <Files />
                             </Suspense>
                         )}
                     />
-                    <Route render={() => <Error code={404} />} />
+                    <Route render={(): React.ReactNode => <Error code={404} />} />
                 </Switch>
             </div>
         </>

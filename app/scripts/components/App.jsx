@@ -16,9 +16,9 @@ import Home from './home/Home.tsx';
 import Login from './Login.jsx';
 import Logout from './Logout.jsx';
 
-const Links = React.lazy(() => import('./data/Links.jsx'));
+const Links = React.lazy(() => import('./data/Links.tsx'));
 const Media = React.lazy(() => import('./media/Media.jsx'));
-const Admin = React.lazy(() => import('./admin/Admin.jsx'));
+const Admin = React.lazy(() => import('./admin/Admin.tsx'));
 
 class App extends React.Component {
     componentDidMount() {

@@ -50,7 +50,7 @@ export interface FileState {
 }
 
 export interface LinkState {
-    content: object[] | null;
+    content: string | null;
     loading: boolean;
 }
 
@@ -72,10 +72,36 @@ export interface MediaStats {
 }
 
 export interface AdminState {
-    stats: object;
-    logs: object[];
-    visits: object[];
-    notes: object[];
+    stats: AdminStats;
+    logs: Log[];
+    visits: Visit[];
+    notes: Note[];
+}
+
+export interface AdminStats {
+    [key: string]: number;
+}
+
+export interface Log {
+    message: string;
+    details: string;
+    timestamp: string;
+}
+
+export interface Visit {
+    ip: string;
+    host: string;
+    agent: string;
+    page: string;
+    referer?: string;
+    timestamp: string;
+}
+
+export interface Note {
+    id: number;
+    title: string;
+    content: string;
+    updated: string;
 }
 
 export interface PaginationState {

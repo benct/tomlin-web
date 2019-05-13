@@ -1,17 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
+import { DefaultState, Visit } from '../../interfaces';
 import adminActions from '../../actions/admin.js';
 
-class Visits extends React.PureComponent {
-    componentDidMount() {
+interface VisitProps {
+    dispatch: Dispatch;
+    visits: Visit[];
+}
+
+class Visits extends React.PureComponent<VisitProps> {
+    componentDidMount(): void {
         if (!this.props.visits.length) {
             this.props.dispatch(adminActions.getVisits());
         }
     }
 
-    static renderVisit(visit, idx) {
+    static renderVisit(visit: Visit, idx: number): React.ReactElement {
         return (
             <div className="admin-logs" key={`visits${idx}`}>
                 <code>
@@ -30,14 +36,9 @@ class Visits extends React.PureComponent {
         );
     }
 
-    render() {
+    render(): React.ReactElement[] | React.ReactElement {
         return this.props.visits.length ? this.props.visits.map(Visits.renderVisit) : <span>No tracking data found...</span>;
     }
 }
 
-Visits.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    visits: PropTypes.array.isRequired,
-};
-
-export default connect(state => ({ visits: state.admin.visits }))(Visits);
+export default connect((state: DefaultState): object => ({ visits: state.admin.visits }))(Visits);

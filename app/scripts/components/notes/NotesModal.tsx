@@ -1,38 +1,48 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { RefObject } from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import adminActions from '../../actions/admin.js';
 
+import { Note } from '../../interfaces';
 import { PlusIcon } from '../page/Icons.jsx';
 import Modal from '../page/Modal.jsx';
 
-class NotesModal extends React.PureComponent {
-    constructor(props) {
+interface NotesModalProps {
+    dispatch: Dispatch;
+    close: () => void;
+    note: Note;
+}
+
+class NotesModal extends React.PureComponent<NotesModalProps> {
+    title: RefObject<HTMLInputElement>;
+    content: RefObject<HTMLTextAreaElement>;
+
+    constructor(props: NotesModalProps) {
         super(props);
 
         this.title = React.createRef();
         this.content = React.createRef();
     }
 
-    save() {
-        if (!this.title.current.value || !this.title.current.value.length) return;
+    save(): void {
+        if (this.title.current && (!this.title.current.value || !this.title.current.value.length)) return;
 
         this.props.dispatch(adminActions.saveNote(this.props.note.id, this.title.current.value, this.content.current.value));
         this.props.close();
     }
 
-    delete() {
+    delete(): void {
         this.props.dispatch(adminActions.deleteNote(this.props.note.id));
         this.props.close();
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <Modal close={this.props.close} className="admin-overlay">
                 <input
                     type="text"
-                    maxLength="64"
+                    maxLength={64}
                     placeholder="Title"
                     autoComplete="off"
                     required
@@ -41,7 +51,7 @@ class NotesModal extends React.PureComponent {
                 />
                 <textarea
                     className="monospace"
-                    rows="20"
+                    rows={20}
                     placeholder="Notes..."
                     autoComplete="off"
                     wrap="off"
@@ -68,11 +78,5 @@ class NotesModal extends React.PureComponent {
         );
     }
 }
-
-NotesModal.propTypes = {
-    note: PropTypes.object.isRequired,
-    close: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired,
-};
 
 export default connect()(NotesModal);

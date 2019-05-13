@@ -1,12 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
+import { DefaultState, AdminStats } from '../../interfaces';
 import { formatThousands } from '../../util/formatting.js';
 import adminActions from '../../actions/admin.js';
 
-class Control extends React.PureComponent {
-    constructor(props) {
+interface ControlProps {
+    dispatch: Dispatch;
+    stats: AdminStats;
+}
+
+class Control extends React.PureComponent<ControlProps> {
+    logCount: React.RefObject<HTMLSelectElement>;
+    updateMovieCount: React.RefObject<HTMLSelectElement>;
+    updateTvCount: React.RefObject<HTMLSelectElement>;
+
+    constructor(props: ControlProps) {
         super(props);
 
         this.logCount = React.createRef();
@@ -14,25 +24,27 @@ class Control extends React.PureComponent {
         this.updateTvCount = React.createRef();
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         if (!this.props.stats.log) {
             this.props.dispatch(adminActions.getStats());
         }
     }
 
-    formatStat(key) {
+    formatStat(key: string): string {
         return formatThousands(this.props.stats[key] || '-');
     }
 
-    static renderOptions(values) {
-        return values.map((opt, idx) => (
-            <option key={`ctrlOpt${idx}`} value={opt}>
-                {opt}
-            </option>
-        ));
+    static renderOptions(values: number[]): React.ReactElement[] {
+        return values.map(
+            (opt, idx): React.ReactElement => (
+                <option key={`ctrlOpt${idx}`} value={opt}>
+                    {opt}
+                </option>
+            )
+        );
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <>
                 <div className="admin-stats text-center text-small">
@@ -63,25 +75,25 @@ class Control extends React.PureComponent {
                     <span />
                     <button
                         className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updatePosters())}>
+                        onClick={(): void => this.props.dispatch(adminActions.updatePosters())}>
                         Run
                     </button>
                     <span className="truncate">Update number of stored movies</span>
-                    <select className="input-small" defaultValue={50} ref={this.updateMovieCount}>
+                    <select className="input-small" defaultValue="50" ref={this.updateMovieCount}>
                         {Control.renderOptions([10, 50, 100, 250, 500])}
                     </select>
                     <button
                         className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updateMedia('movie', this.updateMovieCount.current.value))}>
+                        onClick={(): void => this.props.dispatch(adminActions.updateMedia('movie', this.updateMovieCount.current.value))}>
                         Run
                     </button>
                     <span className="truncate">Update number of stored tv-shows</span>
-                    <select className="input-small" defaultValue={10} ref={this.updateTvCount}>
+                    <select className="input-small" defaultValue="10" ref={this.updateTvCount}>
                         {Control.renderOptions([5, 10, 50, 100])}
                     </select>
                     <button
                         className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updateMedia('tv', this.updateTvCount.current.value))}>
+                        onClick={(): void => this.props.dispatch(adminActions.updateMedia('tv', this.updateTvCount.current.value))}>
                         Run
                     </button>
                 </div>
@@ -91,14 +103,14 @@ class Control extends React.PureComponent {
                     <span />
                     <button
                         className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updateIata('airlines'))}>
+                        onClick={(): void => this.props.dispatch(adminActions.updateIata('airlines'))}>
                         Run
                     </button>
                     <span className="truncate">Update IATA location entries</span>
                     <span />
                     <button
                         className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.updateIata('locations'))}>
+                        onClick={(): void => this.props.dispatch(adminActions.updateIata('locations'))}>
                         Run
                     </button>
                 </div>
@@ -106,16 +118,18 @@ class Control extends React.PureComponent {
                 <div className="admin-list text text-left">
                     <span className="truncate">Clear all log messages</span>
                     <span />
-                    <button className="button-default button-default-small" onClick={() => this.props.dispatch(adminActions.clearLogs())}>
+                    <button
+                        className="button-default button-default-small"
+                        onClick={(): void => this.props.dispatch(adminActions.clearLogs())}>
                         Clear
                     </button>
                     <span className="truncate">Default number of log messages</span>
-                    <select className="input-small" defaultValue={25} ref={this.logCount}>
+                    <select className="input-small" defaultValue="25" ref={this.logCount}>
                         {Control.renderOptions([10, 25, 50, 100, 250, 500])}
                     </select>
                     <button
                         className="button-default button-default-small"
-                        onClick={() => this.props.dispatch(adminActions.getLogs(this.logCount.current.value))}>
+                        onClick={(): void => this.props.dispatch(adminActions.getLogs(this.logCount.current.value))}>
                         Load
                     </button>
                 </div>
@@ -124,9 +138,4 @@ class Control extends React.PureComponent {
     }
 }
 
-Control.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    stats: PropTypes.object.isRequired,
-};
-
-export default connect(state => ({ stats: state.admin.stats }))(Control);
+export default connect((state: DefaultState): object => ({ stats: state.admin.stats }))(Control);
