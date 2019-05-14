@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import auth from '../util/auth.js';
 import actions from '../actions/base.js';
 
-import PrivateRoute from './route/Private.jsx';
-import Suspense from './route/Suspense.jsx';
+import PrivateRoute from './route/Private.tsx';
+import Suspense from './route/Suspense.tsx';
 import Navigation from './page/Navigation.jsx';
 import Social from './page/Social.jsx';
 import Error from './page/Error.jsx';

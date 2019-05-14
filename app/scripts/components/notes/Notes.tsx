@@ -5,12 +5,12 @@ import { Dispatch } from 'redux';
 import adminActions from '../../actions/admin.js';
 
 import { DefaultState, Note } from '../../interfaces';
-import { PlusIcon } from '../page/Icons.jsx';
+import { PlusIcon } from '../page/Icons';
 import NotesModal from './NotesModal';
 
 interface NotesProps {
     dispatch: Dispatch;
-    notes: Note[];
+    notes?: Note[];
 }
 
 interface NotesState {
@@ -29,12 +29,12 @@ class Notes extends React.PureComponent<NotesProps, NotesState> {
     }
 
     componentDidMount(): void {
-        if (!this.props.notes.length) {
+        if (!this.props.notes || !this.props.notes.length) {
             this.props.dispatch(adminActions.getNotes());
         }
     }
 
-    edit(note: Note): void {
+    edit(note?: Note): void {
         this.setState({ selected: note || {}, showOverlay: true });
     }
 
@@ -45,7 +45,7 @@ class Notes extends React.PureComponent<NotesProps, NotesState> {
     render(): React.ReactElement {
         return (
             <>
-                {this.props.notes.length ? (
+                {this.props.notes && this.props.notes.length ? (
                     this.props.notes.map(
                         (note: Note): React.ReactElement => (
                             <div className="admin-logs mbm" key={`note${note.id}`}>
@@ -64,7 +64,7 @@ class Notes extends React.PureComponent<NotesProps, NotesState> {
                     <div className="link-message">No notes found...</div>
                 )}
                 <div className="text-right">
-                    <button className="button-icon button-text-icon mvn" onClick={this.edit.bind(this, null)}>
+                    <button className="button-icon button-text-icon mvn" onClick={this.edit.bind(this, undefined)}>
                         <span>New</span>
                         <PlusIcon width={22} height={22} />
                     </button>

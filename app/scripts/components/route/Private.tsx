@@ -7,8 +7,7 @@ import Suspense from './Suspense';
 
 interface PrivateProps {
     path: string;
-    component: React.ReactNode;
-    location: object;
+    component: typeof React.Component;
 }
 
 const PrivateRoute: React.FC<PrivateProps> = ({ path, component: Component }): React.ReactElement => (

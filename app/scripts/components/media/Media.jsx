@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import PrivateRoute from '../route/Private.jsx';
+import PrivateRoute from '../route/Private.tsx';
 import Navigation from '../page/Navigation.jsx';
 import Error from '../page/Error.jsx';
 import Stats from './MediaStats.jsx';

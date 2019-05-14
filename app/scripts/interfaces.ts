@@ -94,14 +94,15 @@ export interface Visit {
     agent: string;
     page: string;
     referer?: string;
+    visits: number;
     timestamp: string;
 }
 
 export interface Note {
-    id: number;
-    title: string;
-    content: string;
-    updated: string;
+    id?: number;
+    title?: string;
+    content?: string;
+    updated?: string;
 }
 
 export interface PaginationState {

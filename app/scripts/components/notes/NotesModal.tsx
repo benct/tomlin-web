@@ -5,8 +5,8 @@ import { Dispatch } from 'redux';
 import adminActions from '../../actions/admin.js';
 
 import { Note } from '../../interfaces';
-import { PlusIcon } from '../page/Icons.jsx';
-import Modal from '../page/Modal.jsx';
+import { PlusIcon } from '../page/Icons';
+import Modal from '../page/Modal';
 
 interface NotesModalProps {
     dispatch: Dispatch;
@@ -26,7 +26,7 @@ class NotesModal extends React.PureComponent<NotesModalProps> {
     }
 
     save(): void {
-        if (this.title.current && (!this.title.current.value || !this.title.current.value.length)) return;
+        if (!this.title.current || !this.content.current || !this.title.current.value || !this.title.current.value.length) return;
 
         this.props.dispatch(adminActions.saveNote(this.props.note.id, this.title.current.value, this.content.current.value));
         this.props.close();
