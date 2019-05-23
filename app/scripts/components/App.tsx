@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import auth from '../util/auth.js';
 import actions from '../actions/base.js';
+import { DefaultState } from '../interfaces';
 
 import PrivateRoute from './route/Private';
 import Suspense from './route/Suspense';
@@ -13,20 +14,33 @@ import Social from './page/Social';
 import Error from './page/Error';
 import About from './page/About';
 import Home from './home/Home';
-import Login from './Login.jsx';
-import Logout from './Logout.jsx';
+import Login from './Login';
+import Logout from './Logout';
 
 const Links = React.lazy(() => import('./data/Links'));
 const Media = React.lazy(() => import('./media/Media.jsx'));
 const Admin = React.lazy(() => import('./admin/Admin'));
 
-class App extends React.Component {
-    componentDidMount() {
+interface AppStateProps {
+    showMenu: boolean;
+    circleIcons: boolean;
+    toast: string | null;
+    loading: boolean;
+}
+
+interface AppDispatchProps {
+    setLoggedIn: (isLoggedIn: boolean) => void;
+    toggleMenu: () => void;
+    toggleIcons: () => void;
+}
+
+class App extends React.Component<AppStateProps & AppDispatchProps> {
+    componentDidMount(): void {
         auth.onChange = this.props.setLoggedIn;
         auth.init();
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <Router>
                 <React.StrictMode>
@@ -51,7 +65,7 @@ class App extends React.Component {
                             <Route path="/about" component={About} />
                             <Route
                                 path="/finn"
-                                render={() => (
+                                render={(): React.ReactElement => (
                                     <Suspense>
                                         <Links file="finn.json" />
                                     </Suspense>
@@ -61,20 +75,20 @@ class App extends React.Component {
                             <Route path="/login" component={Login} />
                             <Route
                                 path="/media"
-                                render={() => (
+                                render={(): React.ReactElement => (
                                     <Suspense>
                                         <Media />
                                     </Suspense>
                                 )}
                             />
                             <PrivateRoute path="/admin" component={Admin} />
-                            <Route render={() => <Error code={404} />} />
+                            <Route render={(): React.ReactElement => <Error code={404} />} />
                         </Switch>
                     </main>
                     <footer>
                         <Social circle={this.props.circleIcons} />
                         <div className="text color-light mtl">
-                            <span className="pointer no-select" onClick={this.props.toggleIcons} role="button" tabIndex="-1">
+                            <span className="pointer no-select" onClick={this.props.toggleIcons} role="button" tabIndex={-1}>
                                 Ben Tomlin © 2019
                             </span>
                         </div>
@@ -86,27 +100,17 @@ class App extends React.Component {
     }
 }
 
-App.propTypes = {
-    showMenu: PropTypes.bool.isRequired,
-    circleIcons: PropTypes.bool.isRequired,
-    toast: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    setLoggedIn: PropTypes.func.isRequired,
-    toggleMenu: PropTypes.func.isRequired,
-    toggleIcons: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state: DefaultState): AppStateProps => ({
     showMenu: state.showMenu,
     circleIcons: state.circleIcons,
     toast: state.toast,
     loading: state.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
-    setLoggedIn: isLoggedIn => dispatch(actions.setLoggedIn(isLoggedIn)),
-    toggleMenu: () => dispatch(actions.toggleMenu()),
-    toggleIcons: () => dispatch(actions.toggleIcons()),
+const mapDispatchToProps = (dispatch: Dispatch): AppDispatchProps => ({
+    setLoggedIn: (isLoggedIn: boolean): void => dispatch(actions.setLoggedIn(isLoggedIn)),
+    toggleMenu: (): void => dispatch(actions.toggleMenu()),
+    toggleIcons: (): void => dispatch(actions.toggleIcons()),
 });
 
 export default connect(

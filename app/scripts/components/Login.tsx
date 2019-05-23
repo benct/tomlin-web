@@ -1,11 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 
 import auth from '../util/auth.js';
 
-export default class Login extends React.PureComponent {
-    constructor(props) {
+interface LoginState {
+    redirectToReferrer: boolean;
+    error: boolean;
+    loading: boolean;
+}
+
+export default class Login extends React.PureComponent<RouteComponentProps, LoginState> {
+    username: React.RefObject<HTMLInputElement>;
+    password: React.RefObject<HTMLInputElement>;
+
+    constructor(props: RouteComponentProps) {
         super(props);
 
         this.username = React.createRef();
@@ -18,21 +26,26 @@ export default class Login extends React.PureComponent {
         };
     }
 
-    handleSubmit(event) {
+    handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
         event.preventDefault();
 
-        this.setState({ loading: true }, () =>
-            auth.login(this.username.current.value, this.password.current.value, loggedIn =>
-                this.setState({
-                    redirectToReferrer: loggedIn,
-                    error: !loggedIn,
-                    loading: false,
-                })
-            )
+        this.setState(
+            { loading: true },
+            (): void =>
+                auth.login(
+                    this.username.current && this.username.current.value,
+                    this.password.current && this.password.current.value,
+                    (loggedIn: boolean): void =>
+                        this.setState({
+                            redirectToReferrer: loggedIn,
+                            error: !loggedIn,
+                            loading: false,
+                        })
+                )
         );
     }
 
-    render() {
+    render(): React.ReactNode {
         const { from } = this.props.location.state || { from: { pathname: '/' } };
 
         return this.state.redirectToReferrer ? (
@@ -55,7 +68,3 @@ export default class Login extends React.PureComponent {
         );
     }
 }
-
-Login.propTypes = {
-    location: PropTypes.object.isRequired,
-};

@@ -22,7 +22,7 @@ export default {
         return !!localStorage.token;
     },
 
-    onChange() {},
+    onChange(isLoggedIn) {},
 
     _authenticate(data = {}, cb = null) {
         _post(data)

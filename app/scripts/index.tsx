@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import App from './components/App.jsx';
+import App from './components/App';
 
 import store from './redux/store.js';
 
@@ -12,17 +12,19 @@ import '../humans.txt';
 import '../robots.txt';
 
 // Import all files in a folder
-function requireAll(requireContext) {
-    return requireContext.keys().map(requireContext);
-}
+// @ts-ignore
+const requireAll = (requireContext): void => requireContext.keys().map(requireContext);
 
 // CSS resources
+// @ts-ignore
 requireAll(require.context('../styles', true, /^\.\//));
 
 // Favicon/manifest assets
+// @ts-ignore
 requireAll(require.context('../manifest', true, /^\.\//));
 
 // Other resources
+// @ts-ignore
 requireAll(require.context('../content', true, /^\.\//));
 
 // Render app
@@ -33,6 +35,8 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
+// @ts-ignore
 if (module.hot) {
+    // @ts-ignore
     module.hot.accept();
 }
