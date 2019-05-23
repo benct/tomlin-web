@@ -1,10 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export class Pagination extends React.PureComponent {
-    renderImage(name, alt, rotate) {
+import { DefaultState, PaginationState } from '../../interfaces';
+
+interface PaginationProps {
+    path: string;
+    postfix?: string;
+}
+
+interface PaginationImage {
+    name: string;
+    alt: string;
+    rotate?: boolean;
+}
+
+class Pagination extends React.PureComponent<PaginationState & PaginationProps> {
+    static renderImage(name: string, alt: string, rotate?: boolean): React.ReactElement {
         return (
             <img
                 className="valign-middle"
@@ -12,21 +24,21 @@ export class Pagination extends React.PureComponent {
                 alt={alt}
                 width={18}
                 height={18}
-                style={rotate ? { transform: 'rotate(180deg)' } : null}
+                style={rotate ? { transform: 'rotate(180deg)' } : {}}
             />
         );
     }
 
-    renderPage(page, image) {
+    renderPage(page: number, image?: PaginationImage): React.ReactElement {
         return (
             <Link to={this.props.path + page + (this.props.postfix || '')} className="button-icon" key={`pagination${page}`}>
-                {image ? this.renderImage(image.name, image.alt, image.rotate) : <span>{page}</span>}
+                {image ? Pagination.renderImage(image.name, image.alt, image.rotate) : <span>{page}</span>}
             </Link>
         );
     }
 
-    render() {
-        const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = this.props.data;
+    render(): React.ReactNode {
+        const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = this.props;
 
         return enabled ? (
             <div className="text-center clear ptl">
@@ -36,9 +48,9 @@ export class Pagination extends React.PureComponent {
                     <span className="valign-middle phm">Page {current}</span>
                 </span>
                 <span className="hide-lt480 phm">
-                    {previousPages.map(page => this.renderPage(page))}
+                    {previousPages.map((page: number): React.ReactElement => this.renderPage(page))}
                     <span className="valign-middle phm strong">{current}</span>
-                    {consecutivePages.map(page => this.renderPage(page))}
+                    {consecutivePages.map((page: number): React.ReactElement => this.renderPage(page))}
                 </span>
                 {consecutivePages.length ? this.renderPage(next, { name: 'next', alt: 'Next page' }) : null}
                 {last ? this.renderPage(total, { name: 'last', alt: 'Last page' }) : null}
@@ -47,10 +59,4 @@ export class Pagination extends React.PureComponent {
     }
 }
 
-Pagination.propTypes = {
-    path: PropTypes.string.isRequired,
-    data: PropTypes.object.isRequired,
-    postfix: PropTypes.any,
-};
-
-export default connect(state => ({ data: state.pagination }))(Pagination);
+export default connect((state: DefaultState): PaginationState => ({ ...state.pagination }))(Pagination);

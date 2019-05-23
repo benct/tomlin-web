@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import mediaActions from '../../actions/media.js';
 import paginationActions from '../../actions/pagination.js';
 
-import Pagination from '../page/Pagination.jsx';
+import Pagination from '../page/Pagination';
 import MediaModal from './MediaModal.jsx';
 import MediaItem from './MediaItem.jsx';
 

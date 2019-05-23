@@ -7,7 +7,7 @@ import debounce from '../../util/debounce.js';
 import mediaActions from '../../actions/media.js';
 import paginationActions from '../../actions/pagination.js';
 
-import Pagination from '../page/Pagination.jsx';
+import Pagination from '../page/Pagination';
 import MediaSearchItem from './MediaSearchItem.jsx';
 
 class MediaSearch extends React.Component {

@@ -109,4 +109,10 @@ export interface PaginationState {
     enabled: boolean;
     current: number;
     total: number;
+    first: boolean;
+    previous: number;
+    next: number;
+    last: boolean;
+    previousPages: number[];
+    consecutivePages: number[];
 }

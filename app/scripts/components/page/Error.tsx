@@ -1,7 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const error = {
+interface ErrorProps {
+    code: number;
+}
+
+interface ErrorType {
+    title: string;
+    message: string;
+}
+
+const error: { [key: number]: ErrorType } = {
     403: {
         title: 'Forbidden',
         message: "Sorry, but you don't have permission to access this place on our server.",
@@ -16,22 +24,24 @@ const error = {
     },
 };
 
-export default class Error extends React.PureComponent {
-    constructor(props) {
+export default class Error extends React.PureComponent<ErrorProps> {
+    title: string;
+
+    constructor(props: ErrorProps) {
         super(props);
 
         this.title = document.title;
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         document.title += ` - ${error[this.props.code].title}`;
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         document.title = this.title;
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <div className="wrapper error-page">
                 <h1 className="color-primary">{error[this.props.code].title}</h1>
@@ -40,7 +50,3 @@ export default class Error extends React.PureComponent {
         );
     }
 }
-
-Error.propTypes = {
-    code: PropTypes.number.isRequired,
-};

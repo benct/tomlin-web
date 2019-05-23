@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting.js';
 
-import { StarIcon, ViewIcon } from '../page/Icons.jsx';
+import { StarIcon, ViewIcon } from '../page/Icons';
 
 const defaultPoster = require('../../../images/media/poster.png');
 

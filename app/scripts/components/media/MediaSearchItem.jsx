@@ -4,7 +4,7 @@ import ISO6391 from 'iso-639-1';
 
 import { formatDate } from '../../util/formatting.js';
 
-import { PlusIcon } from '../page/Icons.jsx';
+import { PlusIcon } from '../page/Icons';
 
 const defaultPoster = require('../../../images/media/poster_small.png');
 

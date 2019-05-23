@@ -1,7 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function Social({ circle }) {
+interface SocialProps {
+    circle: boolean;
+}
+
+const Social: React.FC<SocialProps> = ({ circle }): React.ReactElement => {
     const prefix = circle ? 'circle-' : '';
     return (
         <div className={`social${circle ? ' large' : ''}`}>
@@ -22,10 +25,6 @@ function Social({ circle }) {
             </a>
         </div>
     );
-}
-
-Social.propTypes = {
-    circle: PropTypes.bool.isRequired,
 };
 
 export default React.memo(Social);

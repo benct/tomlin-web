@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting.js';
 
-import { StarIcon, ViewIcon } from '../page/Icons.jsx';
-import Modal from '../page/Modal.jsx';
+import { StarIcon, ViewIcon } from '../page/Icons';
+import Modal from '../page/Modal';
 import Season from './MediaSeason.jsx';
 
 export default class MediaModal extends React.PureComponent {

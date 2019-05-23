@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import PrivateRoute from '../route/Private.tsx';
-import Navigation from '../page/Navigation.jsx';
-import Error from '../page/Error.jsx';
+import PrivateRoute from '../route/Private';
+import Navigation from '../page/Navigation';
+import Error from '../page/Error';
 import Stats from './MediaStats.jsx';
 
 const Search = React.lazy(() => import('./MediaSearch.jsx'));

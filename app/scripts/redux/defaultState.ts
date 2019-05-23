@@ -62,6 +62,12 @@ const defaultState: DefaultState = {
         enabled: false,
         current: 1,
         total: 1,
+        first: true,
+        previous: 1,
+        next: 1,
+        last: true,
+        previousPages: [],
+        consecutivePages: [],
     },
 };
 

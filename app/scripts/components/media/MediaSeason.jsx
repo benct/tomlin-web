@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import mediaActions from '../../actions/media.js';
 import { formatDate, formatGradientHSL } from '../../util/formatting.js';
 
-import { ViewIcon } from '../page/Icons.jsx';
+import { ViewIcon } from '../page/Icons';
 
 class MediaSeason extends React.PureComponent {
     constructor(props) {

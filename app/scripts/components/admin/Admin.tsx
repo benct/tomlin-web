@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Suspense from '../route/Suspense';
-import Navigation from '../page/Navigation';
+import Navigation, { NavigationItem } from '../page/Navigation';
 import Error from '../page/Error';
 import Control from './Control';
 import Logs from './Logs';
@@ -11,7 +11,7 @@ import Visits from './Visits';
 const Notes = React.lazy(() => import('../notes/Notes'));
 const Files = React.lazy(() => import('../files/Files'));
 
-const menu = [
+const menu: NavigationItem[] = [
     { text: 'Logs', path: '/admin/logs' },
     { text: 'Visits', path: '/admin/visits' },
     { text: 'Notes', path: '/admin/notes' },

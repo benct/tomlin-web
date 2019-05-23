@@ -1,12 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 import actions from '../../actions/base.js';
+import { DefaultState } from '../../interfaces';
 
-function Navigation({ type, data, isLoggedIn, showMenu, dispatch }) {
+interface NavigationProps {
+    dispatch: Dispatch;
+    type?: string;
+    data?: NavigationItem[];
+}
+
+interface NavigationStateProps {
+    isLoggedIn: boolean;
+    showMenu: boolean;
+}
+
+export interface NavigationItem {
+    text: string;
+    path: string;
+    exact?: boolean;
+    hide?: boolean;
+}
+
+const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationStateProps> = (props): React.ReactElement => {
+    const { type, data, isLoggedIn, showMenu, dispatch } = props;
+
     const menu = [
         { text: 'Home', path: '/', exact: true },
         { text: 'About', path: '/about' },
@@ -16,7 +37,7 @@ function Navigation({ type, data, isLoggedIn, showMenu, dispatch }) {
         { text: 'Login', path: '/login', hide: isLoggedIn },
     ];
 
-    const createLink = (item, idx) =>
+    const createLink = (item: NavigationItem, idx: number): React.ReactNode =>
         item.hide ? null : (
             <li key={`menuList${idx}`}>
                 <NavLink to={item.path} exact={!!item.exact}>
@@ -35,7 +56,7 @@ function Navigation({ type, data, isLoggedIn, showMenu, dispatch }) {
         case 'sub':
             return (
                 <nav className="pvl">
-                    <ul className="no-select menu menu-simple menu-sub">{data.map(createLink)}</ul>
+                    <ul className="no-select menu menu-simple menu-sub">{data && data.map(createLink)}</ul>
                 </nav>
             );
         case 'full':
@@ -44,7 +65,7 @@ function Navigation({ type, data, isLoggedIn, showMenu, dispatch }) {
                 <nav
                     className="menu-wrap"
                     style={{ left: showMenu ? '0px' : '100%' }}
-                    onClick={() => dispatch(actions.toggleMenu())}
+                    onClick={(): void => dispatch(actions.toggleMenu())}
                     role="dialog">
                     <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
                         {menu.map(createLink)}
@@ -52,19 +73,11 @@ function Navigation({ type, data, isLoggedIn, showMenu, dispatch }) {
                 </nav>
             );
     }
-}
-
-Navigation.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
-    showMenu: PropTypes.bool.isRequired,
-    type: PropTypes.string,
-    data: PropTypes.array,
 };
 
-export default withRouter(
-    connect(state => ({
+export default connect(
+    (state: DefaultState): NavigationStateProps => ({
         isLoggedIn: state.isLoggedIn,
         showMenu: state.showMenu,
-    }))(Navigation)
-);
+    })
+)(withRouter(Navigation));
