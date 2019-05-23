@@ -8,8 +8,8 @@ import Control from './Control';
 import Logs from './Logs';
 import Visits from './Visits';
 
-const Notes = React.lazy(() => import('../notes/Notes'));
-const Files = React.lazy(() => import('../files/Files'));
+const Notes = React.lazy((): Promise<any> => import('../notes/Notes'));
+const Files = React.lazy((): Promise<any> => import('../files/Files'));
 
 const menu: NavigationItem[] = [
     { text: 'Logs', path: '/admin/logs' },
@@ -18,34 +18,34 @@ const menu: NavigationItem[] = [
     { text: 'Files', path: '/admin/files' },
 ];
 
-export default function Admin(): React.ReactElement {
-    return (
-        <>
-            <Navigation type="sub" data={menu} />
-            <div className="wrapper ptm">
-                <Switch>
-                    <Route path="/admin" exact component={Control} />
-                    <Route path="/admin/logs" component={Logs} />
-                    <Route path="/admin/visits" component={Visits} />
-                    <Route
-                        path="/admin/notes"
-                        render={(): React.ReactNode => (
-                            <Suspense>
-                                <Notes />
-                            </Suspense>
-                        )}
-                    />
-                    <Route
-                        path="/admin/files"
-                        render={(): React.ReactNode => (
-                            <Suspense>
-                                <Files />
-                            </Suspense>
-                        )}
-                    />
-                    <Route render={(): React.ReactNode => <Error code={404} />} />
-                </Switch>
-            </div>
-        </>
-    );
-}
+const Admin: React.FC = (): React.ReactElement => (
+    <>
+        <Navigation type="sub" data={menu} />
+        <div className="wrapper ptm">
+            <Switch>
+                <Route path="/admin" exact component={Control} />
+                <Route path="/admin/logs" component={Logs} />
+                <Route path="/admin/visits" component={Visits} />
+                <Route
+                    path="/admin/notes"
+                    render={(): React.ReactNode => (
+                        <Suspense>
+                            <Notes />
+                        </Suspense>
+                    )}
+                />
+                <Route
+                    path="/admin/files"
+                    render={(): React.ReactNode => (
+                        <Suspense>
+                            <Files />
+                        </Suspense>
+                    )}
+                />
+                <Route render={(): React.ReactNode => <Error code={404} />} />
+            </Switch>
+        </div>
+    </>
+);
+
+export default React.memo(Admin);
