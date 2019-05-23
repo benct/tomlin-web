@@ -1,17 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, QuoteState } from '../../interfaces';
 import actions from '../../actions/base.js';
 
 interface QuoteProps {
-    dispatch: Dispatch;
     text: string | null;
     author: string | null;
 }
 
-class Quote extends React.PureComponent<QuoteProps, QuoteState> {
+class Quote extends React.PureComponent<QuoteProps & DispatchProp, QuoteState> {
     componentDidMount(): void {
         this.refreshQuote();
     }

@@ -1,17 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import actions from '../../actions/base.js';
-
 import { DefaultState, HomeState } from '../../interfaces';
-import Time from './time';
 
-interface StateProps {
-    dispatch: Dispatch;
-}
+import Time from './Time';
 
-class State extends React.PureComponent<StateProps & HomeState> {
+class State extends React.PureComponent<DispatchProp & HomeState> {
     componentDidMount(): void {
         this.props.dispatch(actions.getHomeState());
     }

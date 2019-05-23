@@ -1,12 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, LinkState } from '../../interfaces';
 import actions from '../../actions/base.js';
 
 interface LinkProps {
-    dispatch: Dispatch;
     file: string;
 }
 
@@ -26,7 +24,7 @@ interface Link {
     text: string;
 }
 
-class Links extends React.PureComponent<LinkProps & LinkState> {
+class Links extends React.PureComponent<LinkProps & LinkState & DispatchProp> {
     componentDidMount(): void {
         this.props.dispatch(actions.loadContent({ field: 'links', file: this.props.file }));
     }

@@ -1,16 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, Visit } from '../../interfaces';
 import adminActions from '../../actions/admin.js';
 
 interface VisitProps {
-    dispatch: Dispatch;
     visits: Visit[];
 }
 
-class Visits extends React.PureComponent<VisitProps> {
+class Visits extends React.PureComponent<VisitProps & DispatchProp> {
     componentDidMount(): void {
         if (!this.props.visits.length) {
             this.props.dispatch(adminActions.getVisits());
@@ -41,4 +39,4 @@ class Visits extends React.PureComponent<VisitProps> {
     }
 }
 
-export default connect((state: DefaultState): object => ({ visits: state.admin.visits }))(Visits);
+export default connect((state: DefaultState): VisitProps => ({ visits: state.admin.visits }))(Visits);

@@ -1,16 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, Log } from '../../interfaces';
 import adminActions from '../../actions/admin.js';
 
 interface LogProps {
-    dispatch: Dispatch;
     logs: Log[];
 }
 
-class Logs extends React.PureComponent<LogProps> {
+class Logs extends React.PureComponent<LogProps & DispatchProp> {
     componentDidMount(): void {
         if (!this.props.logs.length) {
             this.props.dispatch(adminActions.getLogs(25));
@@ -35,4 +33,4 @@ class Logs extends React.PureComponent<LogProps> {
     }
 }
 
-export default connect((state: DefaultState): object => ({ logs: state.admin.logs }))(Logs);
+export default connect((state: DefaultState): LogProps => ({ logs: state.admin.logs }))(Logs);

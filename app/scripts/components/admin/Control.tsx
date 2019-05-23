@@ -1,17 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, AdminStats } from '../../interfaces';
 import { formatThousands } from '../../util/formatting.js';
 import adminActions from '../../actions/admin.js';
 
 interface ControlProps {
-    dispatch: Dispatch;
     stats: AdminStats;
 }
 
-class Control extends React.PureComponent<ControlProps> {
+class Control extends React.PureComponent<ControlProps & DispatchProp> {
     logCount: React.RefObject<HTMLSelectElement>;
     updateMovieCount: React.RefObject<HTMLSelectElement>;
     updateTvCount: React.RefObject<HTMLSelectElement>;
@@ -138,4 +136,4 @@ class Control extends React.PureComponent<ControlProps> {
     }
 }
 
-export default connect((state: DefaultState): object => ({ stats: state.admin.stats }))(Control);
+export default connect((state: DefaultState): ControlProps => ({ stats: state.admin.stats }))(Control);

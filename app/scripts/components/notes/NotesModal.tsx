@@ -1,24 +1,22 @@
 import React, { RefObject } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import adminActions from '../../actions/admin.js';
-
 import { Note } from '../../interfaces';
+
 import { PlusIcon } from '../page/Icons';
 import Modal from '../page/Modal';
 
 interface NotesModalProps {
-    dispatch: Dispatch;
     close: () => void;
     note: Note;
 }
 
-class NotesModal extends React.PureComponent<NotesModalProps> {
+class NotesModal extends React.PureComponent<NotesModalProps & DispatchProp> {
     title: RefObject<HTMLInputElement>;
     content: RefObject<HTMLTextAreaElement>;
 
-    constructor(props: NotesModalProps) {
+    constructor(props: NotesModalProps & DispatchProp) {
         super(props);
 
         this.title = React.createRef();

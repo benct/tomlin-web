@@ -1,6 +1,5 @@
 import React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
@@ -8,12 +7,11 @@ import actions from '../../actions/base.js';
 import { DefaultState } from '../../interfaces';
 
 interface NavigationProps {
-    dispatch: Dispatch;
     type?: string;
     data?: NavigationItem[];
 }
 
-interface NavigationStateProps {
+interface NavigationState {
     isLoggedIn: boolean;
     showMenu: boolean;
 }
@@ -25,7 +23,7 @@ export interface NavigationItem {
     hide?: boolean;
 }
 
-const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationStateProps> = (props): React.ReactElement => {
+const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationState & DispatchProp> = (props): React.ReactElement => {
     const { type, data, isLoggedIn, showMenu, dispatch } = props;
 
     const menu = [
@@ -76,7 +74,7 @@ const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationSta
 };
 
 export default connect(
-    (state: DefaultState): NavigationStateProps => ({
+    (state: DefaultState): NavigationState => ({
         isLoggedIn: state.isLoggedIn,
         showMenu: state.showMenu,
     })

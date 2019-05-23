@@ -1,15 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import adminActions from '../../actions/admin.js';
-
 import { DefaultState, Note } from '../../interfaces';
+
 import { PlusIcon } from '../page/Icons';
 import NotesModal from './NotesModal';
 
 interface NotesProps {
-    dispatch: Dispatch;
     notes?: Note[];
 }
 
@@ -18,8 +16,8 @@ interface NotesState {
     selected: Note | null;
 }
 
-class Notes extends React.PureComponent<NotesProps, NotesState> {
-    constructor(props: NotesProps) {
+class Notes extends React.PureComponent<NotesProps & DispatchProp, NotesState> {
+    constructor(props: NotesProps & DispatchProp) {
         super(props);
 
         this.state = {
@@ -77,4 +75,4 @@ class Notes extends React.PureComponent<NotesProps, NotesState> {
     }
 }
 
-export default connect((state: DefaultState): object => ({ notes: state.admin.notes }))(Notes);
+export default connect((state: DefaultState): NotesProps => ({ notes: state.admin.notes }))(Notes);
