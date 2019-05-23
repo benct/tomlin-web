@@ -1,16 +1,27 @@
 /* global File, FormData */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import actions from '../../actions/files.js';
+import { DefaultState, FileItem, FilePreview } from '../../interfaces';
 
-import FileList from './FileList.jsx';
+import FileList from './FileList';
 
 const PARENT_DIR = '..';
 
-class Files extends React.Component {
-    constructor(props) {
+interface FilesProps {
+    cwd: string;
+    content: FileItem[];
+    focused: number | null;
+    preview: FilePreview | null;
+    uploading: boolean;
+}
+
+class Files extends React.Component<FilesProps & DispatchProp> {
+    fileInput: React.RefObject<HTMLInputElement>;
+    fileLabel: React.RefObject<HTMLLabelElement>;
+
+    constructor(props: FilesProps & DispatchProp) {
         super(props);
 
         this.fileInput = React.createRef();
@@ -19,17 +30,17 @@ class Files extends React.Component {
         this.handleKeyboard = this.handleKeyboard.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.props.dispatch(actions.refresh());
 
         document.addEventListener('keyup', this.handleKeyboard, false);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         document.removeEventListener('keyup', this.handleKeyboard, false);
     }
 
-    handleClick(item) {
+    handleClick(item: FileItem): void {
         if (item.dir) {
             this.props.dispatch(actions.changeDirectory(item.name));
         } else if (item.preview) {
@@ -39,7 +50,7 @@ class Files extends React.Component {
         }
     }
 
-    handleKeyboard(event) {
+    handleKeyboard(event: KeyboardEvent): void {
         event.preventDefault();
 
         switch (event.keyCode) {
@@ -71,9 +82,9 @@ class Files extends React.Component {
         }
     }
 
-    handleUpload() {
-        const files = this.fileInput.current.files;
-        if (!files.length) {
+    handleUpload(): void {
+        const files = this.fileInput.current && this.fileInput.current.files;
+        if (!files || !files.length) {
             return;
         }
 
@@ -86,25 +97,29 @@ class Files extends React.Component {
 
         this.props.dispatch(actions.upload(formData));
 
-        this.fileInput.current.value = null;
-        this.fileLabel.current.innerHTML = 'Choose a file';
-    }
-
-    handleFileChange(event) {
-        if (this.fileInput.current && this.fileInput.current.files.length > 1) {
-            this.fileLabel.current.innerHTML = `${this.fileInput.current.files.length} files selected`;
-        } else if (event.target.value) {
-            this.fileLabel.current.innerHTML = event.target.value.split('\\').pop();
-        } else {
+        if (this.fileInput.current && this.fileLabel.current) {
+            this.fileInput.current.value = '';
             this.fileLabel.current.innerHTML = 'Choose a file';
         }
     }
 
-    forceDownload(item) {
-        window.setTimeout(() => window.open(item.href), 100);
+    handleFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
+        if (this.fileLabel.current) {
+            if (this.fileInput.current && this.fileInput.current.files && this.fileInput.current.files.length > 1) {
+                this.fileLabel.current.innerHTML = `${this.fileInput.current.files.length} files selected`;
+            } else if (event.target.value) {
+                this.fileLabel.current.innerHTML = event.target.value.split('\\').pop() || '1 file selected';
+            } else {
+                this.fileLabel.current.innerHTML = 'Choose a file';
+            }
+        }
     }
 
-    previewFile(item) {
+    forceDownload(item: FileItem): void {
+        window.setTimeout((): Window | null => window.open(item.href), 100);
+    }
+
+    previewFile(item: FileItem): void {
         if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
             this.props.dispatch(actions.setPreview({ src: item.href, image: true }));
         } else {
@@ -112,25 +127,25 @@ class Files extends React.Component {
         }
     }
 
-    closePreview() {
+    closePreview(): void {
         this.props.dispatch(actions.setPreview(null));
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <>
                 <div className="file-table-header">
                     <button
                         className="button-icon"
-                        onClick={() => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
+                        onClick={(): void => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
                         disabled={this.props.cwd === ''}>
                         <img src={require(`../../../images/icon/arrow.svg`)} alt="Parent directory" width={28} height={28} />
                     </button>
                     <div className="text-right">
-                        <button className="button-icon" onClick={() => this.props.dispatch(actions.createDirectory())}>
+                        <button className="button-icon" onClick={(): void => this.props.dispatch(actions.createDirectory())}>
                             <img src={require(`../../../images/icon/directory.svg`)} alt="New directory" width={28} height={28} />
                         </button>
-                        <button className="button-icon" onClick={() => this.props.dispatch(actions.refresh())}>
+                        <button className="button-icon" onClick={(): void => this.props.dispatch(actions.refresh())}>
                             <img src={require(`../../../images/icon/refresh.svg`)} alt="Refresh content" width={28} height={28} />
                         </button>
                     </div>
@@ -139,8 +154,8 @@ class Files extends React.Component {
                     content={this.props.content}
                     focused={this.props.focused}
                     handleClick={this.handleClick.bind(this)}
-                    handleRename={item => this.props.dispatch(actions.rename(item))}
-                    handleDelete={item => this.props.dispatch(actions.delete(item))}
+                    handleRename={(item: FileItem): void => this.props.dispatch(actions.rename(item))}
+                    handleDelete={(item: FileItem): void => this.props.dispatch(actions.delete(item))}
                 />
                 <div className="text-center">
                     <label htmlFor="file" className="color-primary pointer">
@@ -188,19 +203,12 @@ class Files extends React.Component {
     }
 }
 
-Files.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    cwd: PropTypes.string.isRequired,
-    content: PropTypes.array.isRequired,
-    focused: PropTypes.number,
-    preview: PropTypes.object,
-    uploading: PropTypes.bool,
-};
-
-export default connect(state => ({
-    cwd: state.files.cwd,
-    content: state.files.content,
-    focused: state.files.focused,
-    preview: state.files.preview,
-    uploading: state.files.uploading,
-}))(Files);
+export default connect(
+    (state: DefaultState): FilesProps => ({
+        cwd: state.files.cwd,
+        content: state.files.content,
+        focused: state.files.focused,
+        preview: state.files.preview,
+        uploading: state.files.uploading,
+    })
+)(Files);

@@ -43,10 +43,29 @@ export interface HomeConsumption {
 
 export interface FileState {
     cwd: string;
-    content: object[];
+    content: FileItem[];
     focused: number | null;
-    preview: object | null;
+    preview: FilePreview | null;
     uploading: boolean;
+}
+
+export interface FileItem {
+    dir: boolean;
+    type: string;
+    name: string;
+    short: string;
+    icon: string;
+    size: string;
+    perms: string;
+    date: string;
+    href: string;
+    preview: object;
+}
+
+export interface FilePreview {
+    src: string;
+    image: string;
+    content: string;
 }
 
 export interface LinkState {
