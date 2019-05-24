@@ -43,7 +43,7 @@ export default class MediaModal extends React.PureComponent<MediaModalProps, Med
         this.setState({ showSeasons: !this.state.showSeasons });
     }
 
-    static calculateSeenEpsiodes(seasons: MediaSeasonEntry[]): number {
+    static calculateSeenEpisodes(seasons: MediaSeasonEntry[]): number {
         return seasons.reduce(
             (acc: number, cur: MediaSeasonEntry): number =>
                 acc + cur.episodes.reduce((acc: number, cur: MediaEpisodeEntry): number => acc + (cur.seen ? 1 : 0), 0),
@@ -212,7 +212,7 @@ export default class MediaModal extends React.PureComponent<MediaModalProps, Med
                         <span>Episodes</span>
                         <span>
                             {this.props.data.number_of_episodes} (Seen:&nbsp;
-                            {this.props.data.seasons && MediaModal.calculateSeenEpsiodes(this.props.data.seasons)}
+                            {this.props.data.seasons && MediaModal.calculateSeenEpisodes(this.props.data.seasons)}
                         </span>
                         {MediaModal.renderOptional('Type', this.props.data.series_type)}
                         <span>Status</span>
