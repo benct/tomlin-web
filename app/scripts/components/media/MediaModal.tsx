@@ -1,15 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting.js';
+import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '../../interfaces';
 
 import { StarIcon, ViewIcon } from '../page/Icons';
 import Modal from '../page/Modal';
-import Season from './MediaSeason.jsx';
+import MediaSeason from './MediaSeason';
 
-export default class MediaModal extends React.PureComponent {
-    constructor(props) {
+interface MediaModalProps {
+    type: MediaType;
+    data: MediaItemEntry;
+    close: () => void;
+    update: () => void;
+    remove: () => void;
+    setSeen: () => void;
+    setFavourite: () => void;
+}
+
+interface MediaModalState {
+    showSeasons: boolean;
+}
+
+export default class MediaModal extends React.PureComponent<MediaModalProps, MediaModalState> {
+    constructor(props: MediaModalProps) {
         super(props);
 
         this.state = {
@@ -17,31 +31,41 @@ export default class MediaModal extends React.PureComponent {
         };
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         document.body.classList.add('no-scroll');
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         document.body.classList.remove('no-scroll');
     }
 
-    toggleSeasons() {
+    toggleSeasons(): void {
         this.setState({ showSeasons: !this.state.showSeasons });
     }
 
-    static renderPoster(poster, title) {
+    static calculateSeenEpsiodes(seasons: MediaSeasonEntry[]): number {
+        return seasons.reduce(
+            (acc: number, cur: MediaSeasonEntry): number =>
+                acc + cur.episodes.reduce((acc: number, cur: MediaEpisodeEntry): number => acc + (cur.seen ? 1 : 0), 0),
+            0
+        );
+    }
+
+    static renderPoster(poster: string, title: string): React.ReactElement {
         return poster ? (
             <img
                 src={`/assets/images/media${poster}`}
                 alt={`Poster: ${title}`}
-                onError={event => (event.target.src = require('../../../images/media/poster.png'))}
+                onError={(event: React.InvalidEvent<HTMLImageElement>): void =>
+                    (event.target.src = require('../../../images/media/poster.png'))
+                }
             />
         ) : (
             <span>No poster</span>
         );
     }
 
-    static renderRating(rating, votes) {
+    static renderRating(rating?: number, votes?: number): React.ReactElement {
         return rating ? (
             <span>
                 {rating} <span className="text-smaller pls">({votes} votes)</span>
@@ -51,7 +75,7 @@ export default class MediaModal extends React.PureComponent {
         );
     }
 
-    static renderRuntime(runtime) {
+    static renderRuntime(runtime: number | null): React.ReactNode {
         return runtime ? (
             <>
                 <span>Runtime</span>
@@ -60,7 +84,7 @@ export default class MediaModal extends React.PureComponent {
         ) : null;
     }
 
-    static renderCost(key, value) {
+    static renderCost(key: string, value: number): React.ReactElement {
         return (
             <>
                 <span>{key}</span>
@@ -69,7 +93,7 @@ export default class MediaModal extends React.PureComponent {
         );
     }
 
-    static renderOptional(key, value, clazz) {
+    static renderOptional(key: string, value?: string, clazz?: string): React.ReactNode {
         return value ? (
             <>
                 <span>{key}</span>
@@ -78,7 +102,7 @@ export default class MediaModal extends React.PureComponent {
         ) : null;
     }
 
-    renderLinks(id, imdb) {
+    renderLinks(id: number, imdb: string | null): React.ReactElement {
         return (
             <span>
                 <a
@@ -135,7 +159,7 @@ export default class MediaModal extends React.PureComponent {
         );
     }
 
-    renderSeasonButton() {
+    renderSeasonButton(): React.ReactNode {
         return this.props.type === 'tv' ? (
             <span>
                 <button className="button-default button-default-small" onClick={this.toggleSeasons.bind(this)}>
@@ -147,19 +171,21 @@ export default class MediaModal extends React.PureComponent {
         ) : null;
     }
 
-    renderSeasons() {
-        return (
+    renderSeasons(): React.ReactNode {
+        return this.props.data.seasons ? (
             <div className="media-overlay-seasons">
                 {this.props.data.seasons
-                    .filter(s => s.season)
-                    .map(season => (
-                        <Season key={`season${season.id}`} data={season} setSeen={this.props.setSeen} />
-                    ))}
+                    .filter((s: MediaSeasonEntry): boolean => s.season > 0)
+                    .map(
+                        (season: MediaSeasonEntry): React.ReactNode => (
+                            <MediaSeason key={`season${season.id}`} data={season} />
+                        )
+                    )}
             </div>
-        );
+        ) : null;
     }
 
-    renderContent() {
+    renderContent(): React.ReactElement {
         return (
             <div className="media-overlay-overview">
                 <span>Original</span>
@@ -186,7 +212,7 @@ export default class MediaModal extends React.PureComponent {
                         <span>Episodes</span>
                         <span>
                             {this.props.data.number_of_episodes} (Seen:&nbsp;
-                            {this.props.data.seasons.reduce((acc, cur) => acc + cur.episodes.reduce((acc, cur) => acc + cur.seen, 0), 0)})
+                            {this.props.data.seasons && MediaModal.calculateSeenEpsiodes(this.props.data.seasons)}
                         </span>
                         {MediaModal.renderOptional('Type', this.props.data.series_type)}
                         <span>Status</span>
@@ -206,7 +232,7 @@ export default class MediaModal extends React.PureComponent {
         );
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <Modal close={this.props.close} className="media-overlay">
                 <div className="media-overlay-title pbm">
@@ -224,10 +250,10 @@ export default class MediaModal extends React.PureComponent {
                         <img src={require(`../../../images/icon/refresh.svg`)} alt="Update" width={22} height={22} />
                     </button>
                     <button className="button-blank mrl" data-tooltip="Favourite" onClick={this.props.setFavourite}>
-                        <StarIcon width={24} height={24} favourite={!!this.props.data.favourite} />
+                        <StarIcon width={24} height={24} favourite={this.props.data.favourite} />
                     </button>
                     <button className="button-blank" data-tooltip="Seen" onClick={this.props.setSeen}>
-                        <ViewIcon width={24} height={24} seen={!!this.props.data.seen} />
+                        <ViewIcon width={24} height={24} seen={this.props.data.seen} />
                     </button>
                     <button className="button-text float-right text-small man" onClick={this.props.close}>
                         Close
@@ -237,13 +263,3 @@ export default class MediaModal extends React.PureComponent {
         );
     }
 }
-
-MediaModal.propTypes = {
-    type: PropTypes.oneOf(['movie', 'tv']).isRequired,
-    data: PropTypes.object.isRequired,
-    close: PropTypes.func.isRequired,
-    update: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired,
-    setSeen: PropTypes.func.isRequired,
-    setFavourite: PropTypes.func.isRequired,
-};

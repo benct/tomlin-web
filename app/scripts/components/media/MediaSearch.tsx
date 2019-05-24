@@ -1,24 +1,43 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Dispatch } from 'redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 import debounce from '../../util/debounce.js';
 import mediaActions from '../../actions/media.js';
 import paginationActions from '../../actions/pagination.js';
+import { DefaultState, MediaSearchItemEntry } from '../../interfaces';
 
 import Pagination from '../page/Pagination';
-import MediaSearchItem from './MediaSearchItem.jsx';
+import MediaSearchItem from './MediaSearchItem';
 
-class MediaSearch extends React.Component {
-    componentDidMount() {
+interface MediaSearchStateProps {
+    data: MediaSearchItemEntry[];
+    existing: number[];
+    type?: string;
+    action?: string;
+    id?: string;
+    page?: number;
+}
+
+interface MediaSearchDispatchProps {
+    search: (query: string) => void;
+    get: () => void;
+    add: (type: string, id: number) => void;
+    remove: (type: string, id: number) => void;
+    goToIMDb: (type: string, id: number) => void;
+    resetPagination: () => void;
+}
+
+class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDispatchProps> {
+    componentDidMount(): void {
         if (this.props.action && this.props.type) {
             this.props.get();
             window.scrollTo(0, 0);
         }
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: MediaSearchStateProps & MediaSearchDispatchProps): void {
         if (
             this.props.action &&
             this.props.type &&
@@ -29,27 +48,20 @@ class MediaSearch extends React.Component {
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         this.props.resetPagination();
     }
 
-    handleChange(event) {
+    handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
         if (event.target.value && event.target.value.length > 1) {
             this.props.search(event.target.value);
         }
     }
 
-    renderItem(data, idx) {
+    renderItem(data: MediaSearchItemEntry, idx: number): React.ReactNode {
         return (
             <MediaSearchItem
-                title={data.title ? data.title : data.name}
-                originalTitle={data.original_title ? data.original_title : data.original_name}
-                poster={data.poster_path}
-                release={data.release_date || data.first_air_date}
-                language={data.original_language}
-                rating={data.vote_average}
-                votes={data.vote_count || 0}
-                overview={data.overview}
+                data={data}
                 stored={this.props.existing.includes(data.id)}
                 add={this.props.add.bind(this, data.media_type, data.id)}
                 remove={this.props.remove.bind(this, data.media_type, data.id)}
@@ -59,17 +71,10 @@ class MediaSearch extends React.Component {
         );
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <div className="text-center">
-                <input
-                    type="text"
-                    name="query"
-                    className="mbl"
-                    aria-label="Search"
-                    onChange={this.handleChange.bind(this)}
-                    onClick={event => event.target.select()}
-                />
+                <input type="text" name="query" className="mbl" aria-label="Search" onChange={this.handleChange.bind(this)} />
                 <div className="media-search">
                     <Link to={'/media/search/movie/popular/'}>Popular (Movie)</Link>
                     <Link to={'/media/search/movie/top/'}>Top Rated (Movie)</Link>
@@ -88,23 +93,7 @@ class MediaSearch extends React.Component {
     }
 }
 
-MediaSearch.propTypes = {
-    data: PropTypes.array.isRequired,
-    existing: PropTypes.array.isRequired,
-    type: PropTypes.string,
-    action: PropTypes.string,
-    id: PropTypes.string,
-    page: PropTypes.number,
-
-    search: PropTypes.func.isRequired,
-    get: PropTypes.func.isRequired,
-    add: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired,
-    goToIMDb: PropTypes.func.isRequired,
-    resetPagination: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps): MediaSearchStateProps => ({
     data: state.media.search,
     existing: state.media.existing,
     type: ownProps.match.params.type,
@@ -113,13 +102,13 @@ const mapStateToProps = (state, ownProps) => ({
     page: +ownProps.match.params.page || 1,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    search: debounce(query => dispatch(mediaActions.search(query)), 500),
-    get: () => dispatch(mediaActions.post(Object.assign({}, ownProps.match.params, { page: +ownProps.match.params.page || 1 }))),
-    add: (type, id) => dispatch(mediaActions.add({ type: type || ownProps.match.params.type, id })),
-    remove: (type, id) => dispatch(mediaActions.remove({ type: type || ownProps.match.params.type, id })),
-    goToIMDb: (type, id) => dispatch(mediaActions.goToIMDb({ type: type || ownProps.match.params.type, id })),
-    resetPagination: () => dispatch(paginationActions.reset()),
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: RouteComponentProps): MediaSearchDispatchProps => ({
+    search: debounce((query: string): void => dispatch(mediaActions.search(query)), 500),
+    get: (): void => dispatch(mediaActions.post(Object.assign({}, ownProps.match.params, { page: +ownProps.match.params.page || 1 }))),
+    add: (type: string, id: number): void => dispatch(mediaActions.add({ type: type || ownProps.match.params.type, id })),
+    remove: (type: string, id: number): void => dispatch(mediaActions.remove({ type: type || ownProps.match.params.type, id })),
+    goToIMDb: (type: string, id: number): void => dispatch(mediaActions.goToIMDb({ type: type || ownProps.match.params.type, id })),
+    resetPagination: (): void => dispatch(paginationActions.reset()),
 });
 
 export default connect(

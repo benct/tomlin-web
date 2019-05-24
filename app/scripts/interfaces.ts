@@ -9,7 +9,7 @@ export interface DefaultState {
     home: HomeState;
     files: FileState;
     links: LinkState;
-    media: MediaState;
+    media: MediaState & MediaTypeState;
     admin: AdminState;
     pagination: PaginationState;
 }
@@ -73,21 +73,115 @@ export interface LinkState {
     loading: boolean;
 }
 
+export type MediaType = 'movie' | 'tv' | 'watchlist';
+
+export interface MediaTypeState {
+    [key: string]: MediaResults | null;
+}
+
 export interface MediaState {
-    movie: object[] | null;
-    tv: object[] | null;
-    watchlist: object[] | null;
-    search: object[];
-    existing: object[];
+    item: MediaItemEntry | null;
     showModal: boolean;
-    item: object | null;
+    search: MediaSearchItemEntry[];
+    existing: number[];
     sort: string;
     stats: MediaStats;
 }
 
+export interface MediaResults {
+    results: MediaItemEntry[];
+    page: number;
+    total_pages: number;
+    total_results: number;
+}
+
+export interface MediaItemEntry {
+    type: MediaType;
+    id: number;
+    title: string;
+    original_title?: string;
+    name: string;
+    original_name?: string;
+    overview: string;
+    poster: string;
+    genres: string;
+    release_date: string | null;
+    release_year: string | null;
+    end_year: string | null;
+    imdb_id: string | null;
+    rating: number;
+    votes: number;
+    runtime: number | null;
+    budget: number;
+    revenue: number;
+    tagline: string;
+    seen: boolean;
+    favourite: boolean;
+    language: string;
+    number_of_seasons?: number;
+    number_of_episodes?: number;
+    seen_episodes: number;
+    seasons?: MediaSeasonEntry[];
+    series_type: string;
+    status: string;
+    networks: string;
+    created_by: string;
+    production_companies: string;
+}
+
+export interface MediaSeasonEntry {
+    id: number;
+    season: number;
+    title: string;
+    episodes: MediaEpisodeEntry[];
+    release_date: string;
+}
+
+export interface MediaEpisodeEntry {
+    id: number;
+    episode: number;
+    title: string;
+    overview: string;
+    seen: boolean;
+    release_date: string | null;
+}
+
+export interface MediaSearchItemEntry {
+    id: number;
+    media_type: string;
+    title: string;
+    original_title?: string;
+    name: string;
+    original_name?: string;
+    overview: string;
+    first_air_date: string;
+    release_date: string;
+    poster_path: string;
+    original_language: string;
+    vote_count: number;
+    vote_average: number;
+}
+
 export interface MediaStats {
-    movie: object;
-    tv: object;
+    movie: MediaStatsType;
+    tv: MediaStatsType;
+}
+
+export interface MediaStatsType {
+    total: number;
+    seen: number;
+    favourite: number;
+    episodes?: number;
+    seen_episodes?: number;
+    rating: number;
+    ratings: MediaStatsEntry[];
+    years: MediaStatsEntry[];
+}
+
+export interface MediaStatsEntry {
+    score?: number;
+    year?: number;
+    count: number;
 }
 
 export interface AdminState {

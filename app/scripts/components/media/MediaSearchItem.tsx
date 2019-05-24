@@ -1,15 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ISO6391 from 'iso-639-1';
 
 import { formatDate } from '../../util/formatting.js';
+import { MediaSearchItemEntry } from '../../interfaces';
 
 import { PlusIcon } from '../page/Icons';
 
 const defaultPoster = require('../../../images/media/poster_small.png');
 
-export default class MediaSearchItem extends React.PureComponent {
-    constructor(props) {
+interface MediaSearchItemProps {
+    data: MediaSearchItemEntry;
+    stored: boolean;
+    add: () => void;
+    remove: () => void;
+    imdb: () => void;
+}
+
+interface MediaSearchItemState {
+    overview: boolean;
+}
+
+export default class MediaSearchItem extends React.PureComponent<MediaSearchItemProps, MediaSearchItemState> {
+    constructor(props: MediaSearchItemProps) {
         super(props);
 
         this.state = {
@@ -17,15 +29,18 @@ export default class MediaSearchItem extends React.PureComponent {
         };
     }
 
-    static validLanguage(code) {
+    static validLanguage(code: string): boolean {
         return code === 'en' || code === 'no' || code === 'nb';
     }
 
-    toggleOverview() {
+    toggleOverview(): void {
         this.setState({ overview: !this.state.overview });
     }
 
-    render() {
+    render(): React.ReactElement {
+        const title = this.props.data.title ? this.props.data.title : this.props.data.name;
+        const originalTitle = this.props.data.original_title ? this.props.data.original_title : this.props.data.original_name;
+        const release = this.props.data.release_date || this.props.data.first_air_date;
         const text = this.props.stored ? 'Remove' : 'Add';
         const change = this.props.stored ? this.props.remove : this.props.add;
 
@@ -33,42 +48,40 @@ export default class MediaSearchItem extends React.PureComponent {
             <div className="media-item pvm">
                 <div className="media-poster">
                     <img
-                        src={this.props.poster ? `https://image.tmdb.org/t/p/w200${this.props.poster}` : defaultPoster}
-                        alt={this.props.poster ? `Poster: ${this.props.title}` : 'No poster'}
-                        onError={event => (event.target.src = defaultPoster)}
+                        src={this.props.data.poster_path ? `https://image.tmdb.org/t/p/w200${this.props.data.poster_path}` : defaultPoster}
+                        alt={this.props.data.poster_path ? `Poster: ${title}` : 'No poster'}
+                        onError={(event: React.InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
                         onClick={this.toggleOverview.bind(this)}
                     />
                     <div
                         className="media-poster-overlay"
                         role="dialog"
                         style={{ opacity: this.state.overview ? 1 : 0, zIndex: this.state.overview ? 10 : -1 }}
-                        onClick={this.state.overview ? change : null}>
+                        onClick={this.state.overview ? change : undefined}>
                         <PlusIcon width={40} height={40} fill="white" rotate={this.props.stored} />
                     </div>
                 </div>
                 <h3 className="media-title color-primary truncate man" onClick={this.toggleOverview.bind(this)}>
-                    {this.props.title} {formatDate(this.props.release, '(yyyy)')}
+                    {title} {formatDate(release, '(yyyy)')}
                 </h3>
                 <div className="media-data text-small">
-                    {this.props.title !== this.props.originalTitle ? (
-                        <div className="text-small italic">Orig: {this.props.originalTitle}</div>
-                    ) : null}
-                    <span className={MediaSearchItem.validLanguage(this.props.language) ? 'color-success' : 'color-warn'}>
-                        {ISO6391.getName(this.props.language)}
+                    {title !== originalTitle ? <div className="text-small italic">Orig: {originalTitle}</div> : null}
+                    <span className={MediaSearchItem.validLanguage(this.props.data.original_language) ? 'color-success' : 'color-warn'}>
+                        {ISO6391.getName(this.props.data.original_language)}
                     </span>
-                    {this.props.rating && this.props.votes > 3 ? (
+                    {this.props.data.vote_average ? (
                         <span>
                             ,&nbsp;
-                            <span className="strong" data-tooltip={`${this.props.votes} votes`}>
-                                {this.props.rating}
+                            <span className="strong" data-tooltip={`${this.props.data.vote_count || 0} votes`}>
+                                {this.props.data.vote_average}
                             </span>
                         </span>
                     ) : null}
-                    {this.props.release ? (
+                    {release ? (
                         <span>
                             ,&nbsp;
                             <span className="hide-lt480">Release: </span>
-                            {formatDate(this.props.release)}
+                            {formatDate(release)}
                         </span>
                     ) : null}
                     <div className="hide-gt768">
@@ -98,23 +111,9 @@ export default class MediaSearchItem extends React.PureComponent {
                     />
                 </div>
                 <div className={`media-overview text-small mtm${this.state.overview ? '' : ' hide-lt768'}`}>
-                    {this.props.overview === '' ? 'No description.' : this.props.overview}
+                    {this.props.data.overview === '' ? 'No description.' : this.props.data.overview}
                 </div>
             </div>
         );
     }
 }
-MediaSearchItem.propTypes = {
-    title: PropTypes.string.isRequired,
-    originalTitle: PropTypes.string.isRequired,
-    overview: PropTypes.string.isRequired,
-    poster: PropTypes.string,
-    release: PropTypes.string,
-    language: PropTypes.string.isRequired,
-    rating: PropTypes.number,
-    votes: PropTypes.number,
-    stored: PropTypes.bool.isRequired,
-    add: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired,
-    imdb: PropTypes.func.isRequired,
-};

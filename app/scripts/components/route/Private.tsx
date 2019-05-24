@@ -5,7 +5,8 @@ import auth from '../../util/auth.js';
 
 import Suspense from './Suspense';
 
-type PrivateComponent = typeof React.Component | React.LazyExoticComponent<React.NamedExoticComponent>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PrivateComponent = typeof React.Component | React.LazyExoticComponent<React.NamedExoticComponent> | any;
 
 interface PrivateProps {
     path: string;

@@ -1,14 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting.js';
 
 import { StarIcon, ViewIcon } from '../page/Icons';
+import { MediaItemEntry, MediaType } from '../../interfaces';
 
 const defaultPoster = require('../../../images/media/poster.png');
 
-export default class MediaItem extends React.PureComponent {
-    renderRating() {
+interface MediaItemProps {
+    type: MediaType;
+    data: MediaItemEntry;
+    setSeen: () => void;
+    setFavourite: () => void;
+    showItem: () => void;
+}
+
+export default class MediaItem extends React.PureComponent<MediaItemProps> {
+    renderRating(): React.ReactElement {
         return (
             <>
                 &nbsp;|&nbsp;
@@ -18,7 +26,7 @@ export default class MediaItem extends React.PureComponent {
         );
     }
 
-    renderSeasons() {
+    renderSeasons(): React.ReactElement {
         const seen = this.props.data.seen_episodes || 0;
         return (
             <>
@@ -31,18 +39,18 @@ export default class MediaItem extends React.PureComponent {
         );
     }
 
-    render() {
+    render(): React.ReactElement {
         return (
             <div className="media-item media-item-small pvm">
-                <div className="media-poster" onClick={this.props.showItem} role="button" tabIndex="0">
+                <div className="media-poster" onClick={this.props.showItem} role="button" tabIndex={0}>
                     <img
                         className="pointer"
                         src={this.props.data.poster ? `/assets/images/media${this.props.data.poster}` : defaultPoster}
                         alt={this.props.data.poster ? `Poster: ${this.props.data.title}` : 'No poster'}
-                        onError={event => (event.target.src = defaultPoster)}
+                        onError={(event: React.InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
                     />
                 </div>
-                <div className="media-title truncate color-primary strong pointer" onClick={this.props.showItem} role="button" tabIndex="0">
+                <div className="media-title truncate color-primary strong pointer" onClick={this.props.showItem} role="button" tabIndex={0}>
                     {this.props.data.title}
                 </div>
                 <div className="media-data text-small truncate">
@@ -69,21 +77,13 @@ export default class MediaItem extends React.PureComponent {
                 </div>
                 <div className="media-external">
                     <button className="button-blank mrm" data-tooltip="Seen" onClick={this.props.setSeen}>
-                        <ViewIcon width={24} seen={!!this.props.data.seen} className={this.props.data.seen ? '' : 'faded'} />
+                        <ViewIcon width={24} seen={this.props.data.seen} />
                     </button>
                     <button className="button-blank" data-tooltip="Favourite" onClick={this.props.setFavourite}>
-                        <StarIcon width={24} favourite={!!this.props.data.favourite} className={this.props.data.favourite ? '' : 'faded'} />
+                        <StarIcon width={24} favourite={this.props.data.favourite} />
                     </button>
                 </div>
             </div>
         );
     }
 }
-
-MediaItem.propTypes = {
-    type: PropTypes.oneOf(['movie', 'tv']).isRequired,
-    data: PropTypes.object.isRequired,
-    setSeen: PropTypes.func.isRequired,
-    setFavourite: PropTypes.func.isRequired,
-    showItem: PropTypes.func.isRequired,
-};
