@@ -33,6 +33,11 @@ interface MediaListDispatchProps {
     setFavourite: (itemType: string, id: number, favourite: boolean) => void;
 }
 
+interface MediaListRouteProps {
+    type: MediaType;
+    page?: string;
+}
+
 class MediaList extends React.Component<MediaListStateProps & MediaListDispatchProps> {
     componentDidMount(): void {
         if (this.props.data) {
@@ -54,7 +59,8 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
 
     handleKey(event: React.KeyboardEvent<HTMLInputElement>): void {
         if ((event.keyCode === 13 || event.key === 'Enter') && event.target) {
-            this.props.loadMedia(event.target.value.length ? event.target.value : undefined);
+            const target = event.target as HTMLInputElement;
+            this.props.loadMedia(target.value.length ? target.value : undefined);
         }
     }
 
@@ -149,25 +155,25 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
     }
 }
 
-const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps): MediaListStateProps => ({
+const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListStateProps => ({
     data: state.media[ownProps.match.params.type],
     item: state.media.item,
     showModal: state.media.showModal,
     sort: state.media.sort,
     type: ownProps.match.params.type,
-    page: +ownProps.match.params.page || 1,
+    page: Number(ownProps.match.params.page || 1),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: RouteComponentProps): MediaListDispatchProps => {
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListDispatchProps => {
     const { type, page } = ownProps.match.params;
     return {
         loadMedia: (query?: string): void => {
-            dispatch(mediaActions.get({ action: type, query, page: +page || 1 }));
+            dispatch(mediaActions.get({ action: type, query, page: page || 1 }));
             window.scrollTo(0, 0);
         },
         setSort: (sort: string): void => {
             dispatch(mediaActions.setSort(sort));
-            dispatch(mediaActions.get({ action: type, sort, page: +page || 1 }));
+            dispatch(mediaActions.get({ action: type, sort, page: page || 1 }));
         },
         setPagination: (page: number): void => dispatch(paginationActions.set(page)),
         resetPagination: (): void => dispatch(paginationActions.reset()),

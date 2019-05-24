@@ -29,6 +29,13 @@ interface MediaSearchDispatchProps {
     resetPagination: () => void;
 }
 
+export interface MediaSearchRouteProps {
+    type?: string;
+    action?: string;
+    id?: string;
+    page?: string;
+}
+
 class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDispatchProps> {
     componentDidMount(): void {
         if (this.props.action && this.props.type) {
@@ -93,18 +100,19 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
     }
 }
 
-const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps): MediaSearchStateProps => ({
+const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<MediaSearchRouteProps>): MediaSearchStateProps => ({
     data: state.media.search,
     existing: state.media.existing,
     type: ownProps.match.params.type,
     action: ownProps.match.params.action,
     id: ownProps.match.params.id,
-    page: +ownProps.match.params.page || 1,
+    page: Number(ownProps.match.params.page || 1),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: RouteComponentProps): MediaSearchDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: RouteComponentProps<MediaSearchRouteProps>): MediaSearchDispatchProps => ({
     search: debounce((query: string): void => dispatch(mediaActions.search(query)), 500),
-    get: (): void => dispatch(mediaActions.post(Object.assign({}, ownProps.match.params, { page: +ownProps.match.params.page || 1 }))),
+    get: (): void =>
+        dispatch(mediaActions.post(Object.assign({}, ownProps.match.params, { page: Number(ownProps.match.params.page || 1) }))),
     add: (type: string, id: number): void => dispatch(mediaActions.add({ type: type || ownProps.match.params.type, id })),
     remove: (type: string, id: number): void => dispatch(mediaActions.remove({ type: type || ownProps.match.params.type, id })),
     goToIMDb: (type: string, id: number): void => dispatch(mediaActions.goToIMDb({ type: type || ownProps.match.params.type, id })),
