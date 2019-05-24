@@ -1,7 +1,7 @@
 import React from 'react';
 import ISO6391 from 'iso-639-1';
 
-import { formatDate } from '../../util/formatting.js';
+import { formatDate } from '../../util/formatting';
 import { MediaSearchItemEntry } from '../../interfaces';
 
 import { PlusIcon } from '../page/Icons';

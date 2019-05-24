@@ -1,8 +1,8 @@
 import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
 
-import { post } from '../util/api.js';
-import auth from '../util/auth.js';
+import { post } from '../util/api';
+import auth from '../util/auth';
 import baseActions from './base.js';
 
 const actions = {};

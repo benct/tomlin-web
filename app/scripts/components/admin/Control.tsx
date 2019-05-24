@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, AdminStats } from '../../interfaces';
-import { formatThousands } from '../../util/formatting.js';
+import { formatThousands } from '../../util/formatting';
 import adminActions from '../../actions/admin.js';
 
 interface ControlProps {
@@ -29,7 +29,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
     }
 
     formatStat(key: string): string {
-        return formatThousands(this.props.stats[key] || '-');
+        return formatThousands(this.props.stats[key]) || '-';
     }
 
     static renderOptions(values: number[]): React.ReactElement[] {
@@ -82,7 +82,11 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     </select>
                     <button
                         className="button-default button-default-small"
-                        onClick={(): void => this.props.dispatch(adminActions.updateMedia('movie', this.updateMovieCount.current.value))}>
+                        onClick={(): void =>
+                            this.props.dispatch(
+                                adminActions.updateMedia('movie', this.updateMovieCount.current && this.updateMovieCount.current.value)
+                            )
+                        }>
                         Run
                     </button>
                     <span className="truncate">Update number of stored tv-shows</span>
@@ -91,7 +95,11 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     </select>
                     <button
                         className="button-default button-default-small"
-                        onClick={(): void => this.props.dispatch(adminActions.updateMedia('tv', this.updateTvCount.current.value))}>
+                        onClick={(): void =>
+                            this.props.dispatch(
+                                adminActions.updateMedia('tv', this.updateTvCount.current && this.updateTvCount.current.value)
+                            )
+                        }>
                         Run
                     </button>
                 </div>
@@ -127,7 +135,9 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     </select>
                     <button
                         className="button-default button-default-small"
-                        onClick={(): void => this.props.dispatch(adminActions.getLogs(this.logCount.current.value))}>
+                        onClick={(): void =>
+                            this.props.dispatch(adminActions.getLogs(this.logCount.current && this.logCount.current.value))
+                        }>
                         Load
                     </button>
                 </div>

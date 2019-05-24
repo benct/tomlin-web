@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 
 import mediaActions from '../../actions/media.js';
-import { formatDate, formatGradientHSL } from '../../util/formatting.js';
+import { formatDate, formatGradientHSL } from '../../util/formatting';
 import { MediaEpisodeEntry, MediaSeasonEntry } from '../../interfaces';
 
 import { ViewIcon } from '../page/Icons';

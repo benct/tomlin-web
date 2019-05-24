@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting.js';
+import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting';
 import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '../../interfaces';
 
 import { StarIcon, ViewIcon } from '../page/Icons';

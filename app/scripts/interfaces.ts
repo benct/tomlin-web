@@ -121,8 +121,8 @@ export interface MediaItemEntry {
     seen: boolean;
     favourite: boolean;
     language: string;
-    number_of_seasons?: number;
-    number_of_episodes?: number;
+    number_of_seasons: number;
+    number_of_episodes: number;
     seen_episodes: number;
     seasons?: MediaSeasonEntry[];
     series_type: string;

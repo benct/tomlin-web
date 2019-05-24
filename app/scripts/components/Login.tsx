@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 
-import auth from '../util/auth.js';
+import auth from '../util/auth';
 
 interface LoginState {
     redirectToReferrer: boolean;

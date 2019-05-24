@@ -1,7 +1,7 @@
 import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
 
-import { post, fetchFile } from '../util/api.js';
+import { post, fetchFile } from '../util/api';
 
 import baseActions from './base.js';
 

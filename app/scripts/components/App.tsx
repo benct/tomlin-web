@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import auth from '../util/auth.js';
+import auth from '../util/auth';
 import actions from '../actions/base.js';
 import { DefaultState } from '../interfaces';
 

@@ -1,8 +1,8 @@
 import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
 
-import quotes from '../util/quotes.js';
-import { fetchFile, _get } from '../util/api.js';
+import quotes from '../util/quotes';
+import { fetchFile, _get } from '../util/api';
 
 const actions = {};
 

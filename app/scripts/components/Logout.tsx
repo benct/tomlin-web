@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import auth from '../util/auth.js';
+import auth from '../util/auth';
 
 class Logout extends React.PureComponent<RouteComponentProps> {
     componentDidMount(): void {

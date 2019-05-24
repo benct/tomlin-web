@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting.js';
+import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting';
 
 import { StarIcon, ViewIcon } from '../page/Icons';
 import { MediaItemEntry, MediaType } from '../../interfaces';

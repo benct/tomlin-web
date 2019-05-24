@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import debounce from '../../util/debounce.js';
+import debounce from '../../util/debounce';
 import mediaActions from '../../actions/media.js';
 import paginationActions from '../../actions/pagination.js';
 import { DefaultState, MediaSearchItemEntry } from '../../interfaces';

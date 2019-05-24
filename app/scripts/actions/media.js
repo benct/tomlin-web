@@ -1,8 +1,8 @@
 import makeAction from '../redux/makeAction.js';
 import makeReducer from '../redux/makeReducer.js';
 
-import { get, post } from '../util/api.js';
-import auth from '../util/auth.js';
+import { get, post } from '../util/api';
+import auth from '../util/auth';
 import baseActions from './base.js';
 import paginationActions from './pagination.js';
 
