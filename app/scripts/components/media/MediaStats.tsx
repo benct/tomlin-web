@@ -13,10 +13,11 @@ import {
 import 'react-vis/dist/style.css';
 
 import mediaActions from '../../actions/media.js';
-import { DefaultState, MediaStats as MediaStatsObject, MediaStatsEntry, MediaStatsType } from '../../interfaces';
+import { DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
 
 interface MediaStatsProps {
-    stats: MediaStatsObject;
+    movie: MediaStatsType;
+    tv: MediaStatsType;
     isLoggedIn: boolean;
 }
 
@@ -27,12 +28,12 @@ interface MediaGraphEntry {
 
 class MediaStats extends React.PureComponent<MediaStatsProps & DispatchProp> {
     componentDidMount(): void {
-        if (!this.props.stats.movie.total) {
+        if (!this.props.movie.total) {
             this.props.dispatch(mediaActions.stats());
         }
     }
 
-    static mapRatings(data: MediaStatsEntry[]): MediaGraphEntry[] {
+    static mapRatings(data?: MediaStatsEntry[]): MediaGraphEntry[] {
         return data
             ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map(
                   (num: number): MediaGraphEntry => ({
@@ -43,7 +44,7 @@ class MediaStats extends React.PureComponent<MediaStatsProps & DispatchProp> {
             : [];
     }
 
-    static mapYears(data: MediaStatsEntry[]): MediaGraphEntry[] {
+    static mapYears(data?: MediaStatsEntry[]): MediaGraphEntry[] {
         return data ? data.map((item: MediaStatsEntry): MediaGraphEntry => ({ x: `${item.year}0`, y: item.count })) : [];
     }
 
@@ -106,23 +107,23 @@ class MediaStats extends React.PureComponent<MediaStatsProps & DispatchProp> {
                 <div className="media-stats text-center">
                     <div>
                         <div className="border-bottom pbs mam">Tracked Movies</div>
-                        {MediaStats.renderStats(this.props.stats.movie)}
+                        {MediaStats.renderStats(this.props.movie)}
                         {MediaStats.renderLineChart(
-                            `Rating (avg: ${this.props.stats.movie.rating || '-'})`,
+                            `Rating (avg: ${this.props.movie.rating || '-'})`,
                             '#006080',
-                            MediaStats.mapRatings(this.props.stats.movie.ratings)
+                            MediaStats.mapRatings(this.props.movie.ratings)
                         )}
-                        {MediaStats.renderBarChart('Release (decade)', '#006080', MediaStats.mapYears(this.props.stats.movie.years))}
+                        {MediaStats.renderBarChart('Release (decade)', '#006080', MediaStats.mapYears(this.props.movie.years))}
                     </div>
                     <div>
                         <div className="border-bottom pbs mam">Tracked TV-Shows</div>
-                        {MediaStats.renderStats(this.props.stats.tv)}
+                        {MediaStats.renderStats(this.props.tv)}
                         {MediaStats.renderLineChart(
-                            `Rating (avg: ${this.props.stats.tv.rating || '-'})`,
+                            `Rating (avg: ${this.props.tv.rating || '-'})`,
                             '#008060',
-                            MediaStats.mapRatings(this.props.stats.tv.ratings)
+                            MediaStats.mapRatings(this.props.tv.ratings)
                         )}
-                        {MediaStats.renderBarChart('First aired (decade)', '#008060', MediaStats.mapYears(this.props.stats.tv.years))}
+                        {MediaStats.renderBarChart('First aired (decade)', '#008060', MediaStats.mapYears(this.props.tv.years))}
                     </div>
                 </div>
             </>
@@ -132,7 +133,8 @@ class MediaStats extends React.PureComponent<MediaStatsProps & DispatchProp> {
 
 export default connect(
     (state: DefaultState): MediaStatsProps => ({
-        stats: state.media.stats,
+        movie: state.media.stats.movie,
+        tv: state.media.stats.tv,
         isLoggedIn: state.isLoggedIn,
     })
 )(MediaStats);

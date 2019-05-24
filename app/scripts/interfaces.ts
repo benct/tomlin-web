@@ -85,7 +85,10 @@ export interface MediaState {
     search: MediaSearchItemEntry[];
     existing: number[];
     sort: string;
-    stats: MediaStats;
+    stats: {
+        movie: MediaStatsType;
+        tv: MediaStatsType;
+    };
 }
 
 export interface MediaResults {
@@ -162,20 +165,15 @@ export interface MediaSearchItemEntry {
     vote_average: number;
 }
 
-export interface MediaStats {
-    movie: MediaStatsType;
-    tv: MediaStatsType;
-}
-
 export interface MediaStatsType {
-    total: number;
-    seen: number;
-    favourite: number;
+    total?: number;
+    seen?: number;
+    favourite?: number;
     episodes?: number;
     seen_episodes?: number;
-    rating: number;
-    ratings: MediaStatsEntry[];
-    years: MediaStatsEntry[];
+    rating?: number;
+    ratings?: MediaStatsEntry[];
+    years?: MediaStatsEntry[];
 }
 
 export interface MediaStatsEntry {

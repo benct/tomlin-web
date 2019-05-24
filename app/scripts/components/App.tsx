@@ -18,7 +18,7 @@ import Login from './Login';
 import Logout from './Logout';
 
 const Links = React.lazy(() => import('./data/Links'));
-const Media = React.lazy(() => import('./media/Media.jsx'));
+const Media = React.lazy(() => import('./media/Media'));
 const Admin = React.lazy(() => import('./admin/Admin'));
 
 interface AppStateProps {
