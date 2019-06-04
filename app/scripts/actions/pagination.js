@@ -1,6 +1,6 @@
-import makeAction from '../redux/makeAction.js';
-import makeReducer from '../redux/makeReducer.js';
-import defaultState from '../redux/defaultState.ts';
+import makeAction from '../redux/makeAction';
+import makeReducer from '../redux/makeReducer';
+import defaultState from '../redux/defaultState';
 
 const actions = {};
 

@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 
 import debounce from './debounce';
 import actions from '../actions/base.js';
-import store from '../redux/store.js';
+import store from '../redux/store';
 import auth from './auth';
 
 const baseUrl = 'https://tomlin.no';

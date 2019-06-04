@@ -1,7 +1,9 @@
+import { AnyAction, Reducer } from 'redux';
+
 /**
  * Takes an action type, a reducer, and optionally an action creator, and returns an action creator with the type and reducer attached.
  *
- * A collection of action creators can be passed to [makeReducer()]{@link makeReducer.js} to automatically generate a reducer.
+ * A collection of action creators can be passed to [makeReducer()]{@link makeReducer.ts} to automatically generate a reducer.
  *
  * The reducer can be either a function or a string. Reducer functions have the normal reducer signature: (state, action) => newState
  * If a string is provided instead, a simple reducer will be generated automatically which will return a new state where a field named
@@ -25,7 +27,11 @@
  * @return {Function} An action creation function
  * @see {@link makeReducer.js}
  */
-export default function makeAction(type, reducer, creator = payload => ({ type, payload })) {
+export default function makeAction<T>(
+    type: string,
+    reducer: string | Reducer<T>,
+    creator: any = (payload: any): AnyAction => ({ type, payload })
+): any {
     if (!type || !reducer) {
         throw new Error('A type and a reducer is required');
     }
@@ -34,7 +40,7 @@ export default function makeAction(type, reducer, creator = payload => ({ type, 
     action.type = type;
 
     if (typeof reducer === 'string') {
-        action.reducer = (state, a) => Object.assign({}, state, { [reducer]: a.payload });
+        action.reducer = (state: T, a: AnyAction): T => Object.assign({}, state, { [reducer]: a.payload });
     } else {
         action.reducer = reducer;
     }

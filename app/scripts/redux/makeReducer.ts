@@ -1,3 +1,9 @@
+import { AnyAction, Reducer } from 'redux';
+
+interface Actions {
+    [key: string]: { reducer: Reducer; type: string };
+}
+
 /**
  * Takes an object consisting of action definitions as defined by makeAction, and returns a reducer function that handles all these actions
  *
@@ -12,26 +18,28 @@
  * @returns {reducer}
  * @see {@link makeAction.js}
  */
-export default function makeReducer(actions) {
+export default function makeReducer<T>(actions: Actions): Reducer {
     if (typeof actions !== 'object') {
         throw new Error('Failed to make reducer: No actions specified');
     }
 
-    const reducerActions = Object.keys(actions)
-        .filter(name => !!actions[name].reducer && !!actions[name].type)
-        .reduce((last, name) => {
-            last[name] = actions[name];
-            return last;
+    const reducerActions: Actions = Object.keys(actions)
+        .filter((name: string): boolean => !!actions[name].reducer && !!actions[name].type)
+        .reduce((acc: Actions, name: string): Actions => {
+            acc[name] = actions[name];
+            return acc;
         }, {});
 
-    function reducer(state, action) {
+    function reducer(state: T, action: AnyAction): T {
         if (!state || typeof state !== 'object') {
             throw new Error('Failed to execute reducer: Missing state');
         } else if (!action || typeof action !== 'object' || !action.type) {
             throw new Error('Failed to execute reducer: Missing action');
         }
 
-        const actionNames = Object.keys(reducerActions || {}).filter(actionName => actions[actionName].type === action.type);
+        const actionNames = Object.keys(reducerActions || {}).filter(
+            (actionName: string): boolean => actions[actionName].type === action.type
+        );
 
         if (actionNames.length === 1) {
             return reducerActions[actionNames[0]].reducer(state, action);

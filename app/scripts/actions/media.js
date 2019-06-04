@@ -1,5 +1,5 @@
-import makeAction from '../redux/makeAction.js';
-import makeReducer from '../redux/makeReducer.js';
+import makeAction from '../redux/makeAction';
+import makeReducer from '../redux/makeReducer';
 
 import { get, post } from '../util/api';
 import auth from '../util/auth';
