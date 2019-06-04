@@ -7,8 +7,7 @@ import auth from '../util/auth';
 import actions from '../actions/base.js';
 import { DefaultState } from '../interfaces';
 
-import PrivateRoute from './route/Private';
-import Suspense from './route/Suspense';
+import SuspendedRoute from './route/Suspended';
 import Navigation from './page/Navigation';
 import Social from './page/Social';
 import Error from './page/Error';
@@ -17,9 +16,9 @@ import Home from './home/Home';
 import Login from './Login';
 import Logout from './Logout';
 
-const Links = React.lazy(() => import('./page/Links'));
-const Media = React.lazy(() => import('./media/Media'));
-const Admin = React.lazy(() => import('./admin/Admin'));
+const Links = React.lazy((): Promise<any> => import('./page/Links'));
+const Media = React.lazy((): Promise<any> => import('./media/Media'));
+const Admin = React.lazy((): Promise<any> => import('./admin/Admin'));
 
 interface AppStateProps {
     showMenu: boolean;
@@ -63,33 +62,12 @@ class App extends React.Component<AppStateProps & AppDispatchProps> {
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/about" component={About} />
-                            <Route
-                                path="/links"
-                                render={(): React.ReactElement => (
-                                    <Suspense>
-                                        <Links file="default.json" />
-                                    </Suspense>
-                                )}
-                            />
-                            <Route
-                                path="/finn"
-                                render={(): React.ReactElement => (
-                                    <Suspense>
-                                        <Links file="finn.json" />
-                                    </Suspense>
-                                )}
-                            />
+                            <SuspendedRoute path="/links" component={Links} extraProps={{ file: 'default.json' }} />
+                            <SuspendedRoute path="/finn" component={Links} extraProps={{ file: 'finn.json' }} />
                             <Route path="/logout" component={Logout} />
                             <Route path="/login" component={Login} />
-                            <Route
-                                path="/media"
-                                render={(): React.ReactElement => (
-                                    <Suspense>
-                                        <Media />
-                                    </Suspense>
-                                )}
-                            />
-                            <PrivateRoute path="/admin" component={Admin} />
+                            <SuspendedRoute path="/media" component={Media} />
+                            <SuspendedRoute path="/admin" component={Admin} requireAuth />
                             <Route render={(): React.ReactElement => <Error code={404} />} />
                         </Switch>
                     </main>

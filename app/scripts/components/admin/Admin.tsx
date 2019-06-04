@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Suspense from '../route/Suspense';
+import SuspendedRoute from '../route/Suspended';
 import Navigation, { NavigationItem } from '../page/Navigation';
 import Error from '../page/Error';
 import Control from './Control';
@@ -26,22 +26,8 @@ const Admin: React.FC = (): React.ReactElement => (
                 <Route path="/admin" exact component={Control} />
                 <Route path="/admin/logs" component={Logs} />
                 <Route path="/admin/visits" component={Visits} />
-                <Route
-                    path="/admin/notes"
-                    render={(): React.ReactNode => (
-                        <Suspense>
-                            <Notes />
-                        </Suspense>
-                    )}
-                />
-                <Route
-                    path="/admin/files"
-                    render={(): React.ReactNode => (
-                        <Suspense>
-                            <Files />
-                        </Suspense>
-                    )}
-                />
+                <SuspendedRoute path="/admin/notes" component={Notes} />
+                <SuspendedRoute path="/admin/files" component={Files} />
                 <Route render={(): React.ReactNode => <Error code={404} />} />
             </Switch>
         </div>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import PrivateRoute from '../route/Private';
+import SuspendedRoute from '../route/Suspended';
 import Navigation, { NavigationItem } from '../page/Navigation';
 import Error from '../page/Error';
 import Stats from './MediaStats';
 
-const MediaSearch = React.lazy(() => import('./MediaSearch'));
-const MediaList = React.lazy(() => import('./MediaList'));
+const MediaSearch = React.lazy((): Promise<any> => import('./MediaSearch'));
+const MediaList = React.lazy((): Promise<any> => import('./MediaList'));
 
 const menu: NavigationItem[] = [
     { text: 'Movies', path: '/media/movie' },
@@ -22,9 +22,9 @@ const Media: React.FC = (): React.ReactElement => (
         <div className="wrapper ptm">
             <Switch>
                 <Route path="/media" exact component={Stats} />
-                <PrivateRoute path="/media/:type(movie|tv|watchlist)/:page?" component={MediaList} />
-                <PrivateRoute path="/media/search/:type?/:action?/:page?/:id?" component={MediaSearch} />
-                <Route render={() => <Error code={404} />} />
+                <SuspendedRoute path="/media/:type(movie|tv|watchlist)/:page?" component={MediaList} requireAuth />
+                <SuspendedRoute path="/media/search/:type?/:action?/:page?/:id?" component={MediaSearch} requireAuth />
+                <Route render={(): React.ReactNode => <Error code={404} />} />
             </Switch>
         </div>
     </>
