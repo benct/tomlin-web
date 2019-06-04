@@ -17,7 +17,7 @@ import Home from './home/Home';
 import Login from './Login';
 import Logout from './Logout';
 
-const Links = React.lazy(() => import('./data/Links'));
+const Links = React.lazy(() => import('./page/Links'));
 const Media = React.lazy(() => import('./media/Media'));
 const Admin = React.lazy(() => import('./admin/Admin'));
 
@@ -63,6 +63,14 @@ class App extends React.Component<AppStateProps & AppDispatchProps> {
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/about" component={About} />
+                            <Route
+                                path="/links"
+                                render={(): React.ReactElement => (
+                                    <Suspense>
+                                        <Links file="default.json" />
+                                    </Suspense>
+                                )}
+                            />
                             <Route
                                 path="/finn"
                                 render={(): React.ReactElement => (
