@@ -14,7 +14,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
     updateMovieCount: React.RefObject<HTMLSelectElement>;
     updateTvCount: React.RefObject<HTMLSelectElement>;
 
-    constructor(props: ControlProps) {
+    constructor(props: ControlProps & DispatchProp) {
         super(props);
 
         this.logCount = React.createRef();
@@ -29,7 +29,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
     }
 
     formatStat(key: string): string {
-        return formatThousands(this.props.stats[key]) || '-';
+        return this.props.stats[key] ? formatThousands(this.props.stats[key]) : '-';
     }
 
     static renderOptions(values: number[]): React.ReactElement[] {
