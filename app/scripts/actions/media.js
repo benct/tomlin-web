@@ -8,22 +8,21 @@ import paginationActions from './pagination.js';
 
 const actions = {};
 
-actions.set = makeAction('MEDIA/SET', (state, { payload }) =>
-    Object.assign({}, state, {
-        [payload.key]: {
-            results: payload.results || [],
-            page: {
-                current: payload.page,
-                total: payload.total_pages,
-            },
+actions.set = makeAction('MEDIA/SET', (state, { payload }) => ({
+    ...state,
+    [payload.key]: {
+        results: payload.results || [],
+        page: {
+            current: payload.page,
+            total: payload.total_pages,
         },
-    })
-);
+    },
+}));
 
 actions.get = ({ action, sort, page, query }) => (dispatch, getState) =>
     get({ service: 'media', action, query, page: page || getState().pagination.current, sort: sort || getState().media.sort })
         .then(response => {
-            dispatch(actions.set(Object.assign(response, { key: action })));
+            dispatch(actions.set({ ...response, key: action }));
             dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
         })
         .catch(() => {
@@ -33,11 +32,9 @@ actions.get = ({ action, sort, page, query }) => (dispatch, getState) =>
 
 actions.setSort = makeAction('MEDIA/SET_SORT', 'sort');
 
-actions.showModal = makeAction('MEDIA/SHOW_MODAL', (state, { payload }) =>
-    Object.assign({}, state, { showModal: true, item: payload || state.item })
-);
+actions.showModal = makeAction('MEDIA/SHOW_MODAL', (state, { payload }) => ({ ...state, showModal: true, item: payload || state.item }));
 
-actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => Object.assign({}, state, { showModal: false }));
+actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => ({ ...state, showModal: false }));
 
 actions.setItem = ({ type, id, override }) => (dispatch, getState) => {
     if (override || !getState().media.item || getState().media.item.id !== id) {
@@ -87,12 +84,13 @@ actions.addExisting = makeAction('MEDIA/ADD_EXISTING', (state, { payload }) => {
     const existing = state.existing.slice();
     existing.push(payload);
 
-    return Object.assign({}, state, { existing });
+    return { ...state, existing };
 });
 
-actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }) =>
-    Object.assign({}, state, { existing: state.existing.filter(i => i !== payload) })
-);
+actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }) => ({
+    ...state,
+    existing: state.existing.filter(i => i !== payload),
+}));
 
 actions.add = ({ type, id }) => dispatch => {
     if (auth.loggedIn()) {
@@ -132,19 +130,19 @@ actions.update = ({ action, type, id }) => dispatch => {
     }
 };
 
-actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload: { action, id, set } }) =>
-    Object.assign({}, state, {
-        item: state.item ? Object.assign({}, state.item, { favourite: set }) : null,
-        [action]: Object.assign({}, state[action], {
-            results: state[action].results.map(item => {
-                if (item.id === id) {
-                    item.favourite = set;
-                }
-                return item;
-            }),
+actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload: { action, id, set } }) => ({
+    ...state,
+    item: state.item ? { ...state.item, favourite: set } : null,
+    [action]: {
+        ...state[action],
+        results: state[action].results.map(item => {
+            if (item.id === id) {
+                item.favourite = set;
+            }
+            return item;
         }),
-    })
-);
+    },
+}));
 
 actions.favourite = ({ action, type, id, set }) => dispatch => {
     if (auth.loggedIn()) {
@@ -157,19 +155,19 @@ actions.favourite = ({ action, type, id, set }) => dispatch => {
     }
 };
 
-actions.setSeen = makeAction('MEDIA/SET_SEEN', (state, { payload: { action, id, set } }) =>
-    Object.assign({}, state, {
-        item: state.item ? Object.assign({}, state.item, { seen: set }) : state.item,
-        [action]: Object.assign({}, state[action], {
-            results: state[action].results.map(item => {
-                if (item.id === id) {
-                    item.seen = set;
-                }
-                return item;
-            }),
+actions.setSeen = makeAction('MEDIA/SET_SEEN', (state, { payload: { action, id, set } }) => ({
+    ...state,
+    item: state.item ? { ...state.item, seen: set } : state.item,
+    [action]: {
+        ...state[action],
+        results: state[action].results.map(item => {
+            if (item.id === id) {
+                item.seen = set;
+            }
+            return item;
         }),
-    })
-);
+    },
+}));
 
 actions.seen = ({ action, type, id, set }) => dispatch => {
     if (auth.loggedIn()) {
@@ -183,18 +181,17 @@ actions.seen = ({ action, type, id, set }) => dispatch => {
 };
 
 actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload: { seasonId, episodeId, set } }) => {
-    const item = Object.assign({}, state.item, {
-        seasons: state.item.seasons.map(season =>
-            Object.assign({}, season, {
-                episodes: season.episodes.map(episode =>
-                    Object.assign({}, episode, {
-                        seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
-                    })
-                ),
-            })
-        ),
-    });
-    return Object.assign({}, state, { item });
+    const item = {
+        ...state.item,
+        seasons: state.item.seasons.map(season => ({
+            ...season,
+            episodes: season.episodes.map(episode => ({
+                ...episode,
+                seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
+            })),
+        })),
+    };
+    return { ...state, item };
 });
 
 actions.seenEpisode = ({ id, set }) => dispatch => {

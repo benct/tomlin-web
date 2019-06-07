@@ -27,7 +27,8 @@ actions.set = makeAction('PAGINATION/SET', (state, { payload }) => {
     const previousPages = createListOfPreviousPages(payload.total, payload.current);
     const consecutivePages = createListOfConsecutivePages(payload.total, previousPages[0] || 1, payload.current);
 
-    return Object.assign({}, state, {
+    return {
+        ...state,
         enabled: payload.total > 1,
         first: payload.current > 2,
         previousPages,
@@ -37,10 +38,10 @@ actions.set = makeAction('PAGINATION/SET', (state, { payload }) => {
         consecutivePages,
         last: payload.current < payload.total - 1,
         total: payload.total,
-    });
+    };
 });
 
-actions.reset = makeAction('PAGINATION/RESET', state => Object.assign({}, state, defaultState.pagination));
+actions.reset = makeAction('PAGINATION/RESET', state => ({ ...state, ...defaultState.pagination }));
 
 export default actions;
 

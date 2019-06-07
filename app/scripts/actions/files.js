@@ -15,7 +15,7 @@ actions.setFocus = makeAction('FILES/SET_FOCUS', 'focused');
 
 actions.setUploading = makeAction('FILES/SET_UPLOADING', 'uploading');
 
-actions.setDirectory = makeAction('FILES/CHANGE_DIR', (state, { payload }) => Object.assign({}, state, { cwd: payload, focused: null }));
+actions.setDirectory = makeAction('FILES/CHANGE_DIR', (state, { payload }) => ({ ...state, cwd: payload, focused: null }));
 
 actions.refresh = cwd => (dispatch, getState) =>
     post({ service: 'files', action: 'ls', path: cwd || getState().files.cwd })

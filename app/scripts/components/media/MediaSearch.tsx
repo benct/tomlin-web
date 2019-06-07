@@ -111,8 +111,7 @@ const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<Medi
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: RouteComponentProps<MediaSearchRouteProps>): MediaSearchDispatchProps => ({
     search: debounce((query: string): void => dispatch(mediaActions.search(query)), 500),
-    get: (): void =>
-        dispatch(mediaActions.post(Object.assign({}, ownProps.match.params, { page: Number(ownProps.match.params.page || 1) }))),
+    get: (): void => dispatch(mediaActions.post({ ...ownProps.match.params, page: Number(ownProps.match.params.page || 1) })),
     add: (type: string, id: number): void => dispatch(mediaActions.add({ type: type || ownProps.match.params.type, id })),
     remove: (type: string, id: number): void => dispatch(mediaActions.remove({ type: type || ownProps.match.params.type, id })),
     goToIMDb: (type: string, id: number): void => dispatch(mediaActions.goToIMDb({ type: type || ownProps.match.params.type, id })),
