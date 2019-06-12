@@ -70,18 +70,16 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
         }
     }
 
-    renderRows(data: MediaItemEntry[]): React.ReactElement[] {
-        return data.map(
-            (item): React.ReactElement => (
-                <MediaItem
-                    key={`${item.id}-${item.imdb_id}`}
-                    type={item.type || this.props.type}
-                    data={item}
-                    setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}
-                    setFavourite={this.props.setFavourite.bind(this, item.type, item.id, item.favourite)}
-                    showItem={this.props.show.bind(this, item.type, item.id)}
-                />
-            )
+    renderRow(item: MediaItemEntry): React.ReactElement {
+        return (
+            <MediaItem
+                key={`${item.id}-${item.imdb_id}`}
+                type={item.type || this.props.type}
+                data={item}
+                setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}
+                setFavourite={this.props.setFavourite.bind(this, item.type, item.id, item.favourite)}
+                showItem={this.props.show.bind(this, item.type, item.id)}
+            />
         );
     }
 
@@ -104,11 +102,11 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
             <>
                 <div>TV-Shows:</div>
                 <div className="clear-fix text-center">
-                    {this.renderRows(data.results.filter((item: MediaItemEntry): boolean => item.type === 'tv'))}
+                    {data.results.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(this.renderRow.bind(this))}
                 </div>
                 <div>Movies:</div>
                 <div className="clear-fix text-center">
-                    {this.renderRows(data.results.filter((item: MediaItemEntry): boolean => item.type === 'movie'))}
+                    {data.results.filter((item: MediaItemEntry): boolean => item.type === 'movie').map(this.renderRow.bind(this))}
                 </div>
             </>
         );
@@ -139,7 +137,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
                         onKeyPress={this.handleKey.bind(this)}
                     />
                 </div>
-                <div className="clear-fix text-center">{this.renderRows(data.results)}</div>
+                <div className="clear-fix text-center">{data.results.map(this.renderRow.bind(this))}</div>
                 <Pagination path={`/media/${this.props.type}/`} />
             </>
         );

@@ -84,7 +84,7 @@ export default class MediaModal extends React.PureComponent<MediaModalProps, Med
         ) : null;
     }
 
-    static renderCost(key: string, value: number): React.ReactElement {
+    static renderCost(key: string, value?: number): React.ReactElement {
         return (
             <>
                 <span>{key}</span>

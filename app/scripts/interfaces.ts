@@ -9,7 +9,7 @@ export interface DefaultState {
     home: HomeState;
     files: FileState;
     links: LinkState;
-    media: MediaState & MediaTypeState;
+    media: MediaState;
     admin: AdminState;
     pagination: PaginationState;
 }
@@ -75,16 +75,15 @@ export interface LinkState {
 
 export type MediaType = 'movie' | 'tv' | 'watchlist';
 
-export interface MediaTypeState {
-    [key: string]: MediaResults | null;
-}
-
 export interface MediaState {
+    movie: MediaResults | null;
+    tv: MediaResults | null;
+    watchlist: MediaResults | null;
     item: MediaItemEntry | null;
+    sort: string;
     showModal: boolean;
     search: MediaSearchItemEntry[];
     existing: number[];
-    sort: string;
     stats: {
         movie: MediaStatsType;
         tv: MediaStatsType;
@@ -98,38 +97,44 @@ export interface MediaResults {
     total_results: number;
 }
 
-export interface MediaItemEntry {
+export type MediaItemEntry = MediaItemCommon & MediaItemMovie & MediaItemTv;
+
+interface MediaItemCommon {
     type: MediaType;
     id: number;
+    imdb_id: string | null;
     title: string;
     original_title?: string;
-    name: string;
-    original_name?: string;
     overview: string;
     poster: string;
     genres: string;
+    language: string;
     release_date: string | null;
     release_year: string | null;
-    end_year: string | null;
-    imdb_id: string | null;
+    runtime: number | null;
     rating: number;
     votes: number;
-    runtime: number | null;
-    budget: number;
-    revenue: number;
-    tagline: string;
     seen: boolean;
     favourite: boolean;
-    language: string;
-    number_of_seasons: number;
-    number_of_episodes: number;
-    seen_episodes: number;
+}
+
+interface MediaItemMovie {
+    budget?: number;
+    revenue?: number;
+    tagline?: string;
+}
+
+interface MediaItemTv {
+    end_year?: string | null;
+    number_of_seasons?: number;
+    number_of_episodes?: number;
+    seen_episodes?: number;
     seasons?: MediaSeasonEntry[];
-    series_type: string;
-    status: string;
-    networks: string;
-    created_by: string;
-    production_companies: string;
+    series_type?: string;
+    status?: string;
+    networks?: string;
+    created_by?: string;
+    production_companies?: string;
 }
 
 export interface MediaSeasonEntry {

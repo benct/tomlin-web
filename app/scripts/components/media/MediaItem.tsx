@@ -26,9 +26,10 @@ export default class MediaItem extends React.PureComponent<MediaItemProps> {
         );
     }
 
-    renderSeasons(): React.ReactElement {
+    renderSeasons(): React.ReactNode {
         const seen = this.props.data.seen_episodes || 0;
-        return (
+
+        return this.props.data.number_of_episodes ? (
             <>
                 <span className="text-smaller">Ep. </span>
                 <span className="strong" style={{ color: formatGradientHSL(seen, this.props.data.number_of_episodes) }}>
@@ -36,7 +37,7 @@ export default class MediaItem extends React.PureComponent<MediaItemProps> {
                 </span>
                 /{this.props.data.number_of_episodes}
             </>
-        );
+        ) : null;
     }
 
     render(): React.ReactElement {

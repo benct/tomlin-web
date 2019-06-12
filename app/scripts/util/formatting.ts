@@ -16,7 +16,7 @@ export function formatThousands(number: number): string {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
-export function formatYears(type: string, start: string | null, end: string | null): string {
+export function formatYears(type: string, start: string | null, end?: string | null): string {
     if (!start) {
         return 'Unknown';
     }

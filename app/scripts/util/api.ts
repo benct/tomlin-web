@@ -1,4 +1,3 @@
-/* global fetch, FormData */
 import 'whatwg-fetch';
 
 import debounce from './debounce';
@@ -15,7 +14,7 @@ const checkStatus = (response: Response): Promise<Response> =>
     response.ok ? Promise.resolve(response) : Promise.reject(response.statusText);
 
 interface DataObject {
-    [key: string]: string;
+    [key: string]: any;
 }
 
 function query(data: DataObject = {}): string {
