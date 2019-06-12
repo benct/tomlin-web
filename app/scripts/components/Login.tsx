@@ -29,19 +29,17 @@ export default class Login extends React.PureComponent<RouteComponentProps, Logi
     handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
         event.preventDefault();
 
-        this.setState(
-            { loading: true },
-            (): void =>
-                auth.login(
-                    this.username.current && this.username.current.value,
-                    this.password.current && this.password.current.value,
-                    (loggedIn: boolean): void =>
-                        this.setState({
-                            redirectToReferrer: loggedIn,
-                            error: !loggedIn,
-                            loading: false,
-                        })
-                )
+        this.setState({ loading: true }, (): void =>
+            auth.login(
+                this.username.current && this.username.current.value,
+                this.password.current && this.password.current.value,
+                (loggedIn: boolean): void =>
+                    this.setState({
+                        redirectToReferrer: loggedIn,
+                        error: !loggedIn,
+                        loading: false,
+                    })
+            )
         );
     }
 

@@ -29,19 +29,15 @@ export default {
     _authenticate(data = {}, cb?: (loggedIn: boolean) => void): void {
         _post<string>(data)
             .then((response: string): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
-            .then(
-                (token: string): void => {
-                    localStorage.token = token;
-                    if (cb) cb(true);
-                    this.onChange(true);
-                }
-            )
-            .catch(
-                (): void => {
-                    delete localStorage.token;
-                    if (cb) cb(false);
-                    this.onChange(false);
-                }
-            );
+            .then((token: string): void => {
+                localStorage.token = token;
+                if (cb) cb(true);
+                this.onChange(true);
+            })
+            .catch((): void => {
+                delete localStorage.token;
+                if (cb) cb(false);
+                this.onChange(false);
+            });
     },
 };
