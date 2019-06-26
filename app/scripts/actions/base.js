@@ -6,8 +6,6 @@ import { fetchFile, _get } from '../util/api';
 
 const actions = {};
 
-actions.setLoggedIn = makeAction('AUTH/SET_LOGGED_IN', 'isLoggedIn');
-
 actions.toggleIcons = makeAction('BASE/TOGGLE_ICONS', state => ({ ...state, circleIcons: !state.circleIcons }));
 
 actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', state => ({ ...state, showMenu: !state.showMenu }));

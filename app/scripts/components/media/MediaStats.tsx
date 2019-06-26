@@ -135,6 +135,6 @@ export default connect(
     (state: DefaultState): MediaStatsProps => ({
         movie: state.media.stats.movie,
         tv: state.media.stats.tv,
-        isLoggedIn: state.isLoggedIn,
+        isLoggedIn: state.auth.isLoggedIn,
     })
 )(MediaStats);

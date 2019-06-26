@@ -2,7 +2,6 @@ import makeAction from '../redux/makeAction';
 import makeReducer from '../redux/makeReducer';
 
 import { get, post } from '../util/api';
-import auth from '../util/auth';
 import baseActions from './base.js';
 import paginationActions from './pagination.js';
 
@@ -92,8 +91,8 @@ actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }
     existing: state.existing.filter(i => i !== payload),
 }));
 
-actions.add = ({ type, id }) => dispatch => {
-    if (auth.loggedIn()) {
+actions.add = ({ type, id }) => (dispatch, getState) => {
+    if (getState().auth.isLoggedIn) {
         post({ service: 'media', action: 'save', type, id })
             .then(() => {
                 dispatch(actions.addExisting(id));
@@ -103,8 +102,8 @@ actions.add = ({ type, id }) => dispatch => {
     }
 };
 
-actions.remove = ({ action, type, id }) => dispatch => {
-    if (auth.loggedIn() && confirm(`Are you sure you want to remove this?`)) {
+actions.remove = ({ action, type, id }) => (dispatch, getState) => {
+    if (getState().auth.isLoggedIn && confirm(`Are you sure you want to remove this?`)) {
         post({ service: 'media', action: 'delete', type, id })
             .then(() => {
                 if (action) {
@@ -118,8 +117,8 @@ actions.remove = ({ action, type, id }) => dispatch => {
     }
 };
 
-actions.update = ({ action, type, id }) => dispatch => {
-    if (auth.loggedIn()) {
+actions.update = ({ action, type, id }) => (dispatch, getState) => {
+    if (getState().auth.isLoggedIn) {
         post({ service: 'media', action: 'update', type, id })
             .then(() => {
                 dispatch(actions.get({ action }));
@@ -144,8 +143,8 @@ actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload: { action, 
     },
 }));
 
-actions.favourite = ({ action, type, id, set }) => dispatch => {
-    if (auth.loggedIn()) {
+actions.favourite = ({ action, type, id, set }) => (dispatch, getState) => {
+    if (getState().auth.isLoggedIn) {
         post({ service: 'media', action: 'favourite', type, id, set })
             .then(() => {
                 dispatch(actions.setFavourite({ action, id, set }));
@@ -169,8 +168,8 @@ actions.setSeen = makeAction('MEDIA/SET_SEEN', (state, { payload: { action, id, 
     },
 }));
 
-actions.seen = ({ action, type, id, set }) => dispatch => {
-    if (auth.loggedIn()) {
+actions.seen = ({ action, type, id, set }) => (dispatch, getState) => {
+    if (getState().auth.isLoggedIn) {
         post({ service: 'media', action: 'seen', type, id, set })
             .then(() => {
                 dispatch(actions.setSeen({ action, id, set }));
@@ -194,8 +193,8 @@ actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload:
     return { ...state, item };
 });
 
-actions.seenEpisode = ({ id, set }) => dispatch => {
-    if (auth.loggedIn()) {
+actions.seenEpisode = ({ id, set }) => (dispatch, getState) => {
+    if (getState().auth.isLoggedIn) {
         post({ service: 'media', action: 'seen', type: 'episode', id, set })
             .then(() => {
                 dispatch(actions.setEpisodeSeen({ episodeId: id, set }));
@@ -205,8 +204,8 @@ actions.seenEpisode = ({ id, set }) => dispatch => {
     }
 };
 
-actions.seenEpisodes = ({ seasonId }) => dispatch => {
-    if (auth.loggedIn()) {
+actions.seenEpisodes = ({ seasonId }) => (dispatch, getState) => {
+    if (getState().auth.isLoggedIn) {
         post({ service: 'media', action: 'seen', type: 'season', id: seasonId, set: true })
             .then(() => {
                 dispatch(actions.setEpisodeSeen({ seasonId, set: true }));

@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import auth from '../util/auth';
-import actions from '../actions/base.js';
 import { DefaultState } from '../interfaces';
+
+import actions from '../actions/base.js';
+import authActions from '../actions/auth.js';
 
 import SuspendedRoute from './route/Suspended';
 import Navigation from './page/Navigation';
@@ -28,15 +29,14 @@ interface AppStateProps {
 }
 
 interface AppDispatchProps {
-    setLoggedIn: (isLoggedIn: boolean) => void;
+    authenticate: () => void;
     toggleMenu: () => void;
     toggleIcons: () => void;
 }
 
 class App extends React.Component<AppStateProps & AppDispatchProps> {
     componentDidMount(): void {
-        auth.onChange = this.props.setLoggedIn;
-        auth.init();
+        this.props.authenticate();
     }
 
     render(): React.ReactNode {
@@ -94,7 +94,7 @@ const mapStateToProps = (state: DefaultState): AppStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): AppDispatchProps => ({
-    setLoggedIn: (isLoggedIn: boolean): void => dispatch(actions.setLoggedIn(isLoggedIn)),
+    authenticate: (): void => dispatch(authActions.authenticate({ action: 'validate', referrer: document.referrer })),
     toggleMenu: (): void => dispatch(actions.toggleMenu()),
     toggleIcons: (): void => dispatch(actions.toggleIcons()),
 });

@@ -1,10 +1,10 @@
 export interface DefaultState {
-    isLoggedIn: boolean;
     showMenu: boolean;
     circleIcons: boolean;
     toast: string | null;
     loading: boolean;
 
+    auth: AuthState;
     quote: QuoteState;
     home: HomeState;
     files: FileState;
@@ -12,6 +12,13 @@ export interface DefaultState {
     media: MediaState;
     admin: AdminState;
     pagination: PaginationState;
+}
+
+export interface AuthState {
+    isLoggedIn: boolean;
+    redirect: boolean;
+    error: boolean;
+    loading: boolean;
 }
 
 export interface QuoteState {

@@ -75,7 +75,7 @@ const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationSta
 
 export default connect(
     (state: DefaultState): NavigationState => ({
-        isLoggedIn: state.isLoggedIn,
+        isLoggedIn: state.auth.isLoggedIn,
         showMenu: state.showMenu,
     })
 )(withRouter(Navigation));

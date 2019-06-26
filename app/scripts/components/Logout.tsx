@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect, DispatchProp } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import auth from '../util/auth';
+import authActions from '../actions/auth.js';
 
-class Logout extends React.PureComponent<RouteComponentProps> {
+class Logout extends React.PureComponent<RouteComponentProps & DispatchProp> {
     componentDidMount(): void {
-        auth.logout();
+        this.props.dispatch(authActions.logout());
 
         window.setTimeout((): void => this.props.history.push('/'), 3000);
     }
@@ -15,4 +16,4 @@ class Logout extends React.PureComponent<RouteComponentProps> {
     }
 }
 
-export default withRouter(Logout);
+export default connect()(withRouter(Logout));

@@ -3,13 +3,17 @@ import quotes from '../util/quotes';
 import { DefaultState } from '../interfaces';
 
 const defaultState: DefaultState = {
-    isLoggedIn: false,
-
     showMenu: false,
     circleIcons: false,
-
     toast: null,
     loading: false,
+
+    auth: {
+        isLoggedIn: false,
+        redirect: false,
+        error: false,
+        loading: false,
+    },
 
     quote: {
         text: null,
