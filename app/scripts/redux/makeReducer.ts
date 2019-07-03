@@ -1,7 +1,7 @@
 import { AnyAction, Reducer } from 'redux';
 
-interface Actions {
-    [key: string]: { reducer: Reducer; type: string };
+export interface Actions {
+    [key: string]: any;
 }
 
 /**

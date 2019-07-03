@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { DefaultState } from '../interfaces';
 
 import actions from '../actions/base.js';
-import authActions from '../actions/auth.js';
+import authActions from '../actions/auth';
 
 import SuspendedRoute from './route/Suspended';
 import Navigation from './page/Navigation';

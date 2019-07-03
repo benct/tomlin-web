@@ -5,11 +5,11 @@ import thunk from 'redux-thunk';
 import defaultState from './defaultState';
 import { DefaultState } from '../interfaces';
 import { reducer as baseReducer } from '../actions/base.js';
-import { reducer as authReducer } from '../actions/auth.js';
+import { reducer as authReducer } from '../actions/auth';
 import { reducer as fileReducer } from '../actions/files.js';
 import { reducer as mediaReducer } from '../actions/media.js';
 import { reducer as adminReducer } from '../actions/admin.js';
-import { reducer as paginationReducer } from '../actions/pagination.js';
+import { reducer as paginationReducer } from '../actions/pagination';
 
 const reducer = (state: DefaultState = defaultState, action: AnyAction): DefaultState => ({
     ...state,

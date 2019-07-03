@@ -3,7 +3,7 @@ import makeReducer from '../redux/makeReducer';
 
 import { get, post } from '../util/api';
 import baseActions from './base.js';
-import paginationActions from './pagination.js';
+import paginationActions from './pagination';
 
 const actions = {};
 

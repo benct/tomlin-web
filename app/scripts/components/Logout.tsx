@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import authActions from '../actions/auth.js';
+import authActions from '../actions/auth';
 
 class Logout extends React.PureComponent<RouteComponentProps & DispatchProp> {
     componentDidMount(): void {

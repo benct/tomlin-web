@@ -4,7 +4,7 @@ import { Redirect, RouteComponentProps } from 'react-router-dom';
 
 import { AuthState, DefaultState } from '../interfaces';
 
-import authActions from '../actions/auth.js';
+import authActions from '../actions/auth';
 
 class Login extends React.PureComponent<RouteComponentProps & AuthState & DispatchProp> {
     username: React.RefObject<HTMLInputElement>;

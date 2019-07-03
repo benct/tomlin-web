@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { RouteComponentProps } from 'react-router';
 
 import mediaActions from '../../actions/media.js';
-import paginationActions from '../../actions/pagination.js';
+import paginationActions from '../../actions/pagination';
 import { DefaultState, MediaItemEntry, MediaResults, MediaType } from '../../interfaces';
 
 import Pagination from '../page/Pagination';

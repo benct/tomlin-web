@@ -5,7 +5,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 
 import debounce from '../../util/debounce';
 import mediaActions from '../../actions/media.js';
-import paginationActions from '../../actions/pagination.js';
+import paginationActions from '../../actions/pagination';
 import { DefaultState, MediaSearchItemEntry } from '../../interfaces';
 
 import Pagination from '../page/Pagination';

@@ -29,7 +29,7 @@ import { AnyAction, Reducer } from 'redux';
  */
 export default function makeAction<T>(
     type: string,
-    reducer: string | Reducer<T>,
+    reducer: string | Reducer,
     creator: any = (payload: any): AnyAction => ({ type, payload })
 ): any {
     if (!type || !reducer) {
