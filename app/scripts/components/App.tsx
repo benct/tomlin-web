@@ -29,14 +29,14 @@ interface AppStateProps {
 }
 
 interface AppDispatchProps {
-    authenticate: () => void;
+    validate: () => void;
     toggleMenu: () => void;
     toggleIcons: () => void;
 }
 
 class App extends React.Component<AppStateProps & AppDispatchProps> {
     componentDidMount(): void {
-        this.props.authenticate();
+        this.props.validate();
     }
 
     render(): React.ReactNode {
@@ -94,7 +94,7 @@ const mapStateToProps = (state: DefaultState): AppStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): AppDispatchProps => ({
-    authenticate: (): void => dispatch(authActions.authenticate({ action: 'validate', referrer: document.referrer })),
+    validate: (): void => dispatch(authActions.validate()),
     toggleMenu: (): void => dispatch(actions.toggleMenu()),
     toggleIcons: (): void => dispatch(actions.toggleIcons()),
 });

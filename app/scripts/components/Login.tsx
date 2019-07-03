@@ -23,7 +23,7 @@ class Login extends React.PureComponent<RouteComponentProps & AuthState & Dispat
         const user = (this.username.current && this.username.current.value) || '';
         const pass = (this.password.current && this.password.current.value) || '';
 
-        this.props.dispatch(authActions.authenticate({ action: 'login', user, pass }));
+        this.props.dispatch(authActions.login({ user, pass }));
     }
 
     render(): React.ReactNode {

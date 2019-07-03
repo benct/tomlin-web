@@ -7,41 +7,42 @@ import { AuthState } from '../interfaces';
 
 import { _post } from '../util/api';
 
-interface AuthData {
-    action: string;
-    user?: string;
-    pass?: string;
-}
-
 const actions: Actions = {};
 
 actions.setLoggedIn = makeAction('AUTH/SET_LOGGED_IN', 'isLoggedIn');
 
 actions.setAuthLoading = makeAction('AUTH/SET_LOADING', 'loading');
 
-actions.setLoginState = makeAction(
-    'AUTH/SET_LOGIN_STATE',
-    (state: AuthState, { payload }): AuthState => ({ ...state, redirect: payload, error: !payload })
+actions.setLoginData = makeAction(
+    'AUTH/SET_LOGIN_DATA',
+    (state: AuthState, { payload }): AuthState => ({ ...state, isLoggedIn: payload, redirect: payload, error: !payload })
 );
 
-actions.authenticate = (data: AuthData): ThunkAction<Promise<void>, AuthState, null, AnyAction> => async (dispatch): Promise<void> => {
-    dispatch(actions.setAuthLoading(true));
-
-    await _post<string>({ service: 'auth', ...data })
+actions.validate = (): ThunkAction<Promise<void>, AuthState, null, AnyAction> => async (dispatch): Promise<void> => {
+    await _post<string>({ service: 'auth', action: 'validate', referrer: document.referrer })
         .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
         .then((token): void => {
             localStorage.token = token;
             dispatch(actions.setLoggedIn(true));
-            if (data.action === 'login') {
-                dispatch(actions.setLoginState(true));
-            }
         })
         .catch((): void => {
             delete localStorage.token;
             dispatch(actions.setLoggedIn(false));
-            if (data.action === 'login') {
-                dispatch(actions.setLoginState(false));
-            }
+        });
+};
+
+actions.login = (data: object): ThunkAction<Promise<void>, AuthState, null, AnyAction> => async (dispatch): Promise<void> => {
+    dispatch(actions.setAuthLoading(true));
+
+    await _post<string>({ service: 'auth', action: 'login', ...data })
+        .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
+        .then((token): void => {
+            localStorage.token = token;
+            dispatch(actions.setLoginData(true));
+        })
+        .catch((): void => {
+            delete localStorage.token;
+            dispatch(actions.setLoginData(false));
         })
         .finally((): void => dispatch(actions.setAuthLoading(false)));
 };
