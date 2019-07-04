@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
+import Icon from '@mdi/react';
+import { mdiLoading } from '@mdi/js';
 
 import { AuthState, DefaultState } from '../interfaces';
 
@@ -43,7 +45,12 @@ class Login extends React.PureComponent<RouteComponentProps & AuthState & Dispat
                     <input type="password" ref={this.password} placeholder="********" aria-label="Password" />
                     <input type="submit" value="login" aria-label="Login" />
                     {this.props.error && <p className="text error">Incorrect username or password...</p>}
-                    {this.props.loading && <p className="text">Logging in...</p>}
+                    {this.props.loading && (
+                        <p className="text">
+                            <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" />
+                            <span className="valign-middle">Logging in...</span>
+                        </p>
+                    )}
                 </form>
             </div>
         );

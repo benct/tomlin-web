@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
+import Icon from '@mdi/react';
+import { mdiLoading } from '@mdi/js';
 
 import { DefaultState, LinkState } from '../../interfaces';
+
 import actions from '../../actions/base.js';
 
 interface LinkProps {
@@ -53,7 +56,16 @@ class Links extends React.PureComponent<LinkProps & LinkState & DispatchProp> {
                 {this.props.content ? (
                     JSON.parse(this.props.content).map(Links.renderGroup)
                 ) : (
-                    <div className="link-message">{this.props.loading ? 'Loading...' : 'No data...'}</div>
+                    <div className="link-message">
+                        {this.props.loading ? (
+                            <>
+                                <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" />
+                                <span className="valign-middle">Loading...</span>
+                            </>
+                        ) : (
+                            'No data...'
+                        )}
+                    </div>
                 )}
             </div>
         );
