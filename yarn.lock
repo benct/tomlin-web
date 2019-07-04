@@ -690,6 +690,16 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@mdi/js@^3.7.95":
+  version "3.7.95"
+  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-3.7.95.tgz#65a15b766db6873447ab88142e452f0b20b3b524"
+  integrity sha512-R0Xt8JCOxPurdAv1nCLg3mazRKT1W8uyNVCJHF6JjbfgZyTm/Ct+G/4Vu+NhdXfpr/me/1kZkyDNq3Lh/vKgkg==
+
+"@mdi/react@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@mdi/react/-/react-1.2.0.tgz#f765e7560a2a25b958120000e6eefbef288245cd"
+  integrity sha512-KLOE/Swve9rtPecnXY1UIdRoiv+GMtlX/848n3mpD2hafTKd0bzsQr9W1d0TQw8eQjjAj/yant3DHcs58aWp9g==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
