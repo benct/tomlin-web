@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
+import Icon from '@mdi/react';
+import { mdiRefresh } from '@mdi/js';
 
 import { DefaultState, QuoteState } from '../../interfaces';
+
 import actions from '../../actions/base.js';
 
 interface QuoteProps {
@@ -23,7 +26,7 @@ class Quote extends React.PureComponent<QuoteProps & DispatchProp, QuoteState> {
             <div className="wrapper text-center pointer no-select" onClick={this.refreshQuote.bind(this)} role="button" tabIndex={0}>
                 <div>{this.props.text}</div>
                 <div>{this.props.author ? <i>- {this.props.author}</i> : null}</div>
-                <img className="help-icon float-right" src={require('../../../images/icon/refresh.svg')} alt="Load new quote" />
+                <Icon path={mdiRefresh} size="16px" className="help-icon float-right" title="Show new quote" />
             </div>
         ) : null;
     }
