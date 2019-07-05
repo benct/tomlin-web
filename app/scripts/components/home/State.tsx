@@ -5,7 +5,7 @@ import { mdiInformationOutline } from '@mdi/js';
 
 import { DefaultState, HomeState } from '../../interfaces';
 
-import actions from '../../actions/base.js';
+import actions from '../../actions/base';
 
 import Time from './Time';
 

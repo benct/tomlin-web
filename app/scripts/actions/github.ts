@@ -6,7 +6,7 @@ import { ThunkAction } from 'redux-thunk';
 import { GitHubRepo, GitHubState } from '../interfaces';
 
 import { externalGet } from '../util/api';
-import baseActions from './base.js';
+import baseActions from './base';
 
 const featured: string[] = ['tomlin-web', 'iata-utils', 'dotfiles'];
 

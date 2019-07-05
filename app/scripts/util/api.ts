@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 
 import debounce from './debounce';
-import actions from '../actions/base.js';
+import actions from '../actions/base';
 import store from '../redux/store';
 
 const baseUrl = 'https://tomlin.no';

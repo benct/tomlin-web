@@ -5,7 +5,7 @@ import { mdiLoading } from '@mdi/js';
 
 import { DefaultState, LinkState } from '../../interfaces';
 
-import actions from '../../actions/base.js';
+import actions from '../../actions/base';
 
 interface LinkProps {
     file: string;
@@ -29,7 +29,7 @@ interface Link {
 
 class Links extends React.PureComponent<LinkProps & LinkState & DispatchProp> {
     componentDidMount(): void {
-        this.props.dispatch(actions.loadContent({ field: 'links', file: this.props.file }));
+        this.props.dispatch(actions.loadContent('links', this.props.file));
     }
 
     static renderLink(link: Link, idx: number, icon: LinkIcon): React.ReactElement {

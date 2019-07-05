@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 
 import defaultState from './defaultState';
 import { DefaultState } from '../interfaces';
-import { reducer as baseReducer } from '../actions/base.js';
+import { reducer as baseReducer } from '../actions/base';
 import { reducer as authReducer } from '../actions/auth';
 import { reducer as githubReducer } from '../actions/github';
 import { reducer as fileReducer } from '../actions/files.js';

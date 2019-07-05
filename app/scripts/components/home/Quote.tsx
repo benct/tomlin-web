@@ -5,7 +5,7 @@ import { mdiRefresh } from '@mdi/js';
 
 import { DefaultState, QuoteState } from '../../interfaces';
 
-import actions from '../../actions/base.js';
+import actions from '../../actions/base';
 
 interface QuoteProps {
     text: string | null;

@@ -2,7 +2,7 @@ import makeAction from '../redux/makeAction';
 import makeReducer from '../redux/makeReducer';
 
 import { post } from '../util/api';
-import baseActions from './base.js';
+import baseActions from './base';
 
 const actions = {};
 

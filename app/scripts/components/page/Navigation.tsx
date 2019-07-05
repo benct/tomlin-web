@@ -3,7 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
-import actions from '../../actions/base.js';
+import actions from '../../actions/base';
 import { DefaultState } from '../../interfaces';
 
 interface NavigationProps {
