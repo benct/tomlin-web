@@ -84,6 +84,11 @@
     fill: #006080;
 }
 
+.default-icon {
+    vertical-align: middle;
+    fill: #888888;
+}
+
 .border-bottom {
     border-bottom: 1px dotted #dddddd !important;
 }

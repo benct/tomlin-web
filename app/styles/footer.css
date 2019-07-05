@@ -25,11 +25,7 @@ footer {
 }
 
 .social a img {
-    width: 20px;
-    height: 20px;
-}
-
-.social.large a img {
     width: 25px;
     height: 25px;
+    vertical-align: middle;
 }
