@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
+import Icon from '@mdi/react';
+import { mdiMovieOutline, mdiTelevisionClassic } from '@mdi/js';
 import {
     FlexibleWidthXYPlot,
     XAxis,
@@ -12,8 +14,9 @@ import {
 } from 'react-vis';
 import 'react-vis/dist/style.css';
 
-import mediaActions from '../../actions/media.js';
 import { DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
+
+import mediaActions from '../../actions/media.js';
 
 interface MediaStatsProps {
     movie: MediaStatsType;
@@ -106,7 +109,10 @@ class MediaStats extends React.PureComponent<MediaStatsProps & DispatchProp> {
                 </div>
                 <div className="media-stats text-center">
                     <div>
-                        <div className="border-bottom pbs mam">Tracked Movies</div>
+                        <div className="border-bottom pbs mam">
+                            <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" />
+                            <span className="valign-middle">Tracked Movies</span>
+                        </div>
                         {MediaStats.renderStats(this.props.movie)}
                         {MediaStats.renderLineChart(
                             `Rating (avg: ${this.props.movie.rating || '-'})`,
@@ -116,7 +122,10 @@ class MediaStats extends React.PureComponent<MediaStatsProps & DispatchProp> {
                         {MediaStats.renderBarChart('Release (decade)', '#006080', MediaStats.mapYears(this.props.movie.years))}
                     </div>
                     <div>
-                        <div className="border-bottom pbs mam">Tracked TV-Shows</div>
+                        <div className="border-bottom pbs mam">
+                            <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" />
+                            <span className="valign-middle">Tracked TV-Shows</span>
+                        </div>
                         {MediaStats.renderStats(this.props.tv)}
                         {MediaStats.renderLineChart(
                             `Rating (avg: ${this.props.tv.rating || '-'})`,
