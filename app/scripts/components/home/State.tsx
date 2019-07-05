@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
+import Icon from '@mdi/react';
+import { mdiInformationOutline } from '@mdi/js';
+
+import { DefaultState, HomeState } from '../../interfaces';
 
 import actions from '../../actions/base.js';
-import { DefaultState, HomeState } from '../../interfaces';
 
 import Time from './Time';
 
@@ -35,7 +38,13 @@ class State extends React.PureComponent<DispatchProp & HomeState> {
                             className="valign-middle mlm"
                             data-tooltip="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
                             data-tooltip-large>
-                            <img className="help-icon" src={require(`../../../images/icon/info.svg`)} alt="Information" />
+                            <Icon
+                                path={mdiInformationOutline}
+                                size="16px"
+                                title="Information"
+                                description="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
+                                className="help-icon"
+                            />
                         </span>
                     </div>
                     <div className="">
