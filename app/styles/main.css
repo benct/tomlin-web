@@ -65,6 +65,7 @@ code {
 
 .color-base {
     color: #292929;
+    fill: #292929;
 }
 
 .color-primary {
@@ -74,6 +75,7 @@ code {
 
 .color-light {
     color: #737373;
+    fill: #737373;
 }
 
 .color-link {
@@ -157,6 +159,10 @@ code {
 
 .italic {
     font-style: italic;
+}
+
+.underline {
+    text-decoration: underline;
 }
 
 .clear {

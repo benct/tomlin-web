@@ -10,9 +10,9 @@ actions.toggleIcons = makeAction('BASE/TOGGLE_ICONS', state => ({ ...state, circ
 
 actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', state => ({ ...state, showMenu: !state.showMenu }));
 
-actions.setToast = makeAction('BASE/SET_TOAST', 'toast');
-
 actions.setLoading = makeAction('BASE/SET_LOADING', 'loading');
+
+actions.setToast = makeAction('BASE/SET_TOAST', 'toast');
 
 actions.showToast = payload => dispatch => {
     dispatch(actions.setToast(payload));
