@@ -66,3 +66,9 @@ export function fetchFile(path: string): Promise<string> {
         .then(checkStatus)
         .then((response: Response): Promise<string> => response.text());
 }
+
+export function externalGet<T>(url: string): Promise<T> {
+    return fetch(url)
+        .then(checkStatus)
+        .then((response: Response): Promise<T> => response.json());
+}

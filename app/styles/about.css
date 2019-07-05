@@ -1,0 +1,78 @@
+.cv-header {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.cv-position {
+    margin-bottom: 10px;
+}
+
+.cv-skills {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding: 0 10px;
+    font-size: 16px;
+    margin: 30px auto 0;
+}
+
+.cv-skills ul {
+    list-style: none;
+    margin: 0;
+    padding: 5px 0;
+}
+
+.github-user {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 40px;
+}
+
+.github-user > * {
+    padding: 0 20px;
+}
+
+.github-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+}
+
+.github-wrapper {
+    max-width: 360px;
+}
+
+.github-repo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.github-repo-state {
+    text-align: right;
+}
+
+.github-repo-state svg {
+    vertical-align: middle;
+    margin-left: 10px;
+    fill: #006080;
+}
+
+.github-repo-state span {
+    vertical-align: middle;
+    margin-left: 5px;
+    font-size: 17px;
+    color: #292929;
+}
+
+@media screen and (max-width: 480px) {
+    .cv-skills {
+        display: block;
+        text-align: center;
+    }
+    .github-user > * {
+        padding: 0 10px;
+    }
+}

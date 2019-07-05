@@ -15,16 +15,22 @@ const defaultState: DefaultState = {
         loading: false,
     },
 
+    home: {
+        temperature: {},
+        consumption: {},
+        day: true,
+    },
+
     quote: {
         text: null,
         author: null,
         current: Math.floor(Math.random() * quotes.length),
     },
 
-    home: {
-        temperature: {},
-        consumption: {},
-        day: true,
+    github: {
+        user: null,
+        top: [],
+        featured: [],
     },
 
     files: {

@@ -5,8 +5,9 @@ export interface DefaultState {
     loading: boolean;
 
     auth: AuthState;
-    quote: QuoteState;
     home: HomeState;
+    quote: QuoteState;
+    github: GitHubState;
     files: FileState;
     links: LinkState;
     media: MediaState;
@@ -21,16 +22,41 @@ export interface AuthState {
     loading: boolean;
 }
 
+export interface HomeState {
+    temperature: HomeTemperature;
+    consumption: HomeConsumption;
+    day: boolean;
+}
+
 export interface QuoteState {
     text: string | null;
     author: string | null;
     current: number;
 }
 
-export interface HomeState {
-    temperature: HomeTemperature;
-    consumption: HomeConsumption;
-    day: boolean;
+export interface GitHubState {
+    user: GitHubUser | null;
+    top: GitHubRepo[];
+    featured: GitHubRepo[];
+}
+
+export interface GitHubUser {
+    name: string;
+    image: string;
+    url: string;
+    repos: number;
+    followers: number;
+    following: number;
+    stars: number;
+}
+
+export interface GitHubRepo {
+    name: string;
+    url: string;
+    language: string;
+    forks: number;
+    stars: number;
+    issues: number | null;
 }
 
 export interface HomeTemperature {
