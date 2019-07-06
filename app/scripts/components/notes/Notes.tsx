@@ -4,7 +4,7 @@ import Icon from '@mdi/react';
 import { mdiFileDocumentBoxPlusOutline } from '@mdi/js';
 
 import { DefaultState, Note } from '../../interfaces';
-import adminActions from '../../actions/admin.js';
+import adminActions from '../../actions/admin';
 
 import NotesModal from './NotesModal';
 

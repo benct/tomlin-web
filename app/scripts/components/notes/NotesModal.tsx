@@ -4,7 +4,7 @@ import Icon from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
 import { Note } from '../../interfaces';
-import adminActions from '../../actions/admin.js';
+import adminActions from '../../actions/admin';
 
 import Modal from '../page/Modal';
 

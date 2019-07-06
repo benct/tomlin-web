@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, Visit } from '../../interfaces';
-import adminActions from '../../actions/admin.js';
+import adminActions from '../../actions/admin';
 
 interface VisitProps {
     visits: Visit[];

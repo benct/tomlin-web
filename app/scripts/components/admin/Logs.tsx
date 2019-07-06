@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, Log } from '../../interfaces';
-import adminActions from '../../actions/admin.js';
+import adminActions from '../../actions/admin';
 
 interface LogProps {
     logs: Log[];

@@ -3,7 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 
 import { DefaultState, AdminStats } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
-import adminActions from '../../actions/admin.js';
+import adminActions from '../../actions/admin';
 
 interface ControlProps {
     stats: AdminStats;
