@@ -147,14 +147,14 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                         className="button-icon"
                         onClick={(): void => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
                         disabled={this.props.cwd === ''}>
-                        <Icon path={mdiSubdirectoryArrowLeft} rotate={90} size="28px" title="Parent directory"/>
+                        <Icon path={mdiSubdirectoryArrowLeft} rotate={90} size="28px" title="Parent directory" />
                     </button>
                     <div className="text-right">
                         <button className="button-icon" onClick={(): void => this.props.dispatch(actions.createDirectory())}>
-                            <Icon path={mdiFolderPlusOutline} size="28px" title="New directory"/>
+                            <Icon path={mdiFolderPlusOutline} size="28px" title="New directory" />
                         </button>
                         <button className="button-icon" onClick={(): void => this.props.dispatch(actions.refresh())}>
-                            <Icon path={mdiFolderSyncOutline} size="28px" title="Refresh content"/>
+                            <Icon path={mdiFolderSyncOutline} size="28px" title="Refresh content" />
                         </button>
                     </div>
                 </div>
@@ -177,12 +177,12 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                             disabled={this.props.uploading}
                             multiple
                         />
-                        <Icon path={mdiCloudUploadOutline} size="20px" title="Upload"/>
+                        <Icon path={mdiCloudUploadOutline} size="20px" title="Upload" />
                         <span className="mlm" ref={this.fileLabel}>
                             Choose a file
                         </span>
                     </label>
-                    <br/>
+                    <br />
                     <button
                         className="button-default text-small mtl"
                         onClick={this.handleUpload.bind(this)}
@@ -194,10 +194,10 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                 {this.props.preview ? (
                     <div className="overlay">
                         <button className="button-blank" onClick={this.closePreview.bind(this)}>
-                            <Icon path={mdiCloseCircleOutline} className="file-close" title="Close"/>
+                            <Icon path={mdiCloseCircleOutline} className="file-close" title="Close" color="white" />
                         </button>
                         {this.props.preview.image ? (
-                            <img className="overlay-image" src={this.props.preview.src} alt="Preview"/>
+                            <img className="overlay-image" src={this.props.preview.src} alt="Preview" />
                         ) : (
                             <pre className="overlay-preview">{this.props.preview.content}</pre>
                         )}
@@ -215,5 +215,5 @@ export default connect(
         focused: state.files.focused,
         preview: state.files.preview,
         uploading: state.files.uploading,
-    }),
+    })
 )(Files);
