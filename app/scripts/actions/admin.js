@@ -90,7 +90,7 @@ actions.saveNote = (id, title, content) => (dispatch, getState) => {
 };
 
 actions.deleteNote = id => (dispatch, getState) => {
-    if (getState().auth.isLoggedIn) {
+    if (getState().auth.isLoggedIn && confirm(`Are you sure you want to delete this note?`)) {
         post({ service: 'notes', action: 'delete', id })
             .then(() => {
                 dispatch(baseActions.showToast('Successfully deleted note!'));
