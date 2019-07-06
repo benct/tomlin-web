@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
+import Icon from '@mdi/react';
+import { mdiFileDocumentBoxPlusOutline } from '@mdi/js';
 
-import adminActions from '../../actions/admin.js';
 import { DefaultState, Note } from '../../interfaces';
+import adminActions from '../../actions/admin.js';
 
-import { PlusIcon } from '../page/Icons';
 import NotesModal from './NotesModal';
 
 interface NotesProps {
@@ -62,9 +63,8 @@ class Notes extends React.PureComponent<NotesProps & DispatchProp, NotesState> {
                     <div className="link-message">No notes found...</div>
                 )}
                 <div className="text-right">
-                    <button className="button-icon button-text-icon mvn" onClick={this.edit.bind(this, undefined)}>
-                        <span>New</span>
-                        <PlusIcon width={22} height={22} />
+                    <button className="button-icon mvn" onClick={this.edit.bind(this, undefined)}>
+                        <Icon path={mdiFileDocumentBoxPlusOutline} size="28px" title="New" />
                     </button>
                 </div>
                 {this.state.showOverlay && this.state.selected ? (

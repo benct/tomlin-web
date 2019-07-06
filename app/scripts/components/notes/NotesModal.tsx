@@ -1,10 +1,11 @@
 import React, { RefObject } from 'react';
 import { connect, DispatchProp } from 'react-redux';
+import Icon from '@mdi/react';
+import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
-import adminActions from '../../actions/admin.js';
 import { Note } from '../../interfaces';
+import adminActions from '../../actions/admin.js';
 
-import { PlusIcon } from '../page/Icons';
 import Modal from '../page/Modal';
 
 interface NotesModalProps {
@@ -58,18 +59,15 @@ class NotesModal extends React.PureComponent<NotesModalProps & DispatchProp> {
                 />
                 <div>
                     {this.props.note.id ? (
-                        <button className="button-icon button-text-icon" onClick={this.delete.bind(this)}>
-                            <img src={require(`../../../images/icon/remove.svg`)} alt="Delete" width={22} height={22} />
-                            <span className="pls">Delete</span>
+                        <button className="button-icon" onClick={this.delete.bind(this)}>
+                            <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
                         </button>
                     ) : null}
-                    <button className="button-icon button-text-icon text-small" onClick={this.save.bind(this)}>
-                        <img src={require(`../../../images/icon/save.svg`)} alt="Save" width={22} height={22} />
-                        <span className="pls">Save</span>
+                    <button className="button-icon text-small" onClick={this.save.bind(this)}>
+                        <Icon path={mdiContentSaveOutline} size="28px" title="Save" />
                     </button>
-                    <button className="button-icon button-text-icon float-right text-small" onClick={this.props.close}>
-                        <PlusIcon width={24} height={24} rotate />
-                        <span className="pls">Cancel</span>
+                    <button className="button-icon float-right text-small" onClick={this.props.close}>
+                        <Icon path={mdiCloseCircleOutline} size="28px" title="Cancel" />
                     </button>
                 </div>
             </Modal>
