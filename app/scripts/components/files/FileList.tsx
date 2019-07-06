@@ -1,4 +1,6 @@
 import React from 'react';
+import Icon from '@mdi/react';
+import { mdiFileQuestion } from '@mdi/js';
 
 import { FileItem } from '../../interfaces';
 
@@ -14,7 +16,11 @@ const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, hand
     const renderItem = (item: FileItem, i: number): React.ReactElement => (
         <tr key={i}>
             <td>
-                <img className="file-icon" src={require(`../../../images/file/${item.icon}`)} alt={item.icon} />
+                {item.icon ? (
+                    <img className="file-icon" src={require(`../../../images/file/${item.icon}`)} alt={item.icon} />
+                ) : (
+                    <Icon path={mdiFileQuestion} title="Unknown type" className="file-icon" />
+                )}
             </td>
             <td className="file-name">
                 <span onClick={(): void => handleClick(item)} className={i === focused ? 'focused' : ''} role="button" tabIndex={0}>

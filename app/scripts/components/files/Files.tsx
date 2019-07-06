@@ -1,9 +1,17 @@
 /* global File, FormData */
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
+import Icon from '@mdi/react';
+import {
+    mdiCloseCircleOutline,
+    mdiCloudUploadOutline,
+    mdiFolderPlusOutline,
+    mdiFolderSyncOutline,
+    mdiSubdirectoryArrowLeft,
+} from '@mdi/js';
 
-import actions from '../../actions/files.js';
 import { DefaultState, FileItem, FilePreview } from '../../interfaces';
+import actions from '../../actions/files.js';
 
 import FileList from './FileList';
 
@@ -139,14 +147,14 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                         className="button-icon"
                         onClick={(): void => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
                         disabled={this.props.cwd === ''}>
-                        <img src={require(`../../../images/icon/arrow.svg`)} alt="Parent directory" width={28} height={28} />
+                        <Icon path={mdiSubdirectoryArrowLeft} rotate={90} size="28px" title="Parent directory"/>
                     </button>
                     <div className="text-right">
                         <button className="button-icon" onClick={(): void => this.props.dispatch(actions.createDirectory())}>
-                            <img src={require(`../../../images/icon/directory.svg`)} alt="New directory" width={28} height={28} />
+                            <Icon path={mdiFolderPlusOutline} size="28px" title="New directory"/>
                         </button>
                         <button className="button-icon" onClick={(): void => this.props.dispatch(actions.refresh())}>
-                            <img src={require(`../../../images/icon/refresh.svg`)} alt="Refresh content" width={28} height={28} />
+                            <Icon path={mdiFolderSyncOutline} size="28px" title="Refresh content"/>
                         </button>
                     </div>
                 </div>
@@ -169,12 +177,12 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                             disabled={this.props.uploading}
                             multiple
                         />
-                        <img src={require(`../../../images/icon/upload.svg`)} alt="Upload" />
+                        <Icon path={mdiCloudUploadOutline} size="20px" title="Upload"/>
                         <span className="mlm" ref={this.fileLabel}>
                             Choose a file
                         </span>
                     </label>
-                    <br />
+                    <br/>
                     <button
                         className="button-default text-small mtl"
                         onClick={this.handleUpload.bind(this)}
@@ -185,14 +193,11 @@ class Files extends React.Component<FilesProps & DispatchProp> {
 
                 {this.props.preview ? (
                     <div className="overlay">
-                        <img
-                            className="file-close"
-                            src={require(`../../../images/icon/close.svg`)}
-                            alt="Close"
-                            onClick={this.closePreview.bind(this)}
-                        />
+                        <button className="button-blank" onClick={this.closePreview.bind(this)}>
+                            <Icon path={mdiCloseCircleOutline} className="file-close" title="Close"/>
+                        </button>
                         {this.props.preview.image ? (
-                            <img className="overlay-image" src={this.props.preview.src} alt="Preview" />
+                            <img className="overlay-image" src={this.props.preview.src} alt="Preview"/>
                         ) : (
                             <pre className="overlay-preview">{this.props.preview.content}</pre>
                         )}
@@ -210,5 +215,5 @@ export default connect(
         focused: state.files.focused,
         preview: state.files.preview,
         uploading: state.files.uploading,
-    })
+    }),
 )(Files);
