@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Icon from '@mdi/react';
+import { mdiChevronDoubleRight, mdiChevronRight } from '@mdi/js';
 
 import { DefaultState, PaginationState } from '../../interfaces';
 
@@ -10,21 +12,20 @@ interface PaginationProps {
 }
 
 interface PaginationImage {
-    name: string;
-    alt: string;
+    title: string;
+    double?: boolean;
     rotate?: boolean;
 }
 
 class Pagination extends React.PureComponent<PaginationState & PaginationProps> {
-    static renderImage(name: string, alt: string, rotate?: boolean): React.ReactElement {
+    static renderImage(image: PaginationImage): React.ReactElement {
         return (
-            <img
+            <Icon
+                path={image.double ? mdiChevronDoubleRight : mdiChevronRight}
+                rotate={image.rotate ? 180 : 0}
+                size={1}
+                title={image.title}
                 className="valign-middle"
-                src={require(`../../../images/icon/${name}.svg`)}
-                alt={alt}
-                width={18}
-                height={18}
-                style={rotate ? { transform: 'rotate(180deg)' } : {}}
             />
         );
     }
@@ -32,7 +33,7 @@ class Pagination extends React.PureComponent<PaginationState & PaginationProps> 
     renderPage(page: number, image?: PaginationImage): React.ReactElement {
         return (
             <Link to={this.props.path + page + (this.props.postfix || '')} className="button-icon" key={`pagination${page}`}>
-                {image ? Pagination.renderImage(image.name, image.alt, image.rotate) : <span>{page}</span>}
+                {image ? Pagination.renderImage(image) : <span>{page}</span>}
             </Link>
         );
     }
@@ -42,8 +43,8 @@ class Pagination extends React.PureComponent<PaginationState & PaginationProps> 
 
         return enabled ? (
             <div className="text-center clear ptl">
-                {first ? this.renderPage(1, { name: 'last', alt: 'First page', rotate: true }) : null}
-                {previousPages.length ? this.renderPage(previous, { name: 'next', alt: 'Previous page', rotate: true }) : null}
+                {first ? this.renderPage(1, { title: 'First page', double: true, rotate: true }) : null}
+                {previousPages.length ? this.renderPage(previous, { title: 'Previous page', rotate: true }) : null}
                 <span className="hide-gt480">
                     <span className="valign-middle phm">Page {current}</span>
                 </span>
@@ -52,8 +53,8 @@ class Pagination extends React.PureComponent<PaginationState & PaginationProps> 
                     <span className="valign-middle phm strong">{current}</span>
                     {consecutivePages.map((page: number): React.ReactElement => this.renderPage(page))}
                 </span>
-                {consecutivePages.length ? this.renderPage(next, { name: 'next', alt: 'Next page' }) : null}
-                {last ? this.renderPage(total, { name: 'last', alt: 'Last page' }) : null}
+                {consecutivePages.length ? this.renderPage(next, { title: 'Next page' }) : null}
+                {last ? this.renderPage(total, { title: 'Last page', double: true }) : null}
             </div>
         ) : null;
     }
