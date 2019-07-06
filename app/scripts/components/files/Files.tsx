@@ -11,7 +11,7 @@ import {
 } from '@mdi/js';
 
 import { DefaultState, FileItem, FilePreview } from '../../interfaces';
-import actions from '../../actions/files.js';
+import actions from '../../actions/files';
 
 import FileList from './FileList';
 

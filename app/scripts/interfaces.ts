@@ -1,3 +1,6 @@
+import { ThunkAction } from 'redux-thunk';
+import { AnyAction } from 'redux';
+
 export interface DefaultState {
     showMenu: boolean;
     circleIcons: boolean;
@@ -265,3 +268,6 @@ export interface PaginationState {
     previousPages: number[];
     consecutivePages: number[];
 }
+
+export type InitAction = ThunkAction<void, DefaultState, null, AnyAction>;
+export type AsyncAction = ThunkAction<Promise<void>, DefaultState, null, AnyAction>;
