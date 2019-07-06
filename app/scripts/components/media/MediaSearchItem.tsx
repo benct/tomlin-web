@@ -1,10 +1,10 @@
 import React from 'react';
 import ISO6391 from 'iso-639-1';
+import Icon from '@mdi/react';
+import { mdiPlus } from '@mdi/js';
 
-import { formatDate } from '../../util/formatting';
 import { MediaSearchItemEntry } from '../../interfaces';
-
-import { PlusIcon } from '../page/Icons';
+import { formatDate } from '../../util/formatting';
 
 const defaultPoster = require('../../../images/media/poster_small.png');
 
@@ -58,7 +58,7 @@ export default class MediaSearchItem extends React.PureComponent<MediaSearchItem
                         role="dialog"
                         style={{ opacity: this.state.overview ? 1 : 0, zIndex: this.state.overview ? 10 : -1 }}
                         onClick={this.state.overview ? change : undefined}>
-                        <PlusIcon width={40} height={40} fill="white" rotate={this.props.stored} />
+                        <Icon path={mdiPlus} size="48px" color="white" rotate={this.props.stored ? 45 : 0} title={text} />
                     </div>
                 </div>
                 <h3 className="media-title color-primary truncate man" onClick={this.toggleOverview.bind(this)}>
@@ -90,14 +90,14 @@ export default class MediaSearchItem extends React.PureComponent<MediaSearchItem
                         </button>
                         <button className="button-icon button-text-icon float-right mtm" onClick={change}>
                             <span>{text}</span>
-                            <PlusIcon width={18} height={18} rotate={this.props.stored} />
+                            <Icon path={mdiPlus} size="28px" rotate={this.props.stored ? 45 : 0} title={text} />
                         </button>
                     </div>
                 </div>
                 <div className="media-actions">
                     <button className="button-icon button-text-icon man" onClick={change}>
                         <span>{text}</span>
-                        <PlusIcon width={18} height={18} rotate={this.props.stored} />
+                        <Icon path={mdiPlus} size="28px" rotate={this.props.stored ? 45 : 0} title={text} />
                     </button>
                 </div>
                 <div className="media-external">
