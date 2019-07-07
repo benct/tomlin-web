@@ -1,9 +1,7 @@
 import makeAction from '../redux/makeAction';
 import makeReducer, { Actions } from '../redux/makeReducer';
 
-import { AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { DefaultState } from '../interfaces';
+import { AsyncAction, DefaultState } from '../interfaces';
 
 import quotes from '../util/quotes';
 import { _get, fetchFile } from '../util/api';
@@ -21,7 +19,7 @@ actions.setLoading = makeAction('BASE/SET_LOADING', 'loading');
 
 actions.setToast = makeAction('BASE/SET_TOAST', 'toast');
 
-actions.showToast = (payload: string): ThunkAction<Promise<void>, DefaultState, null, AnyAction> => async (dispatch): Promise<void> => {
+actions.showToast = (payload: string): AsyncAction => async (dispatch): Promise<void> => {
     dispatch(actions.setToast(payload));
 
     await window.setTimeout((): void => dispatch(actions.setToast(null)), 3000);
@@ -41,7 +39,7 @@ actions.refreshQuote = makeAction(
 
 actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 
-actions.getHomeState = (): ThunkAction<Promise<void>, DefaultState, null, AnyAction> => async (dispatch): Promise<void> =>
+actions.getHomeState = (): AsyncAction => async (dispatch): Promise<void> =>
     await _get({ service: 'hass', action: 'state' }).then((response): void => dispatch(actions.setHomeState(response)));
 
 actions.setContent = makeAction(
@@ -49,9 +47,7 @@ actions.setContent = makeAction(
     (state: DefaultState, { payload }): DefaultState => ({ ...state, [payload.field]: payload })
 );
 
-actions.loadContent = (field: string, file: string): ThunkAction<Promise<void>, DefaultState, null, AnyAction> => async (
-    dispatch
-): Promise<void> => {
+actions.loadContent = (field: string, file: string): AsyncAction => async (dispatch): Promise<void> => {
     dispatch(actions.setContent({ field, content: null, loading: true }));
 
     await fetchFile(`/assets/content/${file}`)

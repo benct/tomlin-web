@@ -16,7 +16,7 @@ export interface Actions {
  *
  * @param actions
  * @returns {reducer}
- * @see {@link makeAction.js}
+ * @see {@link makeAction.ts}
  */
 export default function makeReducer<T>(actions: Actions): Reducer {
     if (typeof actions !== 'object') {

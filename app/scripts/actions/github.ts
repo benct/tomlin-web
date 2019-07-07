@@ -1,9 +1,7 @@
 import makeAction from '../redux/makeAction';
 import makeReducer, { Actions } from '../redux/makeReducer';
 
-import { AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { GitHubRepo, GitHubState } from '../interfaces';
+import { AsyncAction, GitHubRepo, GitHubState } from '../interfaces';
 
 import { externalGet } from '../util/api';
 import baseActions from './base';
@@ -56,7 +54,7 @@ actions.setGitHubRepos = makeAction(
     }
 );
 
-actions.getGitHubData = (): ThunkAction<Promise<void>, GitHubState, null, AnyAction> => async (dispatch): Promise<void> => {
+actions.getGitHubData = (): AsyncAction => async (dispatch): Promise<void> => {
     dispatch(baseActions.setLoading(true));
 
     await externalGet('https://api.github.com/users/benct')

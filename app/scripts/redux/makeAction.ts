@@ -25,7 +25,7 @@ import { AnyAction, Reducer } from 'redux';
  * @param creator {Function} An action creation function
  *
  * @return {Function} An action creation function
- * @see {@link makeReducer.js}
+ * @see {@link makeReducer.ts}
  */
 export default function makeAction<T>(
     type: string,

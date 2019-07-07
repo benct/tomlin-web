@@ -1,5 +1,6 @@
 import makeAction from '../redux/makeAction';
 import makeReducer, { Actions } from '../redux/makeReducer';
+
 import { PaginationState } from '../interfaces';
 
 import defaultState from '../redux/defaultState';
@@ -25,7 +26,7 @@ const createListOfConsecutivePages = (totalPages: number, firstPage: number, cur
     return consecutivePages;
 };
 
-actions.set = makeAction<PaginationState>(
+actions.set = makeAction(
     'PAGINATION/SET',
     (state, { payload }): PaginationState => {
         const previousPages = createListOfPreviousPages(payload.total, payload.current);
@@ -46,7 +47,7 @@ actions.set = makeAction<PaginationState>(
     }
 );
 
-actions.reset = makeAction<PaginationState>('PAGINATION/RESET', (state): PaginationState => ({ ...state, ...defaultState.pagination }));
+actions.reset = makeAction('PAGINATION/RESET', (state): PaginationState => ({ ...state, ...defaultState.pagination }));
 
 export default actions;
 
