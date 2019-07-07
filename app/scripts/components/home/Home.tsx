@@ -15,7 +15,7 @@ const Home: React.FC = (): React.ReactElement => (
             <br />
             <br />
             <a href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer">
-                Version 2.9.3
+                Version 2.10.0
             </a>
         </div>
         <hr />
