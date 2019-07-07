@@ -16,7 +16,7 @@ import 'react-vis/dist/style.css';
 
 import { DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
 
-import mediaActions from '../../actions/media.js';
+import mediaActions from '../../actions/media';
 
 interface MediaStatsProps {
     movie: MediaStatsType;

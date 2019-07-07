@@ -190,6 +190,14 @@ export interface MediaEpisodeEntry {
     release_date: string | null;
 }
 
+export interface MediaSearchResults {
+    results: MediaSearchItemEntry[];
+    page: number;
+    total_pages: number;
+    total_results: number;
+    existing: number[];
+}
+
 export interface MediaSearchItemEntry {
     id: number;
     media_type: string;

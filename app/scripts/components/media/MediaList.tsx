@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouteComponentProps } from 'react-router';
 
-import mediaActions from '../../actions/media.js';
+import mediaActions from '../../actions/media';
 import paginationActions from '../../actions/pagination';
 import { DefaultState, MediaItemEntry, MediaResults, MediaType } from '../../interfaces';
 

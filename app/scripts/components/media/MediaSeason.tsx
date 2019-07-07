@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 
-import mediaActions from '../../actions/media.js';
-import { formatDate, formatGradientHSL } from '../../util/formatting';
 import { MediaEpisodeEntry, MediaSeasonEntry } from '../../interfaces';
+import { formatDate, formatGradientHSL } from '../../util/formatting';
+import mediaActions from '../../actions/media';
 
 import { ViewIcon } from '../page/Icons';
 
@@ -35,7 +35,7 @@ class MediaSeason extends React.PureComponent<MediaSeasonProps & DispatchProp, M
     }
 
     setAllSeen(): void {
-        this.props.dispatch(mediaActions.seenEpisodes({ seasonId: this.props.data.id }));
+        this.props.dispatch(mediaActions.seenEpisodes(this.props.data.id));
     }
 
     renderEpisodes(): React.ReactElement[] {
