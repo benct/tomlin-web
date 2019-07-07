@@ -1,6 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.10.0] - 2019-07-07
+### Added
+- Multiple types and TypeScript related packages
+- Material Design Icons (MDI) packages
+- Loading indication on login request
+- Live GitHub data in about section
+
+### Changed
+- Rewrite all JavaScript to TypeScript
+- Restructure media data and components
+- Improve suspended and private route setup
+- Replace custom SVG icons with MDI icons
+- Rewrite authentication as redux actions
+- Several minor code improvements and cleanup
+- Capitalize React component files
+- Update React refs usage
+- Extract babel options to .babelrc
+- Upgrade several dependencies
+
+### Fixed
+- Invalid values in post API requests
+
 ## [2.9.3] - 2019-05-06
 ### Added
 - Administration notes component
