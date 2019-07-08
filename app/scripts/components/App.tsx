@@ -17,7 +17,6 @@ import Home from './home/Home';
 import Login from './Login';
 import Logout from './Logout';
 
-const Links = React.lazy((): Promise<any> => import('./page/Links'));
 const Media = React.lazy((): Promise<any> => import('./media/Media'));
 const Admin = React.lazy((): Promise<any> => import('./admin/Admin'));
 
@@ -62,8 +61,6 @@ class App extends React.Component<AppStateProps & AppDispatchProps> {
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/about" component={About} />
-                            <SuspendedRoute path="/links" component={Links} extraProps={{ file: 'default.json' }} />
-                            <SuspendedRoute path="/finn" component={Links} extraProps={{ file: 'finn.json' }} />
                             <Route path="/logout" component={Logout} />
                             <Route path="/login" component={Login} />
                             <SuspendedRoute path="/media" component={Media} />

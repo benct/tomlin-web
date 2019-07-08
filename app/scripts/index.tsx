@@ -25,10 +25,6 @@ requireAll(require.context('../styles', true, /^\.\//));
 // @ts-ignore
 requireAll(require.context('../manifest', true, /^\.\//));
 
-// Other resources
-// @ts-ignore
-requireAll(require.context('../content', true, /^\.\//));
-
 // Render app
 ReactDOM.render(
     <Provider store={store}>
