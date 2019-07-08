@@ -13,7 +13,7 @@ const About: React.FC = (): React.ReactElement => (
                 <div>
                     Senior Developer at <a href="https://finn.no">FINN.no</a>
                 </div>
-                <div>Full-stack Developer</div>
+                <div>Full Stack Developer</div>
                 <div className="mtm">
                     <Icon path={mdiMapMarkerOutline} size={1} className="text-icon color-light" />
                     <span className="valign-middle mrm color-light">Oslo, Norway</span>

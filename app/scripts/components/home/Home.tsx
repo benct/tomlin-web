@@ -8,12 +8,11 @@ import Quote from './Quote';
 const Home: React.FC = (): React.ReactElement => (
     <>
         <div className="wrapper text">
-            <h2 className="home-title color-primary mbm">Welcome</h2>
-            This site was developed a while back using React, for the purpose of learning and testing new features and acquiring basic
-            knowledge about Webpack, Babel, Node and other web development technologies. More information about me can be found under the{' '}
-            <Link to="/about">about</Link> tab, or feel free to follow the social links at the bottom of the page.
-            <br />
-            <br />
+            <h2 className="home-title color-primary mbm">Hello.</h2>
+            <p className="mha mvl" style={{ maxWidth: '660px' }}>
+                This site is just a personal website project I doodle with from time to time. See more about me{' '}
+                <Link to="/about">here</Link> or follow the social media links at the bottom of the page.
+            </p>
             <a href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer">
                 Version 2.10.0
             </a>
