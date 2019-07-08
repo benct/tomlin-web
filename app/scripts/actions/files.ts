@@ -3,7 +3,7 @@ import makeReducer, { Actions } from '../redux/makeReducer';
 
 import { AsyncAction, FileItem, FileState, InitAction } from '../interfaces';
 
-import { fetchFile, post } from '../util/api';
+import { fetchFile, load } from '../util/api';
 import baseActions from './base';
 
 const actions: Actions = {};
@@ -19,7 +19,7 @@ actions.setUploading = makeAction('FILES/SET_UPLOADING', 'uploading');
 actions.setDirectory = makeAction('FILES/CHANGE_DIR', (state, { payload }): FileState => ({ ...state, cwd: payload, focused: null }));
 
 actions.refresh = (cwd: string): AsyncAction => async (dispatch, getState): Promise<void> =>
-    await post({ service: 'files', action: 'ls', path: cwd || getState().files.cwd })
+    await load({ service: 'files', action: 'ls', path: cwd || getState().files.cwd })
         .then((data): void => dispatch(actions.setContent(data)))
         .catch((): void => dispatch(baseActions.showToast('Could not fetch content...')));
 
@@ -38,7 +38,7 @@ actions.changeDirectory = (dirname: string): InitAction => (dispatch, getState):
 actions.createDirectory = (): AsyncAction => async (dispatch, getState): Promise<void> => {
     const name = prompt('Enter name of new folder:');
     if (name) {
-        await post({ service: 'files', action: 'mkdir', path: `${getState().files.cwd}/${name}` })
+        await load({ service: 'files', action: 'mkdir', path: `${getState().files.cwd}/${name}` })
             .then((): void => dispatch(actions.refresh()))
             .catch((): void => dispatch(baseActions.showToast('Could not create directory...')));
     }
@@ -47,7 +47,7 @@ actions.createDirectory = (): AsyncAction => async (dispatch, getState): Promise
 actions.rename = (item: FileItem): AsyncAction => async (dispatch, getState): Promise<void> => {
     const name = prompt('Enter new name of file:', item.name);
     if (name) {
-        await post({ service: 'files', action: 'mv', path: `${getState().files.cwd}/${item.name}`, name })
+        await load({ service: 'files', action: 'mv', path: `${getState().files.cwd}/${item.name}`, name })
             .then((): void => dispatch(actions.refresh()))
             .catch((): void => dispatch(baseActions.showToast(`Could not rename ${item.dir ? 'directory' : 'file'}...`)));
     }
@@ -56,7 +56,7 @@ actions.rename = (item: FileItem): AsyncAction => async (dispatch, getState): Pr
 actions.delete = (item: FileItem): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (confirm(`Are you sure you want to delete ${item.name}?`)) {
         const action = item.dir ? 'rmdir' : 'rm';
-        await post({ service: 'files', action: action, path: `${getState().files.cwd}/${item.name}` })
+        await load({ service: 'files', action: action, path: `${getState().files.cwd}/${item.name}` })
             .then((): void => dispatch(actions.refresh()))
             .catch((): void => dispatch(baseActions.showToast(`Could not delete ${item.dir ? 'directory' : 'file'}...`)));
     }
@@ -65,7 +65,7 @@ actions.delete = (item: FileItem): AsyncAction => async (dispatch, getState): Pr
 actions.upload = (data: FormData): AsyncAction => async (dispatch, getState): Promise<void> => {
     dispatch(actions.setUploading(true));
 
-    await post({ service: 'files', action: 'up', path: getState().files.cwd }, data)
+    await load({ service: 'files', action: 'up', path: getState().files.cwd }, data)
         .then((): void => {
             dispatch(actions.setUploading(false));
             dispatch(actions.refresh());

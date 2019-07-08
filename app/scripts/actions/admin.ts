@@ -3,7 +3,7 @@ import makeReducer, { Actions } from '../redux/makeReducer';
 
 import { AsyncAction } from '../interfaces';
 
-import { post } from '../util/api';
+import { load, post } from '../util/api';
 import baseActions from './base';
 
 const actions: Actions = {};
@@ -26,7 +26,7 @@ actions.getStats = (): AsyncAction => async (dispatch, getState): Promise<void> 
 
 actions.getVisits = (): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'db', action: 'visits' })
+        await load({ service: 'db', action: 'visits' })
             .then((response): void => dispatch(actions.setVisits(response || [])))
             .catch((): void => dispatch(baseActions.showToast('Could not fetch visiting data...')));
     }
@@ -34,7 +34,7 @@ actions.getVisits = (): AsyncAction => async (dispatch, getState): Promise<void>
 
 actions.getLogs = (count: number): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'db', action: 'logs', count })
+        await load({ service: 'db', action: 'logs', count })
             .then((response): void => dispatch(actions.setLogs(response || [])))
             .catch((): void => dispatch(baseActions.showToast('Could not fetch log data...')));
     }
@@ -42,7 +42,7 @@ actions.getLogs = (count: number): AsyncAction => async (dispatch, getState): Pr
 
 actions.clearLogs = (): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'db', action: 'clear' })
+        await load({ service: 'db', action: 'clear' })
             .then((response): void => (response ? dispatch(actions.setLogs([])) : null))
             .catch((): void => dispatch(baseActions.showToast('Could not clear log data...')));
     }
@@ -50,7 +50,7 @@ actions.clearLogs = (): AsyncAction => async (dispatch, getState): Promise<void>
 
 actions.updatePosters = (): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'media', action: 'images', overwrite: false })
+        await load({ service: 'media', action: 'images', overwrite: false })
             .then((response): void => dispatch(baseActions.showToast(`Successfully updated ${response} posters!`)))
             .catch((): void => dispatch(baseActions.showToast('Failed to update posters...')));
     }
@@ -58,7 +58,7 @@ actions.updatePosters = (): AsyncAction => async (dispatch, getState): Promise<v
 
 actions.updateMedia = (type: string, count: number): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'media', action: 'update', type, count })
+        await load({ service: 'media', action: 'update', type, count })
             .then((response): void => dispatch(baseActions.showToast(`Successfully updated ${response} items!`)))
             .catch((): void => dispatch(baseActions.showToast('Failed to update media content...')));
     }
@@ -66,7 +66,7 @@ actions.updateMedia = (type: string, count: number): AsyncAction => async (dispa
 
 actions.updateIata = (type: string): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'iata', action: type })
+        await load({ service: 'iata', action: type })
             .then((response): void => dispatch(baseActions.showToast(`Successfully updated ${response} entries!`)))
             .catch((): void => dispatch(baseActions.showToast('Failed to update IATA entries...')));
     }
@@ -74,7 +74,7 @@ actions.updateIata = (type: string): AsyncAction => async (dispatch, getState): 
 
 actions.getNotes = (): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'notes', action: 'get' })
+        await load({ service: 'notes', action: 'get' })
             .then((response): void => dispatch(actions.setNotes(response || [])))
             .catch((): void => dispatch(baseActions.showToast('Could not fetch notes...')));
     }
@@ -82,7 +82,7 @@ actions.getNotes = (): AsyncAction => async (dispatch, getState): Promise<void> 
 
 actions.saveNote = (id: number, title: string, content: string): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'notes', action: 'store', id, title, content })
+        await load({ service: 'notes', action: 'store', id, title, content })
             .then((): void => {
                 dispatch(baseActions.showToast('Successfully saved note!'));
                 dispatch(actions.getNotes());
@@ -93,7 +93,7 @@ actions.saveNote = (id: number, title: string, content: string): AsyncAction => 
 
 actions.deleteNote = (id: number): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm(`Are you sure you want to delete this note?`)) {
-        await post({ service: 'notes', action: 'delete', id })
+        await load({ service: 'notes', action: 'delete', id })
             .then((): void => {
                 dispatch(baseActions.showToast('Successfully deleted note!'));
                 dispatch(actions.getNotes());

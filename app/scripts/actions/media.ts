@@ -12,7 +12,7 @@ import {
     MediaState,
 } from '../interfaces';
 
-import { get, post } from '../util/api';
+import { get, load } from '../util/api';
 import baseActions from './base';
 import paginationActions from './pagination';
 
@@ -43,7 +43,9 @@ actions.set = makeAction(
     })
 );
 
-actions.get = ({ action, sort, page, query }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> =>
+actions.get = ({ action, sort, page, query }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+    dispatch(baseActions.setLoading(true));
+
     await get<MediaResults>({
         service: 'media',
         action,
@@ -58,7 +60,20 @@ actions.get = ({ action, sort, page, query }: MediaActionProps): AsyncAction => 
         .catch((): void => {
             dispatch(paginationActions.reset());
             dispatch(baseActions.showToast('Could not fetch media content...'));
-        });
+        })
+        .finally((): void => dispatch(baseActions.setLoading(false)));
+};
+
+actions.setStats = makeAction('MEDIA/SET_STATS', 'stats');
+
+actions.stats = (): AsyncAction => async (dispatch): Promise<void> => {
+    dispatch(baseActions.setLoading(true));
+
+    await get({ service: 'media', action: 'stats' })
+        .then((response): void => dispatch(actions.setStats(response)))
+        .catch((): void => dispatch(baseActions.showToast('Could not fetch stats...')))
+        .finally((): void => dispatch(baseActions.setLoading(false)));
+};
 
 actions.setSort = makeAction('MEDIA/SET_SORT', 'sort');
 
@@ -72,6 +87,8 @@ actions.hideModal = makeAction('MEDIA/HIDE_MODAL', (state): MediaState => ({ ...
 actions.setItem = ({ type, id, override }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
     const item = getState().media.item;
     if (override || !item || item.id !== id) {
+        dispatch(baseActions.setLoading(true));
+
         await get({ service: 'media', action: 'get', type, id })
             .then((response): void => {
                 dispatch(actions.showModal(response));
@@ -79,7 +96,8 @@ actions.setItem = ({ type, id, override }: MediaActionProps): AsyncAction => asy
             .catch((): void => {
                 dispatch(actions.hideModal());
                 dispatch(baseActions.showToast('Could not fetch media content...'));
-            });
+            })
+            .finally((): void => dispatch(baseActions.setLoading(false)));
     } else {
         dispatch(actions.showModal());
     }
@@ -88,7 +106,7 @@ actions.setItem = ({ type, id, override }: MediaActionProps): AsyncAction => asy
 actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
 
 actions.post = ({ action, type, id, page }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> =>
-    await post<MediaSearchResults>({ service: 'media', action, type, id, page: page || getState().pagination.current })
+    await load<MediaSearchResults>({ service: 'media', action, type, id, page: page || getState().pagination.current })
         .then((response): void => {
             dispatch(actions.setSearch(response.results || []));
             dispatch(actions.setExisting(response.existing));
@@ -100,7 +118,7 @@ actions.post = ({ action, type, id, page }: MediaActionProps): AsyncAction => as
         });
 
 actions.search = (query: string): AsyncAction => async (dispatch): Promise<void> =>
-    await post<MediaSearchResults>({ service: 'media', action: 'search', query: encodeURI(query) })
+    await load<MediaSearchResults>({ service: 'media', action: 'search', query: encodeURI(query) })
         .then((response): void => {
             dispatch(
                 actions.setSearch(
@@ -138,7 +156,7 @@ actions.removeExisting = makeAction(
 
 actions.add = ({ type, id }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'media', action: 'save', type, id })
+        await load({ service: 'media', action: 'save', type, id })
             .then((): void => {
                 dispatch(actions.addExisting(id));
                 dispatch(baseActions.showToast('Media successfully added!'));
@@ -149,7 +167,7 @@ actions.add = ({ type, id }: MediaActionProps): AsyncAction => async (dispatch, 
 
 actions.remove = ({ action, type, id }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm(`Are you sure you want to remove this?`)) {
-        await post({ service: 'media', action: 'delete', type, id })
+        await load({ service: 'media', action: 'delete', type, id })
             .then((): void => {
                 if (action) {
                     dispatch(actions.get({ action }));
@@ -164,7 +182,7 @@ actions.remove = ({ action, type, id }: MediaActionProps): AsyncAction => async 
 
 actions.update = ({ action, type, id }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'media', action: 'update', type, id })
+        await load({ service: 'media', action: 'update', type, id })
             .then((): void => {
                 dispatch(actions.get({ action }));
                 dispatch(actions.setItem({ type, id, override: true }));
@@ -195,7 +213,7 @@ actions.setFavourite = makeAction(
 
 actions.favourite = ({ action, type, id, set }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'media', action: 'favourite', type, id, set })
+        await load({ service: 'media', action: 'favourite', type, id, set })
             .then((): void => {
                 dispatch(actions.setFavourite({ action, id, set }));
                 dispatch(baseActions.showToast(`${set ? 'Added to' : 'Removed from'} favourites!`));
@@ -225,7 +243,7 @@ actions.setSeen = makeAction(
 
 actions.seen = ({ action, type, id, set }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'media', action: 'seen', type, id, set })
+        await load({ service: 'media', action: 'seen', type, id, set })
             .then((): void => {
                 dispatch(actions.setSeen({ action, id, set }));
                 dispatch(baseActions.showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
@@ -257,7 +275,7 @@ actions.setEpisodeSeen = makeAction(
 
 actions.seenEpisode = ({ id, set }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'media', action: 'seen', type: 'episode', id, set })
+        await load({ service: 'media', action: 'seen', type: 'episode', id, set })
             .then((): void => {
                 dispatch(actions.setEpisodeSeen({ episodeId: id, set }));
                 dispatch(baseActions.showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
@@ -268,7 +286,7 @@ actions.seenEpisode = ({ id, set }: MediaActionProps): AsyncAction => async (dis
 
 actions.seenEpisodes = (seasonId: number): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'media', action: 'seen', type: 'season', id: seasonId, set: true })
+        await load({ service: 'media', action: 'seen', type: 'season', id: seasonId, set: true })
             .then((): void => {
                 dispatch(actions.setEpisodeSeen({ seasonId, set: true }));
                 dispatch(baseActions.showToast('All episodes set as seen'));
@@ -277,15 +295,8 @@ actions.seenEpisodes = (seasonId: number): AsyncAction => async (dispatch, getSt
     }
 };
 
-actions.setStats = makeAction('MEDIA/SET_STATS', 'stats');
-
-actions.stats = (): AsyncAction => async (dispatch): Promise<void> =>
-    await get({ service: 'media', action: 'stats' })
-        .then((response): void => dispatch(actions.setStats(response)))
-        .catch((): void => dispatch(baseActions.showToast('Could not fetch stats...')));
-
 actions.goToIMDb = ({ type, id }: MediaActionProps): AsyncAction => async (dispatch): Promise<void> =>
-    await post({ service: 'media', action: 'external', type, id })
+    await load({ service: 'media', action: 'external', type, id })
         .then((response): void => {
             if (response) {
                 const win = window.open(`https://www.imdb.com/title/${response}`, '_blank');

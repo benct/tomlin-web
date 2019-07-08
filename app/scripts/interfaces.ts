@@ -5,7 +5,9 @@ export interface DefaultState {
     showMenu: boolean;
     circleIcons: boolean;
     toast: string | null;
+
     loading: boolean;
+    loadingOverlay: boolean;
 
     auth: AuthState;
     home: HomeState;
@@ -22,7 +24,6 @@ export interface AuthState {
     isLoggedIn: boolean;
     redirect: boolean;
     error: boolean;
-    loading: boolean;
 }
 
 export interface HomeState {

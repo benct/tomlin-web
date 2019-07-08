@@ -4,7 +4,7 @@ import makeReducer, { Actions } from '../redux/makeReducer';
 import { AsyncAction, DefaultState } from '../interfaces';
 
 import quotes from '../util/quotes';
-import { _get, fetchFile } from '../util/api';
+import { get, fetchFile } from '../util/api';
 
 const actions: Actions = {};
 
@@ -16,6 +16,8 @@ actions.toggleIcons = makeAction(
 actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', (state: DefaultState): DefaultState => ({ ...state, showMenu: !state.showMenu }));
 
 actions.setLoading = makeAction('BASE/SET_LOADING', 'loading');
+
+actions.setLoadingOverlay = makeAction('BASE/SET_LOADING_OVERLAY', 'loadingOverlay');
 
 actions.setToast = makeAction('BASE/SET_TOAST', 'toast');
 
@@ -40,7 +42,7 @@ actions.refreshQuote = makeAction(
 actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 
 actions.getHomeState = (): AsyncAction => async (dispatch): Promise<void> =>
-    await _get({ service: 'hass', action: 'state' }).then((response): void => dispatch(actions.setHomeState(response)));
+    await get({ service: 'hass', action: 'state' }).then((response): void => dispatch(actions.setHomeState(response)));
 
 actions.setContent = makeAction(
     'CONTENT/SET_DATA',

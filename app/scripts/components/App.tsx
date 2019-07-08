@@ -87,7 +87,7 @@ const mapStateToProps = (state: DefaultState): AppStateProps => ({
     showMenu: state.showMenu,
     circleIcons: state.circleIcons,
     toast: state.toast,
-    loading: state.loading,
+    loading: state.loadingOverlay,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): AppDispatchProps => ({

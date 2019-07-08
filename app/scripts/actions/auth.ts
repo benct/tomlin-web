@@ -3,13 +3,12 @@ import makeReducer, { Actions } from '../redux/makeReducer';
 
 import { AsyncAction, AuthState, InitAction } from '../interfaces';
 
-import { _post } from '../util/api';
+import { post } from '../util/api';
+import baseActions from './base';
 
 const actions: Actions = {};
 
 actions.setLoggedIn = makeAction('AUTH/SET_LOGGED_IN', 'isLoggedIn');
-
-actions.setAuthLoading = makeAction('AUTH/SET_LOADING', 'loading');
 
 actions.setLoginData = makeAction(
     'AUTH/SET_LOGIN_DATA',
@@ -17,7 +16,7 @@ actions.setLoginData = makeAction(
 );
 
 actions.validate = (): AsyncAction => async (dispatch): Promise<void> => {
-    await _post<string>({ service: 'auth', action: 'validate', referrer: document.referrer })
+    await post<string>({ service: 'auth', action: 'validate', referrer: document.referrer })
         .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
         .then((token): void => {
             localStorage.token = token;
@@ -30,9 +29,9 @@ actions.validate = (): AsyncAction => async (dispatch): Promise<void> => {
 };
 
 actions.login = (data: object): AsyncAction => async (dispatch): Promise<void> => {
-    dispatch(actions.setAuthLoading(true));
+    dispatch(baseActions.setLoading(true));
 
-    await _post<string>({ service: 'auth', action: 'login', ...data })
+    await post<string>({ service: 'auth', action: 'login', ...data })
         .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
         .then((token): void => {
             localStorage.token = token;
@@ -42,7 +41,7 @@ actions.login = (data: object): AsyncAction => async (dispatch): Promise<void> =
             delete localStorage.token;
             dispatch(actions.setLoginData(false));
         })
-        .finally((): void => dispatch(actions.setAuthLoading(false)));
+        .finally((): void => dispatch(baseActions.setLoading(false)));
 };
 
 actions.logout = (): InitAction => (dispatch): void => {

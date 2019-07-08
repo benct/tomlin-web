@@ -6,13 +6,14 @@ const defaultState: DefaultState = {
     showMenu: false,
     circleIcons: false,
     toast: null,
+
     loading: false,
+    loadingOverlay: false,
 
     auth: {
         isLoggedIn: false,
         redirect: false,
         error: false,
-        loading: false,
     },
 
     home: {
