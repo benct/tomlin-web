@@ -12,7 +12,7 @@ import SuspendedRoute from './route/Suspended';
 import Navigation from './page/Navigation';
 import Social from './page/Social';
 import Error from './page/Error';
-import About from './page/About';
+import About from './about/About';
 import Home from './home/Home';
 import Login from './Login';
 import Logout from './Logout';
