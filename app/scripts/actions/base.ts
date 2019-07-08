@@ -4,7 +4,7 @@ import makeReducer, { Actions } from '../redux/makeReducer';
 import { AsyncAction, DefaultState } from '../interfaces';
 
 import quotes from '../util/quotes';
-import { get, fetchFile } from '../util/api';
+import { get } from '../util/api';
 
 const actions: Actions = {};
 
@@ -43,22 +43,6 @@ actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 
 actions.getHomeState = (): AsyncAction => async (dispatch): Promise<void> =>
     await get({ service: 'hass', action: 'state' }).then((response): void => dispatch(actions.setHomeState(response)));
-
-actions.setContent = makeAction(
-    'CONTENT/SET_DATA',
-    (state: DefaultState, { payload }): DefaultState => ({ ...state, [payload.field]: payload })
-);
-
-actions.loadContent = (field: string, file: string): AsyncAction => async (dispatch): Promise<void> => {
-    dispatch(actions.setContent({ field, content: null, loading: true }));
-
-    await fetchFile(`/assets/content/${file}`)
-        .then((data): void => dispatch(actions.setContent({ field, content: data, loading: false })))
-        .catch((): void => {
-            dispatch(actions.setContent({ field, content: null, loading: false }));
-            dispatch(actions.showToast('Could not load file...'));
-        });
-};
 
 export default actions;
 

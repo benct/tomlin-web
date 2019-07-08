@@ -14,7 +14,6 @@ export interface DefaultState {
     quote: QuoteState;
     github: GitHubState;
     files: FileState;
-    links: LinkState;
     media: MediaState;
     admin: AdminState;
     pagination: PaginationState;
@@ -103,11 +102,6 @@ export interface FilePreview {
     src: string;
     image: string;
     content: string;
-}
-
-export interface LinkState {
-    content: string | null;
-    loading: boolean;
 }
 
 export type MediaType = 'movie' | 'tv' | 'watchlist';

@@ -42,11 +42,6 @@ const defaultState: DefaultState = {
         uploading: false,
     },
 
-    links: {
-        content: null,
-        loading: false,
-    },
-
     media: {
         movie: null,
         tv: null,
