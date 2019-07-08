@@ -29,7 +29,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
     }
 
     formatStat(key: string): string {
-        return this.props.stats[key] ? formatThousands(this.props.stats[key]) : '-';
+        return this.props.stats[key] !== undefined ? formatThousands(this.props.stats[key]) : '-';
     }
 
     static renderOptions(values: number[]): React.ReactElement[] {
