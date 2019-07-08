@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.10.1] - 2019-07-09
+### Changed
+- Improve general loading indication
+- Refactor api get/post functions
+- Rewrite site information text
+- Replace some quotes
+
+### Fixed
+- Incorrect number formatting on admin stats
+
+### Removed
+- Old links page component and content
+
 ## [2.10.0] - 2019-07-07
 ### Added
 - Multiple types and TypeScript related packages
