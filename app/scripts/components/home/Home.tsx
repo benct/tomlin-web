@@ -9,7 +9,7 @@ const Home: React.FC = (): React.ReactElement => (
     <>
         <div className="wrapper text">
             <h2 className="home-title color-primary mbm">Hello.</h2>
-            <p className="mha mvl" style={{ maxWidth: '660px' }}>
+            <p className="limit-width mvl">
                 This site is just a personal website project I doodle with from time to time. See more about me{' '}
                 <Link to="/about">here</Link> or follow the social media links at the bottom of the page.
             </p>

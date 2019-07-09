@@ -24,7 +24,7 @@ class Quote extends React.PureComponent<QuoteProps & DispatchProp, QuoteState> {
     render(): React.ReactNode {
         return this.props.text ? (
             <div className="wrapper text-center pointer no-select" onClick={this.refreshQuote.bind(this)} role="button" tabIndex={0}>
-                <div>{this.props.text}</div>
+                <div className="limit-width">{this.props.text}</div>
                 <div>{this.props.author ? <i>- {this.props.author}</i> : null}</div>
                 <Icon path={mdiRefresh} size="16px" className="help-icon float-right" title="Show new quote" />
             </div>
