@@ -41,8 +41,13 @@ actions.refreshQuote = makeAction(
 
 actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 
-actions.getHomeState = (): AsyncAction => async (dispatch): Promise<void> =>
-    await get({ service: 'hass', action: 'state' }).then((response): void => dispatch(actions.setHomeState(response)));
+actions.getHomeState = (): AsyncAction => async (dispatch): Promise<void> => {
+    dispatch(actions.setLoading(true));
+
+    await get({ service: 'hass', action: 'state' })
+        .then((response): void => dispatch(actions.setHomeState(response)))
+        .finally((): void => dispatch(actions.setLoading(false)));
+};
 
 export default actions;
 

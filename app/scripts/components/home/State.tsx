@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import Icon from '@mdi/react';
-import { mdiInformationOutline } from '@mdi/js';
+import { mdiInformationOutline, mdiLoading } from '@mdi/js';
 
 import { DefaultState, HomeState } from '../../interfaces';
 
@@ -9,7 +9,9 @@ import actions from '../../actions/base';
 
 import Time from './Time';
 
-class State extends React.PureComponent<DispatchProp & HomeState> {
+type HomeStateProps = HomeState & Pick<DefaultState, 'loading'>;
+
+class State extends React.PureComponent<DispatchProp & HomeStateProps> {
     componentDidMount(): void {
         this.props.dispatch(actions.getHomeState());
     }
@@ -39,9 +41,10 @@ class State extends React.PureComponent<DispatchProp & HomeState> {
                             data-tooltip="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
                             data-tooltip-large>
                             <Icon
-                                path={mdiInformationOutline}
+                                path={this.props.loading ? mdiLoading : mdiInformationOutline}
+                                title={this.props.loading ? 'Loading' : 'Information'}
+                                spin={this.props.loading}
                                 size="16px"
-                                title="Information"
                                 description="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
                                 className="help-icon"
                             />
@@ -84,9 +87,10 @@ class State extends React.PureComponent<DispatchProp & HomeState> {
 }
 
 export default connect(
-    (state: DefaultState): HomeState => ({
+    (state: DefaultState): HomeStateProps => ({
         temperature: state.home.temperature,
         consumption: state.home.consumption,
         day: state.home.day,
+        loading: state.loading,
     })
 )(State);
