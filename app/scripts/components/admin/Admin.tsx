@@ -7,6 +7,7 @@ import Error from '../page/Error';
 import Control from './Control';
 import Logs from './Logs';
 import Visits from './Visits';
+import Flights from './Flights';
 
 const Notes = React.lazy((): Promise<any> => import('../notes/Notes'));
 const Files = React.lazy((): Promise<any> => import('../files/Files'));
@@ -14,6 +15,7 @@ const Files = React.lazy((): Promise<any> => import('../files/Files'));
 const menu: NavigationItem[] = [
     { text: 'Logs', path: '/admin/logs' },
     { text: 'Visits', path: '/admin/visits' },
+    { text: 'Flights', path: '/admin/flights' },
     { text: 'Notes', path: '/admin/notes' },
     { text: 'Files', path: '/admin/files' },
 ];
@@ -26,6 +28,7 @@ const Admin: React.FC = (): React.ReactElement => (
                 <Route path="/admin" exact component={Control} />
                 <Route path="/admin/logs" component={Logs} />
                 <Route path="/admin/visits" component={Visits} />
+                <Route path="/admin/flights" component={Flights} />
                 <SuspendedRoute path="/admin/notes" component={Notes} />
                 <SuspendedRoute path="/admin/files" component={Files} />
                 <Route render={(): React.ReactNode => <Error code={404} />} />

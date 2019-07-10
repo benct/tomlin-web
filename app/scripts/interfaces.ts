@@ -229,6 +229,7 @@ export interface MediaStatsEntry {
 export interface AdminState {
     stats: AdminStats;
     logs: Log[];
+    flights: any[];
     visits: Visit[];
     notes: Note[];
 }

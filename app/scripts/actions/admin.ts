@@ -12,6 +12,8 @@ actions.setStats = makeAction('ADMIN/SET_STATS', 'stats');
 
 actions.setVisits = makeAction('ADMIN/SET_VISITS', 'visits');
 
+actions.setFlights = makeAction('ADMIN/SET_FLIGHTS', 'flights');
+
 actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
 
 actions.setNotes = makeAction('ADMIN/SET_NOTES', 'notes');
@@ -99,6 +101,22 @@ actions.deleteNote = (id: number): AsyncAction => async (dispatch, getState): Pr
                 dispatch(actions.getNotes());
             })
             .catch((): void => dispatch(baseActions.showToast('Could not delete note...')));
+    }
+};
+
+actions.getFlights = (): AsyncAction => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn) {
+        await load({ service: 'iata', action: 'flights' })
+            .then((response): void => dispatch(actions.setFlights(response || [])))
+            .catch((): void => dispatch(baseActions.showToast('Could not fetch flights data...')));
+    }
+};
+
+actions.saveFlight = (data: object): AsyncAction => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn) {
+        await load({ service: 'iata', action: 'flight', ...data })
+            .then((): void => dispatch(actions.getFlights()))
+            .catch((): void => dispatch(baseActions.showToast('Could not save flight...')));
     }
 };
 
