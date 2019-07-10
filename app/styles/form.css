@@ -45,6 +45,7 @@ select, button, input[type=submit] {
     padding: 8px;
     outline: none;
     color: #002080;
+    font: initial;
     border: 1px solid #aaa;
     border-radius: 5px;
     background-color: #fff;

@@ -28,29 +28,6 @@
     padding-left: 0;
 }
 
-.admin-overlay {
-    display: grid;
-    grid-gap: 5px;
-    max-height: 100%;
-    box-sizing: border-box;
-}
-
-.admin-overlay input,
-.admin-overlay textarea {
-    text-transform: initial;
-    font-size: initial;
-}
-
-.notes-overlay {
-    grid-template-columns: 1fr;
-    grid-template-rows: min-content 1fr min-content;
-}
-
-.flights-overlay {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr min-content;
-}
-
 @media (max-width: 600px) {
     .admin-stats {
         grid-template-columns: repeat(2, 1fr);

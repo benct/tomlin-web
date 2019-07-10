@@ -4,29 +4,10 @@
     column-gap: 10px;
 }
 
-.media-overlay {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: min-content 1fr min-content;
-    row-gap: 5px;
-    width: 460px;
-    max-height: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
 .media-overlay-title {
     display: grid;
     grid-template-columns: 1fr auto;
     column-gap: 5px;
-    border-bottom: 1px solid #dddddd;
-}
-
-.media-overlay-content {
-    max-width: 100%;
-    height: 400px;
-    overflow-y: scroll;
 }
 
 .media-overlay-overview {
@@ -58,10 +39,6 @@
     padding: 10px;
     border: 1px solid #dddddd;
     cursor: pointer;
-}
-
-.media-overlay-buttons {
-    border-top: 1px solid #dddddd;
 }
 
 .media-search button,

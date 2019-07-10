@@ -234,15 +234,15 @@ export default class MediaModal extends React.PureComponent<MediaModalProps, Med
 
     render(): React.ReactElement {
         return (
-            <Modal close={this.props.close} className="media-overlay">
-                <div className="media-overlay-title pbm">
+            <Modal close={this.props.close}>
+                <div className="media-overlay-title border-bottom pbm">
                     <span className="color-primary strong">
                         {this.props.data.title} ({formatYears(this.props.type, this.props.data.release_year, this.props.data.end_year)})
                     </span>
                     {this.renderSeasonButton()}
                 </div>
-                <div className="media-overlay-content">{this.state.showSeasons ? this.renderSeasons() : this.renderContent()}</div>
-                <div className="media-overlay-buttons ptm">
+                <div className="overlay-modal-content">{this.state.showSeasons ? this.renderSeasons() : this.renderContent()}</div>
+                <div className="border-top ptm">
                     <button className="button-blank mrl" data-tooltip="Remove" onClick={this.props.remove}>
                         <img src={require(`../../../images/icon/remove.svg`)} alt="Remove" width={22} height={22} />
                     </button>

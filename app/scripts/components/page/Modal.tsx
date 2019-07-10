@@ -24,7 +24,7 @@ export default class Modal extends React.PureComponent<ModalProps> {
     render(): React.ReactElement {
         return (
             <div className="overlay" onClick={this.handleOutsideClick.bind(this)} role="dialog">
-                <div className={`wrapper overlay-container shadow ${this.props.className}`}>{this.props.children}</div>
+                <div className={`wrapper overlay-modal shadow ${this.props.className}`}>{this.props.children}</div>
             </div>
         );
     }

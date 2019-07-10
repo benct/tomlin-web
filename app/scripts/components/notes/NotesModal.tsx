@@ -38,7 +38,7 @@ class NotesModal extends React.PureComponent<NotesModalProps & DispatchProp> {
 
     render(): React.ReactElement {
         return (
-            <Modal close={this.props.close} className="admin-overlay notes-overlay">
+            <Modal close={this.props.close}>
                 <input
                     className="input"
                     type="text"
