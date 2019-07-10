@@ -71,9 +71,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                 <div className="admin-list text text-left">
                     <span className="truncate">Import missing media poster images</span>
                     <span />
-                    <button
-                        className="input input-small"
-                        onClick={(): void => this.props.dispatch(adminActions.updatePosters())}>
+                    <button className="input input-small" onClick={(): void => this.props.dispatch(adminActions.updatePosters())}>
                         Run
                     </button>
                     <span className="truncate">Update number of stored movies</span>
@@ -107,16 +105,12 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                 <div className="admin-list text text-left">
                     <span className="truncate">Update IATA airline entries</span>
                     <span />
-                    <button
-                        className="input input-small"
-                        onClick={(): void => this.props.dispatch(adminActions.updateIata('airlines'))}>
+                    <button className="input input-small" onClick={(): void => this.props.dispatch(adminActions.updateIata('airlines'))}>
                         Run
                     </button>
                     <span className="truncate">Update IATA location entries</span>
                     <span />
-                    <button
-                        className="input input-small"
-                        onClick={(): void => this.props.dispatch(adminActions.updateIata('locations'))}>
+                    <button className="input input-small" onClick={(): void => this.props.dispatch(adminActions.updateIata('locations'))}>
                         Run
                     </button>
                 </div>
@@ -124,9 +118,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                 <div className="admin-list text text-left">
                     <span className="truncate">Clear all log messages</span>
                     <span />
-                    <button
-                        className="input input-small"
-                        onClick={(): void => this.props.dispatch(adminActions.clearLogs())}>
+                    <button className="input input-small" onClick={(): void => this.props.dispatch(adminActions.clearLogs())}>
                         Clear
                     </button>
                     <span className="truncate">Default number of log messages</span>

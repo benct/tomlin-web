@@ -184,10 +184,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                         </span>
                     </label>
                     <br />
-                    <button
-                        className="input text-small mtl"
-                        onClick={this.handleUpload.bind(this)}
-                        disabled={this.props.uploading}>
+                    <button className="input text-small mtl" onClick={this.handleUpload.bind(this)} disabled={this.props.uploading}>
                         {this.props.uploading ? 'Uploading...' : 'Upload'}
                     </button>
                 </div>
