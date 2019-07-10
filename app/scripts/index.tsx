@@ -8,6 +8,9 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import App from './components/App';
 
+import 'purecss/build/pure-min.css';
+import 'purecss/build/grids-responsive-min.css';
+
 // Static assets
 import '../.htaccess';
 import '../humans.txt';
