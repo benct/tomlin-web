@@ -1,0 +1,26 @@
+.error-page {
+    text-align: center;
+    padding: 100px 30px !important;
+}
+
+.error-page h1 {
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    font-size: 28px;
+    letter-spacing: 3px;
+    line-height: 1.5;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.error-page p {
+    font-size: 1.1em;
+    line-height: 1.2;
+    margin: 20px 0;
+}
+
+@media screen and (max-width: 360px) {
+    .error-page h1 {
+        font-size: 24px;
+    }
+}

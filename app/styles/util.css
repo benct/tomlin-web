@@ -1,0 +1,178 @@
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:after {
+    position: absolute;
+    visibility: hidden;
+    z-index: 999;
+    opacity: 0;
+    bottom: 100%;
+    left: 50%;
+    color: #fff;
+    background-color: #000;
+    background-color: hsla(0, 0%, 20%, 0.9);
+    border: 1px solid #292929;
+    border-radius: 3px;
+    padding: 4px 8px;
+    content: attr(data-tooltip);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: initial;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    -webkit-transform: translate3d(-50%, 0, 0);
+    -moz-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+    -webkit-transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            -webkit-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    -moz-transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            -moz-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    pointer-events: none;
+}
+
+[data-tooltip]:hover:after,
+[data-tooltip]:focus:after {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: translateY(-6px) translateX(-50%);
+    -moz-transform: translateY(-6px) translateX(-50%);
+    transform: translateY(-6px) translateX(-50%);
+}
+
+[data-tooltip-large]:after {
+    width: 300px;
+    white-space: pre-wrap;
+}
+
+@media screen and (max-width: 480px) {
+    [data-tooltip-large]:after {
+        width: 200px;
+    }
+}
+
+.toast {
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    left: 50%;
+    bottom: 40px;
+    z-index: 999;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+.pac-man {
+    margin: 70px auto 105px;
+    border-radius: 100em 100em 0 0;
+    transform-origin: bottom;
+    animation: eating-top .5s infinite;
+    width: 70px;
+    height: 35px;
+    background: #ffdd00;
+}
+
+.pac-man::before {
+    width: 70px;
+    height: 35px;
+    background: #ffdd00;
+}
+
+.pac-man::before {
+    content: '';
+    display: block;
+    margin-top: 35px;
+    position: absolute;
+    transform-origin: top;
+    border-radius: 0 0 100em 100em;
+    transform: rotate(80deg);
+    animation: eating-bottom .5s infinite;
+}
+
+.pac-man::after {
+    position: absolute;
+    border-radius: 100em;
+    content: '';
+    display: block;
+    height: 20px;
+    width: 20px;
+    margin-top: 25px;
+    margin-left: 25px;
+    transform-origin: center;
+    animation: center .5s infinite, ball .5s -.33s infinite linear;
+}
+
+@keyframes eating-top{
+    0% { transform: rotate(-40deg); }
+    50% { transform: rotate(0deg); }
+    100% { transform: rotate(-40deg); }
+}
+
+@keyframes eating-bottom{
+    0% { transform: rotate(80deg); }
+    50% { transform: rotate(0deg); }
+    100% { transform: rotate(80deg); }
+}
+
+@keyframes center{
+    0% { transform: rotate(40deg); }
+    50% { transform: rotate(0deg); }
+    100% { transform: rotate(40deg); }
+}
+
+@keyframes ball{
+    0%{
+        opacity: .7;
+        box-shadow:
+                70px 0 0 0 #ffdd00,
+                120px 0 0 0 #ffdd00,
+                170px 0 0 0 #ffdd00,
+                220px 0 0 0 #ffdd00;
+    }
+    100% {
+        box-shadow:
+                20px 0 0 0 #ffdd00,
+                70px 0 0 0 #ffdd00,
+                120px 0 0 0 #ffdd00,
+                170px 0 0 0 #ffdd00;
+    }
+}

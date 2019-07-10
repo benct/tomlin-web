@@ -162,7 +162,7 @@ export default class MediaModal extends React.PureComponent<MediaModalProps, Med
     renderSeasonButton(): React.ReactNode {
         return this.props.type === 'tv' ? (
             <span>
-                <button className="button-default button-default-small" onClick={this.toggleSeasons.bind(this)}>
+                <button className="input input-small" onClick={this.toggleSeasons.bind(this)}>
                     {this.state.showSeasons
                         ? 'Overview'
                         : `${this.props.data.number_of_seasons} ${this.props.data.number_of_seasons !== 1 ? 'seasons' : 'season'}`}
@@ -255,7 +255,7 @@ export default class MediaModal extends React.PureComponent<MediaModalProps, Med
                     <button className="button-blank" data-tooltip="Seen" onClick={this.props.setSeen}>
                         <ViewIcon width={24} height={24} seen={this.props.data.seen} />
                     </button>
-                    <button className="button-text float-right text-small man" onClick={this.props.close}>
+                    <button className="button-blank text-small float-right man" onClick={this.props.close}>
                         Close
                     </button>
                 </div>

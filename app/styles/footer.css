@@ -6,11 +6,6 @@ footer {
     border-top: 1px solid #ddd;
 }
 
-.social {
-    text-align: center;
-    z-index: 10;
-}
-
 .social a {
     display: inline-block;
     margin: 0 15px;

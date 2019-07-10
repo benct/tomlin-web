@@ -117,7 +117,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
             <>
                 <div className="text-center mbl">
                     <select
-                        className="media-input input-small color-light mrs"
+                        className="input input-small media-input color-light mrs"
                         onChange={(e: React.ChangeEvent<HTMLSelectElement>): void => e.target.blur()}
                         onBlur={this.handleSort.bind(this)}
                         defaultValue={this.props.sort}>
@@ -130,7 +130,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
                         <option value="favourite">Favourite</option>
                     </select>
                     <input
-                        className="media-input input-small mls"
+                        className="input input-small media-input mls"
                         type="text"
                         placeholder="Search"
                         aria-label="Search"

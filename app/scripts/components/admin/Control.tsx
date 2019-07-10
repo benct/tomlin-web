@@ -72,16 +72,16 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     <span className="truncate">Import missing media poster images</span>
                     <span />
                     <button
-                        className="button-default button-default-small"
+                        className="input input-small"
                         onClick={(): void => this.props.dispatch(adminActions.updatePosters())}>
                         Run
                     </button>
                     <span className="truncate">Update number of stored movies</span>
-                    <select className="input-small" defaultValue="50" ref={this.updateMovieCount}>
+                    <select className="input input-small" defaultValue="50" ref={this.updateMovieCount}>
                         {Control.renderOptions([10, 50, 100, 250, 500])}
                     </select>
                     <button
-                        className="button-default button-default-small"
+                        className="input input-small"
                         onClick={(): void =>
                             this.props.dispatch(
                                 adminActions.updateMedia('movie', this.updateMovieCount.current && this.updateMovieCount.current.value)
@@ -90,11 +90,11 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                         Run
                     </button>
                     <span className="truncate">Update number of stored tv-shows</span>
-                    <select className="input-small" defaultValue="10" ref={this.updateTvCount}>
+                    <select className="input input-small" defaultValue="10" ref={this.updateTvCount}>
                         {Control.renderOptions([5, 10, 50, 100])}
                     </select>
                     <button
-                        className="button-default button-default-small"
+                        className="input input-small"
                         onClick={(): void =>
                             this.props.dispatch(
                                 adminActions.updateMedia('tv', this.updateTvCount.current && this.updateTvCount.current.value)
@@ -108,14 +108,14 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     <span className="truncate">Update IATA airline entries</span>
                     <span />
                     <button
-                        className="button-default button-default-small"
+                        className="input input-small"
                         onClick={(): void => this.props.dispatch(adminActions.updateIata('airlines'))}>
                         Run
                     </button>
                     <span className="truncate">Update IATA location entries</span>
                     <span />
                     <button
-                        className="button-default button-default-small"
+                        className="input input-small"
                         onClick={(): void => this.props.dispatch(adminActions.updateIata('locations'))}>
                         Run
                     </button>
@@ -125,16 +125,16 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     <span className="truncate">Clear all log messages</span>
                     <span />
                     <button
-                        className="button-default button-default-small"
+                        className="input input-small"
                         onClick={(): void => this.props.dispatch(adminActions.clearLogs())}>
                         Clear
                     </button>
                     <span className="truncate">Default number of log messages</span>
-                    <select className="input-small" defaultValue="25" ref={this.logCount}>
+                    <select className="input input-small" defaultValue="25" ref={this.logCount}>
                         {Control.renderOptions([10, 25, 50, 100, 250, 500])}
                     </select>
                     <button
-                        className="button-default button-default-small"
+                        className="input input-small"
                         onClick={(): void =>
                             this.props.dispatch(adminActions.getLogs(this.logCount.current && this.logCount.current.value))
                         }>

@@ -60,7 +60,7 @@ class Notes extends React.PureComponent<NotesProps & DispatchProp, NotesState> {
                         )
                     )
                 ) : (
-                    <div className="link-message">No notes found...</div>
+                    <div className="text">No notes found...</div>
                 )}
                 <div className="text-right">
                     <button className="button-icon mvn" onClick={this.edit.bind(this, undefined)}>

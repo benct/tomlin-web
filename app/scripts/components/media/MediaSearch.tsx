@@ -81,7 +81,7 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
     render(): React.ReactElement {
         return (
             <div className="text-center">
-                <input type="text" name="query" className="mbl" aria-label="Search" onChange={this.handleChange.bind(this)} />
+                <input type="text" name="query" className="input mbl" aria-label="Search" onChange={this.handleChange.bind(this)} />
                 <div className="media-search">
                     <Link to={'/media/search/movie/popular/'}>Popular (Movie)</Link>
                     <Link to={'/media/search/movie/top/'}>Top Rated (Movie)</Link>

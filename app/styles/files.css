@@ -1,6 +1,7 @@
 .file-table {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+    border-collapse: separate;
     text-align: center;
     width: 100%;
     margin: 10px auto 30px;

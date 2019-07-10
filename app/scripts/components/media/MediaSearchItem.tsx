@@ -88,14 +88,14 @@ export default class MediaSearchItem extends React.PureComponent<MediaSearchItem
                         <button className="button-blank" onClick={this.props.imdb}>
                             <img src={require(`../../../images/icon/imdb.svg`)} alt="IMDb" width={48} />
                         </button>
-                        <button className="button-icon button-text-icon float-right mtm" onClick={change}>
+                        <button className="button-icon button-icon-text float-right mtm" onClick={change}>
                             <span>{text}</span>
                             <Icon path={mdiPlus} size="28px" rotate={this.props.stored ? 45 : 0} title={text} />
                         </button>
                     </div>
                 </div>
                 <div className="media-actions">
-                    <button className="button-icon button-text-icon man" onClick={change}>
+                    <button className="button-icon button-icon-text man" onClick={change}>
                         <span>{text}</span>
                         <Icon path={mdiPlus} size="28px" rotate={this.props.stored ? 45 : 0} title={text} />
                     </button>

@@ -168,6 +168,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                 <div className="text-center">
                     <label htmlFor="file" className="color-primary pointer">
                         <input
+                            className="input input-file"
                             type="file"
                             name="files[]"
                             id="file"
@@ -184,7 +185,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                     </label>
                     <br />
                     <button
-                        className="button-default text-small mtl"
+                        className="input text-small mtl"
                         onClick={this.handleUpload.bind(this)}
                         disabled={this.props.uploading}>
                         {this.props.uploading ? 'Uploading...' : 'Upload'}

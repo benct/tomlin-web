@@ -30,9 +30,7 @@
 
 .admin-overlay {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: min-content 1fr min-content;
-    row-gap: 5px;
+    grid-gap: 5px;
     max-height: 100%;
     box-sizing: border-box;
 }
@@ -41,6 +39,16 @@
 .admin-overlay textarea {
     text-transform: initial;
     font-size: initial;
+}
+
+.notes-overlay {
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr min-content;
+}
+
+.flights-overlay {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr min-content;
 }
 
 @media (max-width: 600px) {

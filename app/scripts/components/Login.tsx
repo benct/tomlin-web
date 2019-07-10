@@ -42,10 +42,10 @@ class Login extends React.PureComponent<RouteComponentProps & AuthProps & Dispat
                 ) : (
                     <div className="mbl">Fill out the form below to log in.</div>
                 )}
-                <form className="login" onSubmit={this.handleSubmit.bind(this)}>
-                    <input type="email" ref={this.username} placeholder="e-mail" aria-label="E-mail" autoComplete="off" />
-                    <input type="password" ref={this.password} placeholder="********" aria-label="Password" />
-                    <input type="submit" value="login" aria-label="Login" />
+                <form className="mha" onSubmit={this.handleSubmit.bind(this)} style={{ maxWidth: '300px' }}>
+                    <input type="email" ref={this.username} placeholder="e-mail" aria-label="E-mail" autoComplete="off" className="input" />
+                    <input type="password" ref={this.password} placeholder="********" aria-label="Password" className="input" />
+                    <input type="submit" value="login" aria-label="Login" className="input" />
                     {this.props.error && <p className="text error">Incorrect username or password...</p>}
                     {this.props.loading && (
                         <p className="text">

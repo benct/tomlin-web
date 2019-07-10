@@ -38,8 +38,9 @@ class NotesModal extends React.PureComponent<NotesModalProps & DispatchProp> {
 
     render(): React.ReactElement {
         return (
-            <Modal close={this.props.close} className="admin-overlay">
+            <Modal close={this.props.close} className="admin-overlay notes-overlay">
                 <input
+                    className="input"
                     type="text"
                     maxLength={64}
                     placeholder="Title"
@@ -49,7 +50,7 @@ class NotesModal extends React.PureComponent<NotesModalProps & DispatchProp> {
                     defaultValue={this.props.note.title}
                 />
                 <textarea
-                    className="monospace"
+                    className="input-textarea monospace"
                     rows={20}
                     placeholder="Notes..."
                     autoComplete="off"
@@ -63,10 +64,10 @@ class NotesModal extends React.PureComponent<NotesModalProps & DispatchProp> {
                             <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
                         </button>
                     ) : null}
-                    <button className="button-icon text-small" onClick={this.save.bind(this)}>
+                    <button className="button-icon" onClick={this.save.bind(this)}>
                         <Icon path={mdiContentSaveOutline} size="28px" title="Save" />
                     </button>
-                    <button className="button-icon float-right text-small" onClick={this.props.close}>
+                    <button className="button-icon float-right" onClick={this.props.close}>
                         <Icon path={mdiCloseCircleOutline} size="28px" title="Cancel" />
                     </button>
                 </div>

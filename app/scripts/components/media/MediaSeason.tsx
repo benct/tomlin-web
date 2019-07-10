@@ -70,13 +70,13 @@ class MediaSeason extends React.PureComponent<MediaSeasonProps & DispatchProp, M
             <>
                 <span className="pts">
                     <button
-                        className="button-default button-default-small float-right"
+                        className="input input-small float-right"
                         style={{ color: formatGradientHSL(episodesSeen, episodesTotal) }}
                         onClick={this.toggleEpisodes.bind(this)}>
                         {episodesSeen}/{episodesTotal}
                     </button>
                     {episodesSeen === 0 ? (
-                        <button className="button-default button-default-small float-right mrm" onClick={this.setAllSeen.bind(this)}>
+                        <button className="input input-small float-right mrm" onClick={this.setAllSeen.bind(this)}>
                             Mark all
                         </button>
                     ) : null}

@@ -1,11 +1,8 @@
-form.login {
-    max-width: 300px;
-    margin: 0 auto;
+select, button, input[type=submit] {
+    cursor: pointer !important;
 }
 
-input,
-select,
-.button-default {
+.input {
     height: 44px;
     line-height: 42px;
     margin: 10px 0;
@@ -27,18 +24,23 @@ select,
     vertical-align: middle;
 }
 
-input:hover,
-input:active,
-select:hover,
-select:active,
-.button-default:hover,
-.button-default:active {
+.input:hover,
+.input:active {
     color: #fff !important;
     border-color: #292929;
     background-color: #28a0c8;
 }
 
-textarea {
+.input-small {
+    height: auto;
+    line-height: initial;
+    margin: 0;
+    padding: 3px 8px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.input-textarea {
     margin: 10px 0;
     padding: 8px;
     outline: none;
@@ -51,12 +53,7 @@ textarea {
     vertical-align: middle;
 }
 
-select, button,
-input[type=submit] {
-    cursor: pointer;
-}
-
-input[type=file] {
+.input-file {
     width: 1px;
     height: 1px;
     opacity: 0;
@@ -65,23 +62,13 @@ input[type=file] {
     z-index: -1;
 }
 
-input[type=file] + svg {
+.input-file + svg {
     width: 1em;
     height: 1em;
     vertical-align: middle;
     fill: currentColor;
     margin-top: -0.25em;
     margin-right: 0.25em;
-}
-
-.input-small,
-.button-default-small {
-    height: auto;
-    line-height: initial;
-    margin: 0;
-    padding: 3px 8px;
-    font-size: 13px;
-    letter-spacing: 1px;
 }
 
 .button-blank {
@@ -96,7 +83,6 @@ input[type=file] + svg {
     letter-spacing: inherit;
 }
 
-.button-text,
 .button-icon {
     transition: all 0.4s ease-in-out;
     background: transparent no-repeat;
@@ -111,7 +97,6 @@ input[type=file] + svg {
     padding: 2px;
 }
 
-.button-text:hover,
 .button-icon:hover {
     color: #009fd4;
 }
@@ -132,22 +117,20 @@ input[type=file] + svg {
     fill: #009fd4;
 }
 
-.button-icon:not(.button-text-icon):hover img {
+.button-icon:not(.button-icon-text):hover img {
     opacity: 0.5;
 }
 
-.button-text,
-.button-text-icon {
+.button-icon-text {
     width: auto;
 }
 
-.button-text-icon span {
-    font-family: "Open Sans Condensed", "PT Sans Narrow", sans-serif;
+.button-icon-text span {
     vertical-align: middle;
     font-size: 16px;
 }
 
-.button-text-icon svg {
+.button-icon-text svg {
     vertical-align: middle;
     margin-left: 5px;
 }
@@ -156,5 +139,4 @@ input[type=file] + svg {
     cursor: pointer;
     outline: none;
     border: none;
-    font: inherit;
 }

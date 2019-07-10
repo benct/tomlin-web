@@ -7,7 +7,7 @@ interface SocialProps {
 }
 
 const Social: React.FC<SocialProps> = ({ circle }): React.ReactElement => (
-    <div className="social">
+    <div className="social text-center">
         <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">
             {circle ? (
                 <img src={require(`../../../images/social/circle-github.svg`)} alt="GitHub" />
