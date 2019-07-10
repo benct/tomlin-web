@@ -150,7 +150,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                         <Icon path={mdiSubdirectoryArrowLeft} rotate={90} size="28px" title="Parent directory" />
                     </button>
                     <div className="text-right">
-                        <button className="button-icon" onClick={(): void => this.props.dispatch(actions.createDirectory())}>
+                        <button className="button-icon mrm" onClick={(): void => this.props.dispatch(actions.createDirectory())}>
                             <Icon path={mdiFolderPlusOutline} size="28px" title="New directory" />
                         </button>
                         <button className="button-icon" onClick={(): void => this.props.dispatch(actions.refresh())}>

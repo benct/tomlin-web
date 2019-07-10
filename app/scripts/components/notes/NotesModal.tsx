@@ -60,7 +60,7 @@ class NotesModal extends React.PureComponent<NotesModalProps & DispatchProp> {
                 />
                 <div>
                     {this.props.note.id ? (
-                        <button className="button-icon" onClick={this.delete.bind(this)}>
+                        <button className="button-icon mrm" onClick={this.delete.bind(this)}>
                             <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
                         </button>
                     ) : null}

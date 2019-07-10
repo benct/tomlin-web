@@ -63,7 +63,7 @@ class Notes extends React.PureComponent<NotesProps & DispatchProp, NotesState> {
                     <div className="text">No notes found...</div>
                 )}
                 <div className="text-right">
-                    <button className="button-icon mvn" onClick={this.edit.bind(this, undefined)}>
+                    <button className="button-icon" onClick={this.edit.bind(this, undefined)}>
                         <Icon path={mdiFileDocumentBoxPlusOutline} size="28px" title="New" />
                     </button>
                 </div>

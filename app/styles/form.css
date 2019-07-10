@@ -92,10 +92,7 @@ select, button, input[type=submit] {
     cursor: pointer;
     overflow: hidden;
     outline: none;
-    width: 40px;
-    height: 32px;
-    margin: 5px;
-    padding: 2px;
+    padding: 5px;
 }
 
 .button-icon:hover {
@@ -120,10 +117,6 @@ select, button, input[type=submit] {
 
 .button-icon:not(.button-icon-text):hover img {
     opacity: 0.5;
-}
-
-.button-icon-text {
-    width: auto;
 }
 
 .button-icon-text span {

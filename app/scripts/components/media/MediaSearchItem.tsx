@@ -95,7 +95,7 @@ export default class MediaSearchItem extends React.PureComponent<MediaSearchItem
                     </div>
                 </div>
                 <div className="media-actions">
-                    <button className="button-icon button-icon-text man" onClick={change}>
+                    <button className="button-icon button-icon-text pan" onClick={change}>
                         <span>{text}</span>
                         <Icon path={mdiPlus} size="28px" rotate={this.props.stored ? 45 : 0} title={text} />
                     </button>
