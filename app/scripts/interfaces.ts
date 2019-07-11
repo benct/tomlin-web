@@ -229,7 +229,7 @@ export interface MediaStatsEntry {
 export interface AdminState {
     stats: AdminStats;
     logs: Log[];
-    flights: any[];
+    flights: Flight[];
     visits: Visit[];
     notes: Note[];
 }
@@ -252,6 +252,10 @@ export interface Visit {
     referer?: string;
     visits: number;
     timestamp: string;
+}
+
+export interface Flight {
+    [key: string]: string | undefined;
 }
 
 export interface Note {

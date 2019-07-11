@@ -115,7 +115,10 @@ actions.getFlights = (): AsyncAction => async (dispatch, getState): Promise<void
 actions.saveFlight = (data: object): AsyncAction => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'iata', action: 'flight', ...data })
-            .then((): void => dispatch(actions.getFlights()))
+            .then((): void => {
+                dispatch(baseActions.showToast('Successfully saved flight!'));
+                dispatch(actions.getFlights());
+            })
             .catch((): void => dispatch(baseActions.showToast('Could not save flight...')));
     }
 };
