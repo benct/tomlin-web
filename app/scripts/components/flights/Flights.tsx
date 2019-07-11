@@ -26,6 +26,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
 
@@ -47,6 +48,10 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         this.setState({
             form: { ...this.state.form, [name]: value.trim() !== '' ? value : undefined },
         });
+    }
+
+    handleEdit(flight: Flight): void {
+        this.setState({ form: flight, showModal: true });
     }
 
     handleSubmit(event: React.SyntheticEvent): void {
@@ -76,18 +81,18 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         );
     }
 
-    static renderFlight(flight: Flight): React.ReactElement {
+    renderFlight(flight: Flight): React.ReactElement {
         return (
             <tr key={`flight${flight.id}`}>
                 <td>{flight.origin}</td>
                 <td>{flight.destination}</td>
                 <td>{formatDate(flight.departure)}</td>
-                <td>{`${flight.carrier} ${flight.number}`}</td>
-                <td>{flight.aircraft || '—'}</td>
-                <td>{flight.seat || '—'}</td>
-                <td>{flight.reference || '—'}</td>
+                <td className="hide-lt480">{`${flight.carrier} ${flight.number}`}</td>
+                <td className="hide-lt480">{flight.aircraft || '—'}</td>
+                <td className="hide-lt768">{flight.seat || '—'}</td>
+                <td className="hide-lt600">{flight.reference || '—'}</td>
                 <td className="text-right">
-                    <button className="button-icon pan">
+                    <button className="button-icon pan" onClick={(): void => this.handleEdit(flight)}>
                         <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />
                     </button>
                 </td>
@@ -105,7 +110,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                 </div>
                 {this.props.flights.length ? (
                     <table className="pure-table pure-table-horizontal pure-table-striped text-small" style={{ width: '100%' }}>
-                        <tbody>{this.props.flights.map(Flights.renderFlight)}</tbody>
+                        <tbody>{this.props.flights.map(this.renderFlight.bind(this))}</tbody>
                     </table>
                 ) : (
                     <span>No flights...</span>

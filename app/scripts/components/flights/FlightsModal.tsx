@@ -76,7 +76,7 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, handleSubmit,
             </fieldset>
         </form>
         <div className="border-top ptm">
-            {form.flights ? (
+            {form.id ? (
                 <button className="button-icon mrm">
                     <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
                 </button>
