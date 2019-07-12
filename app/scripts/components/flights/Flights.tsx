@@ -108,13 +108,24 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
     render(): React.ReactElement[] | React.ReactElement {
         return (
             <>
-                <div className="text-right">
-                    <button className="button-icon mrm" onClick={this.toggleModal.bind(this)}>
-                        <Icon path={mdiAirplane} size="28px" title="New" />
-                    </button>
-                </div>
                 {this.props.flights.length ? (
                     <table className="pure-table pure-table-horizontal pure-table-striped text-small" style={{ width: '100%' }}>
+                        <thead>
+                            <tr className="text-smaller">
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Departure</th>
+                                <th className="hide-lt480">Flight</th>
+                                <th className="hide-lt480">Type</th>
+                                <th className="hide-lt768">Seat</th>
+                                <th className="hide-lt600">Reference</th>
+                                <th className="text-right">
+                                    <button className="button-icon pan" onClick={this.toggleModal.bind(this)}>
+                                        <Icon path={mdiAirplane} size="24px" title="New" />
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
                         <tbody>{this.props.flights.map(this.renderFlight.bind(this))}</tbody>
                     </table>
                 ) : (
