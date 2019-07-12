@@ -123,6 +123,17 @@ actions.saveFlight = (data: object): AsyncAction => async (dispatch, getState): 
     }
 };
 
+actions.deleteFlight = (id: number): AsyncAction => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn && confirm(`Are you sure you want to delete this flight?`)) {
+        await load({ service: 'iata', action: 'delete', id })
+            .then((): void => {
+                dispatch(baseActions.showToast('Successfully deleted flight!'));
+                dispatch(actions.getFlights());
+            })
+            .catch((): void => dispatch(baseActions.showToast('Could not delete flight...')));
+    }
+};
+
 export default actions;
 
 export const reducer = makeReducer(actions);

@@ -25,11 +25,6 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
     constructor(props: FlightProps & DispatchProp) {
         super(props);
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.toggleModal = this.toggleModal.bind(this);
-
         this.state = {
             showModal: false,
             invalid: false,
@@ -52,6 +47,16 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
 
     handleEdit(flight: Flight): void {
         this.setState({ form: flight, showModal: true });
+    }
+
+    handleCopy(flight: Flight): void {
+        this.setState({ form: { ...flight, id: undefined }, showModal: true });
+    }
+
+    handleDelete(id?: string): void {
+        this.props.dispatch(adminActions.deleteFlight(id));
+
+        this.setState({ form: {}, showModal: false });
     }
 
     handleSubmit(event: React.SyntheticEvent): void {
@@ -92,7 +97,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                 <td className="hide-lt768">{flight.seat || '—'}</td>
                 <td className="hide-lt600">{flight.reference || '—'}</td>
                 <td className="text-right">
-                    <button className="button-icon pan" onClick={(): void => this.handleEdit(flight)}>
+                    <button className="button-icon pan" onClick={this.handleEdit.bind(this, flight)}>
                         <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />
                     </button>
                 </td>
@@ -104,7 +109,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         return (
             <>
                 <div className="text-right">
-                    <button className="button-icon mrm" onClick={this.toggleModal}>
+                    <button className="button-icon mrm" onClick={this.toggleModal.bind(this)}>
                         <Icon path={mdiAirplane} size="28px" title="New" />
                     </button>
                 </div>
@@ -119,9 +124,11 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                     <FlightsModal
                         form={this.state.form}
                         invalid={this.state.invalid}
-                        handleSubmit={this.handleSubmit}
-                        handleChange={this.handleChange}
-                        close={this.toggleModal}
+                        save={this.handleSubmit.bind(this)}
+                        copy={this.handleCopy.bind(this)}
+                        change={this.handleChange.bind(this)}
+                        remove={this.handleDelete.bind(this)}
+                        close={this.toggleModal.bind(this)}
                     />
                 )}
             </>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '@mdi/react';
-import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
+import { mdiCloseCircleOutline, mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
 import { Flight } from '../../interfaces';
 import Modal from '../page/Modal';
@@ -9,27 +9,29 @@ import FlightsInput from './FlightsInput';
 interface FlightModalProps {
     form: Flight;
     invalid: boolean;
-    handleSubmit: (event: React.SyntheticEvent) => void;
-    handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+    save: (event: React.SyntheticEvent) => void;
+    change: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+    copy: (flight: Flight) => void;
+    remove: (id?: string) => void;
     close: () => void;
 }
 
-const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, handleSubmit, handleChange, close }): React.ReactElement => (
+const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change, copy, remove, close }): React.ReactElement => (
     <Modal close={close}>
-        <form onSubmit={handleSubmit} className="overlay-modal-content admin-flight-form pure-form pure-form-stacked">
+        <form onSubmit={save} className="overlay-modal-content admin-flight-form pure-form pure-form-stacked">
             <fieldset className="pan">
                 <div className="pure-g">
-                    <FlightsInput name="origin" value={form.origin} onChange={handleChange} extraProps={{ maxLength: 3 }} />
-                    <FlightsInput name="destination" value={form.destination} onChange={handleChange} extraProps={{ maxLength: 3 }} />
-                    <FlightsInput name="departure" type="datetime-local" value={form.departure} onChange={handleChange} />
-                    <FlightsInput name="arrival" type="datetime-local" value={form.arrival} onChange={handleChange} />
-                    <FlightsInput name="carrier" value={form.carrier} fraction={3} onChange={handleChange} extraProps={{ maxLength: 2 }} />
+                    <FlightsInput name="origin" value={form.origin} onChange={change} extraProps={{ maxLength: 3 }} />
+                    <FlightsInput name="destination" value={form.destination} onChange={change} extraProps={{ maxLength: 3 }} />
+                    <FlightsInput name="departure" type="datetime-local" value={form.departure} onChange={change} />
+                    <FlightsInput name="arrival" type="datetime-local" value={form.arrival} onChange={change} />
+                    <FlightsInput name="carrier" value={form.carrier} fraction={3} onChange={change} extraProps={{ maxLength: 2 }} />
                     <FlightsInput
                         name="number"
                         type="number"
                         value={form.number}
                         fraction={3}
-                        onChange={handleChange}
+                        onChange={change}
                         extraProps={{ min: 1, max: 9999 }}
                     />
                     <div className="pure-u-1-3">
@@ -41,8 +43,8 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, handleSubmit,
                             id="form-cabin"
                             name="cabin"
                             autoComplete="off"
-                            onChange={handleChange}
-                            onBlur={handleChange}
+                            onChange={change}
+                            onBlur={change}
                             defaultValue={form.cabin || 'economy'}>
                             <option value="economy">Economy</option>
                             <option value="premium_economy">Premium</option>
@@ -50,15 +52,9 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, handleSubmit,
                             <option value="first">First</option>
                         </select>
                     </div>
-                    <FlightsInput
-                        name="aircraft"
-                        value={form.aircraft}
-                        fraction={3}
-                        onChange={handleChange}
-                        extraProps={{ maxLength: 4 }}
-                    />
-                    <FlightsInput name="seat" value={form.seat} fraction={3} onChange={handleChange} extraProps={{ maxLength: 4 }} />
-                    <FlightsInput name="reference" value={form.reference} fraction={3} onChange={handleChange} />
+                    <FlightsInput name="aircraft" value={form.aircraft} fraction={3} onChange={change} extraProps={{ maxLength: 4 }} />
+                    <FlightsInput name="seat" value={form.seat} fraction={3} onChange={change} extraProps={{ maxLength: 4 }} />
+                    <FlightsInput name="reference" value={form.reference} fraction={3} onChange={change} />
                     <div className="pure-u-1">
                         <label htmlFor="form-info" className="text-smaller">
                             Info
@@ -68,7 +64,7 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, handleSubmit,
                             id="form-info"
                             name="info"
                             autoComplete="off"
-                            onChange={handleChange}
+                            onChange={change}
                             defaultValue={form.info || undefined}
                         />
                     </div>
@@ -77,11 +73,16 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, handleSubmit,
         </form>
         <div className="border-top ptm">
             {form.id ? (
-                <button className="button-icon mrm">
-                    <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
-                </button>
+                <>
+                    <button className="button-icon mrm" onClick={(): void => remove(form.id)}>
+                        <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
+                    </button>
+                    <button className="button-icon mrm" onClick={(): void => copy(form)}>
+                        <Icon path={mdiContentCopy} size="26px" title="Copy" />
+                    </button>
+                </>
             ) : null}
-            <button className="button-icon" onClick={handleSubmit}>
+            <button className="button-icon" onClick={save}>
                 <Icon path={mdiContentSaveOutline} size="28px" title="Save" />
             </button>
             {invalid && <span className="text error valign-middle">Please fill the required fields!</span>}
