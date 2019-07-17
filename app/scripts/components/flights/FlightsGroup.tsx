@@ -41,7 +41,7 @@ export default class FlightsGroup extends React.PureComponent<FlightGroupProps, 
                   .filter(
                       (location: string, idx: number, arr: string[]): boolean => location !== '' && (idx === 0 || arr[idx - 1] !== location)
                   )
-                  .join('-');
+                  .join(' - ');
 
         return (
             <>
@@ -60,13 +60,21 @@ export default class FlightsGroup extends React.PureComponent<FlightGroupProps, 
                 {this.state.showFlights &&
                     this.props.flights.map(
                         (flight: Flight): React.ReactElement => (
-                            <tr key={`flight${flight.id}`}>
+                            <tr key={`flight${flight.id}`} className="admin-flight-group">
                                 <td>{formatDate(flight.departure)}</td>
-                                <td>{flight.origin}</td>
-                                <td>{flight.destination}</td>
-                                <td className="hide-lt480">{`${flight.carrier} ${flight.number}`}</td>
-                                <td className="hide-lt480">{flight.aircraft || '—'}</td>
-                                <td className="hide-lt768">{flight.seat || '—'}</td>
+                                <td>
+                                    <div className="grid-auto">
+                                        <span>{flight.origin}</span>
+                                        <span>{flight.destination}</span>
+                                    </div>
+                                </td>
+                                <td className="hide-lt600">
+                                    <div className="grid-auto">
+                                        <span>{`${flight.carrier} ${flight.number}`}</span>
+                                        <span>{flight.aircraft || '—'}</span>
+                                        <span>{flight.seat || '—'}</span>
+                                    </div>
+                                </td>
                                 <td className="text-right">
                                     <button className="button-icon pan" onClick={(): void => this.props.edit(flight)}>
                                         <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />

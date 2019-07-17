@@ -124,9 +124,9 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
             <table className="pure-table pure-table-horizontal pure-table-striped text-small" style={{ width: '100%' }}>
                 <thead>
                     <tr className="text-smaller">
+                        <th>Departure</th>
                         <th>From</th>
                         <th>To</th>
-                        <th>Departure</th>
                         <th className="hide-lt480">Flight</th>
                         <th className="hide-lt480">Type</th>
                         <th className="hide-lt600">Seat</th>
@@ -142,9 +142,9 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                     {this.props.flights.flat().map(
                         (flight: Flight): React.ReactElement => (
                             <tr key={`flight${flight.id}`}>
+                                <td className="no-wrap">{formatDate(flight.departure)}</td>
                                 <td>{flight.origin}</td>
                                 <td>{flight.destination}</td>
-                                <td>{formatDate(flight.departure)}</td>
                                 <td className="hide-lt480">{`${flight.carrier} ${flight.number}`}</td>
                                 <td className="hide-lt480">{flight.aircraft || '—'}</td>
                                 <td className="hide-lt600">{flight.seat || '—'}</td>

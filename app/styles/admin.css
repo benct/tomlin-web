@@ -32,6 +32,10 @@
     grid-row: 1 / 3;
 }
 
+.admin-flight-group {
+    border-left: 3px solid #002080;
+}
+
 @media (max-width: 600px) {
     .admin-stats {
         grid-template-columns: repeat(2, 1fr);

@@ -74,6 +74,11 @@
     align-items: center;
 }
 
+.grid-auto {
+    display: grid;
+    grid-auto-flow: column;
+}
+
 .text {
     text-align: center;
     line-height: 1.5;
