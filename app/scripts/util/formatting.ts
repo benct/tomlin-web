@@ -1,7 +1,7 @@
 import dateParse from 'date-fns/parseISO';
 import dateFormat from 'date-fns/format';
 
-export function formatDate(date?: string, format: string = 'MMM do, YYY'): string | null {
+export function formatDate(date?: string, format: string = 'MMM d, YYY'): string | null {
     return date && date !== '' ? dateFormat(dateParse(date), format) : null;
 }
 
