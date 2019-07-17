@@ -8,24 +8,27 @@ import { formatDate } from '../../util/formatting';
 import adminActions from '../../actions/admin';
 
 import FlightsModal from './FlightsModal';
+import FlightsGroup from './FlightsGroup';
 
 interface FlightState {
+    showGrouped: boolean;
     showModal: boolean;
     invalid: boolean;
     form: Flight;
 }
 
 interface FlightProps {
-    flights: Flight[];
+    flights: Flight[][];
 }
 
-const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number'];
+const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 
 class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightState> {
     constructor(props: FlightProps & DispatchProp) {
         super(props);
 
         this.state = {
+            showGrouped: true,
             showModal: false,
             invalid: false,
             form: {},
@@ -72,6 +75,10 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         }
     }
 
+    toggleGrouped(): void {
+        this.setState({ showGrouped: !this.state.showGrouped });
+    }
+
     toggleModal(): void {
         this.setState({ showModal: !this.state.showModal });
     }
@@ -86,51 +93,84 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         );
     }
 
-    renderFlight(flight: Flight): React.ReactElement {
+    renderGrouped(): React.ReactElement {
         return (
-            <tr key={`flight${flight.id}`}>
-                <td>{flight.origin}</td>
-                <td>{flight.destination}</td>
-                <td>{formatDate(flight.departure)}</td>
-                <td className="hide-lt480">{`${flight.carrier} ${flight.number}`}</td>
-                <td className="hide-lt480">{flight.aircraft || '—'}</td>
-                <td className="hide-lt768">{flight.seat || '—'}</td>
-                <td className="hide-lt600">{flight.reference || '—'}</td>
-                <td className="text-right">
-                    <button className="button-icon pan" onClick={this.handleEdit.bind(this, flight)}>
-                        <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />
-                    </button>
-                </td>
-            </tr>
+            <table className="pure-table pure-table-horizontal pure-table-striped text-small" style={{ width: '100%' }}>
+                <thead>
+                    <tr className="text-smaller">
+                        <th>Departure</th>
+                        <th className="hide-lt600">Return</th>
+                        <th>Trip</th>
+                        <th className="text-right">
+                            <button className="button-icon pan" onClick={this.toggleModal.bind(this)}>
+                                <Icon path={mdiAirplane} size="24px" title="New" />
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.props.flights.map(
+                        (group, idx): React.ReactElement => (
+                            <FlightsGroup flights={group} edit={this.handleEdit.bind(this)} key={`flightGroup${idx}`} />
+                        )
+                    )}
+                </tbody>
+            </table>
         );
     }
 
-    render(): React.ReactElement[] | React.ReactElement {
+    renderAll(): React.ReactElement {
         return (
-            <>
-                {this.props.flights.length ? (
-                    <table className="pure-table pure-table-horizontal pure-table-striped text-small" style={{ width: '100%' }}>
-                        <thead>
-                            <tr className="text-smaller">
-                                <th>From</th>
-                                <th>To</th>
-                                <th>Departure</th>
-                                <th className="hide-lt480">Flight</th>
-                                <th className="hide-lt480">Type</th>
-                                <th className="hide-lt768">Seat</th>
-                                <th className="hide-lt600">Reference</th>
-                                <th className="text-right">
-                                    <button className="button-icon pan" onClick={this.toggleModal.bind(this)}>
-                                        <Icon path={mdiAirplane} size="24px" title="New" />
+            <table className="pure-table pure-table-horizontal pure-table-striped text-small" style={{ width: '100%' }}>
+                <thead>
+                    <tr className="text-smaller">
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th className="hide-lt480">Flight</th>
+                        <th className="hide-lt480">Type</th>
+                        <th className="hide-lt600">Seat</th>
+                        <th className="hide-lt768">Reference</th>
+                        <th className="text-right">
+                            <button className="button-icon pan" onClick={this.toggleModal.bind(this)}>
+                                <Icon path={mdiAirplane} size="24px" title="New" />
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.props.flights.flat().map(
+                        (flight: Flight): React.ReactElement => (
+                            <tr key={`flight${flight.id}`}>
+                                <td>{flight.origin}</td>
+                                <td>{flight.destination}</td>
+                                <td>{formatDate(flight.departure)}</td>
+                                <td className="hide-lt480">{`${flight.carrier} ${flight.number}`}</td>
+                                <td className="hide-lt480">{flight.aircraft || '—'}</td>
+                                <td className="hide-lt600">{flight.seat || '—'}</td>
+                                <td className="hide-lt768">{flight.reference || '—'}</td>
+                                <td className="text-right">
+                                    <button className="button-icon pan" onClick={this.handleEdit.bind(this, flight)}>
+                                        <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />
                                     </button>
-                                </th>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>{this.props.flights.map(this.renderFlight.bind(this))}</tbody>
-                    </table>
-                ) : (
-                    <span>No flights...</span>
-                )}
+                        )
+                    )}
+                </tbody>
+            </table>
+        );
+    }
+
+    render(): React.ReactElement {
+        return this.props.flights.length ? (
+            <>
+                <div className="text-center mbm">
+                    <button className="input input-small" onClick={this.toggleGrouped.bind(this)}>
+                        Display: {this.state.showGrouped ? 'Grouped' : 'All'}
+                    </button>
+                </div>
+                {this.state.showGrouped ? this.renderGrouped() : this.renderAll()}
                 {this.state.showModal && (
                     <FlightsModal
                         form={this.state.form}
@@ -143,6 +183,8 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                     />
                 )}
             </>
+        ) : (
+            <div className="text">No flights...</div>
         );
     }
 }

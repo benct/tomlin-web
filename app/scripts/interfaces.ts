@@ -229,7 +229,7 @@ export interface MediaStatsEntry {
 export interface AdminState {
     stats: AdminStats;
     logs: Log[];
-    flights: Flight[];
+    flights: Flight[][];
     visits: Visit[];
     notes: Note[];
 }

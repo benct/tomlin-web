@@ -21,17 +21,25 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change,
         <form onSubmit={save} className="overlay-modal-content admin-flight-form pure-form pure-form-stacked">
             <fieldset className="pan">
                 <div className="pure-g">
-                    <FlightsInput name="origin" value={form.origin} onChange={change} extraProps={{ maxLength: 3 }} />
-                    <FlightsInput name="destination" value={form.destination} onChange={change} extraProps={{ maxLength: 3 }} />
-                    <FlightsInput name="departure" type="datetime-local" value={form.departure} onChange={change} />
-                    <FlightsInput name="arrival" type="datetime-local" value={form.arrival} onChange={change} />
-                    <FlightsInput name="carrier" value={form.carrier} fraction={3} onChange={change} extraProps={{ maxLength: 2 }} />
+                    <FlightsInput name="origin" value={form.origin} onChange={change} required extraProps={{ maxLength: 3 }} />
+                    <FlightsInput name="destination" value={form.destination} onChange={change} required extraProps={{ maxLength: 3 }} />
+                    <FlightsInput name="departure" type="datetime-local" value={form.departure} onChange={change} required />
+                    <FlightsInput name="arrival" type="datetime-local" value={form.arrival} onChange={change} required />
+                    <FlightsInput
+                        name="carrier"
+                        value={form.carrier}
+                        fraction={3}
+                        onChange={change}
+                        required
+                        extraProps={{ maxLength: 2 }}
+                    />
                     <FlightsInput
                         name="number"
                         type="number"
                         value={form.number}
                         fraction={3}
                         onChange={change}
+                        required
                         extraProps={{ min: 1, max: 9999 }}
                     />
                     <div className="pure-u-1-3">
@@ -54,7 +62,7 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change,
                     </div>
                     <FlightsInput name="aircraft" value={form.aircraft} fraction={3} onChange={change} extraProps={{ maxLength: 4 }} />
                     <FlightsInput name="seat" value={form.seat} fraction={3} onChange={change} extraProps={{ maxLength: 4 }} />
-                    <FlightsInput name="reference" value={form.reference} fraction={3} onChange={change} />
+                    <FlightsInput name="reference" value={form.reference} fraction={3} onChange={change} required />
                     <div className="pure-u-1">
                         <label htmlFor="form-info" className="text-smaller">
                             Info
