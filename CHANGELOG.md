@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.11.0] - 2019-07-19
+### Added
+- Personal flight tracking components
+- CRUD functionality for flights
+- Grouping of flights as trips
+- Try out React Hooks
+
+### Changed
+- Replace Normalize.css with PureCSS
+- Refactor and clean up most CSS
+- Change default date format
+
 ## [2.10.1] - 2019-07-09
 ### Changed
 - Improve general loading indication
