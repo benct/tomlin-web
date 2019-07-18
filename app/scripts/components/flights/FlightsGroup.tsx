@@ -61,7 +61,7 @@ export default class FlightsGroup extends React.PureComponent<FlightGroupProps, 
                     this.props.flights.map(
                         (flight: Flight): React.ReactElement => (
                             <tr key={`flight${flight.id}`} className="admin-flight-group">
-                                <td>{formatDate(flight.departure)}</td>
+                                <td className="no-wrap">{formatDate(flight.departure)}</td>
                                 <td>
                                     <div className="grid-auto">
                                         <span>{flight.origin}</span>
