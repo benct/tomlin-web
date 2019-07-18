@@ -45,7 +45,7 @@ export default class FlightsGroup extends React.PureComponent<FlightGroupProps, 
 
         return (
             <>
-                <tr className="mtm pointer" onClick={this.toggleFlights.bind(this)} role="button">
+                <tr className="pointer" onClick={this.toggleFlights.bind(this)} role="button">
                     <td className="no-wrap">{formatDate(this.props.flights[0].departure)}</td>
                     <td className="no-wrap hide-lt600">
                         {this.props.flights.length > 1 ? formatDate(this.props.flights[this.props.flights.length - 1].arrival) : '—'}
