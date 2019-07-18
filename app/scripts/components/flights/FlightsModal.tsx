@@ -20,7 +20,7 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change,
     <Modal close={close}>
         <form onSubmit={save} className="overlay-modal-content admin-flight-form pure-form pure-form-stacked">
             <fieldset className="pan">
-                <div className="pure-g">
+                <div className="pure-g text-smaller">
                     <FlightsInput name="origin" value={form.origin} onChange={change} required extraProps={{ maxLength: 3 }} />
                     <FlightsInput name="destination" value={form.destination} onChange={change} required extraProps={{ maxLength: 3 }} />
                     <FlightsInput name="departure" type="datetime-local" value={form.departure} onChange={change} required />
@@ -43,11 +43,9 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change,
                         extraProps={{ min: 1, max: 9999 }}
                     />
                     <div className="pure-u-1-3">
-                        <label htmlFor="form-cabin" className="text-smaller">
-                            Cabin
-                        </label>
+                        <label htmlFor="form-cabin">Cabin</label>
                         <select
-                            className="pure-u-23-24 text-small"
+                            className="pure-u-23-24"
                             id="form-cabin"
                             name="cabin"
                             autoComplete="off"
@@ -64,14 +62,13 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change,
                     <FlightsInput name="seat" value={form.seat} fraction={3} onChange={change} extraProps={{ maxLength: 4 }} />
                     <FlightsInput name="reference" value={form.reference} fraction={3} onChange={change} required />
                     <div className="pure-u-1">
-                        <label htmlFor="form-info" className="text-smaller">
-                            Info
-                        </label>
+                        <label htmlFor="form-info">Info</label>
                         <textarea
                             className="pure-u-1"
                             id="form-info"
                             name="info"
                             autoComplete="off"
+                            rows={5}
                             onChange={change}
                             defaultValue={form.info || undefined}
                         />

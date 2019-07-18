@@ -16,7 +16,7 @@ const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required,
             {name}
         </label>
         <input
-            className={`pure-u-23-24 text-small${type === 'datetime-local' ? 'er' : ''}`}
+            className="pure-u-23-24"
             type={type || 'text'}
             name={name}
             id={`form-${name}`}
