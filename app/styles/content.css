@@ -74,9 +74,16 @@
     align-items: center;
 }
 
-.grid-auto {
+.grid {
     display: grid;
-    grid-auto-flow: column;
+}
+
+.grid-col-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-col-3 {
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .text {

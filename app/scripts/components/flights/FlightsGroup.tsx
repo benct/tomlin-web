@@ -44,13 +44,13 @@ const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }): React.Reac
                         <tr key={`flight${flight.id}`} className="admin-flight-group">
                             <td className="no-wrap">{formatDate(flight.departure)}</td>
                             <td>
-                                <div className="grid-auto">
+                                <div className="grid grid-col-2">
                                     <span>{flight.origin}</span>
                                     <span>{flight.destination}</span>
                                 </div>
                             </td>
                             <td className="hide-lt600">
-                                <div className="grid-auto">
+                                <div className="grid grid-col-3">
                                     <span>{`${flight.carrier} ${flight.number}`}</span>
                                     <span>{flight.aircraft || '—'}</span>
                                     <span>{flight.seat || '—'}</span>
