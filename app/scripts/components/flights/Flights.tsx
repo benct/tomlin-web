@@ -48,6 +48,10 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         });
     }
 
+    handleNew(): void {
+        this.setState({ form: this.state.form.id ? {} : this.state.form, showModal: true });
+    }
+
     handleEdit(flight: Flight): void {
         this.setState({ form: flight, showModal: true });
     }
@@ -75,14 +79,6 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         }
     }
 
-    toggleGrouped(): void {
-        this.setState({ showGrouped: !this.state.showGrouped });
-    }
-
-    toggleModal(): void {
-        this.setState({ showModal: !this.state.showModal });
-    }
-
     validateForm(form: Flight): boolean {
         return (
             form &&
@@ -91,6 +87,14 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                 return !value || value.trim() === '';
             }).length === 0
         );
+    }
+
+    toggleGrouped(): void {
+        this.setState({ showGrouped: !this.state.showGrouped });
+    }
+
+    closeModal(): void {
+        this.setState({ showModal: false });
     }
 
     renderGrouped(): React.ReactElement {
@@ -102,7 +106,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                         <th className="hide-lt600">Return</th>
                         <th>Trip</th>
                         <th className="text-right">
-                            <button className="button-icon pan" onClick={this.toggleModal.bind(this)}>
+                            <button className="button-icon pan" onClick={this.handleNew.bind(this)}>
                                 <Icon path={mdiAirplane} size="24px" title="New" />
                             </button>
                         </th>
@@ -132,7 +136,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                         <th className="hide-lt600">Seat</th>
                         <th className="hide-lt768">Reference</th>
                         <th className="text-right">
-                            <button className="button-icon pan" onClick={this.toggleModal.bind(this)}>
+                            <button className="button-icon pan" onClick={this.handleNew.bind(this)}>
                                 <Icon path={mdiAirplane} size="24px" title="New" />
                             </button>
                         </th>
@@ -179,7 +183,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                         copy={this.handleCopy.bind(this)}
                         change={this.handleChange.bind(this)}
                         remove={this.handleDelete.bind(this)}
-                        close={this.toggleModal.bind(this)}
+                        close={this.closeModal.bind(this)}
                     />
                 )}
             </>
