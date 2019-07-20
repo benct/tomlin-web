@@ -43,8 +43,14 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
 
     handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void {
         const { value, name } = event.target;
+        const overrideArrival = name === 'departure' && !this.state.form.arrival ? { arrival: value } : {};
+
         this.setState({
-            form: { ...this.state.form, [name]: value.trim() !== '' ? value : undefined },
+            form: {
+                ...this.state.form,
+                ...overrideArrival,
+                [name]: value.trim() !== '' ? value.trim() : undefined,
+            },
         });
     }
 
