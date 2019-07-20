@@ -54,6 +54,10 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         });
     }
 
+    handleSwap(): void {
+        this.setState({ form: { ...this.state.form, origin: this.state.form.destination, destination: this.state.form.origin } });
+    }
+
     handleNew(): void {
         this.setState({ form: this.state.form.id ? {} : this.state.form, showModal: true });
     }
@@ -186,6 +190,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
                         form={this.state.form}
                         invalid={this.state.invalid}
                         save={this.handleSubmit.bind(this)}
+                        swap={this.handleSwap.bind(this)}
                         copy={this.handleCopy.bind(this)}
                         change={this.handleChange.bind(this)}
                         remove={this.handleDelete.bind(this)}

@@ -1,8 +1,9 @@
 import React from 'react';
 import Icon from '@mdi/react';
-import { mdiCloseCircleOutline, mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
+import { mdiCloseCircleOutline, mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
 
 import { Flight } from '../../interfaces';
+
 import Modal from '../page/Modal';
 import FlightsInput from './FlightsInput';
 
@@ -10,13 +11,14 @@ interface FlightModalProps {
     form: Flight;
     invalid: boolean;
     save: (event: React.SyntheticEvent) => void;
+    swap: () => void;
     change: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
     copy: (flight: Flight) => void;
     remove: (id?: string) => void;
     close: () => void;
 }
 
-const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change, copy, remove, close }): React.ReactElement => (
+const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }): React.ReactElement => (
     <Modal close={close}>
         <form onSubmit={save} className="overlay-modal-content admin-flight-form pure-form pure-form-stacked">
             <fieldset className="pan">
@@ -68,12 +70,13 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change,
                             id="form-info"
                             name="info"
                             autoComplete="off"
-                            rows={5}
+                            rows={4}
                             onChange={change}
                             defaultValue={form.info || undefined}
                         />
                     </div>
                 </div>
+                {invalid && <div className="text text-small error pts">Please fill the required fields!</div>}
             </fieldset>
         </form>
         <div className="border-top ptm">
@@ -87,10 +90,12 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, change,
                     </button>
                 </>
             ) : null}
-            <button className="button-icon" onClick={save}>
+            <button className="button-icon mrm" onClick={save}>
                 <Icon path={mdiContentSaveOutline} size="28px" title="Save" />
             </button>
-            {invalid && <span className="text error valign-middle">Please fill the required fields!</span>}
+            <button className="button-icon" onClick={swap}>
+                <Icon path={mdiSwapHorizontal} size="28px" title="Swap airports" />
+            </button>
             <button className="button-icon float-right" onClick={close}>
                 <Icon path={mdiCloseCircleOutline} size="28px" title="Cancel" />
             </button>

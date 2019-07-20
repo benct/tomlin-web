@@ -23,7 +23,7 @@ const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required,
             required={required}
             autoComplete="off"
             onChange={onChange}
-            defaultValue={value || undefined}
+            value={value || ''}
             {...extraProps}
         />
     </div>
