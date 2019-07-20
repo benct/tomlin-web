@@ -10,14 +10,14 @@ import {
     mdiLanguageJavascript,
     mdiLanguagePhp,
     mdiLanguageTypescript,
-    mdiLoading,
     mdiSourceFork,
     mdiStarOutline,
 } from '@mdi/js';
 
 import { DefaultState, GitHubRepo, GitHubState } from '../../interfaces';
-
 import githubActions from '../../actions/github';
+
+import Loading from '../page/Loading';
 
 type GitHubProps = GitHubState & Pick<DefaultState, 'loading'>;
 
@@ -75,51 +75,42 @@ class GitHub extends React.PureComponent<GitHubProps & DispatchProp> {
         );
     }
 
-    render(): React.ReactNode {
-        if (this.props.loading) {
-            return (
-                <div className="wrapper text">
-                    <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" />
-                    <span className="valign-middle">Loading GitHub data...</span>
-                </div>
-            );
-        }
-
-        if (!this.props.user) {
-            return (
-                <div className="wrapper text">
-                    <Icon path={mdiAlertCircleOutline} size={1} title="Error" className="text-icon" />
-                    <span className="valign-middle">No GitHub data...</span>
-                </div>
-            );
-        }
-
+    render(): React.ReactElement {
         return (
-            <div className="wrapper text-center">
-                <div className="text mbl color-primary">GitHub</div>
-                <div className="github-user">
-                    <a href={this.props.user.url} target="_blank" rel="noopener noreferrer">
-                        <img className="github-avatar" src={this.props.user.image} alt="Avatar" />
-                    </a>
-                    <div className="github-count">
-                        <div className="monospace">{this.props.user.repos}</div>
-                        <span className="text-smaller">Repositories</span>
+            <Loading isLoading={this.props.loading} text="Loading GitHub data..." className="wrapper">
+                {this.props.user ? (
+                    <div className="wrapper text-center">
+                        <div className="text mbl color-primary">GitHub</div>
+                        <div className="github-user">
+                            <a href={this.props.user.url} target="_blank" rel="noopener noreferrer">
+                                <img className="github-avatar" src={this.props.user.image} alt="Avatar" />
+                            </a>
+                            <div className="github-count">
+                                <div className="monospace">{this.props.user.repos}</div>
+                                <span className="text-smaller">Repositories</span>
+                            </div>
+                            <div className="github-count">
+                                <div className="monospace">{this.props.user.stars}</div>
+                                <span className="text-smaller">Stargazers</span>
+                            </div>
+                            <div className="github-count">
+                                <div className="monospace">{this.props.user.followers}</div>
+                                <span className="text-smaller">Followers</span>
+                            </div>
+                        </div>
+                        <div className="github-wrapper ptm mha">
+                            <div className="text-smaller mbs">Featured</div>
+                            {this.props.top.map(GitHub.renderRepo)}
+                            {this.props.featured.map(GitHub.renderRepo)}
+                        </div>
                     </div>
-                    <div className="github-count">
-                        <div className="monospace">{this.props.user.stars}</div>
-                        <span className="text-smaller">Stargazers</span>
+                ) : (
+                    <div className="wrapper text">
+                        <Icon path={mdiAlertCircleOutline} size={1} title="Error" className="text-icon" />
+                        <span className="valign-middle">No GitHub data...</span>
                     </div>
-                    <div className="github-count">
-                        <div className="monospace">{this.props.user.followers}</div>
-                        <span className="text-smaller">Followers</span>
-                    </div>
-                </div>
-                <div className="github-wrapper ptm mha">
-                    <div className="text-smaller mbs">Featured</div>
-                    {this.props.top.map(GitHub.renderRepo)}
-                    {this.props.featured.map(GitHub.renderRepo)}
-                </div>
-            </div>
+                )}
+            </Loading>
         );
     }
 }

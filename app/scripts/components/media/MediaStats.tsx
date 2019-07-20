@@ -15,12 +15,14 @@ import {
 import 'react-vis/dist/style.css';
 
 import { DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
-
 import mediaActions from '../../actions/media';
+
+import Loading from '../page/Loading';
 
 interface MediaStatsProps {
     movie: MediaStatsType;
     tv: MediaStatsType;
+    loading: boolean;
     isLoggedIn: boolean;
 }
 
@@ -107,34 +109,36 @@ class MediaStats extends React.PureComponent<MediaStatsProps & DispatchProp> {
                     Personal movie and TV-show watchlist.
                     {!this.props.isLoggedIn && <span className="no-wrap"> Login required.</span>}
                 </div>
-                <div className="media-stats text-center">
-                    <div>
-                        <div className="border-bottom pbs mam">
-                            <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" />
-                            <span className="valign-middle">Tracked Movies</span>
+                <Loading isLoading={this.props.loading} text="Loading stats...">
+                    <div className="media-stats text-center">
+                        <div>
+                            <div className="border-bottom pbs mam">
+                                <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" />
+                                <span className="valign-middle">Tracked Movies</span>
+                            </div>
+                            {MediaStats.renderStats(this.props.movie)}
+                            {MediaStats.renderLineChart(
+                                `Rating (avg: ${this.props.movie.rating || '-'})`,
+                                '#006080',
+                                MediaStats.mapRatings(this.props.movie.ratings)
+                            )}
+                            {MediaStats.renderBarChart('Release (decade)', '#006080', MediaStats.mapYears(this.props.movie.years))}
                         </div>
-                        {MediaStats.renderStats(this.props.movie)}
-                        {MediaStats.renderLineChart(
-                            `Rating (avg: ${this.props.movie.rating || '-'})`,
-                            '#006080',
-                            MediaStats.mapRatings(this.props.movie.ratings)
-                        )}
-                        {MediaStats.renderBarChart('Release (decade)', '#006080', MediaStats.mapYears(this.props.movie.years))}
-                    </div>
-                    <div>
-                        <div className="border-bottom pbs mam">
-                            <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" />
-                            <span className="valign-middle">Tracked TV-Shows</span>
+                        <div>
+                            <div className="border-bottom pbs mam">
+                                <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" />
+                                <span className="valign-middle">Tracked TV-Shows</span>
+                            </div>
+                            {MediaStats.renderStats(this.props.tv)}
+                            {MediaStats.renderLineChart(
+                                `Rating (avg: ${this.props.tv.rating || '-'})`,
+                                '#008060',
+                                MediaStats.mapRatings(this.props.tv.ratings)
+                            )}
+                            {MediaStats.renderBarChart('First aired (decade)', '#008060', MediaStats.mapYears(this.props.tv.years))}
                         </div>
-                        {MediaStats.renderStats(this.props.tv)}
-                        {MediaStats.renderLineChart(
-                            `Rating (avg: ${this.props.tv.rating || '-'})`,
-                            '#008060',
-                            MediaStats.mapRatings(this.props.tv.ratings)
-                        )}
-                        {MediaStats.renderBarChart('First aired (decade)', '#008060', MediaStats.mapYears(this.props.tv.years))}
                     </div>
-                </div>
+                </Loading>
             </>
         );
     }
@@ -144,6 +148,7 @@ export default connect(
     (state: DefaultState): MediaStatsProps => ({
         movie: state.media.stats.movie,
         tv: state.media.stats.tv,
+        loading: state.loading,
         isLoggedIn: state.auth.isLoggedIn,
     })
 )(MediaStats);

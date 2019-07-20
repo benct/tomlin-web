@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
-import Icon from '@mdi/react';
-import { mdiLoading } from '@mdi/js';
 
 import { AuthState, DefaultState } from '../interfaces';
-
 import authActions from '../actions/auth';
+
+import Loading from './page/Loading';
 
 type AuthProps = AuthState & Pick<DefaultState, 'loading'>;
 
@@ -47,12 +46,7 @@ class Login extends React.PureComponent<RouteComponentProps & AuthProps & Dispat
                     <input type="password" ref={this.password} placeholder="********" aria-label="Password" className="input" />
                     <input type="submit" value="login" aria-label="Login" className="input" />
                     {this.props.error && <p className="text error">Incorrect username or password...</p>}
-                    {this.props.loading && (
-                        <p className="text">
-                            <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" />
-                            <span className="valign-middle">Logging in...</span>
-                        </p>
-                    )}
+                    <Loading isLoading={this.props.loading} text="Logging in..." />
                 </form>
             </div>
         );
