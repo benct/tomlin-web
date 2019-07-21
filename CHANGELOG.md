@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.11.1] - 2019-07-21 - *Form Improvements*
+### Added
+- Swapping of airport input values on flights form
+- Set flight arrival date when setting departure date
+
+### Changed
+- Extract loading indicators to common component
+- Separate loading state for login requests
+- Improve controlled inputs on flights form
+
 ## [2.11.0] - 2019-07-19 - *Flight Tracking*
 ### Added
 - Personal flight tracking components
