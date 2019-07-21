@@ -14,7 +14,7 @@ const Home: React.FC = (): React.ReactElement => (
                 <Link to="/about">here</Link> or follow the social media links at the bottom of the page.
             </p>
             <a href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer">
-                Version 2.11.0
+                Version 2.11.1
             </a>
         </div>
         <hr />
