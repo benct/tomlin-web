@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [2.11.0] - 2019-07-19
+## [2.11.0] - 2019-07-19 - *Flight Tracking*
 ### Added
 - Personal flight tracking components
 - CRUD functionality for flights
@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 - Refactor and clean up most CSS
 - Change default date format
 
-## [2.10.1] - 2019-07-09
+## [2.10.1] - 2019-07-09 - *Better Loading*
 ### Changed
 - Improve general loading indication
 - Refactor api get/post functions
@@ -26,7 +26,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Old links page component and content
 
-## [2.10.0] - 2019-07-07
+## [2.10.0] - 2019-07-07 - *TypeScript, MDI, GitHub*
 ### Added
 - Multiple types and TypeScript related packages
 - Material Design Icons (MDI) packages
@@ -48,7 +48,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Invalid values in post API requests
 
-## [2.9.3] - 2019-05-06
+## [2.9.3] - 2019-05-06 - *Notes*
 ### Added
 - Administration notes component
 - CRUD functionality for notes
@@ -63,7 +63,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Simple file note component
 
-## [2.9.2] - 2019-04-30
+## [2.9.2] - 2019-04-30 - *Page Views*
 ### Added
 - Tracking of page views / visits
 - Administration view for visits
@@ -75,7 +75,7 @@ All notable changes to this project will be documented in this file.
 - Extract sub menu data from nav component
 - Upgrade dependencies
 
-## [2.9.1] - 2019-03-10
+## [2.9.1] - 2019-03-10 - *Database Stats*
 ### Added
 - General DB stats in admin view
 - IATA data administration
@@ -87,7 +87,7 @@ All notable changes to this project will be documented in this file.
 - Minor text changes in admin view
 - Simplify and clean up form CSS
 
-## [2.9.0] - 2019-03-03
+## [2.9.0] - 2019-03-03 - *Administration*
 ### Added
 - Administration page
 - Server logging view
@@ -99,7 +99,7 @@ All notable changes to this project will be documented in this file.
 - Move poster update to admin page
 - Upgrade dependencies
 
-## [2.8.2] - 2019-02-12
+## [2.8.2] - 2019-02-12 - *New Sensors*
 ### Added
 - Office and storage temperatures
 
@@ -111,7 +111,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Upload and download speeds
 
-## [2.8.1] - 2019-01-29
+## [2.8.1] - 2019-01-29 - *Minor Fixes*
 ### Added
 - Episode stats in media overview
 - Icon support in countdown title
@@ -125,7 +125,7 @@ All notable changes to this project will be documented in this file.
 - Date formatting error after lib update
 - Bug in text file previews
 
-## [2.8.0] - 2018-11-25
+## [2.8.0] - 2018-11-25 - *Smart Home*
 ### Added
 - Home status/state component
 - Several home status icons
@@ -143,7 +143,7 @@ All notable changes to this project will be documented in this file.
 - Header html tags for title and header
 - Upgrade several dependencies
 
-## [2.7.4] - 2018-11-05
+## [2.7.4] - 2018-11-05 - *Stats, Seasons, Episodes, Loading*
 ### Added
 - Common media overview/stats page
 - Season and episode support for TV media
@@ -160,7 +160,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Stats in media lists
 
-## [2.7.3] - 2018-10-27
+## [2.7.3] - 2018-10-27 - *Lazy, Memo*
 ### Added
 - Lazy-loading using React.lazy() and Suspense
 - Memoization using React.memo() and PureComponent
@@ -177,7 +177,7 @@ All notable changes to this project will be documented in this file.
 - Default to non-circle social icons
 - Improve accessibility
 
-## [2.7.2] - 2018-10-25
+## [2.7.2] - 2018-10-25 - *Improved Media*
 ### Added
 - Media modal for more detailed information
 - Updating functionality for media items
@@ -197,7 +197,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Menu icon on small screens
 
-## [2.7.1] - 2018-10-21
+## [2.7.1] - 2018-10-21 - *Redux!*
 ### Added
 - App-wide state handling using Redux
 - Proper pagination with page numbers
@@ -212,7 +212,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Handle missing external IDs for media
 
-## [2.7.0] - 2018-10-16
+## [2.7.0] - 2018-10-16 - *Media, Toast, Tooltip*
 ### Added
 - Site title in header section
 - Media components
@@ -239,7 +239,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Unnecessary extra font
 
-## [2.6.1] - 2018-09-18
+## [2.6.1] - 2018-09-18 - *Social Links*
 ### Added
 - Social links in CV component
 
@@ -254,7 +254,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Back button in file component
 
-## [2.6.0] - 2018-09-16
+## [2.6.0] - 2018-09-16 - *Resume, Menus*
 ### Added
 - New navigation layout and styling
 - Menu icon for small screens
@@ -274,7 +274,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Unused CSS classes
 
-## [2.5.0] - 2018-09-15
+## [2.5.0] - 2018-09-15 - *Router Upgrades*
 ### Added
 - GitHub Badges in README.md
 - CHANGELOG.md
@@ -291,7 +291,7 @@ All notable changes to this project will be documented in this file.
 - Removed unnecessary main.js setup file
 - Transition effects on components
 
-## [2.4.0] - 2018-09-14
+## [2.4.0] - 2018-09-14 - *The Prettier Update*
 ### Added
 - Prettier code style
 
@@ -308,7 +308,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Remove package-lock file
 
-## [2.3.0] - 2018-01-18
+## [2.3.0] - 2018-01-18 - *Navigation*
 ### Added
 - Compress images with webpack-image-loader
 - Navigation component
@@ -323,11 +323,11 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Link to invalid path
 
-## [2.2.0] - ?
+## [2.2.0] - ? - *The Unknown*
 ### Changed
 - Not quite sure...
 
-## [2.1.0] - 2018-01-14
+## [2.1.0] - 2018-01-14 - *Package Upgrades*
 ### Added
 - Links data component
 - UglifyJS webpack plugin
@@ -342,7 +342,7 @@ All notable changes to this project will be documented in this file.
 - Upgrade to Babel 7
 - Upgrade several dependencies
 
-## [2.0.0] - 2017-12-28
+## [2.0.0] - 2017-12-28 - *New Stuff*
 ### Added
 - New site design
 - Quotes component
@@ -359,7 +359,7 @@ All notable changes to this project will be documented in this file.
 - Unused background images
 - Side navigation panel
 
-## [1.0.0] - 2016-2017
+## [1.0.0] - 2016-2017 - *Old Stuff*
 - Early versions of this app
 
 ### Added
