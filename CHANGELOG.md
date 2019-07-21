@@ -43,7 +43,6 @@ All notable changes to this project will be documented in this file.
 - Capitalize React component files
 - Update React refs usage
 - Extract babel options to .babelrc
-- Upgrade several dependencies
 
 ### Fixed
 - Invalid values in post API requests
@@ -58,7 +57,6 @@ All notable changes to this project will be documented in this file.
 - Move file handling under administration
 - Refactor common modal component
 - Refactor file loading actions
-- Upgrade dependencies
 
 ### Removed
 - Simple file note component
@@ -73,7 +71,6 @@ All notable changes to this project will be documented in this file.
 - Separate administration views
 - Include referrer in auth query
 - Extract sub menu data from nav component
-- Upgrade dependencies
 
 ## [2.9.1] - 2019-03-10 - *Database Stats*
 ### Added
@@ -97,7 +94,6 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Less bold navigation menu
 - Move poster update to admin page
-- Upgrade dependencies
 
 ## [2.8.2] - 2019-02-12 - *New Sensors*
 ### Added
@@ -106,7 +102,6 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Format home state values
 - Small cleanup of home state component
-- Upgrade minor dependencies
 
 ### Removed
 - Upload and download speeds
@@ -117,7 +112,6 @@ All notable changes to this project will be documented in this file.
 - Icon support in countdown title
 
 ### Changed
-- Upgrade dependencies
 - Set correct main file in package.json
 - Update footer/copyright
 
@@ -141,7 +135,6 @@ All notable changes to this project will be documented in this file.
 - Extract most icons in to separate SVG files
 - Reduce delay on loading indicator
 - Header html tags for title and header
-- Upgrade several dependencies
 
 ## [2.7.4] - 2018-11-05 - *Stats, Seasons, Episodes, Loading*
 ### Added
@@ -299,7 +292,6 @@ All notable changes to this project will be documented in this file.
 - Site title to Ben Tomlin
 - Replace NPM with Yarn
 - Upgrade eslint and plugins
-- Upgrade several dependencies
 - Upgrade to Webpack 4
 - Rewrite webpack configs to match v4 specs
 - Run prettier on all JS code
@@ -340,7 +332,6 @@ All notable changes to this project will be documented in this file.
 - Upgrade eslint, plugins and config
 - Upgrade to Webpack 3
 - Upgrade to Babel 7
-- Upgrade several dependencies
 
 ## [2.0.0] - 2017-12-28 - *New Stuff*
 ### Added
