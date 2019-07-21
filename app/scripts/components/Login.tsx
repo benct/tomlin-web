@@ -7,13 +7,11 @@ import authActions from '../actions/auth';
 
 import Loading from './page/Loading';
 
-type AuthProps = AuthState & Pick<DefaultState, 'loading'>;
-
-class Login extends React.PureComponent<RouteComponentProps & AuthProps & DispatchProp> {
+class Login extends React.PureComponent<RouteComponentProps & AuthState & DispatchProp> {
     username: React.RefObject<HTMLInputElement>;
     password: React.RefObject<HTMLInputElement>;
 
-    constructor(props: RouteComponentProps & AuthProps & DispatchProp) {
+    constructor(props: RouteComponentProps & AuthState & DispatchProp) {
         super(props);
 
         this.username = React.createRef();
@@ -53,4 +51,4 @@ class Login extends React.PureComponent<RouteComponentProps & AuthProps & Dispat
     }
 }
 
-export default connect((state: DefaultState): AuthProps => ({ ...state.auth, loading: state.loading }))(Login);
+export default connect((state: DefaultState): AuthState => ({ ...state.auth }))(Login);

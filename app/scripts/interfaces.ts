@@ -23,6 +23,7 @@ export interface AuthState {
     isLoggedIn: boolean;
     redirect: boolean;
     error: boolean;
+    loading: boolean;
 }
 
 export interface HomeState {

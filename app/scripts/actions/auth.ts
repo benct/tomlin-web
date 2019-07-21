@@ -4,15 +4,16 @@ import makeReducer, { Actions } from '../redux/makeReducer';
 import { AsyncAction, AuthState, InitAction } from '../interfaces';
 
 import { post } from '../util/api';
-import baseActions from './base';
 
 const actions: Actions = {};
 
 actions.setLoggedIn = makeAction('AUTH/SET_LOGGED_IN', 'isLoggedIn');
 
+actions.setLoading = makeAction('AUTH/SET_LOADING', 'loading');
+
 actions.setLoginData = makeAction(
     'AUTH/SET_LOGIN_DATA',
-    (state: AuthState, { payload }): AuthState => ({ ...state, isLoggedIn: payload, redirect: payload, error: !payload })
+    (state: AuthState, { payload }): AuthState => ({ ...state, ...payload, loading: false })
 );
 
 actions.validate = (): AsyncAction => async (dispatch): Promise<void> => {
@@ -29,24 +30,23 @@ actions.validate = (): AsyncAction => async (dispatch): Promise<void> => {
 };
 
 actions.login = (data: object): AsyncAction => async (dispatch): Promise<void> => {
-    dispatch(baseActions.setLoading(true));
+    dispatch(actions.setLoading(true));
 
     await post<string>({ service: 'auth', action: 'login', ...data })
         .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
         .then((token): void => {
             localStorage.token = token;
-            dispatch(actions.setLoginData(true));
+            dispatch(actions.setLoginData({ isLoggedIn: true, redirect: true, error: false }));
         })
         .catch((): void => {
             delete localStorage.token;
-            dispatch(actions.setLoginData(false));
-        })
-        .finally((): void => dispatch(baseActions.setLoading(false)));
+            dispatch(actions.setLoginData({ isLoggedIn: false, redirect: false, error: true }));
+        });
 };
 
 actions.logout = (): InitAction => (dispatch): void => {
     delete localStorage.token;
-    dispatch(actions.setLoggedIn(false));
+    dispatch(actions.setLoginData({ isLoggedIn: false, redirect: false }));
 };
 
 export default actions;

@@ -14,6 +14,7 @@ const defaultState: DefaultState = {
         isLoggedIn: false,
         redirect: false,
         error: false,
+        loading: false,
     },
 
     home: {
