@@ -19,6 +19,7 @@
   },
   "include": [
     "./app/scripts/**/*",
-    "./app/types/**/*"
+    "./app/types/**/*",
+    "./webpack.*.js"
   ]
 }
