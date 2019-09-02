@@ -16,7 +16,7 @@ class State extends React.PureComponent<DispatchProp & HomeStateProps> {
         this.props.dispatch(actions.getHomeState());
     }
 
-    static renderState(id: string, value?: number, text?: string, unit: string = '°C'): React.ReactElement {
+    static renderState(id: string, value?: number, text?: string, unit = '°C'): React.ReactElement {
         return (
             <div className="home-state" data-tooltip={text}>
                 <div className="text-right">

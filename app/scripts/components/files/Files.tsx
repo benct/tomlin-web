@@ -97,7 +97,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
         }
 
         const formData = new FormData();
-        for (let key in files) {
+        for (const key in files) {
             if (files.hasOwnProperty(key) && files[key] instanceof File) {
                 formData.append(key, files[key]);
             }
