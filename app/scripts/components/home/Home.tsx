@@ -20,7 +20,7 @@ const Home: React.FC = (): React.ReactElement => (
         <hr />
         <State />
         <hr />
-        <Countdown day={3} month={8} year={2019} hour={13} title="Countdown to something..." icon="wedding" />
+        <Countdown day={24} month={12} title="Countdown to something..." icon="christmas" />
         <hr />
         <Quote />
     </>
