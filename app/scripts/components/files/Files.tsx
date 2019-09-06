@@ -2,13 +2,7 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import Icon from '@mdi/react';
-import {
-    mdiCloseCircleOutline,
-    mdiCloudUploadOutline,
-    mdiFolderPlusOutline,
-    mdiFolderSyncOutline,
-    mdiSubdirectoryArrowLeft,
-} from '@mdi/js';
+import { mdiCloseCircleOutline, mdiCloudUploadOutline, mdiFolderPlusOutline, mdiFolderSyncOutline, mdiFolderUploadOutline } from '@mdi/js';
 
 import { DefaultState, FileItem, FilePreview } from '../../interfaces';
 import actions from '../../actions/files';
@@ -147,7 +141,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                         className="button-icon"
                         onClick={(): void => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
                         disabled={this.props.cwd === ''}>
-                        <Icon path={mdiSubdirectoryArrowLeft} rotate={90} size="28px" title="Parent directory" />
+                        <Icon path={mdiFolderUploadOutline} size="28px" title="Parent directory" />
                     </button>
                     <div className="text-right">
                         <button className="button-icon mrm" onClick={(): void => this.props.dispatch(actions.createDirectory())}>
