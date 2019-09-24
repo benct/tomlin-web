@@ -31,8 +31,9 @@ class Pagination extends React.PureComponent<PaginationState & PaginationProps> 
     }
 
     renderPage(page: number, image?: PaginationImage): React.ReactElement {
+        const postfix = this.props.postfix ? `/${this.props.postfix}` : '';
         return (
-            <Link to={this.props.path + page + (this.props.postfix || '')} className="button-icon" key={`pagination${page}`}>
+            <Link to={this.props.path + page + postfix} className="button-icon" key={`pagination${page}`}>
                 {image ? Pagination.renderImage(image) : <span>{page}</span>}
             </Link>
         );

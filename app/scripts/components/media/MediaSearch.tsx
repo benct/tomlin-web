@@ -94,7 +94,7 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
                     <Link to={'/media/search/tv/now/'}>Now Playing (TV)</Link>
                 </div>
                 {this.props.data.map(this.renderItem.bind(this))}
-                <Pagination path={`/media/search/${this.props.type}/${this.props.action}/`} postfix={`/${this.props.id}`} />
+                <Pagination path={`/media/search/${this.props.type}/${this.props.action}/`} postfix={this.props.id} />
             </div>
         );
     }
