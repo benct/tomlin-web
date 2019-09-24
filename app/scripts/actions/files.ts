@@ -1,12 +1,11 @@
-import makeAction from '../redux/makeAction';
-import makeReducer, { Actions } from '../redux/makeReducer';
+import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
-import { AsyncAction, FileItem, FileState, InitAction } from '../interfaces';
+import { FileItem, FileState, ThunkResult } from '../interfaces';
 
 import { fetchFile, load } from '../util/api';
-import baseActions from './base';
+import { showToast } from './base';
 
-const actions: Actions = {};
+const actions: ActionsObject<FileState> = {};
 
 actions.setContent = makeAction('FILES/SET_DATA', 'content');
 
@@ -16,14 +15,15 @@ actions.setFocus = makeAction('FILES/SET_FOCUS', 'focused');
 
 actions.setUploading = makeAction('FILES/SET_UPLOADING', 'uploading');
 
-actions.setDirectory = makeAction('FILES/CHANGE_DIR', (state, { payload }): FileState => ({ ...state, cwd: payload, focused: null }));
+actions.setDirectory = makeAction('FILES/CHANGE_DIR', (state, { payload }) => ({ ...state, cwd: payload, focused: null }));
 
-actions.refresh = (cwd: string): AsyncAction => async (dispatch, getState): Promise<void> =>
+export const refresh = (cwd?: string): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     await load({ service: 'files', action: 'ls', path: cwd || getState().files.cwd })
-        .then((data): void => dispatch(actions.setContent(data)))
-        .catch((): void => dispatch(baseActions.showToast('Could not fetch content...')));
+        .then(data => dispatch(actions.setContent(data)))
+        .catch(() => dispatch(showToast('Could not fetch content...')));
+};
 
-actions.changeDirectory = (dirname: string): InitAction => (dispatch, getState): void => {
+export const changeDirectory = (dirname: string): ThunkResult<void> => (dispatch, getState): void => {
     let dir = getState().files.cwd;
     if (dirname === '..') {
         if (dir === '') return;
@@ -32,55 +32,56 @@ actions.changeDirectory = (dirname: string): InitAction => (dispatch, getState):
         dir += (dir === '' ? '' : '/') + dirname;
     }
     dispatch(actions.setDirectory(dir));
-    dispatch(actions.refresh(dir));
+    dispatch(refresh(dir));
 };
 
-actions.createDirectory = (): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const createDirectory = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     const name = prompt('Enter name of new folder:');
     if (name) {
         await load({ service: 'files', action: 'mkdir', path: `${getState().files.cwd}/${name}` })
-            .then((): void => dispatch(actions.refresh()))
-            .catch((): void => dispatch(baseActions.showToast('Could not create directory...')));
+            .then(() => dispatch(refresh()))
+            .catch(() => dispatch(showToast('Could not create directory...')));
     }
 };
 
-actions.rename = (item: FileItem): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const rename = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     const name = prompt('Enter new name of file:', item.name);
     if (name) {
         await load({ service: 'files', action: 'mv', path: `${getState().files.cwd}/${item.name}`, name })
-            .then((): void => dispatch(actions.refresh()))
-            .catch((): void => dispatch(baseActions.showToast(`Could not rename ${item.dir ? 'directory' : 'file'}...`)));
+            .then(() => dispatch(refresh()))
+            .catch(() => dispatch(showToast(`Could not rename ${item.dir ? 'directory' : 'file'}...`)));
     }
 };
 
-actions.delete = (item: FileItem): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const remove = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (confirm(`Are you sure you want to delete ${item.name}?`)) {
         const action = item.dir ? 'rmdir' : 'rm';
         await load({ service: 'files', action: action, path: `${getState().files.cwd}/${item.name}` })
-            .then((): void => dispatch(actions.refresh()))
-            .catch((): void => dispatch(baseActions.showToast(`Could not delete ${item.dir ? 'directory' : 'file'}...`)));
+            .then(() => dispatch(refresh()))
+            .catch(() => dispatch(showToast(`Could not delete ${item.dir ? 'directory' : 'file'}...`)));
     }
 };
 
-actions.upload = (data: FormData): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const upload = (data: FormData): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     dispatch(actions.setUploading(true));
 
     await load({ service: 'files', action: 'up', path: getState().files.cwd }, data)
-        .then((): void => {
+        .then(() => {
             dispatch(actions.setUploading(false));
-            dispatch(actions.refresh());
+            dispatch(refresh());
         })
-        .catch((): void => {
+        .catch(() => {
             dispatch(actions.setUploading(false));
-            dispatch(baseActions.showToast('An error occurred while uploading the file(s)...'));
+            dispatch(showToast('An error occurred while uploading the file(s)...'));
         });
 };
 
-actions.open = (item: FileItem): AsyncAction => async (dispatch): Promise<void> =>
+export const open = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     await fetchFile(item.href)
-        .then((data): void => dispatch(actions.setPreview({ content: data, image: false })))
-        .catch((): void => dispatch(baseActions.showToast('Could not fetch file...')));
+        .then(data => dispatch(actions.setPreview({ content: data, image: false })))
+        .catch(() => dispatch(showToast('Could not fetch file...')));
+};
 
 export default actions;
 
-export const reducer = makeReducer(actions);
+export const reducer = makeReducer<FileState>(actions);

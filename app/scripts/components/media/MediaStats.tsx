@@ -1,21 +1,21 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiMovieOutline, mdiTelevisionClassic } from '@mdi/js';
 import {
+    AreaSeries,
+    DiscreteColorLegend,
     FlexibleWidthXYPlot,
+    HorizontalGridLines,
+    LineMarkSeries,
+    VerticalBarSeries,
     XAxis,
     YAxis,
-    HorizontalGridLines,
-    VerticalBarSeries,
-    DiscreteColorLegend,
-    AreaSeries,
-    LineMarkSeries,
 } from 'react-vis';
 import 'react-vis/dist/style.css';
 
-import { DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
-import mediaActions from '../../actions/media';
+import { DefaultState, MediaStatsEntry, MediaStatsType, ThunkDispatchProp } from '../../interfaces';
+import { getStats } from '../../actions/media';
 
 import Loading from '../page/Loading';
 
@@ -31,10 +31,10 @@ interface MediaGraphEntry {
     y: number;
 }
 
-class MediaStats extends React.PureComponent<MediaStatsProps & DispatchProp> {
+class MediaStats extends React.PureComponent<MediaStatsProps & ThunkDispatchProp> {
     componentDidMount(): void {
         if (!this.props.movie.total) {
-            this.props.dispatch(mediaActions.stats());
+            this.props.dispatch(getStats());
         }
     }
 

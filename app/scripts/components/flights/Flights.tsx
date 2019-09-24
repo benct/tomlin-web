@@ -1,11 +1,12 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiAirplane, mdiBriefcaseEditOutline } from '@mdi/js';
 
-import { DefaultState, Flight } from '../../interfaces';
+import { DefaultState, Flight, ThunkDispatchProp } from '../../interfaces';
+
 import { formatDate } from '../../util/formatting';
-import adminActions from '../../actions/admin';
+import { deleteFlight, getFlights, saveFlight } from '../../actions/admin';
 
 import FlightsModal from './FlightsModal';
 import FlightsGroup from './FlightsGroup';
@@ -23,8 +24,8 @@ interface FlightProps {
 
 const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 
-class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightState> {
-    constructor(props: FlightProps & DispatchProp) {
+class Flights extends React.PureComponent<FlightProps & ThunkDispatchProp, FlightState> {
+    constructor(props: FlightProps & ThunkDispatchProp) {
         super(props);
 
         this.state = {
@@ -37,7 +38,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
 
     componentDidMount(): void {
         if (!this.props.flights.length) {
-            this.props.dispatch(adminActions.getFlights());
+            this.props.dispatch(getFlights());
         }
     }
 
@@ -71,9 +72,11 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
     }
 
     handleDelete(id?: string): void {
-        this.props.dispatch(adminActions.deleteFlight(id));
+        if (!!id) {
+            this.props.dispatch(deleteFlight(+id));
 
-        this.setState({ form: {}, showModal: false });
+            this.setState({ form: {}, showModal: false });
+        }
     }
 
     handleSubmit(event: React.SyntheticEvent): void {
@@ -82,7 +85,7 @@ class Flights extends React.PureComponent<FlightProps & DispatchProp, FlightStat
         const formData = this.state.form;
 
         if (this.validateForm(formData)) {
-            this.props.dispatch(adminActions.saveFlight(formData));
+            this.props.dispatch(saveFlight(formData));
             this.setState({ invalid: false });
         } else {
             this.setState({ invalid: true });

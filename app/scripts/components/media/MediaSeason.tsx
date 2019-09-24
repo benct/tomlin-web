@@ -1,9 +1,10 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 
-import { MediaEpisodeEntry, MediaSeasonEntry } from '../../interfaces';
+import { MediaEpisodeEntry, MediaSeasonEntry, ThunkDispatchProp } from '../../interfaces';
+
 import { formatDate, formatGradientHSL } from '../../util/formatting';
-import mediaActions from '../../actions/media';
+import { seenEpisode, seenEpisodes } from '../../actions/media';
 
 import { ViewIcon } from '../page/Icons';
 
@@ -17,8 +18,8 @@ interface MediaSeasonState {
     overview?: string;
 }
 
-class MediaSeason extends React.PureComponent<MediaSeasonProps & DispatchProp, MediaSeasonState> {
-    constructor(props: MediaSeasonProps & DispatchProp) {
+class MediaSeason extends React.PureComponent<MediaSeasonProps & ThunkDispatchProp, MediaSeasonState> {
+    constructor(props: MediaSeasonProps & ThunkDispatchProp) {
         super(props);
 
         this.state = {
@@ -32,10 +33,6 @@ class MediaSeason extends React.PureComponent<MediaSeasonProps & DispatchProp, M
 
     setOverview(title?: string, overview?: string): void {
         this.setState({ title, overview });
-    }
-
-    setAllSeen(): void {
-        this.props.dispatch(mediaActions.seenEpisodes(this.props.data.id));
     }
 
     renderEpisodes(): React.ReactElement[] {
@@ -54,7 +51,7 @@ class MediaSeason extends React.PureComponent<MediaSeasonProps & DispatchProp, M
                     <button
                         className="button-blank mrm"
                         style={{ height: '22px' }}
-                        onClick={(): void => this.props.dispatch(mediaActions.seenEpisode({ id: episode.id, set: !episode.seen }))}>
+                        onClick={(): Promise<void> => this.props.dispatch(seenEpisode({ id: episode.id, set: !episode.seen }))}>
                         <ViewIcon width={22} height={22} seen={episode.seen} />
                     </button>
                 </React.Fragment>
@@ -76,7 +73,9 @@ class MediaSeason extends React.PureComponent<MediaSeasonProps & DispatchProp, M
                         {episodesSeen}/{episodesTotal}
                     </button>
                     {episodesSeen === 0 ? (
-                        <button className="input input-small float-right mrm" onClick={this.setAllSeen.bind(this)}>
+                        <button
+                            className="input input-small float-right mrm"
+                            onClick={(): Promise<void> => this.props.dispatch(seenEpisodes(this.props.data.id))}>
                             Mark all
                         </button>
                     ) : null}

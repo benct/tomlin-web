@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiFileDocumentBoxPlusOutline } from '@mdi/js';
 
-import { DefaultState, Note } from '../../interfaces';
-import adminActions from '../../actions/admin';
+import { DefaultState, Note, ThunkDispatchProp } from '../../interfaces';
+import { getNotes } from '../../actions/admin';
 
 import NotesModal from './NotesModal';
 
@@ -17,8 +17,8 @@ interface NotesState {
     selected: Note | null;
 }
 
-class Notes extends React.PureComponent<NotesProps & DispatchProp, NotesState> {
-    constructor(props: NotesProps & DispatchProp) {
+class Notes extends React.PureComponent<NotesProps & ThunkDispatchProp, NotesState> {
+    constructor(props: NotesProps & ThunkDispatchProp) {
         super(props);
 
         this.state = {
@@ -29,7 +29,7 @@ class Notes extends React.PureComponent<NotesProps & DispatchProp, NotesState> {
 
     componentDidMount(): void {
         if (!this.props.notes || !this.props.notes.length) {
-            this.props.dispatch(adminActions.getNotes());
+            this.props.dispatch(getNotes());
         }
     }
 

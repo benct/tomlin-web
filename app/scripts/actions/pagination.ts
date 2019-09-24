@@ -1,11 +1,10 @@
-import makeAction from '../redux/makeAction';
-import makeReducer, { Actions } from '../redux/makeReducer';
+import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { PaginationState } from '../interfaces';
 
 import defaultState from '../redux/defaultState';
 
-const actions: Actions = {};
+const actions: ActionsObject<PaginationState> = {};
 
 const createListOfPreviousPages = (totalPages: number, currentPage: number): number[] => {
     const minPageNr = Math.min(currentPage - 3, totalPages - 5);
@@ -47,8 +46,8 @@ actions.set = makeAction(
     }
 );
 
-actions.reset = makeAction('PAGINATION/RESET', (state): PaginationState => ({ ...state, ...defaultState.pagination }));
+actions.reset = makeAction('PAGINATION/RESET', state => ({ ...state, ...defaultState.pagination }));
 
 export default actions;
 
-export const reducer = makeReducer(actions);
+export const reducer = makeReducer<PaginationState>(actions);

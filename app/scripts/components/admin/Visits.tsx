@@ -1,17 +1,17 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 
-import { DefaultState, Visit } from '../../interfaces';
-import adminActions from '../../actions/admin';
+import { DefaultState, ThunkDispatchProp, Visit } from '../../interfaces';
+import { getVisits } from '../../actions/admin';
 
 interface VisitProps {
     visits: Visit[];
 }
 
-class Visits extends React.PureComponent<VisitProps & DispatchProp> {
+class Visits extends React.PureComponent<VisitProps & ThunkDispatchProp> {
     componentDidMount(): void {
         if (!this.props.visits.length) {
-            this.props.dispatch(adminActions.getVisits());
+            this.props.dispatch(getVisits());
         }
     }
 

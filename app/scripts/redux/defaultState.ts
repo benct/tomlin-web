@@ -31,6 +31,7 @@ const defaultState: DefaultState = {
 
     github: {
         user: null,
+        stars: 0,
         top: [],
         featured: [],
     },

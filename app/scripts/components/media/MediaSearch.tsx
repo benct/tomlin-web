@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Action } from 'redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
+import { DefaultState, MediaSearchItemEntry, ThunkDispatchFunc } from '../../interfaces';
+
 import debounce from '../../util/debounce';
-import mediaActions from '../../actions/media';
+import { add, goToIMDb, postMedia, remove, searchMedia } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
-import { DefaultState, MediaSearchItemEntry } from '../../interfaces';
 
 import Pagination from '../page/Pagination';
 import MediaSearchItem from './MediaSearchItem';
@@ -109,13 +110,16 @@ const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<Medi
     page: Number(ownProps.match.params.page || 1),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: RouteComponentProps<MediaSearchRouteProps>): MediaSearchDispatchProps => ({
-    search: debounce((query: string): void => dispatch(mediaActions.search(query)), 500),
-    get: (): void => dispatch(mediaActions.post({ ...ownProps.match.params, page: Number(ownProps.match.params.page || 1) })),
-    add: (type: string, id: number): void => dispatch(mediaActions.add({ type: type || ownProps.match.params.type, id })),
-    remove: (type: string, id: number): void => dispatch(mediaActions.remove({ type: type || ownProps.match.params.type, id })),
-    goToIMDb: (type: string, id: number): void => dispatch(mediaActions.goToIMDb({ type: type || ownProps.match.params.type, id })),
-    resetPagination: (): void => dispatch(paginationActions.reset()),
+const mapDispatchToProps = (
+    dispatch: ThunkDispatchFunc,
+    ownProps: RouteComponentProps<MediaSearchRouteProps>
+): MediaSearchDispatchProps => ({
+    search: debounce((query: string): Promise<void> => dispatch(searchMedia(query)), 500),
+    get: (): Promise<void> => dispatch(postMedia({ ...ownProps.match.params, page: Number(ownProps.match.params.page || 1) })),
+    add: (type: string, id: number): Promise<void> => dispatch(add({ type: type || ownProps.match.params.type, id })),
+    remove: (type: string, id: number): Promise<void> => dispatch(remove({ type: type || ownProps.match.params.type, id })),
+    goToIMDb: (type: string, id: number): Promise<void> => dispatch(goToIMDb({ type: type || ownProps.match.params.type, id })),
+    resetPagination: (): Action => dispatch(paginationActions.reset()),
 });
 
 export default connect(

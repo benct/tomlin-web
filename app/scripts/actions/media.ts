@@ -1,8 +1,6 @@
-import makeAction from '../redux/makeAction';
-import makeReducer, { Actions } from '../redux/makeReducer';
+import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import {
-    AsyncAction,
     MediaEpisodeEntry,
     MediaItemEntry,
     MediaResults,
@@ -10,10 +8,11 @@ import {
     MediaSearchResults,
     MediaSeasonEntry,
     MediaState,
+    ThunkResult,
 } from '../interfaces';
 
 import { get, load } from '../util/api';
-import baseActions from './base';
+import baseActions, { showToast } from './base';
 import paginationActions from './pagination';
 
 interface MediaActionProps {
@@ -21,29 +20,103 @@ interface MediaActionProps {
     type?: string;
     sort?: string;
     page?: number;
-    id?: number;
+    id?: number | string;
     query?: string;
     override?: boolean;
     set?: boolean;
 }
 
-const actions: Actions = {};
+const actions: ActionsObject<MediaState> = {};
 
-actions.set = makeAction(
-    'MEDIA/SET',
-    (state, { payload }): MediaState => ({
-        ...state,
-        [payload.key]: {
-            results: payload.results || [],
-            page: {
-                current: payload.page,
-                total: payload.total_pages,
-            },
+actions.setMedia = makeAction('MEDIA/SET', (state, { payload }) => ({
+    ...state,
+    [payload.key]: {
+        results: payload.results || [],
+        page: {
+            current: payload.page,
+            total: payload.total_pages,
         },
-    })
-);
+    },
+}));
 
-actions.get = ({ action, sort, page, query }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+actions.setStats = makeAction('MEDIA/SET_STATS', 'stats');
+
+actions.setSort = makeAction('MEDIA/SET_SORT', 'sort');
+
+actions.showModal = makeAction('MEDIA/SHOW_MODAL', (state, { payload }) => ({ ...state, showModal: true, item: payload || state.item }));
+
+actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => ({ ...state, showModal: false }));
+
+actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
+
+actions.setExisting = makeAction('MEDIA/SET_EXISTING', 'existing');
+
+actions.addExisting = makeAction('MEDIA/ADD_EXISTING', (state, { payload }) => {
+    const existing = state.existing.slice();
+    existing.push(payload);
+
+    return { ...state, existing };
+});
+
+actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }) => ({
+    ...state,
+    existing: state.existing.filter((i: number): boolean => i !== payload),
+}));
+
+actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload: { action, id, set } }) => ({
+    ...state,
+    item: state.item ? { ...state.item, favourite: set } : null,
+    [action]: {
+        ...state[action],
+        results: state[action].results.map(
+            (item: MediaItemEntry): MediaItemEntry => {
+                if (item.id === id) {
+                    item.favourite = set;
+                }
+                return item;
+            }
+        ),
+    },
+}));
+
+actions.setSeen = makeAction('MEDIA/SET_SEEN', (state, { payload: { action, id, set } }) => ({
+    ...state,
+    item: state.item ? { ...state.item, seen: set } : state.item,
+    [action]: {
+        ...state[action],
+        results: state[action].results.map(
+            (item: MediaItemEntry): MediaItemEntry => {
+                if (item.id === id) {
+                    item.seen = set;
+                }
+                return item;
+            }
+        ),
+    },
+}));
+
+actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload: { seasonId, episodeId, set } }) => ({
+    ...state,
+    item: {
+        ...state.item,
+        seasons: state.item.seasons.map(
+            (season: MediaSeasonEntry): MediaSeasonEntry => ({
+                ...season,
+                episodes: season.episodes.map(
+                    (episode: MediaEpisodeEntry): MediaEpisodeEntry => ({
+                        ...episode,
+                        seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
+                    })
+                ),
+            })
+        ),
+    },
+}));
+
+export const getMedia = ({ action, sort, page, query }: MediaActionProps): ThunkResult<Promise<void>> => async (
+    dispatch,
+    getState
+): Promise<void> => {
     dispatch(baseActions.setLoading(true));
 
     await get<MediaResults>({
@@ -53,73 +126,66 @@ actions.get = ({ action, sort, page, query }: MediaActionProps): AsyncAction => 
         page: page || getState().pagination.current,
         sort: sort || getState().media.sort,
     })
-        .then((response): void => {
-            dispatch(actions.set({ ...response, key: action }));
+        .then(response => {
+            dispatch(actions.setMedia({ ...response, key: action }));
             dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
         })
-        .catch((): void => {
+        .catch(() => {
             dispatch(paginationActions.reset());
-            dispatch(baseActions.showToast('Could not fetch media content...'));
+            dispatch(showToast('Could not fetch media content...'));
         })
-        .finally((): void => dispatch(baseActions.setLoading(false)));
+        .finally(() => dispatch(baseActions.setLoading(false)));
 };
 
-actions.setStats = makeAction('MEDIA/SET_STATS', 'stats');
-
-actions.stats = (): AsyncAction => async (dispatch): Promise<void> => {
+export const getStats = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(baseActions.setLoading(true));
 
     await get({ service: 'media', action: 'stats' })
-        .then((response): void => dispatch(actions.setStats(response)))
-        .catch((): void => dispatch(baseActions.showToast('Could not fetch stats...')))
-        .finally((): void => dispatch(baseActions.setLoading(false)));
+        .then(response => dispatch(actions.setStats(response)))
+        .catch(() => dispatch(showToast('Could not fetch stats...')))
+        .finally(() => dispatch(baseActions.setLoading(false)));
 };
 
-actions.setSort = makeAction('MEDIA/SET_SORT', 'sort');
-
-actions.showModal = makeAction(
-    'MEDIA/SHOW_MODAL',
-    (state, { payload }): MediaState => ({ ...state, showModal: true, item: payload || state.item })
-);
-
-actions.hideModal = makeAction('MEDIA/HIDE_MODAL', (state): MediaState => ({ ...state, showModal: false }));
-
-actions.setItem = ({ type, id, override }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const setItem = ({ type, id, override }: MediaActionProps): ThunkResult<Promise<void>> => async (
+    dispatch,
+    getState
+): Promise<void> => {
     const item = getState().media.item;
     if (override || !item || item.id !== id) {
         dispatch(baseActions.setLoading(true));
 
         await get({ service: 'media', action: 'get', type, id })
-            .then((response): void => {
+            .then(response => {
                 dispatch(actions.showModal(response));
             })
-            .catch((): void => {
+            .catch(() => {
                 dispatch(actions.hideModal());
-                dispatch(baseActions.showToast('Could not fetch media content...'));
+                dispatch(showToast('Could not fetch media content...'));
             })
-            .finally((): void => dispatch(baseActions.setLoading(false)));
+            .finally(() => dispatch(baseActions.setLoading(false)));
     } else {
         dispatch(actions.showModal());
     }
 };
 
-actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
-
-actions.post = ({ action, type, id, page }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> =>
+export const postMedia = ({ action, type, id, page }: MediaActionProps): ThunkResult<Promise<void>> => async (
+    dispatch,
+    getState
+): Promise<void> =>
     await load<MediaSearchResults>({ service: 'media', action, type, id, page: page || getState().pagination.current })
-        .then((response): void => {
+        .then(response => {
             dispatch(actions.setSearch(response.results || []));
             dispatch(actions.setExisting(response.existing));
             dispatch(paginationActions.set({ current: response.page, total: Math.min(response.total_pages, 1000) }));
         })
-        .catch((): void => {
+        .catch(() => {
             dispatch(paginationActions.reset());
-            dispatch(baseActions.showToast('Could not fetch media content...'));
+            dispatch(showToast('Could not fetch media content...'));
         });
 
-actions.search = (query: string): AsyncAction => async (dispatch): Promise<void> =>
+export const searchMedia = (query: string): ThunkResult<Promise<void>> => async (dispatch): Promise<void> =>
     await load<MediaSearchResults>({ service: 'media', action: 'search', query: encodeURI(query) })
-        .then((response): void => {
+        .then(response => {
             dispatch(
                 actions.setSearch(
                     response.results
@@ -132,181 +198,108 @@ actions.search = (query: string): AsyncAction => async (dispatch): Promise<void>
             dispatch(actions.setExisting(response.existing));
             dispatch(paginationActions.reset());
         })
-        .catch((): void => dispatch(baseActions.showToast('Failed to execute search...')));
+        .catch(() => dispatch(showToast('Failed to execute search...')));
 
-actions.setExisting = makeAction('MEDIA/SET_EXISTING', 'existing');
-
-actions.addExisting = makeAction(
-    'MEDIA/ADD_EXISTING',
-    (state, { payload }): MediaState => {
-        const existing = state.existing.slice();
-        existing.push(payload);
-
-        return { ...state, existing };
-    }
-);
-
-actions.removeExisting = makeAction(
-    'MEDIA/REMOVE_EXISTING',
-    (state, { payload }): MediaState => ({
-        ...state,
-        existing: state.existing.filter((i: number): boolean => i !== payload),
-    })
-);
-
-actions.add = ({ type, id }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const add = ({ type, id }: MediaActionProps): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'media', action: 'save', type, id })
-            .then((): void => {
+            .then(() => {
                 dispatch(actions.addExisting(id));
-                dispatch(baseActions.showToast('Media successfully added!'));
+                dispatch(showToast('Media successfully added!'));
             })
-            .catch((): void => dispatch(baseActions.showToast('Failed to add media...')));
+            .catch(() => dispatch(showToast('Failed to add media...')));
     }
 };
 
-actions.remove = ({ action, type, id }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const remove = ({ action, type, id }: MediaActionProps): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm(`Are you sure you want to remove this?`)) {
         await load({ service: 'media', action: 'delete', type, id })
-            .then((): void => {
+            .then(() => {
                 if (action) {
-                    dispatch(actions.get({ action }));
+                    dispatch(getMedia({ action }));
                 }
                 dispatch(actions.hideModal());
                 dispatch(actions.removeExisting(id));
-                dispatch(baseActions.showToast('Media successfully removed!'));
+                dispatch(showToast('Media successfully removed!'));
             })
-            .catch((): void => dispatch(baseActions.showToast('Failed to remove media...')));
+            .catch(() => dispatch(showToast('Failed to remove media...')));
     }
 };
 
-actions.update = ({ action, type, id }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const update = ({ action, type, id }: MediaActionProps): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'media', action: 'update', type, id })
-            .then((): void => {
-                dispatch(actions.get({ action }));
-                dispatch(actions.setItem({ type, id, override: true }));
-                dispatch(baseActions.showToast('Media successfully updated!'));
+            .then(() => {
+                dispatch(getMedia({ action }));
+                dispatch(setItem({ type, id, override: true }));
+                dispatch(showToast('Media successfully updated!'));
             })
-            .catch((): void => dispatch(baseActions.showToast('Failed to update media...')));
+            .catch(() => dispatch(showToast('Failed to update media...')));
     }
 };
 
-actions.setFavourite = makeAction(
-    'MEDIA/SET_FAV',
-    (state, { payload: { action, id, set } }): MediaState => ({
-        ...state,
-        item: state.item ? { ...state.item, favourite: set } : null,
-        [action]: {
-            ...state[action],
-            results: state[action].results.map(
-                (item: MediaItemEntry): MediaItemEntry => {
-                    if (item.id === id) {
-                        item.favourite = set;
-                    }
-                    return item;
-                }
-            ),
-        },
-    })
-);
-
-actions.favourite = ({ action, type, id, set }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const favourite = ({ action, type, id, set }: MediaActionProps): ThunkResult<Promise<void>> => async (
+    dispatch,
+    getState
+): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'media', action: 'favourite', type, id, set })
-            .then((): void => {
+            .then(() => {
                 dispatch(actions.setFavourite({ action, id, set }));
-                dispatch(baseActions.showToast(`${set ? 'Added to' : 'Removed from'} favourites!`));
+                dispatch(showToast(`${set ? 'Added to' : 'Removed from'} favourites!`));
             })
-            .catch((): void => dispatch(baseActions.showToast('Could not set favourite...')));
+            .catch(() => dispatch(showToast('Could not set favourite...')));
     }
 };
 
-actions.setSeen = makeAction(
-    'MEDIA/SET_SEEN',
-    (state, { payload: { action, id, set } }): MediaState => ({
-        ...state,
-        item: state.item ? { ...state.item, seen: set } : state.item,
-        [action]: {
-            ...state[action],
-            results: state[action].results.map(
-                (item: MediaItemEntry): MediaItemEntry => {
-                    if (item.id === id) {
-                        item.seen = set;
-                    }
-                    return item;
-                }
-            ),
-        },
-    })
-);
-
-actions.seen = ({ action, type, id, set }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const seen = ({ action, type, id, set }: MediaActionProps): ThunkResult<Promise<void>> => async (
+    dispatch,
+    getState
+): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'media', action: 'seen', type, id, set })
-            .then((): void => {
+            .then(() => {
                 dispatch(actions.setSeen({ action, id, set }));
-                dispatch(baseActions.showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
+                dispatch(showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
             })
-            .catch((): void => dispatch(baseActions.showToast('Could not set seen...')));
+            .catch(() => dispatch(showToast('Could not set seen...')));
     }
 };
 
-actions.setEpisodeSeen = makeAction(
-    'MEDIA/SET_EPISODE_SEEN',
-    (state, { payload: { seasonId, episodeId, set } }): MediaState => {
-        const item = {
-            ...state.item,
-            seasons: state.item.seasons.map(
-                (season: MediaSeasonEntry): MediaSeasonEntry => ({
-                    ...season,
-                    episodes: season.episodes.map(
-                        (episode: MediaEpisodeEntry): MediaEpisodeEntry => ({
-                            ...episode,
-                            seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
-                        })
-                    ),
-                })
-            ),
-        };
-        return { ...state, item };
-    }
-);
-
-actions.seenEpisode = ({ id, set }: MediaActionProps): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const seenEpisode = ({ id, set }: MediaActionProps): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'media', action: 'seen', type: 'episode', id, set })
-            .then((): void => {
+            .then(() => {
                 dispatch(actions.setEpisodeSeen({ episodeId: id, set }));
-                dispatch(baseActions.showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
+                dispatch(showToast(`Set as ${set ? 'seen' : 'unseen'}!`));
             })
-            .catch((): void => dispatch(baseActions.showToast('Could not set seen...')));
+            .catch(() => dispatch(showToast('Could not set seen...')));
     }
 };
 
-actions.seenEpisodes = (seasonId: number): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const seenEpisodes = (seasonId: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'media', action: 'seen', type: 'season', id: seasonId, set: true })
-            .then((): void => {
+            .then(() => {
                 dispatch(actions.setEpisodeSeen({ seasonId, set: true }));
-                dispatch(baseActions.showToast('All episodes set as seen'));
+                dispatch(showToast('All episodes set as seen'));
             })
-            .catch((): void => dispatch(baseActions.showToast('Could not set seen...')));
+            .catch(() => dispatch(showToast('Could not set seen...')));
     }
 };
 
-actions.goToIMDb = ({ type, id }: MediaActionProps): AsyncAction => async (dispatch): Promise<void> =>
+export const goToIMDb = ({ type, id }: MediaActionProps): ThunkResult<Promise<void>> => async (dispatch): Promise<void> =>
     await load({ service: 'media', action: 'external', type, id })
-        .then((response): void => {
+        .then(response => {
             if (response) {
                 const win = window.open(`https://www.imdb.com/title/${response}`, '_blank');
                 win ? win.focus() : undefined;
             } else {
-                dispatch(baseActions.showToast('No external ID found...'));
+                dispatch(showToast('No external ID found...'));
             }
         })
-        .catch((): void => dispatch(baseActions.showToast('Failed to get external ID...')));
+        .catch(() => dispatch(showToast('Failed to get external ID...')));
 
 export default actions;
 
-export const reducer = makeReducer(actions);
+export const reducer = makeReducer<MediaState>(actions);

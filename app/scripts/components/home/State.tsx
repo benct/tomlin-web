@@ -1,19 +1,19 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiInformationOutline, mdiLoading } from '@mdi/js';
 
-import { DefaultState, HomeState } from '../../interfaces';
+import { DefaultState, HomeState, ThunkDispatchProp } from '../../interfaces';
 
-import actions from '../../actions/base';
+import { getHomeState } from '../../actions/base';
 
 import Time from './Time';
 
 type HomeStateProps = HomeState & Pick<DefaultState, 'loading'>;
 
-class State extends React.PureComponent<DispatchProp & HomeStateProps> {
+class State extends React.PureComponent<HomeStateProps & ThunkDispatchProp> {
     componentDidMount(): void {
-        this.props.dispatch(actions.getHomeState());
+        this.props.dispatch(getHomeState());
     }
 
     static renderState(id: string, value?: number, text?: string, unit = '°C'): React.ReactElement {

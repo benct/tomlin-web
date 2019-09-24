@@ -1,12 +1,13 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import authActions from '../actions/auth';
+import { ThunkDispatchProp } from '../interfaces';
+import { logout } from '../actions/auth';
 
-class Logout extends React.PureComponent<RouteComponentProps & DispatchProp> {
+class Logout extends React.PureComponent<RouteComponentProps & ThunkDispatchProp> {
     componentDidMount(): void {
-        this.props.dispatch(authActions.logout());
+        this.props.dispatch(logout());
 
         window.setTimeout((): void => this.props.history.push('/'), 3000);
     }

@@ -1,12 +1,11 @@
-import makeAction from '../redux/makeAction';
-import makeReducer, { Actions } from '../redux/makeReducer';
+import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
-import { AsyncAction } from '../interfaces';
+import { AdminState, ThunkResult } from '../interfaces';
 
 import { load, post } from '../util/api';
-import baseActions from './base';
+import { showToast } from './base';
 
-const actions: Actions = {};
+const actions: ActionsObject<AdminState> = {};
 
 actions.setStats = makeAction('ADMIN/SET_STATS', 'stats');
 
@@ -18,122 +17,125 @@ actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
 
 actions.setNotes = makeAction('ADMIN/SET_NOTES', 'notes');
 
-actions.getStats = (): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await post({ service: 'db', action: 'stats' })
-            .then((response): void => dispatch(actions.setStats(response || {})))
-            .catch((): void => dispatch(baseActions.showToast('Could not fetch stats...')));
+            .then(response => dispatch(actions.setStats(response || {})))
+            .catch(() => dispatch(showToast('Could not fetch stats...')));
     }
 };
 
-actions.getVisits = (): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const getVisits = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'db', action: 'visits' })
-            .then((response): void => dispatch(actions.setVisits(response || [])))
-            .catch((): void => dispatch(baseActions.showToast('Could not fetch visiting data...')));
+            .then(response => dispatch(actions.setVisits(response || [])))
+            .catch(() => dispatch(showToast('Could not fetch visiting data...')));
     }
 };
 
-actions.getLogs = (count: number): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const getLogs = (count = 25): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'db', action: 'logs', count })
-            .then((response): void => dispatch(actions.setLogs(response || [])))
-            .catch((): void => dispatch(baseActions.showToast('Could not fetch log data...')));
+            .then(response => dispatch(actions.setLogs(response || [])))
+            .catch(() => dispatch(showToast('Could not fetch log data...')));
     }
 };
 
-actions.clearLogs = (): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const clearLogs = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'db', action: 'clear' })
-            .then((response): void => (response ? dispatch(actions.setLogs([])) : null))
-            .catch((): void => dispatch(baseActions.showToast('Could not clear log data...')));
+            .then(response => (response ? dispatch(actions.setLogs([])) : null))
+            .catch(() => dispatch(showToast('Could not clear log data...')));
     }
 };
 
-actions.updatePosters = (): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const updatePosters = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'media', action: 'images', overwrite: false })
-            .then((response): void => dispatch(baseActions.showToast(`Successfully updated ${response} posters!`)))
-            .catch((): void => dispatch(baseActions.showToast('Failed to update posters...')));
+            .then(response => dispatch(showToast(`Successfully updated ${response} posters!`)))
+            .catch(() => dispatch(showToast('Failed to update posters...')));
     }
 };
 
-actions.updateMedia = (type: string, count: number): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const updateMedia = (type: string, count = 10): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'media', action: 'update', type, count })
-            .then((response): void => dispatch(baseActions.showToast(`Successfully updated ${response} items!`)))
-            .catch((): void => dispatch(baseActions.showToast('Failed to update media content...')));
+            .then(response => dispatch(showToast(`Successfully updated ${response} items!`)))
+            .catch(() => dispatch(showToast('Failed to update media content...')));
     }
 };
 
-actions.updateIata = (type: string): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const updateIata = (type: string): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'iata', action: type })
-            .then((response): void => dispatch(baseActions.showToast(`Successfully updated ${response} entries!`)))
-            .catch((): void => dispatch(baseActions.showToast('Failed to update IATA entries...')));
+            .then(response => dispatch(showToast(`Successfully updated ${response} entries!`)))
+            .catch(() => dispatch(showToast('Failed to update IATA entries...')));
     }
 };
 
-actions.getNotes = (): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const getNotes = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'notes', action: 'get' })
-            .then((response): void => dispatch(actions.setNotes(response || [])))
-            .catch((): void => dispatch(baseActions.showToast('Could not fetch notes...')));
+            .then(response => dispatch(actions.setNotes(response || [])))
+            .catch(() => dispatch(showToast('Could not fetch notes...')));
     }
 };
 
-actions.saveNote = (id: number, title: string, content: string): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const saveNote = (id: number, title: string, content: string): ThunkResult<Promise<void>> => async (
+    dispatch,
+    getState
+): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'notes', action: 'store', id, title, content })
-            .then((): void => {
-                dispatch(baseActions.showToast('Successfully saved note!'));
-                dispatch(actions.getNotes());
+            .then(() => {
+                dispatch(getNotes());
+                dispatch(showToast('Successfully saved note!'));
             })
-            .catch((): void => dispatch(baseActions.showToast('Could not store note...')));
+            .catch(() => dispatch(showToast('Could not store note...')));
     }
 };
 
-actions.deleteNote = (id: number): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const deleteNote = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm(`Are you sure you want to delete this note?`)) {
         await load({ service: 'notes', action: 'delete', id })
-            .then((): void => {
-                dispatch(baseActions.showToast('Successfully deleted note!'));
-                dispatch(actions.getNotes());
+            .then(() => {
+                dispatch(getNotes());
+                dispatch(showToast('Successfully deleted note!'));
             })
-            .catch((): void => dispatch(baseActions.showToast('Could not delete note...')));
+            .catch(() => dispatch(showToast('Could not delete note...')));
     }
 };
 
-actions.getFlights = (): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const getFlights = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'iata', action: 'flights' })
-            .then((response): void => dispatch(actions.setFlights(response || [])))
-            .catch((): void => dispatch(baseActions.showToast('Could not fetch flights data...')));
+            .then(response => dispatch(actions.setFlights(response || [])))
+            .catch(() => dispatch(showToast('Could not fetch flights data...')));
     }
 };
 
-actions.saveFlight = (data: object): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const saveFlight = (data: object): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load({ service: 'iata', action: 'flight', ...data })
-            .then((): void => {
-                dispatch(baseActions.showToast('Successfully saved flight!'));
-                dispatch(actions.getFlights());
+            .then(() => {
+                dispatch(getFlights());
+                dispatch(showToast('Successfully saved flight!'));
             })
-            .catch((): void => dispatch(baseActions.showToast('Could not save flight...')));
+            .catch(() => dispatch(showToast('Could not save flight...')));
     }
 };
 
-actions.deleteFlight = (id: number): AsyncAction => async (dispatch, getState): Promise<void> => {
+export const deleteFlight = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm(`Are you sure you want to delete this flight?`)) {
         await load({ service: 'iata', action: 'delete', id })
-            .then((): void => {
-                dispatch(baseActions.showToast('Successfully deleted flight!'));
-                dispatch(actions.getFlights());
+            .then(() => {
+                dispatch(getFlights());
+                dispatch(showToast('Successfully deleted flight!'));
             })
-            .catch((): void => dispatch(baseActions.showToast('Could not delete flight...')));
+            .catch(() => dispatch(showToast('Could not delete flight...')));
     }
 };
 
 export default actions;
 
-export const reducer = makeReducer(actions);
+export const reducer = makeReducer<AdminState>(actions);

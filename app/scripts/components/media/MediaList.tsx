@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Action } from 'redux';
 import { RouteComponentProps } from 'react-router';
 
-import mediaActions from '../../actions/media';
+import { DefaultState, MediaItemEntry, MediaResults, MediaType, ThunkDispatchFunc } from '../../interfaces';
+
+import mediaActions, { favourite, getMedia, remove, seen, setItem, update } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
-import { DefaultState, MediaItemEntry, MediaResults, MediaType } from '../../interfaces';
 
 import Pagination from '../page/Pagination';
 import MediaModal from './MediaModal';
@@ -162,27 +163,27 @@ const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<Medi
     page: Number(ownProps.match.params.page || 1),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatchFunc, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListDispatchProps => {
     const { type, page } = ownProps.match.params;
     return {
         loadMedia: (query?: string): void => {
-            dispatch(mediaActions.get({ action: type, query, page: page || 1 }));
+            dispatch(getMedia({ action: type, query, page: Number(page || 1) }));
             window.scrollTo(0, 0);
         },
         setSort: (sort: string): void => {
             dispatch(mediaActions.setSort(sort));
-            dispatch(mediaActions.get({ action: type, sort, page: page || 1 }));
+            dispatch(getMedia({ action: type, sort, page: Number(page || 1) }));
         },
-        setPagination: (page: number): void => dispatch(paginationActions.set(page)),
-        resetPagination: (): void => dispatch(paginationActions.reset()),
-        show: (itemType: string, id: number): void => dispatch(mediaActions.setItem({ type: itemType || type, id })),
-        hide: (): void => dispatch(mediaActions.hideModal()),
-        update: (itemType: string, id: number): void => dispatch(mediaActions.update({ action: type, type: itemType || type, id })),
-        remove: (itemType: string, id: number): void => dispatch(mediaActions.remove({ action: type, type: itemType || type, id })),
-        setSeen: (itemType: string, id: number, seen: boolean): void =>
-            dispatch(mediaActions.seen({ action: type, type: itemType || type, id, set: !seen })),
-        setFavourite: (itemType: string, id: number, favourite: boolean): void =>
-            dispatch(mediaActions.favourite({ action: type, type: itemType || type, id, set: !favourite })),
+        setPagination: (page: number): Action => dispatch(paginationActions.set(page)),
+        resetPagination: (): Action => dispatch(paginationActions.reset()),
+        show: (itemType: string, id: number): Promise<void> => dispatch(setItem({ type: itemType || type, id })),
+        hide: (): Action => dispatch(mediaActions.hideModal()),
+        update: (itemType: string, id: number): Promise<void> => dispatch(update({ action: type, type: itemType || type, id })),
+        remove: (itemType: string, id: number): Promise<void> => dispatch(remove({ action: type, type: itemType || type, id })),
+        setSeen: (itemType: string, id: number, isSeen: boolean): Promise<void> =>
+            dispatch(seen({ action: type, type: itemType || type, id, set: !isSeen })),
+        setFavourite: (itemType: string, id: number, isFavourite: boolean): Promise<void> =>
+            dispatch(favourite({ action: type, type: itemType || type, id, set: !isFavourite })),
     };
 };
 

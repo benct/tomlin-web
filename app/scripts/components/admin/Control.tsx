@@ -1,20 +1,20 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 
-import { DefaultState, AdminStats } from '../../interfaces';
+import { AdminStats, DefaultState, ThunkDispatchProp } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
-import adminActions from '../../actions/admin';
+import { clearLogs, getLogs, getStats, updateIata, updateMedia, updatePosters } from '../../actions/admin';
 
 interface ControlProps {
     stats: AdminStats;
 }
 
-class Control extends React.PureComponent<ControlProps & DispatchProp> {
+class Control extends React.PureComponent<ControlProps & ThunkDispatchProp> {
     logCount: React.RefObject<HTMLSelectElement>;
     updateMovieCount: React.RefObject<HTMLSelectElement>;
     updateTvCount: React.RefObject<HTMLSelectElement>;
 
-    constructor(props: ControlProps & DispatchProp) {
+    constructor(props: ControlProps & ThunkDispatchProp) {
         super(props);
 
         this.logCount = React.createRef();
@@ -24,12 +24,16 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
 
     componentDidMount(): void {
         if (!this.props.stats.log) {
-            this.props.dispatch(adminActions.getStats());
+            this.props.dispatch(getStats());
         }
     }
 
     formatStat(key: string): string {
         return this.props.stats[key] !== undefined ? formatThousands(this.props.stats[key]) : '-';
+    }
+
+    static getInputValue(field: HTMLSelectElement | null): number | undefined {
+        return !!field ? Number(field.value) : undefined;
     }
 
     static renderOptions(values: number[]): React.ReactElement[] {
@@ -71,7 +75,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                 <div className="admin-list text text-left">
                     <span className="truncate">Import missing media poster images</span>
                     <span />
-                    <button className="input input-small" onClick={(): void => this.props.dispatch(adminActions.updatePosters())}>
+                    <button className="input input-small" onClick={(): Promise<void> => this.props.dispatch(updatePosters())}>
                         Run
                     </button>
                     <span className="truncate">Update number of stored movies</span>
@@ -80,10 +84,8 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     </select>
                     <button
                         className="input input-small"
-                        onClick={(): void =>
-                            this.props.dispatch(
-                                adminActions.updateMedia('movie', this.updateMovieCount.current && this.updateMovieCount.current.value)
-                            )
+                        onClick={(): Promise<void> =>
+                            this.props.dispatch(updateMedia('movie', Control.getInputValue(this.updateMovieCount.current)))
                         }>
                         Run
                     </button>
@@ -93,10 +95,8 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     </select>
                     <button
                         className="input input-small"
-                        onClick={(): void =>
-                            this.props.dispatch(
-                                adminActions.updateMedia('tv', this.updateTvCount.current && this.updateTvCount.current.value)
-                            )
+                        onClick={(): Promise<void> =>
+                            this.props.dispatch(updateMedia('tv', Control.getInputValue(this.updateTvCount.current)))
                         }>
                         Run
                     </button>
@@ -105,12 +105,12 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                 <div className="admin-list text text-left">
                     <span className="truncate">Update IATA airline entries</span>
                     <span />
-                    <button className="input input-small" onClick={(): void => this.props.dispatch(adminActions.updateIata('airlines'))}>
+                    <button className="input input-small" onClick={(): Promise<void> => this.props.dispatch(updateIata('airlines'))}>
                         Run
                     </button>
                     <span className="truncate">Update IATA location entries</span>
                     <span />
-                    <button className="input input-small" onClick={(): void => this.props.dispatch(adminActions.updateIata('locations'))}>
+                    <button className="input input-small" onClick={(): Promise<void> => this.props.dispatch(updateIata('locations'))}>
                         Run
                     </button>
                 </div>
@@ -118,7 +118,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                 <div className="admin-list text text-left">
                     <span className="truncate">Clear all log messages</span>
                     <span />
-                    <button className="input input-small" onClick={(): void => this.props.dispatch(adminActions.clearLogs())}>
+                    <button className="input input-small" onClick={(): Promise<void> => this.props.dispatch(clearLogs())}>
                         Clear
                     </button>
                     <span className="truncate">Default number of log messages</span>
@@ -127,9 +127,7 @@ class Control extends React.PureComponent<ControlProps & DispatchProp> {
                     </select>
                     <button
                         className="input input-small"
-                        onClick={(): void =>
-                            this.props.dispatch(adminActions.getLogs(this.logCount.current && this.logCount.current.value))
-                        }>
+                        onClick={(): Promise<void> => this.props.dispatch(getLogs(Control.getInputValue(this.logCount.current)))}>
                         Load
                     </button>
                 </div>

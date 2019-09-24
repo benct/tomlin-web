@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Action } from 'redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { DefaultState } from '../interfaces';
+import { DefaultState, ThunkDispatchFunc } from '../interfaces';
 
 import actions from '../actions/base';
-import authActions from '../actions/auth';
+import { validate } from '../actions/auth';
 
 import SuspendedRoute from './route/Suspended';
 import Navigation from './page/Navigation';
@@ -90,10 +90,10 @@ const mapStateToProps = (state: DefaultState): AppStateProps => ({
     loading: state.loadingOverlay,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): AppDispatchProps => ({
-    validate: (): void => dispatch(authActions.validate()),
-    toggleMenu: (): void => dispatch(actions.toggleMenu()),
-    toggleIcons: (): void => dispatch(actions.toggleIcons()),
+const mapDispatchToProps = (dispatch: ThunkDispatchFunc): AppDispatchProps => ({
+    validate: (): Promise<void> => dispatch(validate()),
+    toggleMenu: (): Action => dispatch(actions.toggleMenu()),
+    toggleIcons: (): Action => dispatch(actions.toggleIcons()),
 });
 
 export default connect(

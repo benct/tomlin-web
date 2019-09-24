@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import { Action } from 'redux';
 
 import debounce from './debounce';
 import actions from '../actions/base';
@@ -7,7 +8,7 @@ import store from '../redux/store';
 const baseUrl = 'https://tomlin.no';
 const baseApiUrl = 'https://api.tomlin.no';
 
-const delayedLoading = debounce((value: boolean): void => store.dispatch(actions.setLoadingOverlay(value)), 150);
+const delayedLoading = debounce((value: boolean): Action => store.dispatch(actions.setLoadingOverlay(value)), 150);
 
 const checkStatus = (response: Response): Promise<Response> =>
     response.ok ? Promise.resolve(response) : Promise.reject(response.statusText);

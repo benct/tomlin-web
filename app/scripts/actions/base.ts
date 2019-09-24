@@ -1,19 +1,15 @@
-import makeAction from '../redux/makeAction';
-import makeReducer, { Actions } from '../redux/makeReducer';
+import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
-import { AsyncAction, DefaultState } from '../interfaces';
+import { DefaultState, ThunkResult } from '../interfaces';
 
 import quotes from '../util/quotes';
 import { get } from '../util/api';
 
-const actions: Actions = {};
+const actions: ActionsObject<DefaultState> = {};
 
-actions.toggleIcons = makeAction(
-    'BASE/TOGGLE_ICONS',
-    (state: DefaultState): DefaultState => ({ ...state, circleIcons: !state.circleIcons })
-);
+actions.toggleIcons = makeAction('BASE/TOGGLE_ICONS', state => ({ ...state, circleIcons: !state.circleIcons }));
 
-actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', (state: DefaultState): DefaultState => ({ ...state, showMenu: !state.showMenu }));
+actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', state => ({ ...state, showMenu: !state.showMenu }));
 
 actions.setLoading = makeAction('BASE/SET_LOADING', 'loading');
 
@@ -21,34 +17,31 @@ actions.setLoadingOverlay = makeAction('BASE/SET_LOADING_OVERLAY', 'loadingOverl
 
 actions.setToast = makeAction('BASE/SET_TOAST', 'toast');
 
-actions.showToast = (payload: string): AsyncAction => async (dispatch): Promise<void> => {
-    dispatch(actions.setToast(payload));
-
-    await window.setTimeout((): void => dispatch(actions.setToast(null)), 3000);
-};
-
-actions.refreshQuote = makeAction(
-    'BASE/REFRESH_QUOTE',
-    (state: DefaultState): DefaultState => ({
-        ...state,
-        quote: {
-            text: quotes[state.quote.current][0],
-            author: quotes[state.quote.current].length > 1 ? quotes[state.quote.current][1] : null,
-            current: state.quote.current === quotes.length - 1 ? 0 : state.quote.current + 1,
-        },
-    })
-);
+actions.refreshQuote = makeAction('BASE/REFRESH_QUOTE', state => ({
+    ...state,
+    quote: {
+        text: quotes[state.quote.current][0],
+        author: quotes[state.quote.current].length > 1 ? quotes[state.quote.current][1] : null,
+        current: state.quote.current === quotes.length - 1 ? 0 : state.quote.current + 1,
+    },
+}));
 
 actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 
-actions.getHomeState = (): AsyncAction => async (dispatch): Promise<void> => {
+export const showToast = (payload: string): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+    dispatch(actions.setToast(payload));
+
+    await window.setTimeout(() => dispatch(actions.setToast(null)), 3000);
+};
+
+export const getHomeState = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(actions.setLoading(true));
 
     await get({ service: 'hass', action: 'state' })
-        .then((response): void => dispatch(actions.setHomeState(response)))
-        .finally((): void => dispatch(actions.setLoading(false)));
+        .then(response => dispatch(actions.setHomeState(response)))
+        .finally(() => dispatch(actions.setLoading(false)));
 };
 
 export default actions;
 
-export const reducer = makeReducer(actions);
+export const reducer = makeReducer<DefaultState>(actions);

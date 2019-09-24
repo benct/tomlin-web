@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { Action } from 'redux';
+import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
+import { DefaultState, ThunkDispatchProp } from '../../interfaces';
 import actions from '../../actions/base';
-import { DefaultState } from '../../interfaces';
 
 interface NavigationProps {
     type?: string;
@@ -23,7 +24,7 @@ export interface NavigationItem {
     hide?: boolean;
 }
 
-const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationState & DispatchProp> = (props): React.ReactElement => {
+const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationState & ThunkDispatchProp> = (props): React.ReactElement => {
     const { type, data, isLoggedIn, showMenu, dispatch } = props;
 
     const menu = [
@@ -63,7 +64,7 @@ const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationSta
                 <nav
                     className="menu-wrap"
                     style={{ left: showMenu ? '0px' : '100%' }}
-                    onClick={(): void => dispatch(actions.toggleMenu())}
+                    onClick={(): Action => dispatch(actions.toggleMenu())}
                     role="dialog">
                     <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
                         {menu.map(createLink)}

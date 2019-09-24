@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import Icon from '@mdi/react';
 import {
     mdiAlertCircleOutline,
@@ -14,17 +14,17 @@ import {
     mdiStarOutline,
 } from '@mdi/js';
 
-import { DefaultState, GitHubRepo, GitHubState } from '../../interfaces';
-import githubActions from '../../actions/github';
+import { DefaultState, GitHubRepo, GitHubState, ThunkDispatchProp } from '../../interfaces';
+import { getGitHubData } from '../../actions/github';
 
 import Loading from '../page/Loading';
 
 type GitHubProps = GitHubState & Pick<DefaultState, 'loading'>;
 
-class GitHub extends React.PureComponent<GitHubProps & DispatchProp> {
+class GitHub extends React.PureComponent<GitHubProps & ThunkDispatchProp> {
     componentDidMount(): void {
         if (!this.props.user) {
-            this.props.dispatch(githubActions.getGitHubData());
+            this.props.dispatch(getGitHubData());
         }
     }
 
@@ -90,7 +90,7 @@ class GitHub extends React.PureComponent<GitHubProps & DispatchProp> {
                                 <span className="text-smaller">Repositories</span>
                             </div>
                             <div className="github-count">
-                                <div className="monospace">{this.props.user.stars}</div>
+                                <div className="monospace">{this.props.stars}</div>
                                 <span className="text-smaller">Stargazers</span>
                             </div>
                             <div className="github-count">

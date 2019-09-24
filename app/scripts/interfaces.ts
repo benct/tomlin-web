@@ -1,5 +1,5 @@
-import { ThunkAction } from 'redux-thunk';
-import { AnyAction } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { Action, Dispatch } from 'redux';
 
 export interface DefaultState {
     showMenu: boolean;
@@ -40,6 +40,7 @@ export interface QuoteState {
 
 export interface GitHubState {
     user: GitHubUser | null;
+    stars: number;
     top: GitHubRepo[];
     featured: GitHubRepo[];
 }
@@ -51,7 +52,6 @@ export interface GitHubUser {
     repos: number;
     followers: number;
     following: number;
-    stars: number;
 }
 
 export interface GitHubRepo {
@@ -278,5 +278,8 @@ export interface PaginationState {
     consecutivePages: number[];
 }
 
-export type InitAction = ThunkAction<void, DefaultState, null, AnyAction>;
-export type AsyncAction = ThunkAction<Promise<void>, DefaultState, null, AnyAction>;
+export type ThunkResult<R> = ThunkAction<R, DefaultState, undefined, Action>;
+export type ThunkDispatchFunc = ThunkDispatch<DefaultState, undefined, Action>;
+export interface ThunkDispatchProp {
+    dispatch: Dispatch<Action> & ThunkDispatchFunc;
+}

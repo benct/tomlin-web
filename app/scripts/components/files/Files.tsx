@@ -1,11 +1,11 @@
 /* global File, FormData */
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiCloseCircleOutline, mdiCloudUploadOutline, mdiFolderPlusOutline, mdiFolderSyncOutline, mdiFolderUploadOutline } from '@mdi/js';
 
-import { DefaultState, FileItem, FilePreview } from '../../interfaces';
-import actions from '../../actions/files';
+import { DefaultState, FileItem, FilePreview, ThunkDispatchProp } from '../../interfaces';
+import fileActions, { changeDirectory, createDirectory, open, refresh, remove, rename, upload } from '../../actions/files';
 
 import FileList from './FileList';
 
@@ -19,11 +19,11 @@ interface FilesProps {
     uploading: boolean;
 }
 
-class Files extends React.Component<FilesProps & DispatchProp> {
+class Files extends React.Component<FilesProps & ThunkDispatchProp> {
     fileInput: React.RefObject<HTMLInputElement>;
     fileLabel: React.RefObject<HTMLLabelElement>;
 
-    constructor(props: FilesProps & DispatchProp) {
+    constructor(props: FilesProps & ThunkDispatchProp) {
         super(props);
 
         this.fileInput = React.createRef();
@@ -33,7 +33,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
     }
 
     componentDidMount(): void {
-        this.props.dispatch(actions.refresh());
+        this.props.dispatch(refresh());
 
         document.addEventListener('keyup', this.handleKeyboard, false);
     }
@@ -44,7 +44,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
 
     handleClick(item: FileItem): void {
         if (item.dir) {
-            this.props.dispatch(actions.changeDirectory(item.name));
+            this.props.dispatch(changeDirectory(item.name));
         } else if (item.preview) {
             this.previewFile(item);
         } else {
@@ -57,7 +57,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
 
         switch (event.keyCode) {
             case 8: // backspace
-                this.props.dispatch(actions.changeDirectory(PARENT_DIR));
+                this.props.dispatch(changeDirectory(PARENT_DIR));
                 break;
             case 13: // enter
                 if (this.props.focused !== null) {
@@ -69,16 +69,16 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                 break;
             case 38: // up
                 if (this.props.focused === null) {
-                    this.props.dispatch(actions.setFocus(0));
+                    this.props.dispatch(fileActions.setFocus(0));
                 } else if (this.props.focused > 0) {
-                    this.props.dispatch(actions.setFocus(this.props.focused - 1));
+                    this.props.dispatch(fileActions.setFocus(this.props.focused - 1));
                 }
                 break;
             case 40: // down
                 if (this.props.focused === null) {
-                    this.props.dispatch(actions.setFocus(0));
+                    this.props.dispatch(fileActions.setFocus(0));
                 } else if (this.props.focused < this.props.content.length - 1) {
-                    this.props.dispatch(actions.setFocus(this.props.focused + 1));
+                    this.props.dispatch(fileActions.setFocus(this.props.focused + 1));
                 }
                 break;
         }
@@ -97,7 +97,7 @@ class Files extends React.Component<FilesProps & DispatchProp> {
             }
         }
 
-        this.props.dispatch(actions.upload(formData));
+        this.props.dispatch(upload(formData));
 
         if (this.fileInput.current && this.fileLabel.current) {
             this.fileInput.current.value = '';
@@ -123,14 +123,14 @@ class Files extends React.Component<FilesProps & DispatchProp> {
 
     previewFile(item: FileItem): void {
         if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
-            this.props.dispatch(actions.setPreview({ src: item.href, image: true }));
+            this.props.dispatch(fileActions.setPreview({ src: item.href, image: true }));
         } else {
-            this.props.dispatch(actions.open(item));
+            this.props.dispatch(open(item));
         }
     }
 
     closePreview(): void {
-        this.props.dispatch(actions.setPreview(null));
+        this.props.dispatch(fileActions.setPreview(null));
     }
 
     render(): React.ReactElement {
@@ -139,15 +139,15 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                 <div className="file-table-header">
                     <button
                         className="button-icon"
-                        onClick={(): void => this.props.dispatch(actions.changeDirectory(PARENT_DIR))}
+                        onClick={(): void => this.props.dispatch(changeDirectory(PARENT_DIR))}
                         disabled={this.props.cwd === ''}>
                         <Icon path={mdiFolderUploadOutline} size="28px" title="Parent directory" />
                     </button>
                     <div className="text-right">
-                        <button className="button-icon mrm" onClick={(): void => this.props.dispatch(actions.createDirectory())}>
+                        <button className="button-icon mrm" onClick={(): Promise<void> => this.props.dispatch(createDirectory())}>
                             <Icon path={mdiFolderPlusOutline} size="28px" title="New directory" />
                         </button>
-                        <button className="button-icon" onClick={(): void => this.props.dispatch(actions.refresh())}>
+                        <button className="button-icon" onClick={(): Promise<void> => this.props.dispatch(refresh())}>
                             <Icon path={mdiFolderSyncOutline} size="28px" title="Refresh content" />
                         </button>
                     </div>
@@ -156,8 +156,8 @@ class Files extends React.Component<FilesProps & DispatchProp> {
                     content={this.props.content}
                     focused={this.props.focused}
                     handleClick={this.handleClick.bind(this)}
-                    handleRename={(item: FileItem): void => this.props.dispatch(actions.rename(item))}
-                    handleDelete={(item: FileItem): void => this.props.dispatch(actions.delete(item))}
+                    handleRename={(item: FileItem): Promise<void> => this.props.dispatch(rename(item))}
+                    handleDelete={(item: FileItem): Promise<void> => this.props.dispatch(remove(item))}
                 />
                 <div className="text-center">
                     <label htmlFor="file" className="color-primary pointer">

@@ -1,17 +1,19 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 
-import { AuthState, DefaultState } from '../interfaces';
-import authActions from '../actions/auth';
+import { AuthState, DefaultState, ThunkDispatchProp } from '../interfaces';
+import { login } from '../actions/auth';
 
 import Loading from './page/Loading';
 
-class Login extends React.PureComponent<RouteComponentProps & AuthState & DispatchProp> {
+type LoginProps = RouteComponentProps & AuthState & ThunkDispatchProp;
+
+class Login extends React.PureComponent<LoginProps> {
     username: React.RefObject<HTMLInputElement>;
     password: React.RefObject<HTMLInputElement>;
 
-    constructor(props: RouteComponentProps & AuthState & DispatchProp) {
+    constructor(props: LoginProps) {
         super(props);
 
         this.username = React.createRef();
@@ -24,7 +26,7 @@ class Login extends React.PureComponent<RouteComponentProps & AuthState & Dispat
         const user = (this.username.current && this.username.current.value) || '';
         const pass = (this.password.current && this.password.current.value) || '';
 
-        this.props.dispatch(authActions.login({ user, pass }));
+        this.props.dispatch(login({ user, pass }));
     }
 
     render(): React.ReactNode {

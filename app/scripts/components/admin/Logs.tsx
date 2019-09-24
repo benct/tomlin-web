@@ -1,17 +1,17 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 
-import { DefaultState, Log } from '../../interfaces';
-import adminActions from '../../actions/admin';
+import { DefaultState, Log, ThunkDispatchProp } from '../../interfaces';
+import { getLogs } from '../../actions/admin';
 
 interface LogProps {
     logs: Log[];
 }
 
-class Logs extends React.PureComponent<LogProps & DispatchProp> {
+class Logs extends React.PureComponent<LogProps & ThunkDispatchProp> {
     componentDidMount(): void {
         if (!this.props.logs.length) {
-            this.props.dispatch(adminActions.getLogs(25));
+            this.props.dispatch(getLogs(25));
         }
     }
 

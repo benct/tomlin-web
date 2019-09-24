@@ -1,71 +1,71 @@
-import makeAction from '../redux/makeAction';
-import makeReducer, { Actions } from '../redux/makeReducer';
+import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
-import { AsyncAction, GitHubRepo, GitHubState } from '../interfaces';
+import { GitHubRepo, GitHubState, ThunkResult } from '../interfaces';
 
 import { externalGet } from '../util/api';
-import baseActions from './base';
+import baseActions, { showToast } from './base';
 
 const featured: string[] = ['tomlin-web', 'iata-utils', 'dotfiles'];
 
-const actions: Actions = {};
+const actions: ActionsObject<GitHubState> = {};
 
-actions.setGitHubUser = makeAction(
-    'BASE/SET_GITHUB_USER',
-    (state, { payload }): GitHubState => ({
+interface GitHubRepoResponse {
+    name: string;
+    html_url: string;
+    language: string;
+    forks_count: number;
+    stargazers_count: number;
+    has_issues: boolean;
+    open_issues_count: number;
+}
+
+actions.setGitHubUser = makeAction('BASE/SET_GITHUB_USER', (state, { payload }) => ({
+    ...state,
+    user: {
+        name: payload.login,
+        image: payload.avatar_url,
+        url: payload.html_url,
+        repos: payload.public_repos,
+        followers: payload.followers,
+        following: payload.following,
+    },
+}));
+
+actions.setGitHubRepos = makeAction('BASE/SET_GITHUB_REPOS', (state, { payload }) => {
+    const repositories: GitHubRepo[] = payload.map(
+        (repo: GitHubRepoResponse): GitHubRepo => ({
+            name: repo.name,
+            url: repo.html_url,
+            language: repo.language,
+            forks: repo.forks_count,
+            stars: repo.stargazers_count,
+            issues: repo.has_issues ? repo.open_issues_count : null,
+        })
+    );
+
+    return {
         ...state,
-        user: {
-            name: payload.login,
-            image: payload.avatar_url,
-            url: payload.html_url,
-            repos: payload.public_repos,
-            followers: payload.followers,
-            following: payload.following,
-        },
-    })
-);
+        stars: repositories.map((repo: GitHubRepo): number => repo.stars).reduce((a: number, b: number): number => a + b, 0),
+        top: repositories
+            .slice()
+            .sort((a: GitHubRepo, b: GitHubRepo): number => b.stars - a.stars)
+            .slice(0, 3),
+        featured: repositories.filter((repo: GitHubRepo): boolean => featured.includes(repo.name)),
+    };
+});
 
-actions.setGitHubRepos = makeAction(
-    'BASE/SET_GITHUB_REPOS',
-    (state, { payload }): GitHubState => {
-        const repositories: GitHubRepo[] = payload.map(
-            (repo: any): GitHubRepo => ({
-                name: repo.name,
-                url: repo.html_url,
-                language: repo.language,
-                forks: repo.forks_count,
-                stars: repo.stargazers_count,
-                issues: repo.has_issues ? repo.open_issues_count : null,
-            })
-        );
-
-        return {
-            ...state,
-            user: {
-                ...state.user,
-                stars: repositories.map((repo: GitHubRepo): number => repo.stars).reduce((a: number, b: number): number => a + b, 0),
-            },
-            top: repositories
-                .slice()
-                .sort((a: GitHubRepo, b: GitHubRepo): number => b.stars - a.stars)
-                .slice(0, 3),
-            featured: repositories.filter((repo: GitHubRepo): boolean => featured.includes(repo.name)),
-        };
-    }
-);
-
-actions.getGitHubData = (): AsyncAction => async (dispatch): Promise<void> => {
+export const getGitHubData = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(baseActions.setLoading(true));
 
     await externalGet('https://api.github.com/users/benct')
-        .then((data): void => dispatch(actions.setGitHubUser(data)))
-        .catch((): void => dispatch(baseActions.showToast('Could not load GitHub data...')))
-        .finally((): void => dispatch(baseActions.setLoading(false)));
+        .then(data => dispatch(actions.setGitHubUser(data)))
+        .catch(() => dispatch(showToast('Could not load GitHub data...')))
+        .finally(() => dispatch(baseActions.setLoading(false)));
     await externalGet('https://api.github.com/users/benct/repos')
-        .then((data): void => dispatch(actions.setGitHubRepos(data || [])))
-        .catch((): void => dispatch(baseActions.showToast('Could not load GitHub data...')));
+        .then(data => dispatch(actions.setGitHubRepos(data || [])))
+        .catch(() => dispatch(showToast('Could not load GitHub data...')));
 };
 
 export default actions;
 
-export const reducer = makeReducer(actions);
+export const reducer = makeReducer<GitHubState>(actions);
