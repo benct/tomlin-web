@@ -8,6 +8,7 @@ import {
     MediaSearchResults,
     MediaSeasonEntry,
     MediaState,
+    MediaType,
     ThunkResult,
 } from '../interfaces';
 
@@ -63,54 +64,70 @@ actions.removeExisting = makeAction('MEDIA/REMOVE_EXISTING', (state, { payload }
     existing: state.existing.filter((i: number): boolean => i !== payload),
 }));
 
-actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload: { action, id, set } }) => ({
-    ...state,
-    item: state.item ? { ...state.item, favourite: set } : null,
-    [action]: {
-        ...state[action],
-        results: state[action].results.map(
-            (item: MediaItemEntry): MediaItemEntry => {
-                if (item.id === id) {
-                    item.favourite = set;
-                }
-                return item;
-            }
-        ),
-    },
-}));
+actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload }) => {
+    const action: MediaType = payload.action;
+    const actionState: MediaResults | null = state[action];
+    const results: MediaItemEntry[] = actionState ? actionState.results : [];
 
-actions.setSeen = makeAction('MEDIA/SET_SEEN', (state, { payload: { action, id, set } }) => ({
-    ...state,
-    item: state.item ? { ...state.item, seen: set } : state.item,
-    [action]: {
-        ...state[action],
-        results: state[action].results.map(
-            (item: MediaItemEntry): MediaItemEntry => {
-                if (item.id === id) {
-                    item.seen = set;
+    return {
+        ...state,
+        item: state.item ? { ...state.item, favourite: payload.set } : null,
+        [action]: {
+            ...actionState,
+            results: results.map(
+                (item: MediaItemEntry): MediaItemEntry => {
+                    if (item.id === payload.id) {
+                        item.favourite = payload.set;
+                    }
+                    return item;
                 }
-                return item;
-            }
-        ),
-    },
-}));
+            ),
+        },
+    };
+});
+
+actions.setSeen = makeAction('MEDIA/SET_SEEN', (state, { payload }) => {
+    const action: MediaType = payload.action;
+    const actionState: MediaResults | null = state[action];
+    const results: MediaItemEntry[] = actionState ? actionState.results : [];
+
+    return {
+        ...state,
+        item: state.item ? { ...state.item, seen: payload.set } : state.item,
+        [action]: {
+            ...actionState,
+            results: results.map(
+                (item: MediaItemEntry): MediaItemEntry => {
+                    if (item.id === payload.id) {
+                        item.seen = payload.set;
+                    }
+                    return item;
+                }
+            ),
+        },
+    };
+});
 
 actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload: { seasonId, episodeId, set } }) => ({
     ...state,
-    item: {
-        ...state.item,
-        seasons: state.item.seasons.map(
-            (season: MediaSeasonEntry): MediaSeasonEntry => ({
-                ...season,
-                episodes: season.episodes.map(
-                    (episode: MediaEpisodeEntry): MediaEpisodeEntry => ({
-                        ...episode,
-                        seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
-                    })
-                ),
-            })
-        ),
-    },
+    item: state.item
+        ? {
+              ...state.item,
+              seasons:
+                  state.item.seasons &&
+                  state.item.seasons.map(
+                      (season: MediaSeasonEntry): MediaSeasonEntry => ({
+                          ...season,
+                          episodes: season.episodes.map(
+                              (episode: MediaEpisodeEntry): MediaEpisodeEntry => ({
+                                  ...episode,
+                                  seen: season.id === seasonId || episode.id === episodeId ? set : episode.seen,
+                              })
+                          ),
+                      })
+                  ),
+          }
+        : null,
 }));
 
 export const getMedia = ({ action, sort, page, query }: MediaActionProps): ThunkResult<Promise<void>> => async (
