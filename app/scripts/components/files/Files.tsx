@@ -1,4 +1,3 @@
-/* global File, FormData */
 import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '@mdi/react';
@@ -92,7 +91,7 @@ class Files extends React.Component<FilesProps & ThunkDispatchProp> {
 
         const formData = new FormData();
         for (const key in files) {
-            if (files.hasOwnProperty(key) && files[key] instanceof File) {
+            if (Object.prototype.hasOwnProperty.call(files, key) && files[key] instanceof File) {
                 formData.append(key, files[key]);
             }
         }

@@ -27,7 +27,7 @@ function query(data: DataObject = {}): string {
 function buildForm(data: DataObject, files?: FormData): FormData {
     const formData = files || new FormData();
     for (const key in data) {
-        if (data.hasOwnProperty(key) && typeof data[key] !== 'undefined' && data[key] !== null) {
+        if (Object.prototype.hasOwnProperty.call(data, key) && typeof data[key] !== 'undefined' && data[key] !== null) {
             formData.append(key, data[key]);
         }
     }

@@ -72,7 +72,7 @@ class Flights extends React.PureComponent<FlightProps & ThunkDispatchProp, Fligh
     }
 
     handleDelete(id?: string): void {
-        if (!!id) {
+        if (id) {
             this.props.dispatch(deleteFlight(+id));
 
             this.setState({ form: {}, showModal: false });

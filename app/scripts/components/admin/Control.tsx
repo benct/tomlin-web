@@ -33,7 +33,7 @@ class Control extends React.PureComponent<ControlProps & ThunkDispatchProp> {
     }
 
     static getInputValue(field: HTMLSelectElement | null): number | undefined {
-        return !!field ? Number(field.value) : undefined;
+        return field ? Number(field.value) : undefined;
     }
 
     static renderOptions(values: number[]): React.ReactElement[] {

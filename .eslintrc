@@ -15,6 +15,7 @@
     "@typescript-eslint"
   ],
   "extends": [
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
@@ -31,7 +32,7 @@
   },
   "settings": {
     "react": {
-      "version": "16.8"
+      "version": "16.10"
     }
   },
   "globals": {
@@ -43,7 +44,10 @@
     "window": true,
     "document": true,
     "console": true,
+    "fetch": true,
     "Promise": true,
+    "FormData": true,
+    "File": true,
     "confirm": true,
     "prompt": true
   }
