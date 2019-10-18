@@ -279,7 +279,9 @@ export interface PaginationState {
 }
 
 export type ThunkResult<R> = ThunkAction<R, DefaultState, undefined, Action>;
+
 export type ThunkDispatchFunc = ThunkDispatch<DefaultState, undefined, Action>;
+
 export interface ThunkDispatchProp {
     dispatch: Dispatch<Action> & ThunkDispatchFunc;
 }
