@@ -5,37 +5,24 @@ interface TimeProps {
     timeZone: string;
 }
 
-interface TimeState {
-    time: string;
-}
+const Time: React.FC<TimeProps> = ({ locale, timeZone }) => {
+    const now = (): string => new Date().toLocaleTimeString(locale, { timeZone });
 
-export default class Time extends React.PureComponent<TimeProps, TimeState> {
-    interval: number;
+    const [time, setTime] = React.useState<string>(now());
 
-    constructor(props: TimeProps) {
-        super(props);
+    const tick = (): void => {
+        setTime(now());
+    };
 
-        this.interval = 0;
+    React.useEffect(() => {
+        tick();
 
-        this.state = {
-            time: new Date().toLocaleTimeString(props.locale, { timeZone: props.timeZone }),
-        };
-    }
+        const interval = window.setInterval(tick, 1000);
 
-    componentDidMount(): void {
-        this.tick();
-        this.interval = window.setInterval(this.tick.bind(this), 1000);
-    }
+        return (): void => window.clearInterval(interval);
+    }, []);
 
-    componentWillUnmount(): void {
-        window.clearInterval(this.interval);
-    }
+    return <>{time}</>;
+};
 
-    tick(): void {
-        this.setState({ time: new Date().toLocaleTimeString(this.props.locale, { timeZone: this.props.timeZone }) });
-    }
-
-    render(): string {
-        return this.state.time;
-    }
-}
+export default React.memo(Time);

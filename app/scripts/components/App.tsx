@@ -33,55 +33,53 @@ interface AppDispatchProps {
     toggleIcons: () => void;
 }
 
-class App extends React.Component<AppStateProps & AppDispatchProps> {
-    componentDidMount(): void {
-        this.props.validate();
-    }
+const App: React.FC<AppStateProps & AppDispatchProps> = props => {
+    React.useEffect(() => {
+        props.validate();
+    }, []);
 
-    render(): React.ReactNode {
-        return (
-            <Router>
-                <React.StrictMode>
-                    <header>
-                        <h1 className="site-title no-select">Tomlin</h1>
-                        <Navigation type="simple" />
-                        <button className="menu-overlay button-blank hide-gt480" aria-label="Menu" onClick={this.props.toggleMenu}>
-                            &nbsp;
-                        </button>
-                    </header>
-                    <Navigation />
-                    <main>
-                        {this.props.loading ? (
-                            <div className="overlay overlay-loading">
-                                <div className="overlay-container shadow">
-                                    <div className="pac-man" />
-                                </div>
+    return (
+        <Router>
+            <React.StrictMode>
+                <header>
+                    <h1 className="site-title no-select">Tomlin</h1>
+                    <Navigation type="simple" />
+                    <button className="menu-overlay button-blank hide-gt480" aria-label="Menu" onClick={props.toggleMenu}>
+                        &nbsp;
+                    </button>
+                </header>
+                <Navigation />
+                <main>
+                    {props.loading ? (
+                        <div className="overlay overlay-loading">
+                            <div className="overlay-container shadow">
+                                <div className="pac-man" />
                             </div>
-                        ) : null}
-                        <Switch>
-                            <Route exact path="/" component={Home} />
-                            <Route path="/about" component={About} />
-                            <Route path="/logout" component={Logout} />
-                            <Route path="/login" component={Login} />
-                            <SuspendedRoute path="/media" component={Media} />
-                            <SuspendedRoute path="/admin" component={Admin} requireAuth />
-                            <Route render={(): React.ReactElement => <Error code={404} />} />
-                        </Switch>
-                    </main>
-                    <footer>
-                        <Social circle={this.props.circleIcons} />
-                        <div className="text color-light mtl">
-                            <span className="pointer no-select" onClick={this.props.toggleIcons} role="button" tabIndex={-1}>
-                                Ben Tomlin © 2019
-                            </span>
                         </div>
-                    </footer>
-                    {this.props.toast ? <div className="toast">{this.props.toast}</div> : null}
-                </React.StrictMode>
-            </Router>
-        );
-    }
-}
+                    ) : null}
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/about" component={About} />
+                        <Route path="/logout" component={Logout} />
+                        <Route path="/login" component={Login} />
+                        <SuspendedRoute path="/media" component={Media} />
+                        <SuspendedRoute path="/admin" component={Admin} requireAuth />
+                        <Route render={(): React.ReactElement => <Error code={404} />} />
+                    </Switch>
+                </main>
+                <footer>
+                    <Social circle={props.circleIcons} />
+                    <div className="text color-light mtl">
+                        <span className="pointer no-select" onClick={props.toggleIcons} role="button" tabIndex={-1}>
+                            Ben Tomlin © 2019
+                        </span>
+                    </div>
+                </footer>
+                {props.toast ? <div className="toast">{props.toast}</div> : null}
+            </React.StrictMode>
+        </Router>
+    );
+};
 
 const mapStateToProps = (state: DefaultState): AppStateProps => ({
     showMenu: state.showMenu,

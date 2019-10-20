@@ -10,69 +10,57 @@ import NotesModal from './NotesModal';
 
 interface NotesProps {
     notes?: Note[];
+    isLoggedIn: boolean;
 }
 
-interface NotesState {
-    showOverlay: boolean;
-    selected: Note | null;
-}
+const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, isLoggedIn, dispatch }) => {
+    const [showOverlay, setShowOverlay] = React.useState<boolean>(false);
+    const [selected, setSelected] = React.useState<Note>();
 
-class Notes extends React.PureComponent<NotesProps & ThunkDispatchProp, NotesState> {
-    constructor(props: NotesProps & ThunkDispatchProp) {
-        super(props);
-
-        this.state = {
-            showOverlay: false,
-            selected: null,
-        };
-    }
-
-    componentDidMount(): void {
-        if (!this.props.notes || !this.props.notes.length) {
-            this.props.dispatch(getNotes());
+    React.useEffect(() => {
+        if (!notes || !notes.length) {
+            dispatch(getNotes());
         }
-    }
+    }, [isLoggedIn]);
 
-    edit(note?: Note): void {
-        this.setState({ selected: note || {}, showOverlay: true });
-    }
+    const edit = (note: Note): void => {
+        setShowOverlay(true);
+        setSelected(note);
+    };
 
-    closeModal(): void {
-        this.setState({ selected: null, showOverlay: false });
-    }
+    const closeModal = (): void => {
+        setShowOverlay(false);
+        setSelected(undefined);
+    };
 
-    render(): React.ReactElement {
-        return (
-            <>
-                {this.props.notes && this.props.notes.length ? (
-                    this.props.notes.map(
-                        (note: Note): React.ReactElement => (
-                            <div className="admin-logs mbm" key={`note${note.id}`}>
-                                <code>
-                                    {note.updated}
-                                    <br />
-                                    <button className="button-blank text-left strong" onClick={(): void => this.edit(note)}>
-                                        {note.title || 'No title'}
-                                    </button>
-                                </code>
-                                <pre>{note.content || 'No content...'}</pre>
-                            </div>
-                        )
+    return (
+        <>
+            {notes && notes.length ? (
+                notes.map(
+                    (note: Note): React.ReactElement => (
+                        <div className="admin-logs mbm" key={`note${note.id}`}>
+                            <code>
+                                {note.updated}
+                                <br />
+                                <button className="button-blank text-left strong" onClick={(): void => edit(note)}>
+                                    {note.title || 'No title'}
+                                </button>
+                            </code>
+                            <pre>{note.content || 'No content...'}</pre>
+                        </div>
                     )
-                ) : (
-                    <div className="text">No notes found...</div>
-                )}
-                <div className="text-right">
-                    <button className="button-icon" onClick={this.edit.bind(this, undefined)}>
-                        <Icon path={mdiFileDocumentBoxPlusOutline} size="28px" title="New" />
-                    </button>
-                </div>
-                {this.state.showOverlay && this.state.selected ? (
-                    <NotesModal note={this.state.selected} close={this.closeModal.bind(this)} />
-                ) : null}
-            </>
-        );
-    }
-}
+                )
+            ) : (
+                <div className="text">No notes found...</div>
+            )}
+            <div className="text-right">
+                <button className="button-icon" onClick={(): void => edit({})}>
+                    <Icon path={mdiFileDocumentBoxPlusOutline} size="28px" title="New" />
+                </button>
+            </div>
+            {showOverlay && selected ? <NotesModal note={selected} close={closeModal} /> : null}
+        </>
+    );
+};
 
-export default connect((state: DefaultState): NotesProps => ({ notes: state.admin.notes }))(Notes);
+export default connect((state: DefaultState): NotesProps => ({ notes: state.admin.notes, isLoggedIn: state.auth.isLoggedIn }))(Notes);

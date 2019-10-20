@@ -24,29 +24,23 @@ const error: { [key: number]: ErrorType } = {
     },
 };
 
-export default class Error extends React.PureComponent<ErrorProps> {
-    title: string;
+const Error: React.FC<ErrorProps> = ({ code }) => {
+    const title: string = document.title;
 
-    constructor(props: ErrorProps) {
-        super(props);
+    React.useEffect(() => {
+        document.title += ` - ${error[code].title}`;
 
-        this.title = document.title;
-    }
+        return (): void => {
+            document.title = title;
+        };
+    }, []);
 
-    componentDidMount(): void {
-        document.title += ` - ${error[this.props.code].title}`;
-    }
+    return (
+        <div className="wrapper error-page">
+            <h1 className="color-primary">{error[code].title}</h1>
+            <p>{error[code].message}</p>
+        </div>
+    );
+};
 
-    componentWillUnmount(): void {
-        document.title = this.title;
-    }
-
-    render(): React.ReactElement {
-        return (
-            <div className="wrapper error-page">
-                <h1 className="color-primary">{error[this.props.code].title}</h1>
-                <p>{error[this.props.code].message}</p>
-            </div>
-        );
-    }
-}
+export default React.memo(Error);

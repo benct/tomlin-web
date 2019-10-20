@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { DefaultState, ThunkDispatchProp, Visit } from '../../interfaces';
@@ -6,37 +6,34 @@ import { getVisits } from '../../actions/admin';
 
 interface VisitProps {
     visits: Visit[];
+    isLoggedIn: boolean;
 }
 
-class Visits extends React.PureComponent<VisitProps & ThunkDispatchProp> {
-    componentDidMount(): void {
-        if (!this.props.visits.length) {
-            this.props.dispatch(getVisits());
+const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, isLoggedIn, dispatch }) => {
+    useEffect(() => {
+        if (!visits.length) {
+            dispatch(getVisits());
         }
-    }
+    }, [isLoggedIn]);
 
-    static renderVisit(visit: Visit, idx: number): React.ReactElement {
-        return (
-            <div className="admin-logs" key={`visits${idx}`}>
-                <code>
-                    {visit.timestamp}
-                    <br />
-                    <span className="strong">{visit.visits}</span>
-                </code>
-                <code>
-                    {visit.ip} / {visit.host}
-                    <br />
-                    {visit.agent}
-                    <br />
-                    {visit.page} {visit.referer}
-                </code>
-            </div>
-        );
-    }
+    const renderVisit = (visit: Visit, idx: number): React.ReactElement => (
+        <div className="admin-logs" key={`visits${idx}`}>
+            <code>
+                {visit.timestamp}
+                <br />
+                <span className="strong">{visit.visits}</span>
+            </code>
+            <code>
+                {visit.ip} / {visit.host}
+                <br />
+                {visit.agent}
+                <br />
+                {visit.page} {visit.referer}
+            </code>
+        </div>
+    );
 
-    render(): React.ReactElement[] | React.ReactElement {
-        return this.props.visits.length ? this.props.visits.map(Visits.renderVisit) : <span>No tracking data found...</span>;
-    }
-}
+    return visits.length ? <>{visits.map(renderVisit)}</> : <span>No tracking data found...</span>;
+};
 
-export default connect((state: DefaultState): VisitProps => ({ visits: state.admin.visits }))(Visits);
+export default connect((state: DefaultState): VisitProps => ({ visits: state.admin.visits, isLoggedIn: state.auth.isLoggedIn }))(Visits);

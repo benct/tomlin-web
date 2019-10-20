@@ -12,37 +12,28 @@ interface MediaSeasonProps {
     data: MediaSeasonEntry;
 }
 
-interface MediaSeasonState {
-    showEpisodes: boolean;
-    title?: string;
-    overview?: string;
-}
+const MediaSeason: React.FC<MediaSeasonProps & ThunkDispatchProp> = ({ data, dispatch }) => {
+    const [showEpisodes, setShowEpisodes] = React.useState<boolean>(false);
+    const [title, setTitle] = React.useState<string>();
+    const [overview, setOverview] = React.useState<string>();
 
-class MediaSeason extends React.PureComponent<MediaSeasonProps & ThunkDispatchProp, MediaSeasonState> {
-    constructor(props: MediaSeasonProps & ThunkDispatchProp) {
-        super(props);
+    const toggleEpisodes = (): void => {
+        setShowEpisodes(!showEpisodes);
+    };
 
-        this.state = {
-            showEpisodes: false,
-        };
-    }
+    const showOverview = (title?: string, overview?: string): void => {
+        setTitle(title);
+        setOverview(overview);
+    };
 
-    toggleEpisodes(): void {
-        this.setState({ showEpisodes: !this.state.showEpisodes });
-    }
-
-    setOverview(title?: string, overview?: string): void {
-        this.setState({ title, overview });
-    }
-
-    renderEpisodes(): React.ReactElement[] {
-        return this.props.data.episodes.map(
+    const renderEpisodes = (): React.ReactElement[] =>
+        data.episodes.map(
             (episode): React.ReactElement => (
                 <React.Fragment key={`episode${episode.id}`}>
                     <span className="text-small pll">{episode.episode}</span>
                     <button
                         className="button-blank text-small text-left truncate"
-                        onClick={this.setOverview.bind(this, episode.title, episode.overview)}>
+                        onClick={(): void => showOverview(episode.title, episode.overview)}>
                         {episode.title}
                     </button>
                     <span className="text-small text-right">
@@ -51,54 +42,49 @@ class MediaSeason extends React.PureComponent<MediaSeasonProps & ThunkDispatchPr
                     <button
                         className="button-blank mrm"
                         style={{ height: '22px' }}
-                        onClick={(): Promise<void> => this.props.dispatch(seenEpisode({ id: episode.id, set: !episode.seen }))}>
+                        onClick={(): Promise<void> => dispatch(seenEpisode({ id: episode.id, set: !episode.seen }))}>
                         <ViewIcon width={22} height={22} seen={episode.seen} />
                     </button>
                 </React.Fragment>
             )
         );
-    }
 
-    render(): React.ReactElement {
-        const episodesSeen = this.props.data.episodes.filter((ep: MediaEpisodeEntry): boolean => ep.seen).length;
-        const episodesTotal = this.props.data.episodes.length;
+    const episodesSeen = data.episodes.filter((ep: MediaEpisodeEntry): boolean => ep.seen).length;
+    const episodesTotal = data.episodes.length;
 
-        return (
-            <>
-                <span className="pts">
-                    <button
-                        className="input input-small float-right"
-                        style={{ color: formatGradientHSL(episodesSeen, episodesTotal) }}
-                        onClick={this.toggleEpisodes.bind(this)}>
-                        {episodesSeen}/{episodesTotal}
+    return (
+        <>
+            <span className="pts">
+                <button
+                    className="input input-small float-right"
+                    style={{ color: formatGradientHSL(episodesSeen, episodesTotal) }}
+                    onClick={toggleEpisodes}>
+                    {episodesSeen}/{episodesTotal}
+                </button>
+                {episodesSeen === 0 ? (
+                    <button className="input input-small float-right mrm" onClick={(): Promise<void> => dispatch(seenEpisodes(data.id))}>
+                        Mark all
                     </button>
-                    {episodesSeen === 0 ? (
-                        <button
-                            className="input input-small float-right mrm"
-                            onClick={(): Promise<void> => this.props.dispatch(seenEpisodes(this.props.data.id))}>
-                            Mark all
-                        </button>
-                    ) : null}
-                    <span className="text-small prl">{this.props.data.season}</span>
-                    <button className="button-blank border-bottom" onClick={this.toggleEpisodes.bind(this)}>
-                        {this.props.data.title}
-                    </button>
-                    <span className="text-small plm">{formatDate(this.props.data.release_date, '(MMM do, YYY)')}</span>
-                </span>
-                {this.state.showEpisodes ? (
-                    <div className="media-overlay-episodes">
-                        {this.renderEpisodes()}
-                        {this.state.overview ? (
-                            <div className="media-overlay-episode-overview shadow" role="dialog" onClick={(): void => this.setOverview()}>
-                                <span>{this.state.title}</span>
-                                <span className="text-small">{this.state.overview}</span>
-                            </div>
-                        ) : null}
-                    </div>
                 ) : null}
-            </>
-        );
-    }
-}
+                <span className="text-small prl">{data.season}</span>
+                <button className="button-blank border-bottom" onClick={toggleEpisodes}>
+                    {data.title}
+                </button>
+                <span className="text-small plm">{formatDate(data.release_date, '(MMM do, YYY)')}</span>
+            </span>
+            {showEpisodes ? (
+                <div className="media-overlay-episodes">
+                    {renderEpisodes()}
+                    {overview ? (
+                        <div className="media-overlay-episode-overview shadow" role="dialog" onClick={(): void => showOverview()}>
+                            <span>{title}</span>
+                            <span className="text-small">{overview}</span>
+                        </div>
+                    ) : null}
+                </div>
+            ) : null}
+        </>
+    );
+};
 
 export default connect()(MediaSeason);

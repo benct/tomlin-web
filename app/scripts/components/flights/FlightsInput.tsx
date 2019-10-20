@@ -29,4 +29,4 @@ const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required,
     </div>
 );
 
-export default FlightsInput;
+export default React.memo(FlightsInput);

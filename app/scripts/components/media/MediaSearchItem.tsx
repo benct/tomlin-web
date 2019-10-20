@@ -6,8 +6,6 @@ import { mdiPlus } from '@mdi/js';
 import { MediaSearchItemEntry } from '../../interfaces';
 import { formatDate } from '../../util/formatting';
 
-const defaultPoster = require('../../../images/media/poster_small.png');
-
 interface MediaSearchItemProps {
     data: MediaSearchItemEntry;
     stored: boolean;
@@ -16,104 +14,92 @@ interface MediaSearchItemProps {
     imdb: () => void;
 }
 
-interface MediaSearchItemState {
-    overview: boolean;
-}
+const defaultPoster = require('../../../images/media/poster_small.png');
 
-export default class MediaSearchItem extends React.PureComponent<MediaSearchItemProps, MediaSearchItemState> {
-    constructor(props: MediaSearchItemProps) {
-        super(props);
+const MediaSearchItem: React.FC<MediaSearchItemProps> = props => {
+    const [overview, setOverview] = React.useState<boolean>(false);
 
-        this.state = {
-            overview: false,
-        };
-    }
+    const title = props.data.title ? props.data.title : props.data.name;
+    const originalTitle = props.data.original_title ? props.data.original_title : props.data.original_name;
+    const release = props.data.release_date || props.data.first_air_date;
+    const text = props.stored ? 'Remove' : 'Add';
+    const change = props.stored ? props.remove : props.add;
 
-    static validLanguage(code: string): boolean {
-        return code === 'en' || code === 'no' || code === 'nb';
-    }
+    const validLanguage = (code: string): boolean => code === 'en' || code === 'no' || code === 'nb';
 
-    toggleOverview(): void {
-        this.setState({ overview: !this.state.overview });
-    }
+    const toggleOverview = (): void => setOverview(!overview);
 
-    render(): React.ReactElement {
-        const title = this.props.data.title ? this.props.data.title : this.props.data.name;
-        const originalTitle = this.props.data.original_title ? this.props.data.original_title : this.props.data.original_name;
-        const release = this.props.data.release_date || this.props.data.first_air_date;
-        const text = this.props.stored ? 'Remove' : 'Add';
-        const change = this.props.stored ? this.props.remove : this.props.add;
-
-        return (
-            <div className="media-item pvm">
-                <div className="media-poster">
-                    <img
-                        src={this.props.data.poster_path ? `https://image.tmdb.org/t/p/w200${this.props.data.poster_path}` : defaultPoster}
-                        alt={this.props.data.poster_path ? `Poster: ${title}` : 'No poster'}
-                        onError={(event: React.InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
-                        onClick={this.toggleOverview.bind(this)}
-                    />
-                    <div
-                        className="media-poster-overlay"
-                        role="dialog"
-                        style={{ opacity: this.state.overview ? 1 : 0, zIndex: this.state.overview ? 10 : -1 }}
-                        onClick={this.state.overview ? change : undefined}>
-                        <Icon path={mdiPlus} size="48px" color="white" rotate={this.props.stored ? 45 : 0} title={text} />
-                    </div>
-                </div>
-                <h3 className="media-title color-primary truncate man" onClick={this.toggleOverview.bind(this)}>
-                    {title} {formatDate(release, '(yyyy)')}
-                </h3>
-                <div className="media-data text-small">
-                    {title !== originalTitle ? <div className="text-small italic">Orig: {originalTitle}</div> : null}
-                    <span className={MediaSearchItem.validLanguage(this.props.data.original_language) ? 'color-success' : 'color-warn'}>
-                        {ISO6391.getName(this.props.data.original_language)}
-                    </span>
-                    {this.props.data.vote_average ? (
-                        <span>
-                            ,&nbsp;
-                            <span className="strong" data-tooltip={`${this.props.data.vote_count || 0} votes`}>
-                                {this.props.data.vote_average}
-                            </span>
-                        </span>
-                    ) : null}
-                    {release ? (
-                        <span>
-                            ,&nbsp;
-                            <span className="hide-lt480">Release: </span>
-                            {formatDate(release)}
-                        </span>
-                    ) : null}
-                    <div className="hide-gt768">
-                        <button className="button-blank" onClick={this.props.imdb}>
-                            <img src={require(`../../../images/icon/imdb.svg`)} alt="IMDb" width={48} />
-                        </button>
-                        <button className="button-icon button-icon-text float-right mtm" onClick={change}>
-                            <span>{text}</span>
-                            <Icon path={mdiPlus} size="28px" rotate={this.props.stored ? 45 : 0} title={text} />
-                        </button>
-                    </div>
-                </div>
-                <div className="media-actions">
-                    <button className="button-icon button-icon-text pan" onClick={change}>
-                        <span>{text}</span>
-                        <Icon path={mdiPlus} size="28px" rotate={this.props.stored ? 45 : 0} title={text} />
-                    </button>
-                </div>
-                <div className="media-external">
-                    <img
-                        className="pointer"
-                        src={require(`../../../images/icon/imdb.svg`)}
-                        alt="IMDb"
-                        width={48}
-                        style={{ margin: '-15px 0' }}
-                        onClick={this.props.imdb}
-                    />
-                </div>
-                <div className={`media-overview text-small mtm${this.state.overview ? '' : ' hide-lt768'}`}>
-                    {this.props.data.overview === '' ? 'No description.' : this.props.data.overview}
+    return (
+        <div className="media-item pvm">
+            <div className="media-poster">
+                <img
+                    src={props.data.poster_path ? `https://image.tmdb.org/t/p/w200${props.data.poster_path}` : defaultPoster}
+                    alt={props.data.poster_path ? `Poster: ${title}` : 'No poster'}
+                    onError={(event: React.InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
+                    onClick={toggleOverview}
+                />
+                <div
+                    className="media-poster-overlay"
+                    role="dialog"
+                    style={{ opacity: overview ? 1 : 0, zIndex: overview ? 10 : -1 }}
+                    onClick={overview ? change : undefined}>
+                    <Icon path={mdiPlus} size="48px" color="white" rotate={props.stored ? 45 : 0} title={text} />
                 </div>
             </div>
-        );
-    }
-}
+            <h3 className="media-title color-primary truncate man" onClick={toggleOverview}>
+                {title} {formatDate(release, '(yyyy)')}
+            </h3>
+            <div className="media-data text-small">
+                {title !== originalTitle ? <div className="text-small italic">Orig: {originalTitle}</div> : null}
+                <span className={validLanguage(props.data.original_language) ? 'color-success' : 'color-warn'}>
+                    {ISO6391.getName(props.data.original_language)}
+                </span>
+                {props.data.vote_average ? (
+                    <span>
+                        ,&nbsp;
+                        <span className="strong" data-tooltip={`${props.data.vote_count || 0} votes`}>
+                            {props.data.vote_average}
+                        </span>
+                    </span>
+                ) : null}
+                {release ? (
+                    <span>
+                        ,&nbsp;
+                        <span className="hide-lt480">Release: </span>
+                        {formatDate(release)}
+                    </span>
+                ) : null}
+                <div className="hide-gt768">
+                    <button className="button-blank" onClick={props.imdb}>
+                        <img src={require(`../../../images/icon/imdb.svg`)} alt="IMDb" width={48} />
+                    </button>
+                    <button className="button-icon button-icon-text float-right mtm" onClick={change}>
+                        <span>{text}</span>
+                        <Icon path={mdiPlus} size="28px" rotate={props.stored ? 45 : 0} title={text} />
+                    </button>
+                </div>
+            </div>
+            <div className="media-actions">
+                <button className="button-icon button-icon-text pan" onClick={change}>
+                    <span>{text}</span>
+                    <Icon path={mdiPlus} size="28px" rotate={props.stored ? 45 : 0} title={text} />
+                </button>
+            </div>
+            <div className="media-external">
+                <img
+                    className="pointer"
+                    src={require(`../../../images/icon/imdb.svg`)}
+                    alt="IMDb"
+                    width={48}
+                    style={{ margin: '-15px 0' }}
+                    onClick={props.imdb}
+                />
+            </div>
+            <div className={`media-overview text-small mtm${overview ? '' : ' hide-lt768'}`}>
+                {props.data.overview === '' ? 'No description.' : props.data.overview}
+            </div>
+        </div>
+    );
+};
+
+export default React.memo(MediaSearchItem);
