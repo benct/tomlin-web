@@ -19,8 +19,8 @@ interface FilesProps {
 const PARENT_DIR = '..';
 
 const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
-    const fileInput = React.createRef<HTMLInputElement>();
-    const fileLabel = React.createRef<HTMLLabelElement>();
+    const fileInput = React.useRef<HTMLInputElement>(null);
+    const fileLabel = React.useRef<HTMLLabelElement>(null);
 
     const handleUpload = (): void => {
         const files = fileInput.current && fileInput.current.files;

@@ -10,18 +10,15 @@ import Loading from './page/Loading';
 type LoginProps = RouteComponentProps & AuthState & ThunkDispatchProp;
 
 const Login: React.FC<LoginProps> = ({ loading, redirect, error, location, dispatch }) => {
-    const username = React.createRef<HTMLInputElement>();
-    const password = React.createRef<HTMLInputElement>();
+    const username = React.useRef<HTMLInputElement>(null);
+    const password = React.useRef<HTMLInputElement>(null);
 
     const { from } = location.state || { from: { pathname: '/' } };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
 
-        const user = (username.current && username.current.value) || '';
-        const pass = (password.current && password.current.value) || '';
-
-        dispatch(login({ user, pass }));
+        dispatch(login({ user: username.current && username.current.value, pass: password.current && password.current.value }));
     };
 
     return redirect ? (

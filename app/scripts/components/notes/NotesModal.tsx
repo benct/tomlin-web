@@ -14,8 +14,8 @@ interface NotesModalProps {
 }
 
 const NotesModal: React.FC<NotesModalProps & ThunkDispatchProp> = ({ note, close, dispatch }) => {
-    const title = React.createRef<HTMLInputElement>();
-    const content = React.createRef<HTMLTextAreaElement>();
+    const title = React.useRef<HTMLInputElement>(null);
+    const content = React.useRef<HTMLTextAreaElement>(null);
 
     const save = (): void => {
         if (!note.id || !title.current || !content.current || !title.current.value || !title.current.value.length) {

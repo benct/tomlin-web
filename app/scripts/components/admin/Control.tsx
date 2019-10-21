@@ -11,9 +11,9 @@ interface ControlProps {
 }
 
 const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn, dispatch }) => {
-    const logCount = React.createRef<HTMLSelectElement>();
-    const updateMovieCount = React.createRef<HTMLSelectElement>();
-    const updateTvCount = React.createRef<HTMLSelectElement>();
+    const logCount = React.useRef<HTMLSelectElement>(null);
+    const updateMovieCount = React.useRef<HTMLSelectElement>(null);
+    const updateTvCount = React.useRef<HTMLSelectElement>(null);
 
     React.useEffect(() => {
         if (!stats.log) {
