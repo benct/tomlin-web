@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.12.0] - 2019-10-21 - *Redux Boilerplate, React Hooks*
+### Added
+- Redefined actions using redux-actions package
+- Proper typing for redux-thunk actions
+
+### Changed
+- Refactor several classes to functions using React Hooks
+- Make on-mount action calls handle logged-in state change
+- Multiple redux-related TS interfaces and types
+- Move types and interfaces to declarations file
+- Update countdown timer with new target
+
+### Fixed
+- Undefined path value in media search pagination
+- Missing recommended eslint-settings
+
+### Removed
+- Custom redux action boilerplate handlers
+
 ## [2.11.1] - 2019-07-21 - *Form Improvements*
 ### Added
 - Swapping of airport input values on flights form
