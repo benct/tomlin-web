@@ -9,94 +9,70 @@ interface CountdownProps {
     icon?: string;
 }
 
-interface CountdownState {
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
-}
+const toDate = (hour: number, day: number, month: number, year?: number): Date => {
+    const now = new Date();
+    const y = year || now.getFullYear() + (month > now.getMonth() || (month === now.getMonth() && day > now.getDate()) ? 0 : 1);
+    return new Date(y, month - 1, day, hour);
+};
 
-export default class Countdown extends React.PureComponent<CountdownProps, CountdownState> {
-    interval: number;
-    countdownTo: Date;
+const Countdown: React.FC<CountdownProps> = props => {
+    const interval = React.useRef<number>(0);
+    const countdownTo = React.useRef<Date>(toDate(props.hour || 0, props.day, props.month, props.year));
 
-    constructor(props: CountdownProps) {
-        super(props);
+    const [days, setDays] = React.useState<number>(0);
+    const [hours, setHours] = React.useState<number>(0);
+    const [minutes, setMinutes] = React.useState<number>(0);
+    const [seconds, setSeconds] = React.useState<number>(0);
 
-        this.interval = 0;
-        this.countdownTo = props.year
-            ? new Date(props.year, props.month - 1, props.day, props.hour || 0)
-            : Countdown.toDate(props.day, props.month - 1);
+    React.useEffect(() => {
+        const timeComponent = (x: number, v: number): number => Math.floor(x / v);
 
-        this.state = {
-            days: 0,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
+        const calculateCountdown = (): void => {
+            const timestamp = (countdownTo.current.getTime() - Date.now()) / 1000;
+
+            setDays(timeComponent(timestamp, 24 * 60 * 60));
+            setHours(timeComponent(timestamp, 60 * 60) % 24);
+            setMinutes(timeComponent(timestamp, 60) % 60);
+            setSeconds(timeComponent(timestamp, 1) % 60);
         };
-    }
 
-    componentDidMount(): void {
-        this.calculateCountdown();
-        this.interval = window.setInterval(this.calculateCountdown.bind(this), 1000);
-    }
+        calculateCountdown();
+        interval.current = window.setInterval(calculateCountdown, 1000);
 
-    componentWillUnmount(): void {
-        window.clearInterval(this.interval);
-    }
+        return (): void => {
+            window.clearInterval(interval.current);
+        };
+    }, []);
 
-    static toDate(day: number, month: number): Date {
-        const now = new Date();
-        const year = now.getFullYear() + (month > now.getMonth() || (month === now.getMonth() && day > now.getDate()) ? 0 : 1);
-        return new Date(year, month, day);
-    }
+    const renderTimeUnit = (time: number, unit: string): React.ReactElement => (
+        <li className="countdown-time-wrap">
+            <span className="countdown-time">{time}</span>
+            <p className="countdown-unit">{unit}</p>
+        </li>
+    );
 
-    static timeComponent(x: number, v: number): number {
-        return Math.floor(x / v);
-    }
-
-    calculateCountdown(): void {
-        const timestamp = (this.countdownTo.getTime() - Date.now()) / 1000;
-
-        this.setState({
-            days: Countdown.timeComponent(timestamp, 24 * 60 * 60),
-            hours: Countdown.timeComponent(timestamp, 60 * 60) % 24,
-            minutes: Countdown.timeComponent(timestamp, 60) % 60,
-            seconds: Countdown.timeComponent(timestamp, 1) % 60,
-        });
-    }
-
-    static renderTimeUnit(time: number, unit: string): React.ReactElement {
-        return (
-            <li className="countdown-time-wrap">
-                <span className="countdown-time">{time}</span>
-                <p className="countdown-unit">{unit}</p>
-            </li>
-        );
-    }
-
-    render(): React.ReactElement {
-        return (
-            <div className="wrapper text-center color-primary">
-                <div className="countdown-title">
-                    {this.props.title}{' '}
-                    {this.props.icon ? (
-                        <img
-                            src={require(`../../../images/icon/${this.props.icon}.svg`)}
-                            alt="countdown"
-                            width={26}
-                            height={26}
-                            style={{ verticalAlign: 'top' }}
-                        />
-                    ) : null}
-                </div>
-                <ul className="countdown">
-                    {Countdown.renderTimeUnit(this.state.days, 'days')}
-                    {Countdown.renderTimeUnit(this.state.hours, 'hours')}
-                    {Countdown.renderTimeUnit(this.state.minutes, 'minutes')}
-                    {Countdown.renderTimeUnit(this.state.seconds, 'seconds')}
-                </ul>
+    return (
+        <div className="wrapper text-center color-primary">
+            <div className="countdown-title">
+                {props.title}{' '}
+                {props.icon ? (
+                    <img
+                        src={require(`../../../images/icon/${props.icon}.svg`)}
+                        alt="countdown"
+                        width={26}
+                        height={26}
+                        style={{ verticalAlign: 'top' }}
+                    />
+                ) : null}
             </div>
-        );
-    }
-}
+            <ul className="countdown">
+                {renderTimeUnit(days, 'days')}
+                {renderTimeUnit(hours, 'hours')}
+                {renderTimeUnit(minutes, 'minutes')}
+                {renderTimeUnit(seconds, 'seconds')}
+            </ul>
+        </div>
+    );
+};
+
+export default React.memo(Countdown);
