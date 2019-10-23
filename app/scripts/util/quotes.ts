@@ -1,4 +1,4 @@
-export default [
+export const quotes = [
     ['The man who smiles when things go wrong has thought of someone to blame it on.'],
     [
         "It's true that we don't know what we've got until we lose it, but it's also true that we don't know what we've been missing until it arrives.",

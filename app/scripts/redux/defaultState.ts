@@ -1,4 +1,4 @@
-import quotes from '../util/quotes';
+import { quotes } from '../util/quotes';
 
 import { DefaultState } from '../interfaces';
 

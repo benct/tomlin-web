@@ -2,7 +2,7 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { DefaultState, ThunkResult } from '../interfaces';
 
-import quotes from '../util/quotes';
+import { quotes } from '../util/quotes';
 import { get } from '../util/api';
 
 const actions: ActionsObject<DefaultState> = {};
