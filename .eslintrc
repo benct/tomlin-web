@@ -32,7 +32,7 @@
   },
   "settings": {
     "react": {
-      "version": "16.10"
+      "version": "detect"
     }
   },
   "globals": {
