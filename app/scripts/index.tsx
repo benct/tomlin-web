@@ -15,13 +15,17 @@ import '../.htaccess';
 import '../humans.txt';
 import '../robots.txt';
 
-// Import all files in a folder
-// @ts-ignore
-const requireAll = (requireContext): void => requireContext.keys().map(requireContext);
-
 // Favicon/manifest assets
-// @ts-ignore
-requireAll(require.context('../manifest', true, /^\.\//));
+import '../manifest/manifest.json';
+import '../manifest/browserconfig.xml';
+import '../manifest/favicon.ico';
+import '../manifest/favicon-16x16.png';
+import '../manifest/favicon-32x32.png';
+import '../manifest/android-chrome-192x192.png';
+import '../manifest/android-chrome-512x512.png';
+import '../manifest/apple-touch-icon.png';
+import '../manifest/mstile-150x150.png';
+import '../manifest/safari-pinned-tab.svg';
 
 // Render app
 ReactDOM.render(
