@@ -12,6 +12,7 @@ module.exports = {
     output: {
         path: PATHS.dist,
         filename: 'assets/scripts/bundle.[hash].js',
+        chunkFilename: 'assets/scripts/[id].[hash].js',
         publicPath: '/',
     },
     resolve: {

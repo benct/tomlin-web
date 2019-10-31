@@ -20,6 +20,8 @@ module.exports = merge(common, {
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'assets/styles/main.[hash].css',
+            chunkFilename: 'assets/styles/[id].[hash].css',
+            // ignoreOrder: false,
         }),
     ],
     devtool: 'source-map',
