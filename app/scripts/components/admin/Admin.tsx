@@ -8,6 +8,8 @@ import Control from './Control';
 import Logs from './Logs';
 import Visits from './Visits';
 
+import '../../../styles/admin.css';
+
 const Flights = React.lazy((): Promise<any> => import('../flights/Flights'));
 const Notes = React.lazy((): Promise<any> => import('../notes/Notes'));
 const Files = React.lazy((): Promise<any> => import('../files/Files'));

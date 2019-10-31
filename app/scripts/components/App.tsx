@@ -17,6 +17,13 @@ import Home from './home/Home';
 import Login from './Login';
 import Logout from './Logout';
 
+import '../../styles/main.css';
+import '../../styles/content.css';
+import '../../styles/header.css';
+import '../../styles/footer.css';
+import '../../styles/form.css';
+import '../../styles/util.css';
+
 const Media = React.lazy((): Promise<any> => import('./media/Media'));
 const Admin = React.lazy((): Promise<any> => import('./admin/Admin'));
 

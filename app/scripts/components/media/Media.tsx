@@ -6,6 +6,8 @@ import Navigation, { NavigationItem } from '../page/Navigation';
 import Error from '../page/Error';
 import Stats from './MediaStats';
 
+import '../../../styles/media.css';
+
 const MediaSearch = React.lazy((): Promise<any> => import('./MediaSearch'));
 const MediaList = React.lazy((): Promise<any> => import('./MediaList'));
 

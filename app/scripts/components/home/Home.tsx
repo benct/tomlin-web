@@ -5,6 +5,8 @@ import Countdown from './Countdown';
 import State from './State';
 import Quote from './Quote';
 
+import '../../../styles/home.css';
+
 const Home: React.FC = (): React.ReactElement => (
     <>
         <div className="wrapper text">

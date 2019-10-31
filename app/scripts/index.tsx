@@ -19,10 +19,6 @@ import '../robots.txt';
 // @ts-ignore
 const requireAll = (requireContext): void => requireContext.keys().map(requireContext);
 
-// CSS resources
-// @ts-ignore
-requireAll(require.context('../styles', true, /^\.\//));
-
 // Favicon/manifest assets
 // @ts-ignore
 requireAll(require.context('../manifest', true, /^\.\//));

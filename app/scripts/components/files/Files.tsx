@@ -8,6 +8,8 @@ import fileActions, { changeDirectory, createDirectory, open, refresh, remove, r
 
 import FileList from './FileList';
 
+import '../../../styles/files.css';
+
 interface FilesProps {
     cwd: string;
     content: FileItem[];

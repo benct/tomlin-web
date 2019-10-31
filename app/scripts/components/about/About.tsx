@@ -4,6 +4,8 @@ import { mdiMapMarkerOutline } from '@mdi/js';
 
 import GitHub from './GitHub';
 
+import '../../../styles/about.css';
+
 const About: React.FC = (): React.ReactElement => (
     <>
         <div className="wrapper text">
