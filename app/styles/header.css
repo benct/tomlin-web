@@ -7,7 +7,7 @@ header {
 }
 
 header::after {
-    content: "";
+    content: '';
     opacity: 0.3;
     background: #fff url(../images/header.jpg) no-repeat center center;
     -webkit-background-size: cover;
@@ -35,6 +35,7 @@ header::after {
     font-size: 60px;
     font-weight: 700;
     opacity: 0.2;
+    margin: 0;
 }
 
 .menu-wrap {
@@ -48,10 +49,10 @@ header::after {
     z-index: 800;
     text-align: center;
     background-color: rgba(20, 20, 20, 0.9);
-    -webkit-transition: left .6s ease-in-out;
-    -moz-transition: left .6s ease-in-out;
-    -o-transition: left .6s ease-in-out;
-    transition: left .6s ease-in-out;
+    -webkit-transition: left 0.6s ease-in-out;
+    -moz-transition: left 0.6s ease-in-out;
+    -o-transition: left 0.6s ease-in-out;
+    transition: left 0.6s ease-in-out;
 }
 
 .menu-top {
@@ -115,7 +116,7 @@ header::after {
     -moz-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     bottom: 0;
@@ -123,7 +124,7 @@ header::after {
     right: 50%;
     width: 0;
     height: 100%;
-    opacity: .75;
+    opacity: 0.75;
     z-index: -1;
     background-color: #28c8a8;
 }
