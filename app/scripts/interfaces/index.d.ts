@@ -5,6 +5,7 @@ export interface DefaultState {
     showMenu: boolean;
     circleIcons: boolean;
     toast: string | null;
+    theme: string;
 
     loading: boolean;
     loadingOverlay: boolean;

@@ -1,0 +1,19 @@
+body {
+    background-color: #ffffff;
+    color: #292929;
+}
+
+.color-base {
+    color: #292929;
+    fill: #292929;
+}
+
+.color-primary {
+    color: #002080;
+    fill: #002080;
+}
+
+.color-light {
+    color: #737373;
+    fill: #737373;
+}

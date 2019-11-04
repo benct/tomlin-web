@@ -1,14 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,400,600,700");
 
 body {
-    background-color: #fff;
     height: 100vh;
     font-family: "Open Sans Condensed", "PT Sans Narrow", sans-serif;
     font-size: 19px;
     font-weight: 400;
     letter-spacing: 1px;
-    /*line-height: 1.5;*/
-    color: #292929;
     margin: 0;
     padding: 0;
 }
@@ -61,21 +58,6 @@ code {
     padding: 0 10px;
     margin: 0;
     overflow: auto;
-}
-
-.color-base {
-    color: #292929;
-    fill: #292929;
-}
-
-.color-primary {
-    color: #002080;
-    fill: #002080;
-}
-
-.color-light {
-    color: #737373;
-    fill: #737373;
 }
 
 .color-success {

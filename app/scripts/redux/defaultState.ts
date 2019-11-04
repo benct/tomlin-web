@@ -6,6 +6,7 @@ const defaultState: DefaultState = {
     showMenu: false,
     circleIcons: false,
     toast: null,
+    theme: 'default',
 
     loading: false,
     loadingOverlay: false,

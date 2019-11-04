@@ -23,19 +23,17 @@ import '../../styles/header.css';
 import '../../styles/footer.css';
 import '../../styles/form.css';
 import '../../styles/util.css';
+import '../../styles/themes/default.css';
+import '../../styles/themes/midnight.css';
 
 const Media = React.lazy((): Promise<any> => import('./media/Media'));
 const Admin = React.lazy((): Promise<any> => import('./admin/Admin'));
 
-interface AppStateProps {
-    showMenu: boolean;
-    circleIcons: boolean;
-    toast: string | null;
-    loading: boolean;
-}
+type AppStateProps = Pick<DefaultState, 'circleIcons' | 'toast' | 'theme' | 'loading'>;
 
 interface AppDispatchProps {
     validate: () => void;
+    toggleTheme: () => void;
     toggleMenu: () => void;
     toggleIcons: () => void;
 }
@@ -44,6 +42,11 @@ const App: React.FC<AppStateProps & AppDispatchProps> = props => {
     React.useEffect(() => {
         props.validate();
     }, []);
+
+    React.useEffect(() => {
+        document.body.classList.remove('default', 'midnight');
+        document.body.classList.add(props.theme);
+    }, [props.theme]);
 
     return (
         <Router>
@@ -76,9 +79,9 @@ const App: React.FC<AppStateProps & AppDispatchProps> = props => {
                 </main>
                 <footer>
                     <Social circle={props.circleIcons} />
-                    <div className="text color-light mtl">
+                    <div className="text color-light mtl" onClick={props.toggleTheme} role="button" tabIndex={-1}>
                         <span className="pointer no-select" onClick={props.toggleIcons} role="button" tabIndex={-1}>
-                            Ben Tomlin © 2019
+                            Ben Tomlin © 2019 | {props.theme}
                         </span>
                     </div>
                 </footer>
@@ -89,14 +92,15 @@ const App: React.FC<AppStateProps & AppDispatchProps> = props => {
 };
 
 const mapStateToProps = (state: DefaultState): AppStateProps => ({
-    showMenu: state.showMenu,
     circleIcons: state.circleIcons,
     toast: state.toast,
+    theme: state.theme,
     loading: state.loadingOverlay,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatchFunc): AppDispatchProps => ({
     validate: (): Promise<void> => dispatch(validate()),
+    toggleTheme: (): Action => dispatch(actions.toggleTheme()),
     toggleMenu: (): Action => dispatch(actions.toggleMenu()),
     toggleIcons: (): Action => dispatch(actions.toggleIcons()),
 });

@@ -7,6 +7,8 @@ import { get } from '../util/api';
 
 const actions: ActionsObject<DefaultState> = {};
 
+actions.toggleTheme = makeAction('BASE/TOGGLE_THEME', state => ({ ...state, theme: state.theme === 'default' ? 'midnight' : 'default' }));
+
 actions.toggleIcons = makeAction('BASE/TOGGLE_ICONS', state => ({ ...state, circleIcons: !state.circleIcons }));
 
 actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', state => ({ ...state, showMenu: !state.showMenu }));

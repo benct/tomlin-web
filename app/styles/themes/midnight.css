@@ -1,0 +1,19 @@
+body.midnight {
+    background-color: #292929;
+    color: #cccccc;
+}
+
+.midnight .color-base {
+    color: #cccccc;
+    fill: #cccccc;
+}
+
+.midnight .color-primary {
+    color: #00baba;
+    fill: #00baba;
+}
+
+.midnight .color-light {
+    color: #ffffff;
+    fill: #ffffff;
+}
