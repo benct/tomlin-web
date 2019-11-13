@@ -8,6 +8,8 @@ body {
     letter-spacing: 1px;
     margin: 0;
     padding: 0;
+    background-color: #ffffff;
+    color: #292929;
 }
 
 main {
@@ -58,6 +60,21 @@ code {
     padding: 0 10px;
     margin: 0;
     overflow: auto;
+}
+
+.color-base {
+    color: #292929;
+    fill: #292929;
+}
+
+.color-primary {
+    color: #002080;
+    fill: #002080;
+}
+
+.color-light {
+    color: #737373;
+    fill: #737373;
 }
 
 .color-success {
