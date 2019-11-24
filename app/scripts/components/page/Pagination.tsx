@@ -31,7 +31,7 @@ const Pagination: React.FC<PaginationState & PaginationProps> = props => {
     );
 
     const renderPage = (page: number, image?: PaginationImage): React.ReactElement => (
-        <Link to={props.path + page + (props.postfix ? `/${props.postfix}` : '')} className="button-icon" key={`pagination${page}`}>
+        <Link to={props.path + page + (props.postfix ? `/${props.postfix}` : '')} className="button-icon phm" key={`pagination${page}`}>
             {image ? renderImage(image) : <span>{page}</span>}
         </Link>
     );
