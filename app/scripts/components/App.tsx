@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Action } from 'redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { DefaultState, ThunkDispatchFunc } from '../interfaces';
+import { DefaultState, ThunkDispatchProp } from '../interfaces';
 
-import actions from '../actions/base';
 import { validate } from '../actions/auth';
 
 import SuspendedRoute from './route/Suspended';
-import Navigation from './page/Navigation';
+import Header from './page/Header';
 import Footer from './page/Footer';
 import Error from './page/Error';
 import About from './about/About';
@@ -30,14 +28,9 @@ const Admin = React.lazy((): Promise<any> => import('./admin/Admin'));
 
 type AppStateProps = Pick<DefaultState, 'toast' | 'theme' | 'loading'>;
 
-interface AppDispatchProps {
-    validate: () => void;
-    toggleMenu: () => void;
-}
-
-const App: React.FC<AppStateProps & AppDispatchProps> = props => {
+const App: React.FC<AppStateProps & ThunkDispatchProp> = props => {
     React.useEffect(() => {
-        props.validate();
+        props.dispatch(validate());
     }, []);
 
     React.useEffect(() => {
@@ -48,14 +41,7 @@ const App: React.FC<AppStateProps & AppDispatchProps> = props => {
     return (
         <Router>
             <React.StrictMode>
-                <header>
-                    <h1 className="site-title no-select">Tomlin</h1>
-                    <Navigation type="simple" />
-                    <button className="menu-overlay button-blank hide-gt480" aria-label="Menu" onClick={props.toggleMenu}>
-                        &nbsp;
-                    </button>
-                </header>
-                <Navigation />
+                <Header />
                 <main>
                     {props.loading ? (
                         <div className="overlay overlay-loading">
@@ -87,12 +73,4 @@ const mapStateToProps = (state: DefaultState): AppStateProps => ({
     loading: state.loadingOverlay,
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatchFunc): AppDispatchProps => ({
-    validate: (): Promise<void> => dispatch(validate()),
-    toggleMenu: (): Action => dispatch(actions.toggleMenu()),
-});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(App);
+export default connect(mapStateToProps)(App);
