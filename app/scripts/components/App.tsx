@@ -78,8 +78,8 @@ const App: React.FC<AppStateProps & AppDispatchProps> = props => {
                 </main>
                 <footer className="color-bg">
                     <Social circle={props.circleIcons} />
-                    <div className="text mtl" onClick={props.toggleTheme} role="button" tabIndex={-1}>
-                        <span className="pointer no-select color-secondary" onClick={props.toggleIcons} role="button" tabIndex={-1}>
+                    <div className="text mtl">
+                        <span className="pointer no-select color-offset" onClick={props.toggleIcons} role="button" tabIndex={-1}>
                             Ben Tomlin © 2019 | {props.theme}
                         </span>
                     </div>

@@ -1,15 +1,11 @@
 body.midnight {
-    background-color: #212121;
+    background-color: #222831;
     color: #eeeeee;
 }
 
 .midnight .wrapper,
 .midnight .color-bg {
-    background-color: #323232;
-}
-
-.midnight svg {
-    fill: #00adb5;
+    background-color: #393e46;
 }
 
 .midnight a,
@@ -19,26 +15,31 @@ body.midnight {
 
 .midnight a:focus,
 .midnight a:hover {
-    color: white;
+    color: #eeeeee;
 }
 
-.midnight .color-base {
+.midnight .menu-simple a:hover,
+.midnight .menu-simple a:focus,
+.midnight .menu-simple a.active {
+    color: #affaff;
+    border-bottom: 1px solid #00adb5;
+}
+
+.midnight .color-base,
+.midnight .color-secondary {
     color: #eeeeee;
     fill: #eeeeee;
 }
 
-.midnight .color-primary {
-    color: #00adb5;
-    fill: #00adb5;
-}
-
-.midnight .color-secondary {
+.midnight .color-offset {
     color: #bbbbbb;
     fill: #bbbbbb;
 }
 
-.midnight .home-container {
-    color: #eeeeee;
+.midnight svg,
+.midnight .color-primary {
+    color: #00adb5;
+    fill: #00adb5;
 }
 
 .midnight .home-title,

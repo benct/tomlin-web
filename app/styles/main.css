@@ -75,14 +75,15 @@ svg {
     fill: #292929;
 }
 
-.color-primary {
-    color: #0c3c78;
-    fill: #0c3c78;
-}
-
-.color-secondary {
+.color-offset {
     color: #737373;
     fill: #737373;
+}
+
+.color-primary,
+.color-secondary {
+    color: #0c3c78;
+    fill: #0c3c78;
 }
 
 .color-success {

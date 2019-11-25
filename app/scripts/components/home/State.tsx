@@ -47,14 +47,14 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = props => {
                         />
                     </span>
                 </div>
-                <div>
+                <div className="color-secondary">
                     <span className="home-unit">Oslo</span>
                     <br />
                     <span className="home-value">
                         <Time locale="nb-NO" timeZone="Europe/Oslo" />
                     </span>
                 </div>
-                <div className="ptm">
+                <div className="color-secondary ptm">
                     <img
                         className="valign-middle phm"
                         src={require(`../../../images/icon/${props.day ? 'day' : 'night'}.svg`)}
@@ -68,7 +68,7 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = props => {
                     </div>
                 </div>
             </div>
-            <div className="home-sensors">
+            <div className="home-sensors color-secondary">
                 {renderState('livingroom', props.temperature.livingroom, 'Living room temperature')}
                 {renderState('office', props.temperature.office, 'Office temperature')}
                 {renderState('bedroom', props.temperature.bedroom, 'Bedroom temperature')}

@@ -18,7 +18,7 @@ const About: React.FC = (): React.ReactElement => (
                 <div>Full Stack Developer</div>
                 <div className="mtm">
                     <Icon path={mdiMapMarkerOutline} size={1} className="text-icon" />
-                    <span className="valign-middle mrm color-secondary">Oslo, Norway</span>
+                    <span className="valign-middle mrm color-offset">Oslo, Norway</span>
                 </div>
             </div>
 
