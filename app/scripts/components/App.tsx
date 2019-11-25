@@ -51,7 +51,9 @@ const App: React.FC<AppStateProps & AppDispatchProps> = props => {
         <Router>
             <React.StrictMode>
                 <header>
-                    <h1 className="site-title no-select">Tomlin</h1>
+                    <h1 className="site-title no-select" onClick={props.toggleTheme}>
+                        Tomlin
+                    </h1>
                     <Navigation type="simple" />
                     <button className="menu-overlay button-blank hide-gt480" aria-label="Menu" onClick={props.toggleMenu}>
                         &nbsp;
@@ -80,7 +82,7 @@ const App: React.FC<AppStateProps & AppDispatchProps> = props => {
                     <Social circle={props.circleIcons} />
                     <div className="text mtl">
                         <span className="pointer no-select color-offset" onClick={props.toggleIcons} role="button" tabIndex={-1}>
-                            Ben Tomlin © 2019 | {props.theme}
+                            Ben Tomlin © 2019
                         </span>
                     </div>
                 </footer>
