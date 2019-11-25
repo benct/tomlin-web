@@ -52,8 +52,8 @@ const Countdown: React.FC<CountdownProps> = props => {
     );
 
     return (
-        <div className="wrapper text-center color-primary">
-            <div className="countdown-title">
+        <div className="wrapper text-center">
+            <div className="countdown-title color-primary">
                 {props.title}{' '}
                 {props.icon ? (
                     <img

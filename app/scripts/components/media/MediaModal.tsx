@@ -57,7 +57,7 @@ const MediaModal: React.FC<MediaModalProps> = props => {
                 {rating} <span className="text-smaller pls">({votes} votes)</span>
             </span>
         ) : (
-            <span className="color-light">No rating</span>
+            <span>No rating</span>
         );
 
     const renderRuntime = (runtime: number | null): React.ReactNode =>

@@ -54,7 +54,7 @@ const Navigation: React.FC<RouteComponentProps & NavigationProps & NavigationSta
             );
         case 'sub':
             return (
-                <nav className="pvl">
+                <nav className="color-bg pvl">
                     <ul className="no-select menu menu-simple menu-sub">{data && data.map(createLink)}</ul>
                 </nav>
             );

@@ -3,10 +3,6 @@
     margin-bottom: 10px;
 }
 
-.cv-position {
-    margin-bottom: 10px;
-}
-
 .cv-skills {
     display: inline-block;
     vertical-align: top;
@@ -61,14 +57,12 @@
 .github-repo-state svg {
     vertical-align: middle;
     margin-left: 10px;
-    fill: #006080;
 }
 
 .github-repo-state span {
     vertical-align: middle;
     margin-left: 5px;
     font-size: 17px;
-    color: #292929;
 }
 
 @media screen and (max-width: 480px) {

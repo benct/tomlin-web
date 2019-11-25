@@ -60,6 +60,7 @@
 
 .wrapper {
     padding: 40px 30px;
+    background-color: white;
 }
 
 .limit-width {
@@ -97,6 +98,18 @@
     text-shadow: 0 0 15px rgba(255, 20, 20, 0.6);
 }
 
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
 .text-small {
     font-size: 17px;
 }
@@ -108,12 +121,6 @@
 .text-icon {
     vertical-align: middle;
     margin-right: 10px;
-    fill: #006080;
-}
-
-.default-icon {
-    vertical-align: middle;
-    fill: #737373;
 }
 
 .help-icon {

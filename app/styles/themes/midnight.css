@@ -1,11 +1,20 @@
 body.midnight {
-    background-color: #292929;
-    color: white;
+    background-color: #212121;
+    color: #eeeeee;
+}
+
+.midnight .wrapper,
+.midnight .color-bg {
+    background-color: #323232;
+}
+
+.midnight svg {
+    fill: #00adb5;
 }
 
 .midnight a,
 .midnight a:visited {
-    color: #8ff8ff;
+    color: #affaff;
 }
 
 .midnight a:focus,
@@ -14,21 +23,25 @@ body.midnight {
 }
 
 .midnight .color-base {
-    color: #cccccc;
-    fill: #cccccc;
+    color: #eeeeee;
+    fill: #eeeeee;
 }
 
 .midnight .color-primary {
-    color: #8ff8ff;
-    fill: #8ff8ff;
+    color: #00adb5;
+    fill: #00adb5;
 }
 
-.midnight .color-light {
-    color: #ffffff;
-    fill: #ffffff;
+.midnight .color-secondary {
+    color: #bbbbbb;
+    fill: #bbbbbb;
+}
+
+.midnight .home-container {
+    color: #eeeeee;
 }
 
 .midnight .home-title,
 .midnight .countdown-title {
-    text-shadow: 0 2px 2px rgba(255, 255, 255, 0.8);
+    text-shadow: none;
 }

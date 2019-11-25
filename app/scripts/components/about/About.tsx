@@ -11,14 +11,14 @@ const About: React.FC = (): React.ReactElement => (
         <div className="wrapper text">
             <div className="cv-header color-primary">Ben Christopher Tomlin</div>
 
-            <div className="cv-position">
+            <div className="mbm">
                 <div>
                     Senior Developer at <a href="https://finn.no">FINN.no</a>
                 </div>
                 <div>Full Stack Developer</div>
                 <div className="mtm">
-                    <Icon path={mdiMapMarkerOutline} size={1} className="text-icon color-light" />
-                    <span className="valign-middle mrm color-light">Oslo, Norway</span>
+                    <Icon path={mdiMapMarkerOutline} size={1} className="text-icon" />
+                    <span className="valign-middle mrm color-secondary">Oslo, Norway</span>
                 </div>
             </div>
 

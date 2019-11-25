@@ -29,9 +29,9 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = props => {
     );
 
     return (
-        <div className="wrapper text-center no-select color-primary home-container">
+        <div className="wrapper text-center no-select home-container">
             <div className="home-header">
-                <div className="home-title">
+                <div className="home-title color-primary">
                     Home Status
                     <span
                         className="valign-middle mlm"
@@ -47,7 +47,7 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = props => {
                         />
                     </span>
                 </div>
-                <div className="">
+                <div>
                     <span className="home-unit">Oslo</span>
                     <br />
                     <span className="home-value">

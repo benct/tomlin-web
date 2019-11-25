@@ -12,6 +12,7 @@ footer {
     -moz-transition: opacity 0.5s ease;
     -o-transition: opacity 0.5s ease;
     transition: opacity 0.5s ease;
+    opacity: 0.9;
 }
 
 .social a:hover {

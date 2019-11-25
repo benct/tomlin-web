@@ -50,24 +50,24 @@ const GitHub: React.FC<GitHubProps & ThunkDispatchProp> = props => {
 
     const renderRepo = (repo: GitHubRepo): React.ReactElement => (
         <div className="github-repo mbm" key={repo.name}>
-            <a href={repo.url} target="_blank" rel="noopener noreferrer" className="color-base truncate">
+            <a href={repo.url} target="_blank" rel="noopener noreferrer" className="truncate">
                 <Icon path={getLanguageIcon(repo.language)} size="22px" title={repo.language} className="text-icon" />
-                <span className="valign-middle text-small">{repo.name}</span>
+                <span className="valign-middle text-small color-base">{repo.name}</span>
             </a>
             <div className="github-repo-state no-wrap">
                 <a href={`${repo.url}/stargazers`} target="_blank" rel="noopener noreferrer">
                     <Icon path={mdiStarOutline} size="22px" title="Stargazers" />
-                    <span>{repo.stars}</span>
+                    <span className="color-base">{repo.stars}</span>
                 </a>
                 {repo.issues !== null && (
                     <a href={`${repo.url}/issues`} target="_blank" rel="noopener noreferrer">
                         <Icon path={mdiAlertCircleOutline} size="22px" title="Open Issues" />
-                        <span>{repo.issues}</span>
+                        <span className="color-base">{repo.issues}</span>
                     </a>
                 )}
                 <a href={`${repo.url}/network/members`} target="_blank" rel="noopener noreferrer">
                     <Icon path={mdiSourceFork} size="22px" title="Forks" />
-                    <span>{repo.forks}</span>
+                    <span className="color-base">{repo.forks}</span>
                 </a>
             </div>
         </div>
