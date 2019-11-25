@@ -3,7 +3,6 @@ import { Action, Dispatch } from 'redux';
 
 export interface DefaultState {
     showMenu: boolean;
-    circleIcons: boolean;
     toast: string | null;
     theme: string;
 

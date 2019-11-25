@@ -4,7 +4,6 @@ import { DefaultState } from '../interfaces';
 
 const defaultState: DefaultState = {
     showMenu: false,
-    circleIcons: false,
     toast: null,
     theme: 'default',
 
