@@ -10,7 +10,7 @@ interface LoadingProps {
 
 const Loading: React.FC<LoadingProps> = ({ isLoading, children, className, text }): React.ReactElement =>
     isLoading ? (
-        <div className={`text ${className}`}>
+        <div className={`text color-bg ${className || ''}`}>
             <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" />
             <span className="valign-middle">{text || 'Loading...'}</span>
         </div>

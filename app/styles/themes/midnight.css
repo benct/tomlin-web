@@ -48,3 +48,51 @@ body.midnight {
 .midnight .countdown-title {
     text-shadow: none;
 }
+
+.midnight .input,
+.midnight .input-textarea,
+.midnight .pure-form input,
+.midnight .pure-form select,
+.midnight .pure-form textarea {
+    color: #eeeeee;
+    background-color: #222831;
+}
+.midnight .input:hover,
+.midnight .input:active {
+    color: white !important;
+    background-color: #00adb5;
+}
+
+.midnight .button-icon {
+    color: #00adb5;
+}
+.midnight .button-icon:hover,
+.midnight .button-icon:hover svg path {
+    color: #affaff;
+    fill: #affaff;
+}
+
+.midnight .admin-flight-group {
+    border-left-color: #affaff;
+    border-right-color: #affaff;
+}
+
+.midnight .file-table .file-name span.focused,
+.midnight .file-table .file-name span:hover,
+.midnight .file-table .file-name span:active {
+    color: #affaff;
+}
+
+.midnight .pure-table thead {
+    color: #eeeeee;
+    background-color: #393e46;
+}
+.midnight .pure-table-striped tr:nth-child(2n-1) td {
+    background-color: #222831;
+}
+
+.midnight .rv-discrete-color-legend-item,
+.midnight .rv-xy-plot__axis__tick__text {
+    color: #eeeeee;
+    fill: #eeeeee;
+}

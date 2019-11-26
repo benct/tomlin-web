@@ -54,3 +54,34 @@ body.default {
 .default .home-sensors svg {
     fill: #292929;
 }
+
+.default .input,
+.default .input-textarea {
+    color: #0c3c78;
+    background-color: white;
+}
+.default .input:hover,
+.default .input:active {
+    color: white !important;
+    background-color: #04879c;
+}
+
+.default .button-icon {
+    color: #0c3c78;
+}
+.default .button-icon:hover,
+.default .button-icon:hover svg path {
+    color: #04879c;
+    fill: #04879c;
+}
+
+.default .admin-flight-group {
+    border-left-color: #0c3c78;
+    border-right-color: #0c3c78;
+}
+
+.default .file-table .file-name span.focused,
+.default .file-table .file-name span:hover,
+.default .file-table .file-name span:active {
+    color: #04879c;
+}

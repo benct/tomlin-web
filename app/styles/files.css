@@ -45,12 +45,6 @@
     cursor: pointer;
 }
 
-.file-table .file-name span.focused,
-.file-table .file-name span:hover,
-.file-table .file-name span:active {
-    color: #04879c;
-}
-
 .file-table .file-info {
     padding-left: 10px;
     font-size: 11px;

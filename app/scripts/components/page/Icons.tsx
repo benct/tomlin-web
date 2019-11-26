@@ -7,7 +7,7 @@ interface StarIconProps {
 }
 
 export const StarIcon: React.FC<StarIconProps> = ({ width, height, favourite }): React.ReactElement => (
-    <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <svg width={width} height={height} className="color-base" viewBox="0 0 512 512">
         <polygon
             fill={favourite ? '#fad000' : 'transparent'}
             points="461.6,214.8 304,214.8 255.2,62.8 206.4,214.8 48.8,214.8 176.8,307.6 128,458.8 256,365.2
@@ -27,7 +27,7 @@ interface ViewIconProps {
 }
 
 export const ViewIcon: React.FC<ViewIconProps> = ({ width, height, seen }): React.ReactElement => (
-    <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 480">
+    <svg width={width} height={height} className="color-base" viewBox="0 0 512 480">
         <path
             fill={seen ? '#edebec' : 'transparent'}
             d="M256,127.749c-100.027,0-189.405,49.922-248.485,128.25C66.595,334.329,155.973,384.25,256,384.25

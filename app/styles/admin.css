@@ -33,8 +33,10 @@
 }
 
 .admin-flight-group {
-    border-left: 2px solid #0c3c78;
-    border-right: 2px solid #0c3c78;
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-right-style: solid;
+    border-right-width: 3px;
 }
 
 @media (max-width: 600px) {
