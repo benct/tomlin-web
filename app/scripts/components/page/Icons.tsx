@@ -9,7 +9,7 @@ interface StarIconProps {
 export const StarIcon: React.FC<StarIconProps> = ({ width, height, favourite }): React.ReactElement => (
     <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
         <polygon
-            fill={favourite ? '#FAD000' : '#FFFFFF'}
+            fill={favourite ? '#fad000' : 'transparent'}
             points="461.6,214.8 304,214.8 255.2,62.8 206.4,214.8 48.8,214.8 176.8,307.6 128,458.8 256,365.2
                     384,458.8 333.6,307.6 "
         />
@@ -29,12 +29,12 @@ interface ViewIconProps {
 export const ViewIcon: React.FC<ViewIconProps> = ({ width, height, seen }): React.ReactElement => (
     <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 480">
         <path
-            fill={seen ? '#EDEBEC' : '#FFFFFF'}
+            fill={seen ? '#edebec' : 'transparent'}
             d="M256,127.749c-100.027,0-189.405,49.922-248.485,128.25C66.595,334.329,155.973,384.25,256,384.25
                     S445.404,334.329,504.485,256C445.404,177.671,356.026,127.749,256,127.749z"
         />
-        <circle fill={seen ? '#55D3FA' : '#FFFFFF'} cx="256" cy="256" r="112.219" />
-        <circle fill={seen ? '#614A50' : '#FFFFFF'} cx="256" cy="256" r="40.078" />
+        <circle fill={seen ? '#55d3fA' : 'transparent'} cx="256" cy="256" r="112.219" />
+        <circle fill={seen ? '#614a50' : 'transparent'} cx="256" cy="256" r="40.078" />
         <path
             d="M510.484,251.474C447.574,168.069,354.819,120.235,256,120.235S64.425,168.07,1.515,251.474c-2.02,2.679-2.02,6.371,0,9.051
                 C64.425,343.93,157.181,391.765,256,391.765s191.574-47.834,254.484-131.239C512.505,257.846,512.505,254.153,510.484,251.474z
