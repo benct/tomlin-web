@@ -6,7 +6,7 @@ import { MediaEpisodeEntry, MediaSeasonEntry, ThunkDispatchProp } from '../../in
 import { formatDate, formatGradientHSL } from '../../util/formatting';
 import { seenEpisode, seenEpisodes } from '../../actions/media';
 
-import { ViewIcon } from '../page/Icons';
+import { ViewIcon } from './MediaIcons';
 
 interface MediaSeasonProps {
     data: MediaSeasonEntry;

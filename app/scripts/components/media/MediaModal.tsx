@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting';
 import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '../../interfaces';
 
-import { StarIcon, ViewIcon } from '../page/Icons';
+import { StarIcon, ViewIcon } from './MediaIcons';
 import Modal from '../page/Modal';
 import MediaSeason from './MediaSeason';
 

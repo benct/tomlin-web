@@ -2,7 +2,7 @@ import React from 'react';
 
 import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting';
 
-import { StarIcon, ViewIcon } from '../page/Icons';
+import { StarIcon, ViewIcon } from './MediaIcons';
 import { MediaItemEntry, MediaType } from '../../interfaces';
 
 const defaultPoster = require('../../../images/media/poster.png');

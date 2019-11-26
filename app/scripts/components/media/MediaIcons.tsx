@@ -10,8 +10,7 @@ export const StarIcon: React.FC<StarIconProps> = ({ width, height, favourite }):
     <svg width={width} height={height} className="color-base" viewBox="0 0 512 512">
         <polygon
             fill={favourite ? '#fad000' : 'transparent'}
-            points="461.6,214.8 304,214.8 255.2,62.8 206.4,214.8 48.8,214.8 176.8,307.6 128,458.8 256,365.2
-                    384,458.8 333.6,307.6 "
+            points="461.6,214.8 304,214.8 255.2,62.8 206.4,214.8 48.8,214.8 176.8,307.6 128,458.8 256,365.2 384,458.8 333.6,307.6"
         />
         <path
             d="M512,198H316.8L256,10.8L195.2,198H0l157.6,115.2L96.8,500.4L256,385.2l158.4,116L353.6,314L512,198z M256,365.2l-128,93.6
@@ -31,7 +30,7 @@ export const ViewIcon: React.FC<ViewIconProps> = ({ width, height, seen }): Reac
         <path
             fill={seen ? '#edebec' : 'transparent'}
             d="M256,127.749c-100.027,0-189.405,49.922-248.485,128.25C66.595,334.329,155.973,384.25,256,384.25
-                    S445.404,334.329,504.485,256C445.404,177.671,356.026,127.749,256,127.749z"
+                S445.404,334.329,504.485,256C445.404,177.671,356.026,127.749,256,127.749z"
         />
         <circle fill={seen ? '#55d3fA' : 'transparent'} cx="256" cy="256" r="112.219" />
         <circle fill={seen ? '#614a50' : 'transparent'} cx="256" cy="256" r="40.078" />
