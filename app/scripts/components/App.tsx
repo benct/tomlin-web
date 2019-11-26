@@ -21,6 +21,7 @@ import '../../styles/header.css';
 import '../../styles/footer.css';
 import '../../styles/form.css';
 import '../../styles/util.css';
+import '../../styles/themes/default.css';
 import '../../styles/themes/midnight.css';
 
 const Media = React.lazy((): Promise<any> => import('./media/Media'));

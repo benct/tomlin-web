@@ -149,6 +149,7 @@ header::after {
 }
 
 .menu-simple a,
+.menu-simple a:focus,
 .menu-simple a:visited {
     font-size: 20px;
     font-weight: 400;
@@ -158,7 +159,6 @@ header::after {
 }
 
 .menu-simple a:hover,
-.menu-simple a:focus,
 .menu-simple a.active {
     color: #0c3c78;
     border-bottom: 1px solid #0c3c78;

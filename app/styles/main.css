@@ -19,20 +19,18 @@ main {
     margin: 0 auto;
 }
 
-a {
+a, a:visited {
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     text-decoration: none;
     background-color: transparent;
-    color: #04879c;
     cursor: pointer;
 }
 
 a:focus, a:hover {
     text-decoration: none;
-    color: #00adb5;
     outline: 0;
 }
 
@@ -60,30 +58,6 @@ code {
     padding: 0 10px;
     margin: 0;
     overflow: auto;
-}
-
-svg {
-    fill: #0c3c78;
-}
-
-.color-bg {
-    background-color: white;
-}
-
-.color-base {
-    color: #292929;
-    fill: #292929;
-}
-
-.color-offset {
-    color: #737373;
-    fill: #737373;
-}
-
-.color-primary,
-.color-secondary {
-    color: #0c3c78;
-    fill: #0c3c78;
 }
 
 .color-success {

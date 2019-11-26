@@ -65,7 +65,7 @@ const Countdown: React.FC<CountdownProps> = props => {
                     />
                 ) : null}
             </div>
-            <ul className="countdown color-secondary">
+            <ul className="countdown">
                 {renderTimeUnit(days, 'days')}
                 {renderTimeUnit(hours, 'hours')}
                 {renderTimeUnit(minutes, 'minutes')}

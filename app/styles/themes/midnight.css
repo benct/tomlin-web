@@ -3,30 +3,32 @@ body.midnight {
     color: #eeeeee;
 }
 
-.midnight .wrapper,
-.midnight .color-bg {
-    background-color: #393e46;
-}
-
 .midnight a,
 .midnight a:visited {
     color: #affaff;
 }
-
 .midnight a:focus,
 .midnight a:hover {
     color: #eeeeee;
 }
 
-.midnight .menu-simple a:hover,
+.midnight .menu-simple a,
 .midnight .menu-simple a:focus,
+.midnight .menu-simple a:visited {
+    color: #affaff;
+}
+.midnight .menu-simple a:hover,
 .midnight .menu-simple a.active {
     color: #affaff;
     border-bottom: 1px solid #00adb5;
 }
 
-.midnight .color-base,
-.midnight .color-secondary {
+.midnight .wrapper,
+.midnight .color-bg {
+    background-color: #393e46;
+}
+
+.midnight .color-base {
     color: #eeeeee;
     fill: #eeeeee;
 }

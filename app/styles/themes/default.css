@@ -1,0 +1,56 @@
+body.default {
+    background-color: #fafafa;
+    color: #292929;
+}
+
+.default a,
+.default a:visited {
+    color: #04879c;
+}
+.default a:focus,
+.default a:hover {
+    color: #00adb5;
+}
+
+.default .menu-simple a,
+.default .menu-simple a:focus,
+.default .menu-simple a:visited {
+    color: #0c3c78;
+}
+.default .menu-simple a:hover,
+.default .menu-simple a.active {
+    color: #0c3c78;
+    border-bottom: 1px solid #0c3c78;
+}
+
+.default .wrapper,
+.default .color-bg {
+    background-color: white;
+}
+
+.default .color-base {
+    color: #292929;
+    fill: #292929;
+}
+
+.default .color-offset {
+    color: #737373;
+    fill: #737373;
+}
+
+.default svg,
+.default .color-primary {
+    color: #0c3c78;
+    fill: #0c3c78;
+}
+
+.default .home-header,
+.default .home-sensors,
+.default .countdown {
+    color: #0c3c78;
+}
+
+.default .social svg,
+.default .home-sensors svg {
+    fill: #292929;
+}
