@@ -188,7 +188,7 @@ const MediaModal: React.FC<MediaModalProps> = props => {
                     <span>Episodes</span>
                     <span>
                         {props.data.number_of_episodes} (Seen:&nbsp;
-                        {props.data.seasons && calculateSeenEpisodes(props.data.seasons)}
+                        {props.data.seasons && calculateSeenEpisodes(props.data.seasons)})
                     </span>
                     {renderOptional('Type', props.data.series_type)}
                     <span>Status</span>
