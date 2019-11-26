@@ -76,7 +76,7 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
-            <VerticalBarSeries color={color} opacity={0.8} stroke="black" data={data} />
+            <VerticalBarSeries color={color} opacity={0.8} stroke="#aaa" data={data} />
         </FlexibleWidthXYPlot>
     );
 
@@ -109,7 +109,7 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
                         </div>
                         {renderStats(props.movie)}
                         {renderLineChart(`Rating (avg: ${props.movie.rating || '-'})`, '#006080', mapRatings(props.movie.ratings))}
-                        {renderBarChart('Release (decade)', '#006080', mapYears(props.movie.years))}
+                        {renderBarChart('Release (by decade)', '#006080', mapYears(props.movie.years))}
                     </div>
                     <div>
                         <div className="border-bottom pbs mam">
@@ -118,7 +118,7 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
                         </div>
                         {renderStats(props.tv)}
                         {renderLineChart(`Rating (avg: ${props.tv.rating || '-'})`, '#008060', mapRatings(props.tv.ratings))}
-                        {renderBarChart('First aired (decade)', '#008060', mapYears(props.tv.years))}
+                        {renderBarChart('First aired (by decade)', '#008060', mapYears(props.tv.years))}
                     </div>
                 </div>
             </Loading>
