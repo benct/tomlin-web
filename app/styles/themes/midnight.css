@@ -54,7 +54,8 @@ body.midnight {
     fill: #c32323;
 }
 
-.midnight .shadow {
+.midnight .shadow,
+.midnight .overlay-preview {
     background-color: rgba(57, 62, 70, 0.98);
 }
 
