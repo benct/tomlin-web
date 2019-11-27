@@ -44,13 +44,6 @@ const App: React.FC<AppStateProps & ThunkDispatchProp> = props => {
             <React.StrictMode>
                 <Header />
                 <main>
-                    {props.loading ? (
-                        <div className="overlay overlay-loading">
-                            <div className="overlay-container shadow">
-                                <div className="pac-man" />
-                            </div>
-                        </div>
-                    ) : null}
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/about" component={About} />
@@ -62,6 +55,13 @@ const App: React.FC<AppStateProps & ThunkDispatchProp> = props => {
                     </Switch>
                 </main>
                 <Footer />
+                {props.loading ? (
+                    <div className="overlay overlay-loading">
+                        <div className="overlay-container shadow">
+                            <div className="pac-man" />
+                        </div>
+                    </div>
+                ) : null}
                 {props.toast ? <div className="toast">{props.toast}</div> : null}
             </React.StrictMode>
         </Router>
