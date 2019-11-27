@@ -20,7 +20,7 @@ body.midnight {
 .midnight .menu-simple a:hover,
 .midnight .menu-simple a.active {
     color: #affaff;
-    border-bottom: 1px solid #00adb5;
+    border-bottom: 1px solid #00c5cd;
 }
 
 .midnight .menu-full a,
@@ -47,8 +47,8 @@ body.midnight {
 
 .midnight svg,
 .midnight .color-primary {
-    color: #00adb5;
-    fill: #00adb5;
+    color: #00c5cd;
+    fill: #00c5cd;
 }
 
 .midnight .color-success {
@@ -82,11 +82,11 @@ body.midnight {
 .midnight .input:hover,
 .midnight .input:active {
     color: white !important;
-    background-color: #00adb5;
+    background-color: #00c5cd;
 }
 
 .midnight .button-icon {
-    color: #00adb5;
+    color: #00c5cd;
 }
 .midnight .button-icon:hover,
 .midnight .button-icon:hover svg path {
