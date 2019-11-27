@@ -24,5 +24,5 @@ export function formatYears(type: string, start: string | null, end?: string | n
 }
 
 export function formatGradientHSL(count: number, total: number): string {
-    return `hsl(${Math.ceil((total > 0 ? count / total : 0) * 120)}, 1000%, 30%)`;
+    return `hsl(${Math.ceil((total > 0 ? count / total : 0) * 120)}, 1000%, 40%)`;
 }
