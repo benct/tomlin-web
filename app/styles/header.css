@@ -103,12 +103,6 @@ header::after {
     letter-spacing: 3px;
     text-transform: uppercase;
     padding: 3px 10px;
-    color: #fff;
-}
-
-.menu-full a:hover,
-.menu-full a.active {
-    color: #fff;
 }
 
 .menu-full a:before {
@@ -126,7 +120,7 @@ header::after {
     height: 100%;
     opacity: 0.75;
     z-index: -1;
-    background-color: #28c8a8;
+    background-color: #00adb5;
 }
 
 .menu-full a:hover:before,

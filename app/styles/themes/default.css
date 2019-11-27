@@ -23,6 +23,13 @@ body.default {
     border-bottom: 1px solid #0c3c78;
 }
 
+.default .menu-full a,
+.default .menu-full a:focus,
+.default .menu-full a:hover,
+.default .menu-full a.active {
+    color: white;
+}
+
 .default .wrapper,
 .default .color-bg {
     background-color: white;

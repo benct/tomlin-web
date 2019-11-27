@@ -23,6 +23,13 @@ body.midnight {
     border-bottom: 1px solid #00adb5;
 }
 
+.midnight .menu-full a,
+.midnight .menu-full a:focus,
+.midnight .menu-full a:hover,
+.midnight .menu-full a.active {
+    color: #eeeeee;
+}
+
 .midnight .wrapper,
 .midnight .color-bg {
     background-color: #393e46;
