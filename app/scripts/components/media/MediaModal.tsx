@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Icon from '@mdi/react';
+import { mdiApproximatelyEqualBox, mdiCloseCircleOutline, mdiDeleteOutline, mdiRefresh, mdiThumbUpOutline } from '@mdi/js';
 
 import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting';
 import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '../../interfaces';
@@ -114,26 +116,14 @@ const MediaModal: React.FC<MediaModalProps> = props => {
                 className="mlm pointer"
                 data-tooltip="Find similar"
                 onClick={props.close}>
-                <img
-                    className="valign-middle"
-                    src={require(`../../../images/icon/similar.svg`)}
-                    alt="Find similar"
-                    width={24}
-                    height={24}
-                />
+                <Icon path={mdiApproximatelyEqualBox} size="26px" title="Find similar" className="valign-middle" />
             </Link>
             <Link
                 to={`/media/search/${props.type}/recommended/1/${id}`}
                 className="mlm pointer"
                 data-tooltip="Recommendations"
                 onClick={props.close}>
-                <img
-                    className="valign-middle"
-                    src={require(`../../../images/icon/recommend.svg`)}
-                    alt="Recommendations"
-                    width={24}
-                    height={24}
-                />
+                <Icon path={mdiThumbUpOutline} size="26px" title="Recommendations" className="valign-middle" />
             </Link>
         </span>
     );
@@ -218,15 +208,15 @@ const MediaModal: React.FC<MediaModalProps> = props => {
             <div className="overlay-modal-content">{showSeasons ? renderSeasons() : renderContent()}</div>
             <div className="border-top ptm">
                 <button className="button-blank mrl" data-tooltip="Remove" onClick={props.remove}>
-                    <img src={require(`../../../images/icon/remove.svg`)} alt="Remove" width={22} height={22} />
+                    <Icon path={mdiDeleteOutline} size="28px" title="Update" />
                 </button>
                 <button className="button-blank mrl" data-tooltip="Update" onClick={props.update}>
-                    <img src={require(`../../../images/icon/refresh.svg`)} alt="Update" width={22} height={22} />
+                    <Icon path={mdiRefresh} size="28px" title="Update" />
                 </button>
                 <SeenIcon seen={props.data.seen} setSeen={props.setSeen} size="28px" className="mrl" />
                 <FavouriteIcon favourite={props.data.favourite} setFavourite={props.setFavourite} size="28px" />
-                <button className="button-blank text-small float-right man" onClick={props.close}>
-                    Close
+                <button className="button-blank float-right" data-tooltip="Close" onClick={props.close}>
+                    <Icon path={mdiCloseCircleOutline} size="28px" title="Close" />
                 </button>
             </div>
         </Modal>
