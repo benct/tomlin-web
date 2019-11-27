@@ -81,7 +81,7 @@ export const getNotes = (): ThunkResult<Promise<void>> => async (dispatch, getSt
     }
 };
 
-export const saveNote = (id: number, title: string, content: string): ThunkResult<Promise<void>> => async (
+export const saveNote = (id: number | undefined, title: string, content: string): ThunkResult<Promise<void>> => async (
     dispatch,
     getState
 ): Promise<void> => {
