@@ -44,6 +44,20 @@ body.default {
     fill: #0c3c78;
 }
 
+.default .color-success {
+    color: #008000;
+    fill: #008000;
+}
+
+.default .color-warn {
+    color: #800000;
+    fill: #800000;
+}
+
+.default .shadow {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
 .default .home-header,
 .default .home-sensors,
 .default .countdown {

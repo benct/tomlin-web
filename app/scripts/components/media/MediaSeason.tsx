@@ -6,7 +6,7 @@ import { MediaEpisodeEntry, MediaSeasonEntry, ThunkDispatchProp } from '../../in
 import { formatDate, formatGradientHSL } from '../../util/formatting';
 import { seenEpisode, seenEpisodes } from '../../actions/media';
 
-import { ViewIcon } from './MediaIcons';
+import { SeenIcon } from './MediaIcons';
 
 interface MediaSeasonProps {
     data: MediaSeasonEntry;
@@ -39,12 +39,12 @@ const MediaSeason: React.FC<MediaSeasonProps & ThunkDispatchProp> = ({ data, dis
                     <span className="text-small text-right">
                         {episode.release_date ? formatDate(episode.release_date, 'MMM do') : null}
                     </span>
-                    <button
-                        className="button-blank mrm"
-                        style={{ height: '22px' }}
-                        onClick={(): Promise<void> => dispatch(seenEpisode({ id: episode.id, set: !episode.seen }))}>
-                        <ViewIcon width={22} height={22} seen={episode.seen} />
-                    </button>
+                    <SeenIcon
+                        seen={episode.seen}
+                        setSeen={(): Promise<void> => dispatch(seenEpisode({ id: episode.id, set: !episode.seen }))}
+                        size="22px"
+                        className="mrm"
+                    />
                 </React.Fragment>
             )
         );

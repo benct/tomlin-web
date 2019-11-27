@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting';
 import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '../../interfaces';
 
-import { StarIcon, ViewIcon } from './MediaIcons';
+import { FavouriteIcon, SeenIcon } from './MediaIcons';
 import Modal from '../page/Modal';
 import MediaSeason from './MediaSeason';
 
@@ -223,12 +223,8 @@ const MediaModal: React.FC<MediaModalProps> = props => {
                 <button className="button-blank mrl" data-tooltip="Update" onClick={props.update}>
                     <img src={require(`../../../images/icon/refresh.svg`)} alt="Update" width={22} height={22} />
                 </button>
-                <button className="button-blank mrl" data-tooltip="Favourite" onClick={props.setFavourite}>
-                    <StarIcon width={24} height={24} favourite={props.data.favourite} />
-                </button>
-                <button className="button-blank" data-tooltip="Seen" onClick={props.setSeen}>
-                    <ViewIcon width={24} height={24} seen={props.data.seen} />
-                </button>
+                <SeenIcon seen={props.data.seen} setSeen={props.setSeen} size="28px" className="mrl" />
+                <FavouriteIcon favourite={props.data.favourite} setFavourite={props.setFavourite} size="28px" />
                 <button className="button-blank text-small float-right man" onClick={props.close}>
                     Close
                 </button>

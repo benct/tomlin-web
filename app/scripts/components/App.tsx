@@ -46,7 +46,7 @@ const App: React.FC<AppStateProps & ThunkDispatchProp> = props => {
                 <main>
                     {props.loading ? (
                         <div className="overlay overlay-loading">
-                            <div className="overlay-container shadow color-bg">
+                            <div className="overlay-container shadow">
                                 <div className="pac-man" />
                             </div>
                         </div>

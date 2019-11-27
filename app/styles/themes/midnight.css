@@ -44,6 +44,20 @@ body.midnight {
     fill: #00adb5;
 }
 
+.midnight .color-success {
+    color: #a3f7bf;
+    fill: #a3f7bf;
+}
+
+.midnight .color-warn {
+    color: #c32323;
+    fill: #c32323;
+}
+
+.midnight .shadow {
+    background-color: rgba(57, 62, 70, 0.98);
+}
+
 .midnight .home-title,
 .midnight .countdown-title {
     text-shadow: none;

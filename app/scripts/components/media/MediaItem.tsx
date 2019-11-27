@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting';
-
-import { StarIcon, ViewIcon } from './MediaIcons';
 import { MediaItemEntry, MediaType } from '../../interfaces';
+
+import { FavouriteIcon, SeenIcon } from './MediaIcons';
 
 const defaultPoster = require('../../../images/media/poster.png');
 
@@ -71,12 +71,8 @@ const MediaItem: React.FC<MediaItemProps> = props => {
                 {formatYears(props.type, props.data.release_year, props.data.end_year)}
             </div>
             <div className="media-external">
-                <button className="button-blank mrm" data-tooltip="Seen" onClick={props.setSeen}>
-                    <ViewIcon width={24} seen={props.data.seen} />
-                </button>
-                <button className="button-blank" data-tooltip="Favourite" onClick={props.setFavourite}>
-                    <StarIcon width={24} favourite={props.data.favourite} />
-                </button>
+                <SeenIcon seen={props.data.seen} setSeen={props.setSeen} className="mrm" />
+                <FavouriteIcon favourite={props.data.favourite} setFavourite={props.setFavourite} />
             </div>
         </div>
     );

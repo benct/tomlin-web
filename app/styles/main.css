@@ -58,14 +58,6 @@ code {
     overflow: auto;
 }
 
-.color-success {
-    color: #008000;
-}
-
-.color-warn {
-    color: #800000;
-}
-
 .float-left {
     float: left;
 }
