@@ -122,7 +122,4 @@ const mapDispatchToProps = (
     resetPagination: (): Action => dispatch(paginationActions.reset()),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MediaSearch);
+export default connect(mapStateToProps, mapDispatchToProps)(MediaSearch);

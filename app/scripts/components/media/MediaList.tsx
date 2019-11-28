@@ -187,7 +187,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatchFunc, ownProps: RouteComponen
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MediaList);
+export default connect(mapStateToProps, mapDispatchToProps)(MediaList);
