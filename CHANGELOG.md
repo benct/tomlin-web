@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.13.0] - 2019-11-28 - *Themes, Dark Mode*
+### Added
+- Basic CSS theming support
+- Dark mode theme (midnight)
+
+### Changed
+- Use React's useRef rather than createRef
+- Refactor and use more React Hooks
+- Improve webpack bundling of CSS assets
+- Refactor header and footer as separate components
+- Refactor and replace many media icons
+
+### Fixed
+- Not possible to save new notes
+
+### Removed
+- Circle version and toggling of social icons
+- Home state and media icon files
+
 ## [2.12.0] - 2019-10-21 - *Redux Boilerplate, React Hooks*
 ### Added
 - Redefined actions using redux-actions package
