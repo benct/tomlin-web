@@ -1,13 +1,8 @@
 import React from 'react';
-import { Action } from 'redux';
-import { connect } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiAt, mdiFacebook, mdiGithubCircle, mdiInstagram, mdiLinkedin } from '@mdi/js';
 
-import { ThunkDispatchProp } from '../../interfaces';
-import actions from '../../actions/base';
-
-const Footer: React.FC<ThunkDispatchProp> = ({ dispatch }): React.ReactElement => (
+const Footer: React.FC = (): React.ReactElement => (
     <footer className="color-bg">
         <div className="social text-center">
             <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">
@@ -26,16 +21,8 @@ const Footer: React.FC<ThunkDispatchProp> = ({ dispatch }): React.ReactElement =
                 <Icon path={mdiAt} size={1} title="E-mail" className="valign-middle" />
             </a>
         </div>
-        <div className="text mtl">
-            <span
-                className="pointer no-select color-offset"
-                onClick={(): Action => dispatch(actions.toggleTheme())}
-                role="button"
-                tabIndex={-1}>
-                Ben Tomlin © 2019
-            </span>
-        </div>
+        <div className="text color-offset no-select mtl">Ben Tomlin © 2019</div>
     </footer>
 );
 
-export default connect()(React.memo(Footer));
+export default React.memo(Footer);

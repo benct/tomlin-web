@@ -3,12 +3,12 @@ body.default {
     color: #292929;
 }
 
-.default a,
-.default a:visited {
+.default a:not(.input),
+.default a:not(.input):visited {
     color: #04879c;
 }
-.default a:focus,
-.default a:hover {
+.default a:not(.input):focus,
+.default a:not(.input):hover {
     color: #00c5cd;
 }
 

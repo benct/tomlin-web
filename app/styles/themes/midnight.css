@@ -3,12 +3,12 @@ body.midnight {
     color: #eeeeee;
 }
 
-.midnight a,
-.midnight a:visited {
+.midnight a:not(.input),
+.midnight a:not(.input):visited {
     color: #affaff;
 }
-.midnight a:focus,
-.midnight a:hover {
+.midnight a:not(.input):focus,
+.midnight a:not(.input):hover {
     color: #eeeeee;
 }
 
