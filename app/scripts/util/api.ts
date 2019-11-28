@@ -31,7 +31,7 @@ function buildForm(data: DataObject, files?: FormData): FormData {
             formData.append(key, data[key]);
         }
     }
-    formData.append('token', localStorage.token);
+    formData.append('token', localStorage.getItem('token') || '');
     return formData;
 }
 

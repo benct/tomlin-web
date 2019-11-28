@@ -12,7 +12,7 @@ interface SuspendedProps {
     extraProps?: object;
 }
 
-const isLoggedIn = (): boolean => !!localStorage.token;
+const isLoggedIn = (): boolean => !!localStorage.getItem('token');
 
 const SuspendedRoute: React.FC<SuspendedProps> = ({ path, component: Component, requireAuth, extraProps }): React.ReactElement => (
     <Route

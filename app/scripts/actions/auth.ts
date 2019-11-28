@@ -16,11 +16,11 @@ export const validate = (): ThunkResult<Promise<void>> => async (dispatch): Prom
     await post<string>({ service: 'auth', action: 'validate', referrer: document.referrer })
         .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
         .then(token => {
-            localStorage.token = token;
+            localStorage.setItem('token', token);
             dispatch(actions.setLoggedIn(true));
         })
         .catch(() => {
-            delete localStorage.token;
+            localStorage.removeItem('token');
             dispatch(actions.setLoggedIn(false));
         });
 
@@ -30,17 +30,17 @@ export const login = (data: object): ThunkResult<Promise<void>> => async (dispat
     await post<string>({ service: 'auth', action: 'login', ...data })
         .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
         .then(token => {
-            localStorage.token = token;
+            localStorage.setItem('token', token);
             dispatch(actions.setLoginData({ isLoggedIn: true, redirect: true, error: false }));
         })
         .catch(() => {
-            delete localStorage.token;
+            localStorage.removeItem('token');
             dispatch(actions.setLoginData({ isLoggedIn: false, redirect: false, error: true }));
         });
 };
 
 export const logout = (): ThunkResult<void> => (dispatch): void => {
-    delete localStorage.token;
+    localStorage.removeItem('token');
     dispatch(actions.setLoginData({ isLoggedIn: false, redirect: false }));
 };
 
