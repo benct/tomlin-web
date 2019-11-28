@@ -41,6 +41,7 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         name: '.htaccess',
+                        esModule: false,
                     },
                 },
             },
@@ -50,30 +51,33 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         name: '[name].[ext]',
+                        esModule: false,
                     },
                 },
             },
             {
                 test: /\.(xml|json|txt)$/,
-                include: /content|images|manifest|scripts|styles/,
+                include: /images|manifest|scripts|styles/,
                 type: 'javascript/auto',
                 use: {
                     loader: 'file-loader',
                     options: {
                         name: '[path][name].[ext]',
                         outputPath: 'assets/',
+                        esModule: false,
                     },
                 },
             },
             {
                 test: /\.(jpe?g|png|svg|gif)$/,
-                include: /content|images|manifest|scripts|styles/,
+                include: /images|manifest|scripts|styles/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
                             name: '[path][name].[ext]',
                             outputPath: 'assets/',
+                            esModule: false,
                         },
                     },
                     'image-webpack-loader',
