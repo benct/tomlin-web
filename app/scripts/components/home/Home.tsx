@@ -35,7 +35,7 @@ const Home: React.FC<HomeProps> = ({ theme, dispatch }): React.ReactElement => (
                     href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
                     target="_blank"
                     rel="noopener noreferrer">
-                    2.12.0
+                    2.13.0
                 </a>
             </div>
         </div>
