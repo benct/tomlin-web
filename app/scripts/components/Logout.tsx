@@ -12,7 +12,7 @@ const Logout: React.FC<RouteComponentProps & ThunkDispatchProp> = ({ history, di
         window.setTimeout((): void => history.push('/'), 3000);
     }, []);
 
-    return <div className="wrapper text">You have been logged out!</div>;
+    return <div className="wrapper min-height text">You have been logged out!</div>;
 };
 
 export default connect()(withRouter(Logout));

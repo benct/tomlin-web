@@ -25,7 +25,7 @@ const menu: NavigationItem[] = [
 const Admin: React.FC = (): React.ReactElement => (
     <>
         <Navigation type="sub" data={menu} />
-        <div className="wrapper ptm">
+        <div className="wrapper min-height ptm">
             <Switch>
                 <Route path="/admin" exact component={Control} />
                 <Route path="/admin/logs" component={Logs} />

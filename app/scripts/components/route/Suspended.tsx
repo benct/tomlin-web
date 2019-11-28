@@ -19,7 +19,7 @@ const SuspendedRoute: React.FC<SuspendedProps> = ({ path, component: Component, 
         path={path}
         render={(props: RouteProps): React.ReactElement =>
             !requireAuth || isLoggedIn() ? (
-                <React.Suspense fallback={<Loading isLoading className="wrapper" />}>
+                <React.Suspense fallback={<Loading isLoading className="wrapper min-height" />}>
                     <Component {...props} {...extraProps} />
                 </React.Suspense>
             ) : (

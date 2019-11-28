@@ -58,6 +58,10 @@ code {
     overflow: auto;
 }
 
+.min-height {
+    min-height: 250px;
+}
+
 .float-left {
     float: left;
 }

@@ -21,7 +21,7 @@ const menu: NavigationItem[] = [
 const Media: React.FC = (): React.ReactElement => (
     <>
         <Navigation type="sub" data={menu} />
-        <div className="wrapper ptm">
+        <div className="wrapper min-height ptm">
             <Switch>
                 <Route path="/media" exact component={Stats} />
                 <SuspendedRoute path="/media/:type(movie|tv|watchlist)/:page?" component={MediaList} requireAuth />
