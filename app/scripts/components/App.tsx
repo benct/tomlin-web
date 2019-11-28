@@ -37,6 +37,7 @@ const App: React.FC<AppStateProps & ThunkDispatchProp> = props => {
     React.useEffect(() => {
         document.body.classList.remove('default', 'midnight');
         document.body.classList.add(props.theme);
+        localStorage.setItem('theme', props.theme);
     }, [props.theme]);
 
     return (
