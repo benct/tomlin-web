@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { AdminStats, DefaultState, ThunkDispatchProp } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
-import { clearLogs, getLogs, getStats, updateIata, updateMedia, updatePosters } from '../../actions/admin';
+import { clearLogs, getLogs, getStats, setCountdown, updateIata, updateMedia, updatePosters } from '../../actions/admin';
 
 interface ControlProps {
     stats: AdminStats;
@@ -14,6 +14,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
     const logCount = React.useRef<HTMLSelectElement>(null);
     const updateMovieCount = React.useRef<HTMLSelectElement>(null);
     const updateTvCount = React.useRef<HTMLSelectElement>(null);
+    const countdownTarget = React.useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
         if (!stats.log) {
@@ -57,6 +58,16 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                     <br />
                     Logs: {formatStat('log')}
                 </div>
+            </div>
+            <hr className="divider" />
+            <div className="admin-list text text-left">
+                <span className="truncate">Set countdown target</span>
+                <input className="input input-small" type="datetime-local" ref={countdownTarget} />
+                <button
+                    className="input input-small"
+                    onClick={(): Promise<void> => dispatch(setCountdown(countdownTarget.current && countdownTarget.current.value))}>
+                    Set
+                </button>
             </div>
             <hr className="divider" />
             <div className="admin-list text text-left">

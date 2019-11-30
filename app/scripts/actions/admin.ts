@@ -96,7 +96,7 @@ export const saveNote = (id: number | undefined, title: string, content: string)
 };
 
 export const deleteNote = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
-    if (getState().auth.isLoggedIn && confirm(`Are you sure you want to delete this note?`)) {
+    if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this note?')) {
         await load({ service: 'notes', action: 'delete', id })
             .then(() => {
                 dispatch(getNotes());
@@ -126,13 +126,21 @@ export const saveFlight = (data: object): ThunkResult<Promise<void>> => async (d
 };
 
 export const deleteFlight = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
-    if (getState().auth.isLoggedIn && confirm(`Are you sure you want to delete this flight?`)) {
+    if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this flight?')) {
         await load({ service: 'iata', action: 'delete', id })
             .then(() => {
                 dispatch(getFlights());
                 dispatch(showToast('Successfully deleted flight!'));
             })
             .catch(() => dispatch(showToast('Could not delete flight...')));
+    }
+};
+
+export const setCountdown = (datetime: string | null): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn && confirm('Are you sure you want to set a new countdown target?')) {
+        await load({ service: 'settings', action: 'set', key: 'countdown', value: datetime })
+            .then(() => dispatch(showToast('Successfully set new countdown target!')))
+            .catch(() => dispatch(showToast('Could not set countdown target...')));
     }
 };
 
