@@ -17,10 +17,10 @@ about Webpack, Babel, Node/NPM/Yarn and other web development technologies.
 
  - Clone repo using `git clone https://github.com/benct/tomlin-web.git`
  - Run `yarn install` to install dependencies.<br />
+ - Run `yarn start` to start the app locally for testing.<br/>
+   *At this point the app is running on `http://localhost:8080`.*
  - Run `yarn build` to build the app. Output in `dist` folder.
  - Run `yarn build-prod` to build the app for production.
- - Run `yarn test` to start the app locally for testing.<br/>
-   *At this point you can see the app at `http://localhost:8080`.*
  - Run `yarn lint` to check for code style issues.
  - Run `yarn clean` to clean/delete the output directory.
 
