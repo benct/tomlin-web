@@ -26,6 +26,8 @@ actions.refreshQuote = makeAction('BASE/REFRESH_QUOTE', state => ({
     },
 }));
 
+actions.setSettings = makeAction('BASE/SET_SETTINGS', 'settings');
+
 actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 
 export const showToast = (payload: string): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {

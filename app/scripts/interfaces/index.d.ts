@@ -9,6 +9,7 @@ export interface DefaultState {
     loading: boolean;
     loadingOverlay: boolean;
 
+    settings: Settings;
     auth: AuthState;
     home: HomeState;
     quote: QuoteState;
@@ -17,6 +18,10 @@ export interface DefaultState {
     media: MediaState;
     admin: AdminState;
     pagination: PaginationState;
+}
+
+export interface Settings {
+    [key: string]: string;
 }
 
 export interface AuthState {

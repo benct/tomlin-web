@@ -10,6 +10,8 @@ const defaultState: DefaultState = {
     loading: false,
     loadingOverlay: false,
 
+    settings: {},
+
     auth: {
         isLoggedIn: false,
         redirect: false,

@@ -1,8 +1,14 @@
 import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
-import { AuthState, ThunkResult } from '../interfaces';
+import { AuthState, Settings, ThunkResult } from '../interfaces';
 
 import { post } from '../util/api';
+import baseActions from './base';
+
+interface ValidateResponse {
+    token: string | null;
+    settings: Settings;
+}
 
 const actions: ActionsObject<AuthState> = {};
 
@@ -13,8 +19,11 @@ actions.setLoading = makeAction('AUTH/SET_LOADING', 'loading');
 actions.setLoginData = makeAction('AUTH/SET_LOGIN_DATA', (state, { payload }) => ({ ...state, ...payload, loading: false }));
 
 export const validate = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> =>
-    await post<string>({ service: 'auth', action: 'validate', referrer: document.referrer })
-        .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
+    await post<ValidateResponse>({ service: 'auth', action: 'validate', referrer: document.referrer })
+        .then(response => {
+            dispatch(baseActions.setSettings(response.settings));
+            return response.token ? Promise.resolve(response.token) : Promise.reject();
+        })
         .then(token => {
             localStorage.setItem('token', token);
             dispatch(actions.setLoggedIn(true));
@@ -28,7 +37,7 @@ export const login = (data: object): ThunkResult<Promise<void>> => async (dispat
     dispatch(actions.setLoading(true));
 
     await post<string>({ service: 'auth', action: 'login', ...data })
-        .then((response): Promise<string> => (response ? Promise.resolve(response) : Promise.reject()))
+        .then(token => (token ? Promise.resolve(token) : Promise.reject()))
         .then(token => {
             localStorage.setItem('token', token);
             dispatch(actions.setLoginData({ isLoggedIn: true, redirect: true, error: false }));
