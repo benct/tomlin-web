@@ -12,9 +12,9 @@ import Quote from './Quote';
 
 import '../../../styles/home.css';
 
-type HomeProps = Pick<DefaultState, 'theme'> & ThunkDispatchProp;
+type HomeProps = Pick<DefaultState, 'theme' | 'settings'> & ThunkDispatchProp;
 
-const Home: React.FC<HomeProps> = ({ theme, dispatch }): React.ReactElement => (
+const Home: React.FC<HomeProps> = ({ theme, settings, dispatch }): React.ReactElement => (
     <>
         <div className="wrapper text">
             <h2 className="home-title color-primary mbm">Hello</h2>
@@ -42,10 +42,10 @@ const Home: React.FC<HomeProps> = ({ theme, dispatch }): React.ReactElement => (
         <hr />
         <State />
         <hr />
-        <Countdown day={24} month={12} title="Countdown to something..." icon="christmas" />
+        <Countdown title="Countdown to something..." timestamp={settings.countdownTarget} icon={settings.countdownIcon} />
         <hr />
         <Quote />
     </>
 );
 
-export default connect((state: DefaultState) => ({ theme: state.theme }))(React.memo(Home));
+export default connect((state: DefaultState) => ({ theme: state.theme, settings: state.settings }))(React.memo(Home));

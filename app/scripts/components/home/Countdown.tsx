@@ -2,22 +2,13 @@ import React from 'react';
 
 interface CountdownProps {
     title: string;
-    day: number;
-    month: number;
-    year?: number;
-    hour?: number;
+    timestamp?: string;
     icon?: string;
 }
 
-const toDate = (hour: number, day: number, month: number, year?: number): Date => {
-    const now = new Date();
-    const y = year || now.getFullYear() + (month > now.getMonth() || (month === now.getMonth() && day > now.getDate()) ? 0 : 1);
-    return new Date(y, month - 1, day, hour);
-};
-
-const Countdown: React.FC<CountdownProps> = props => {
+const Countdown: React.FC<CountdownProps> = ({ title, timestamp, icon }) => {
     const interval = React.useRef<number>(0);
-    const countdownTo = React.useRef<Date>(toDate(props.hour || 0, props.day, props.month, props.year));
+    const countdownTarget = React.useRef<Date | null>(null);
 
     const [days, setDays] = React.useState<number>(0);
     const [hours, setHours] = React.useState<number>(0);
@@ -25,15 +16,19 @@ const Countdown: React.FC<CountdownProps> = props => {
     const [seconds, setSeconds] = React.useState<number>(0);
 
     React.useEffect(() => {
+        countdownTarget.current = timestamp ? new Date(timestamp) : null;
+
         const timeComponent = (x: number, v: number): number => Math.floor(x / v);
 
         const calculateCountdown = (): void => {
-            const timestamp = (countdownTo.current.getTime() - Date.now()) / 1000;
+            if (countdownTarget.current) {
+                const timestamp = (countdownTarget.current.getTime() - Date.now()) / 1000;
 
-            setDays(timeComponent(timestamp, 24 * 60 * 60));
-            setHours(timeComponent(timestamp, 60 * 60) % 24);
-            setMinutes(timeComponent(timestamp, 60) % 60);
-            setSeconds(timeComponent(timestamp, 1) % 60);
+                setDays(timeComponent(timestamp, 24 * 60 * 60));
+                setHours(timeComponent(timestamp, 60 * 60) % 24);
+                setMinutes(timeComponent(timestamp, 60) % 60);
+                setSeconds(timeComponent(timestamp, 1) % 60);
+            }
         };
 
         calculateCountdown();
@@ -42,7 +37,7 @@ const Countdown: React.FC<CountdownProps> = props => {
         return (): void => {
             window.clearInterval(interval.current);
         };
-    }, []);
+    }, [timestamp]);
 
     const renderTimeUnit = (time: number, unit: string): React.ReactElement => (
         <li className="countdown-time-wrap">
@@ -54,11 +49,11 @@ const Countdown: React.FC<CountdownProps> = props => {
     return (
         <div className="wrapper text-center">
             <div className="countdown-title color-primary">
-                {props.title}{' '}
-                {props.icon ? (
+                {title}{' '}
+                {icon ? (
                     <img
-                        src={require(`../../../images/icon/${props.icon}.svg`)}
-                        alt="countdown"
+                        src={require(`../../../images/icon/${icon}.svg`)}
+                        alt={icon}
                         width={26}
                         height={26}
                         style={{ verticalAlign: 'top' }}
