@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { AdminStats, DefaultState, ThunkDispatchProp } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
-import { clearLogs, getLogs, getStats, setCountdown, updateIata, updateMedia, updatePosters } from '../../actions/admin';
+import { clearLogs, getLogs, getStats, saveSetting, updateIata, updateMedia, updatePosters } from '../../actions/admin';
 
 interface ControlProps {
     stats: AdminStats;
@@ -14,6 +14,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
     const logCount = React.useRef<HTMLSelectElement>(null);
     const updateMovieCount = React.useRef<HTMLSelectElement>(null);
     const updateTvCount = React.useRef<HTMLSelectElement>(null);
+    const countdownIcon = React.useRef<HTMLSelectElement>(null);
     const countdownTarget = React.useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
@@ -24,7 +25,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
 
     const formatStat = (key: string): string => (stats[key] !== undefined ? formatThousands(stats[key]) : '-');
 
-    const getInputValue = (field: HTMLSelectElement | null): number | undefined => (field ? Number(field.value) : undefined);
+    const getCount = (field: HTMLSelectElement | null): number | undefined => (field ? Number(field.value) : undefined);
 
     const renderOptions = (values: number[]): React.ReactElement[] =>
         values.map(
@@ -61,11 +62,27 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
             </div>
             <hr className="divider" />
             <div className="admin-list text text-left">
+                <span className="truncate">Set countdown icon</span>
+                <select className="input input-small" defaultValue="birthday" ref={countdownIcon}>
+                    <option value="birthday">Birthday</option>
+                    <option value="christmas">Christmas</option>
+                    <option value="anniversary">Anniversary</option>
+                    <option value="wedding">Wedding</option>
+                </select>
+                <button
+                    className="input input-small"
+                    onClick={(): Promise<void> =>
+                        dispatch(saveSetting('countdownIcon', countdownIcon.current && countdownIcon.current.value))
+                    }>
+                    Set
+                </button>
                 <span className="truncate">Set countdown target</span>
                 <input className="input input-small" type="datetime-local" ref={countdownTarget} />
                 <button
                     className="input input-small"
-                    onClick={(): Promise<void> => dispatch(setCountdown(countdownTarget.current && countdownTarget.current.value))}>
+                    onClick={(): Promise<void> =>
+                        dispatch(saveSetting('countdownTarget', countdownTarget.current && countdownTarget.current.value))
+                    }>
                     Set
                 </button>
             </div>
@@ -82,7 +99,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 </select>
                 <button
                     className="input input-small"
-                    onClick={(): Promise<void> => dispatch(updateMedia('movie', getInputValue(updateMovieCount.current)))}>
+                    onClick={(): Promise<void> => dispatch(updateMedia('movie', getCount(updateMovieCount.current)))}>
                     Run
                 </button>
                 <span className="truncate">Update number of stored tv-shows</span>
@@ -91,7 +108,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 </select>
                 <button
                     className="input input-small"
-                    onClick={(): Promise<void> => dispatch(updateMedia('tv', getInputValue(updateTvCount.current)))}>
+                    onClick={(): Promise<void> => dispatch(updateMedia('tv', getCount(updateTvCount.current)))}>
                     Run
                 </button>
             </div>
@@ -119,7 +136,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 <select className="input input-small" defaultValue="25" ref={logCount}>
                     {renderOptions([10, 25, 50, 100, 250, 500])}
                 </select>
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(getLogs(getInputValue(logCount.current)))}>
+                <button className="input input-small" onClick={(): Promise<void> => dispatch(getLogs(getCount(logCount.current)))}>
                     Load
                 </button>
             </div>

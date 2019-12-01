@@ -136,11 +136,11 @@ export const deleteFlight = (id: number): ThunkResult<Promise<void>> => async (d
     }
 };
 
-export const setCountdown = (datetime: string | null): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
-    if (getState().auth.isLoggedIn && confirm('Are you sure you want to set a new countdown target?')) {
-        await load({ service: 'settings', action: 'set', key: 'countdown', value: datetime })
-            .then(() => dispatch(showToast('Successfully set new countdown target!')))
-            .catch(() => dispatch(showToast('Could not set countdown target...')));
+export const saveSetting = (key: string, value: string | null): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn && confirm('Are you sure you want to change this setting?')) {
+        await load({ service: 'settings', action: 'set', key, value })
+            .then(() => dispatch(showToast('Successfully saved settings!')))
+            .catch(() => dispatch(showToast('Could not save settings...')));
     }
 };
 
