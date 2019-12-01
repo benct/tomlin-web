@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { AdminStats, DefaultState, ThunkDispatchProp } from '../../interfaces';
+import { AdminStats, DefaultState, Settings, ThunkDispatchProp } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
 import { clearLogs, getLogs, getStats, saveSetting, updateIata, updateMedia, updatePosters } from '../../actions/admin';
 
 interface ControlProps {
     stats: AdminStats;
     isLoggedIn: boolean;
+    settings: Settings;
 }
 
-const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn, dispatch }) => {
+const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn, settings, dispatch }) => {
     const logCount = React.useRef<HTMLSelectElement>(null);
     const updateMovieCount = React.useRef<HTMLSelectElement>(null);
     const updateTvCount = React.useRef<HTMLSelectElement>(null);
@@ -63,7 +64,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
             <hr className="divider" />
             <div className="admin-list text text-left">
                 <span className="truncate">Set countdown icon</span>
-                <select className="input input-small" defaultValue="birthday" ref={countdownIcon}>
+                <select className="input input-small" defaultValue={settings.countdownIcon} ref={countdownIcon}>
                     <option value="birthday">Birthday</option>
                     <option value="christmas">Christmas</option>
                     <option value="anniversary">Anniversary</option>
@@ -77,7 +78,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                     Set
                 </button>
                 <span className="truncate">Set countdown target</span>
-                <input className="input input-small" type="datetime-local" ref={countdownTarget} />
+                <input className="input input-small" type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
                 <button
                     className="input input-small"
                     onClick={(): Promise<void> =>
@@ -144,4 +145,6 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
     );
 };
 
-export default connect((state: DefaultState): ControlProps => ({ stats: state.admin.stats, isLoggedIn: state.auth.isLoggedIn }))(Control);
+export default connect(
+    (state: DefaultState): ControlProps => ({ stats: state.admin.stats, isLoggedIn: state.auth.isLoggedIn, settings: state.settings })
+)(Control);
