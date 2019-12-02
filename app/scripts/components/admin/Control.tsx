@@ -67,6 +67,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 <select className="input input-small" defaultValue={settings.countdownIcon} ref={countdownIcon}>
                     <option value="birthday">Birthday</option>
                     <option value="christmas">Christmas</option>
+                    <option value="newyear">New Year</option>
                     <option value="anniversary">Anniversary</option>
                     <option value="wedding">Wedding</option>
                 </select>
