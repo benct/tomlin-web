@@ -140,7 +140,7 @@ All notable changes to this project will be documented in this file.
 - Stored media search functionality
 
 ### Changed
-- New API url `api.tomlin.no`
+- New API url: api.tomlin.no
 - Update files and auth service parameters
 - Minor text changes in admin view
 - Simplify and clean up form CSS
@@ -251,7 +251,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Menu icon on small screens
 
-## [2.7.1] - 2018-10-21 - *Redux!*
+## [2.7.1] - 2018-10-21 - *Redux*
 ### Added
 - App-wide state handling using Redux
 - Proper pagination with page numbers
@@ -345,7 +345,7 @@ All notable changes to this project will be documented in this file.
 - Removed unnecessary main.js setup file
 - Transition effects on components
 
-## [2.4.0] - 2018-09-14 - *The Prettier Update*
+## [2.4.0] - 2018-09-14 - *Prettier*
 ### Added
 - Prettier code style
 
@@ -376,9 +376,10 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Link to invalid path
 
-## [2.2.0] - ? - *The Unknown*
+## [2.2.0] - ? - *Unknown?*
 ### Changed
 - Not quite sure...
+- Probably upgrades and cleanup
 
 ## [2.1.0] - 2018-01-14 - *Package Upgrades*
 ### Added
