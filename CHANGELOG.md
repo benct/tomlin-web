@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.13.1] - 2019-12-01 - *Theme Persistence*
+### Added
+- Persist theme selection in localStorage
+- Set countdown target from admin control view
+
+### Changed
+- Receive and handle site settings in validation response
+- Use correct methods for interacting with localStorage
+- Rename yarn task for running the app
+
+### Fixed
+- Blank background gap on components with low height
+
 ## [2.13.0] - 2019-11-28 - *Themes, Dark Mode*
 ### Added
 - Basic CSS theming support
