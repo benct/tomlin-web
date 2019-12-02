@@ -11,7 +11,6 @@ import State from './State';
 import Quote from './Quote';
 
 import '../../../styles/home.css';
-import Loading from '../page/Loading';
 
 type HomeProps = Pick<DefaultState, 'theme' | 'settings'> & ThunkDispatchProp;
 
@@ -48,7 +47,7 @@ const Home: React.FC<HomeProps> = ({ theme, settings, dispatch }): React.ReactEl
             <hr />
             <Quote />
             {showChangelog && (
-                <React.Suspense fallback={<Loading isLoading className="wrapper" />}>
+                <React.Suspense fallback={null}>
                     <Changelog close={(): void => setShowChangelog(false)} />
                 </React.Suspense>
             )}
