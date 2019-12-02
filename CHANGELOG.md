@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.13.2] - 2019-12-02 - *Changelog View*
+### Added
+- Changelog view in modal overlay
+- Support for markdown content
+- No-icon and New Year's countdown options
+
+### Removed
+- Redundant dynamic import types
+
 ## [2.13.1] - 2019-12-01 - *Theme Persistence*
 ### Added
 - Persist theme selection in localStorage
