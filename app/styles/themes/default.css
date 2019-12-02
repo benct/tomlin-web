@@ -68,7 +68,9 @@ body.default {
 
 .default .home-header,
 .default .home-sensors,
-.default .countdown {
+.default .countdown,
+.default .changelog h1,
+.default .changelog h2 {
     color: #0c3c78;
 }
 

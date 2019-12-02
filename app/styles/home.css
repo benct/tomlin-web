@@ -91,6 +91,14 @@
     margin-top: 5px;
 }
 
+.changelog {
+    font-size: 0.9rem;
+}
+
+.changelog h1 {
+    margin-top: 0;
+}
+
 @media screen and (max-width: 767px) {
     .home-container {
         grid-template-columns: 1fr 1.5fr;

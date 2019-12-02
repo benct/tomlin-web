@@ -71,6 +71,11 @@ body.midnight {
     text-shadow: none;
 }
 
+.midnight .changelog h1,
+.midnight .changelog h2 {
+    color: #00c5cd;
+}
+
 .midnight .input,
 .midnight .input-textarea,
 .midnight .pure-form input,
