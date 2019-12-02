@@ -8,8 +8,8 @@ import Stats from './MediaStats';
 
 import '../../../styles/media.css';
 
-const MediaSearch = React.lazy((): Promise<any> => import('./MediaSearch'));
-const MediaList = React.lazy((): Promise<any> => import('./MediaList'));
+const MediaSearch = React.lazy(() => import('./MediaSearch'));
+const MediaList = React.lazy(() => import('./MediaList'));
 
 const menu: NavigationItem[] = [
     { text: 'Movies', path: '/media/movie' },

@@ -14,7 +14,7 @@ import '../../../styles/home.css';
 
 type HomeProps = Pick<DefaultState, 'theme' | 'settings'> & ThunkDispatchProp;
 
-const Changelog = React.lazy((): Promise<any> => import('./Changelog'));
+const Changelog = React.lazy(() => import('./Changelog'));
 
 const Home: React.FC<HomeProps> = ({ theme, settings, dispatch }): React.ReactElement => {
     const [showChangelog, setShowChangelog] = React.useState(false);

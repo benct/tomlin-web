@@ -24,8 +24,8 @@ import '../../styles/util.css';
 import '../../styles/themes/default.css';
 import '../../styles/themes/midnight.css';
 
-const Media = React.lazy((): Promise<any> => import('./media/Media'));
-const Admin = React.lazy((): Promise<any> => import('./admin/Admin'));
+const Media = React.lazy(() => import('./media/Media'));
+const Admin = React.lazy(() => import('./admin/Admin'));
 
 type AppStateProps = Pick<DefaultState, 'toast' | 'theme' | 'loading'>;
 

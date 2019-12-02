@@ -10,9 +10,9 @@ import Visits from './Visits';
 
 import '../../../styles/admin.css';
 
-const Flights = React.lazy((): Promise<any> => import('../flights/Flights'));
-const Notes = React.lazy((): Promise<any> => import('../notes/Notes'));
-const Files = React.lazy((): Promise<any> => import('../files/Files'));
+const Flights = React.lazy(() => import('../flights/Flights'));
+const Notes = React.lazy(() => import('../notes/Notes'));
+const Files = React.lazy(() => import('../files/Files'));
 
 const menu: NavigationItem[] = [
     { text: 'Logs', path: '/admin/logs' },

@@ -3,7 +3,7 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import Loading from '../page/Loading';
 
-type SuspendedComponent = typeof React.Component | React.FunctionComponent | React.LazyExoticComponent<React.ComponentType>;
+type SuspendedComponent = typeof React.Component | React.FunctionComponent | React.LazyExoticComponent<any>;
 
 interface SuspendedProps {
     path: string;
