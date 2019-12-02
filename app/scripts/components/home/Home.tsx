@@ -36,7 +36,7 @@ const Home: React.FC<HomeProps> = ({ theme, settings, dispatch }): React.ReactEl
                 <div className="home-info text-small">
                     Version
                     <button className="input input-small" onClick={(): void => setShowChangelog(!showChangelog)}>
-                        2.13.1
+                        2.13.2
                     </button>
                 </div>
             </div>
