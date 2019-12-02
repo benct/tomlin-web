@@ -28,6 +28,9 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
 
     const getCount = (field: HTMLSelectElement | null): number | undefined => (field ? Number(field.value) : undefined);
 
+    const getValue = (field: HTMLSelectElement | HTMLInputElement | null): string | null =>
+        field && field.value !== 'none' ? field.value : null;
+
     const renderOptions = (values: number[]): React.ReactElement[] =>
         values.map(
             (opt, idx): React.ReactElement => (
@@ -63,8 +66,9 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
             </div>
             <hr className="divider" />
             <div className="admin-list text text-left">
-                <span className="truncate">Set countdown icon</span>
+                <span className="truncate">Countdown icon</span>
                 <select className="input input-small" defaultValue={settings.countdownIcon} ref={countdownIcon}>
+                    <option value="none">None</option>
                     <option value="birthday">Birthday</option>
                     <option value="christmas">Christmas</option>
                     <option value="newyear">New Year</option>
@@ -73,18 +77,14 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 </select>
                 <button
                     className="input input-small"
-                    onClick={(): Promise<void> =>
-                        dispatch(saveSetting('countdownIcon', countdownIcon.current && countdownIcon.current.value))
-                    }>
+                    onClick={(): Promise<void> => dispatch(saveSetting('countdownIcon', getValue(countdownIcon.current)))}>
                     Set
                 </button>
-                <span className="truncate">Set countdown target</span>
+                <span className="truncate">Countdown target date</span>
                 <input className="input input-small" type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
                 <button
                     className="input input-small"
-                    onClick={(): Promise<void> =>
-                        dispatch(saveSetting('countdownTarget', countdownTarget.current && countdownTarget.current.value))
-                    }>
+                    onClick={(): Promise<void> => dispatch(saveSetting('countdownTarget', getValue(countdownTarget.current)))}>
                     Set
                 </button>
             </div>
