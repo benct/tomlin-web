@@ -36,6 +36,11 @@ module.exports = {
                 loader: 'html-loader',
             },
             {
+                test: /\.md$/,
+                exclude: /node_modules/,
+                use: ['html-loader', 'markdown-loader'],
+            },
+            {
                 test: /\.htaccess$/,
                 use: {
                     loader: 'file-loader',
