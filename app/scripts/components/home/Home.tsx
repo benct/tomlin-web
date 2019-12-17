@@ -24,8 +24,8 @@ const Home: React.FC<HomeProps> = ({ theme, settings, dispatch }): React.ReactEl
             <div className="wrapper text">
                 <h2 className="home-title color-primary man mbm">Hello</h2>
                 <p className="limit-width mvl">
-                    This site is just a personal website project I doodle with from time to time. See more about me{' '}
-                    <Link to="/about">here</Link> or follow the social media links at the bottom of the page.
+                    This site is just a personal website project I doodle with from time to time. See more in the{' '}
+                    <Link to="/about">about section</Link> or follow the social media links at the bottom of the page.
                 </p>
                 <div className="home-info text-small">
                     Theme
