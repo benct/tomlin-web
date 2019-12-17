@@ -1,6 +1,7 @@
 {
     "name": "Tomlin",
     "short_name": "Tomlin",
+    "start_url": "https://tomlin.no",
     "icons": [
         {
             "src": "/assets/manifest/android-chrome-192x192.png",
