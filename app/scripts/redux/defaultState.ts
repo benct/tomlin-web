@@ -22,7 +22,7 @@ const defaultState: DefaultState = {
     home: {
         temperature: {},
         consumption: {},
-        day: true,
+        day: null,
     },
 
     quote: {

@@ -34,7 +34,7 @@ export interface AuthState {
 export interface HomeState {
     temperature: HomeTemperature;
     consumption: HomeConsumption;
-    day: boolean;
+    day: boolean | null;
 }
 
 export interface QuoteState {

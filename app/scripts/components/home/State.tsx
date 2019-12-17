@@ -65,13 +65,15 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = props => {
                     </span>
                 </div>
                 <div className="ptm">
-                    <img
-                        className="valign-middle phm"
-                        src={require(`../../../images/icon/${props.day ? 'day' : 'night'}.svg`)}
-                        alt="Outside temperature"
-                        width={54}
-                        height={54}
-                    />
+                    {props.day !== null && (
+                        <img
+                            className="valign-middle phm"
+                            src={require(`../../../images/icon/${props.day ? 'day' : 'night'}.svg`)}
+                            alt="Outside temperature"
+                            width={54}
+                            height={54}
+                        />
+                    )}
                     <div className="phm" data-tooltip="Outdoor temperature" style={{ display: 'inline-block' }}>
                         <span className="home-value home-large">{props.temperature.outside || '-'}</span>
                         <span className="home-unit"> &deg;C</span>
