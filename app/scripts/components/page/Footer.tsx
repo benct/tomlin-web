@@ -21,7 +21,7 @@ const Footer: React.FC = (): React.ReactElement => (
                 <Icon path={mdiAt} size={1} title="E-mail" className="valign-middle" />
             </a>
         </div>
-        <div className="text color-offset no-select mtl">Ben Tomlin © 2019</div>
+        <div className="text color-offset no-select mtl">Ben Tomlin © 2020</div>
     </footer>
 );
 

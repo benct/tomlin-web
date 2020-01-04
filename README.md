@@ -26,5 +26,5 @@ about Webpack, Babel, Node/NPM/Yarn and other web development technologies.
 
 ## License
 
-This project is licensed under the MIT license, Copyright (c) 2019 Ben Christopher Tomlin.
+This project is licensed under the MIT license, Copyright (c) 2020 Ben Christopher Tomlin.
 For more information see `LICENSE`.
