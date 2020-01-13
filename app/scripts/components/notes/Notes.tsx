@@ -46,7 +46,7 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, isLoggedIn, di
                                     {note.title || 'No title'}
                                 </button>
                             </code>
-                            <pre>{note.content || 'No content...'}</pre>
+                            <pre style={{ whiteSpace: 'pre-wrap' }}>{note.content || 'No content...'}</pre>
                         </div>
                     )
                 )
