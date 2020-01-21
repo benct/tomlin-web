@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { StaticContext } from 'react-router';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 
 import { AuthState, DefaultState, ThunkDispatchProp } from '../interfaces';
@@ -7,7 +8,7 @@ import { login } from '../actions/auth';
 
 import Loading from './page/Loading';
 
-type LoginProps = RouteComponentProps & AuthState & ThunkDispatchProp;
+type LoginProps = RouteComponentProps<{}, StaticContext, { from: { pathname: string } }> & AuthState & ThunkDispatchProp;
 
 const Login: React.FC<LoginProps> = ({ loading, redirect, error, location, dispatch }) => {
     const username = React.useRef<HTMLInputElement>(null);
