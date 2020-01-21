@@ -38,7 +38,7 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, isLoggedIn, di
             {notes && notes.length ? (
                 notes.map(
                     (note: Note): React.ReactElement => (
-                        <div className="admin-logs" key={`note${note.id}`}>
+                        <div className="admin-logs admin-note" key={`note${note.id}`}>
                             <code>
                                 {note.updated}
                                 <br />

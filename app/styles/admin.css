@@ -13,9 +13,7 @@
 .admin-logs {
     display: grid;
     grid-template-columns: 170px auto;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .admin-logs code,
@@ -29,6 +27,12 @@
 .admin-logs pre:nth-child(1) {
     border-left: none;
     padding-left: 0;
+}
+
+.admin-note {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .admin-flight-form {
