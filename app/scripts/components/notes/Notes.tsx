@@ -38,11 +38,11 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, isLoggedIn, di
             {notes && notes.length ? (
                 notes.map(
                     (note: Note): React.ReactElement => (
-                        <div className="admin-logs mbm" key={`note${note.id}`}>
+                        <div className="admin-logs" key={`note${note.id}`}>
                             <code>
                                 {note.updated}
                                 <br />
-                                <button className="button-blank text-left strong" onClick={(): void => edit(note)}>
+                                <button className="button-blank text-left strong mts" onClick={(): void => edit(note)}>
                                     {note.title || 'No title'}
                                 </button>
                             </code>
@@ -53,9 +53,9 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, isLoggedIn, di
             ) : (
                 <div className="text">No notes found...</div>
             )}
-            <div className="text-right">
-                <button className="button-icon" onClick={(): void => edit({})}>
-                    <Icon path={mdiFileDocumentBoxPlusOutline} size="28px" title="New" />
+            <div className="text-center">
+                <button className="button-icon button-icon-text" onClick={(): void => edit({})}>
+                    New note <Icon path={mdiFileDocumentBoxPlusOutline} size="28px" title="New" />
                 </button>
             </div>
             {showOverlay && selected ? <NotesModal note={selected} close={closeModal} /> : null}
