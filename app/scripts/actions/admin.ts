@@ -2,7 +2,7 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { AdminState, ThunkResult } from '../interfaces';
 
-import { load, post } from '../util/api';
+import { del, get, post } from '../util/api';
 import { showToast } from './base';
 
 const actions: ActionsObject<AdminState> = {};
@@ -19,7 +19,7 @@ actions.setNotes = makeAction('ADMIN/SET_NOTES', 'notes');
 
 export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post({ service: 'db', action: 'stats' })
+        await get('/admin/stats')
             .then(response => dispatch(actions.setStats(response || {})))
             .catch(() => dispatch(showToast('Could not fetch stats...')));
     }
@@ -27,7 +27,7 @@ export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getSt
 
 export const getVisits = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await load({ service: 'db', action: 'visits' })
+        await get('/admin/visits')
             .then(response => dispatch(actions.setVisits(response || [])))
             .catch(() => dispatch(showToast('Could not fetch visiting data...')));
     }
@@ -35,31 +35,31 @@ export const getVisits = (): ThunkResult<Promise<void>> => async (dispatch, getS
 
 export const getLogs = (count = 25): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await load({ service: 'db', action: 'logs', count })
+        await get(`/admin/logs/${count}`)
             .then(response => dispatch(actions.setLogs(response || [])))
             .catch(() => dispatch(showToast('Could not fetch log data...')));
     }
 };
 
 export const clearLogs = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
-    if (getState().auth.isLoggedIn) {
-        await load({ service: 'db', action: 'clear' })
+    if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete all logs?')) {
+        await del('/admin/logs')
             .then(response => (response ? dispatch(actions.setLogs([])) : null))
             .catch(() => dispatch(showToast('Could not clear log data...')));
     }
 };
 
-export const updatePosters = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
-    if (getState().auth.isLoggedIn) {
-        await load({ service: 'media', action: 'images', overwrite: false })
-            .then(response => dispatch(showToast(`Successfully updated ${response} posters!`)))
-            .catch(() => dispatch(showToast('Failed to update posters...')));
+export const deleteLog = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this entry?')) {
+        await del(`/admin/logs/${id}`)
+            .then(response => (response ? dispatch(getLogs()) : null))
+            .catch(() => dispatch(showToast('Could not clear log data...')));
     }
 };
 
 export const updateMedia = (type: string, count = 10): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await load({ service: 'media', action: 'update', type, count })
+        await post(`/media/${type}/update/${count}`)
             .then(response => dispatch(showToast(`Successfully updated ${response} items!`)))
             .catch(() => dispatch(showToast('Failed to update media content...')));
     }
@@ -67,7 +67,7 @@ export const updateMedia = (type: string, count = 10): ThunkResult<Promise<void>
 
 export const updateIata = (type: string): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await load({ service: 'iata', action: type })
+        await post(`/iata/${type}`)
             .then(response => dispatch(showToast(`Successfully updated ${response} entries!`)))
             .catch(() => dispatch(showToast('Failed to update IATA entries...')));
     }
@@ -75,7 +75,7 @@ export const updateIata = (type: string): ThunkResult<Promise<void>> => async (d
 
 export const getNotes = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await load({ service: 'notes', action: 'get' })
+        await get('/admin/notes')
             .then(response => dispatch(actions.setNotes(response || [])))
             .catch(() => dispatch(showToast('Could not fetch notes...')));
     }
@@ -86,7 +86,7 @@ export const saveNote = (id: number | undefined, title: string, content: string)
     getState
 ): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await load({ service: 'notes', action: 'store', id, title, content })
+        await post('/admin/notes', { id, title, content })
             .then(() => {
                 dispatch(getNotes());
                 dispatch(showToast('Successfully saved note!'));
@@ -97,7 +97,7 @@ export const saveNote = (id: number | undefined, title: string, content: string)
 
 export const deleteNote = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this note?')) {
-        await load({ service: 'notes', action: 'delete', id })
+        await del(`/admin/notes/${id}`)
             .then(() => {
                 dispatch(getNotes());
                 dispatch(showToast('Successfully deleted note!'));
@@ -108,7 +108,7 @@ export const deleteNote = (id: number): ThunkResult<Promise<void>> => async (dis
 
 export const getFlights = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await load({ service: 'iata', action: 'flights' })
+        await get('/flight')
             .then(response => dispatch(actions.setFlights(response || [])))
             .catch(() => dispatch(showToast('Could not fetch flights data...')));
     }
@@ -116,7 +116,7 @@ export const getFlights = (): ThunkResult<Promise<void>> => async (dispatch, get
 
 export const saveFlight = (data: object): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await load({ service: 'iata', action: 'flight', ...data })
+        await post('/flight', data)
             .then(() => {
                 dispatch(getFlights());
                 dispatch(showToast('Successfully saved flight!'));
@@ -127,7 +127,7 @@ export const saveFlight = (data: object): ThunkResult<Promise<void>> => async (d
 
 export const deleteFlight = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this flight?')) {
-        await load({ service: 'iata', action: 'delete', id })
+        await del(`/flight/${id}`)
             .then(() => {
                 dispatch(getFlights());
                 dispatch(showToast('Successfully deleted flight!'));
@@ -138,7 +138,7 @@ export const deleteFlight = (id: number): ThunkResult<Promise<void>> => async (d
 
 export const saveSetting = (key: string, value: string | null): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to change this setting?')) {
-        await load({ service: 'settings', action: 'set', key, value })
+        await post('/settings/set', { key, value })
             .then(() => dispatch(showToast('Successfully saved settings!')))
             .catch(() => dispatch(showToast('Could not save settings...')));
     }

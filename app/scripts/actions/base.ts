@@ -3,7 +3,7 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 import { DefaultState, ThunkResult } from '../interfaces';
 
 import { quotes } from '../util/quotes';
-import { get } from '../util/api';
+import { api } from '../util/api';
 
 const actions: ActionsObject<DefaultState> = {};
 
@@ -39,7 +39,7 @@ export const showToast = (payload: string): ThunkResult<Promise<void>> => async 
 export const getHomeState = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(actions.setLoading(true));
 
-    await get({ service: 'hass', action: 'state' })
+    await api('GET', '/hass/states', { loading: false })
         .then(response => dispatch(actions.setHomeState(response)))
         .finally(() => dispatch(actions.setLoading(false)));
 };

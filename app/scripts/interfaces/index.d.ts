@@ -33,7 +33,7 @@ export interface AuthState {
 
 export interface HomeState {
     temperature: HomeTemperature;
-    consumption: HomeConsumption;
+    consumption?: HomeConsumption;
     day: boolean | null;
 }
 
@@ -92,15 +92,16 @@ export interface FileState {
 }
 
 export interface FileItem {
-    dir: boolean;
-    type: string;
+    path: string;
     name: string;
     short: string;
+    type: string;
+    dir: boolean;
     icon: string;
     size: string;
+    files: number;
     perms: string;
     date: string;
-    href: string;
     preview: object;
 }
 
@@ -113,22 +114,25 @@ export interface FilePreview {
 export type MediaType = 'movie' | 'tv' | 'watchlist';
 
 export interface MediaState {
-    movie: MediaResults | null;
-    tv: MediaResults | null;
-    watchlist: MediaResults | null;
+    movie: MediaResults<MediaItemEntry> | null;
+    tv: MediaResults<MediaItemEntry> | null;
+    watchlist: MediaResults<MediaItemEntry> | null;
     item: MediaItemEntry | null;
     sort: string;
     showModal: boolean;
     search: MediaSearchItemEntry[];
-    existing: number[];
+    existing: {
+        movie: number[];
+        tv: number[];
+    };
     stats: {
         movie: MediaStatsType;
         tv: MediaStatsType;
     };
 }
 
-export interface MediaResults {
-    results: MediaItemEntry[];
+export interface MediaResults<T extends MediaItemEntry | MediaSearchItemEntry> {
+    results: T[];
     page: number;
     total_pages: number;
     total_results: number;
@@ -191,17 +195,9 @@ export interface MediaEpisodeEntry {
     release_date: string | null;
 }
 
-export interface MediaSearchResults {
-    results: MediaSearchItemEntry[];
-    page: number;
-    total_pages: number;
-    total_results: number;
-    existing: number[];
-}
-
 export interface MediaSearchItemEntry {
     id: number;
-    media_type: string;
+    media_type: 'movie' | 'tv';
     title: string;
     original_title?: string;
     name: string;
@@ -245,8 +241,10 @@ export interface AdminStats {
 }
 
 export interface Log {
+    id: number;
     message: string;
-    details: string;
+    details: string | null;
+    path: string | null;
     timestamp: string;
 }
 

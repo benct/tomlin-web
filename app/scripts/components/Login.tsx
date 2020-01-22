@@ -19,7 +19,7 @@ const Login: React.FC<LoginProps> = ({ loading, redirect, error, location, dispa
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
 
-        dispatch(login({ user: username.current && username.current.value, pass: password.current && password.current.value }));
+        dispatch(login(username.current && username.current.value, password.current && password.current.value));
     };
 
     return redirect ? (

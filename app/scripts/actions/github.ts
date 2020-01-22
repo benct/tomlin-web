@@ -2,7 +2,7 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { GitHubRepo, GitHubState, ThunkResult } from '../interfaces';
 
-import { externalGet } from '../util/api';
+import { getExternal } from '../util/api';
 import baseActions, { showToast } from './base';
 
 const featured: string[] = ['tomlin-web', 'iata-utils', 'dotfiles'];
@@ -57,11 +57,11 @@ actions.setGitHubRepos = makeAction('BASE/SET_GITHUB_REPOS', (state, { payload }
 export const getGitHubData = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(baseActions.setLoading(true));
 
-    await externalGet('https://api.github.com/users/benct')
+    await getExternal('https://api.github.com/users/benct')
         .then(data => dispatch(actions.setGitHubUser(data)))
         .catch(() => dispatch(showToast('Could not load GitHub data...')))
         .finally(() => dispatch(baseActions.setLoading(false)));
-    await externalGet('https://api.github.com/users/benct/repos')
+    await getExternal('https://api.github.com/users/benct/repos')
         .then(data => dispatch(actions.setGitHubRepos(data || [])))
         .catch(() => dispatch(showToast('Could not load GitHub data...')));
 };

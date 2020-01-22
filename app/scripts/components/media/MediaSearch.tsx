@@ -6,7 +6,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { DefaultState, MediaSearchItemEntry, ThunkDispatchFunc } from '../../interfaces';
 
 import debounce from '../../util/debounce';
-import { add, goToIMDb, postMedia, remove, searchMedia } from '../../actions/media';
+import { add, existing, getTmdbMedia, goToIMDb, remove, searchTmdbMedia } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
 
 import Pagination from '../page/Pagination';
@@ -14,7 +14,7 @@ import MediaSearchItem from './MediaSearchItem';
 
 interface MediaSearchStateProps {
     data: MediaSearchItemEntry[];
-    existing: number[];
+    existing: { movie: number[]; tv: number[] };
     type?: string;
     action?: string;
     id?: string;
@@ -28,10 +28,11 @@ interface MediaSearchDispatchProps {
     remove: (type: string, id: number) => void;
     goToIMDb: (type: string, id: number) => void;
     resetPagination: () => void;
+    getExisting: () => void;
 }
 
 export interface MediaSearchRouteProps {
-    type?: string;
+    type?: 'movie' | 'tv';
     action?: string;
     id?: string;
     page?: string;
@@ -39,6 +40,8 @@ export interface MediaSearchRouteProps {
 
 class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDispatchProps> {
     componentDidMount(): void {
+        this.props.getExisting();
+
         if (this.props.action && this.props.type) {
             this.props.get();
             window.scrollTo(0, 0);
@@ -67,10 +70,11 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
     }
 
     renderItem(data: MediaSearchItemEntry, idx: number): React.ReactNode {
+        const existing = this.props.existing[data.media_type || this.props.type] || [];
         return (
             <MediaSearchItem
                 data={data}
-                stored={this.props.existing.includes(data.id)}
+                stored={existing.includes(data.id)}
                 add={this.props.add.bind(this, data.media_type, data.id)}
                 remove={this.props.remove.bind(this, data.media_type, data.id)}
                 imdb={this.props.goToIMDb.bind(this, data.media_type, data.id)}
@@ -114,12 +118,13 @@ const mapDispatchToProps = (
     dispatch: ThunkDispatchFunc,
     ownProps: RouteComponentProps<MediaSearchRouteProps>
 ): MediaSearchDispatchProps => ({
-    search: debounce((query: string): Promise<void> => dispatch(searchMedia(query)), 500),
-    get: (): Promise<void> => dispatch(postMedia({ ...ownProps.match.params, page: Number(ownProps.match.params.page || 1) })),
+    search: debounce((query: string): Promise<void> => dispatch(searchTmdbMedia(query)), 500),
+    get: (): Promise<void> => dispatch(getTmdbMedia({ ...ownProps.match.params, page: Number(ownProps.match.params.page || 1) })),
     add: (type: string, id: number): Promise<void> => dispatch(add({ type: type || ownProps.match.params.type, id })),
     remove: (type: string, id: number): Promise<void> => dispatch(remove({ type: type || ownProps.match.params.type, id })),
     goToIMDb: (type: string, id: number): Promise<void> => dispatch(goToIMDb({ type: type || ownProps.match.params.type, id })),
     resetPagination: (): Action => dispatch(paginationActions.reset()),
+    getExisting: (): Promise<void> => dispatch(existing()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MediaSearch);

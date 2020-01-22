@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { AdminStats, DefaultState, Settings, ThunkDispatchProp } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
-import { clearLogs, getLogs, getStats, saveSetting, updateIata, updateMedia, updatePosters } from '../../actions/admin';
+import { clearLogs, getLogs, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
 
 interface ControlProps {
     stats: AdminStats;
@@ -90,11 +90,6 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
             </div>
             <hr className="divider" />
             <div className="admin-list text text-left">
-                <span className="truncate">Import missing media poster images</span>
-                <span />
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(updatePosters())}>
-                    Run
-                </button>
                 <span className="truncate">Update number of stored movies</span>
                 <select className="input input-small" defaultValue="50" ref={updateMovieCount}>
                     {renderOptions([10, 50, 100, 250, 500])}

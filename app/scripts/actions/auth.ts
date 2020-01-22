@@ -2,11 +2,11 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { AuthState, Settings, ThunkResult } from '../interfaces';
 
-import { post } from '../util/api';
+import { auth } from '../util/api';
 import baseActions from './base';
 
 interface ValidateResponse {
-    token: string | null;
+    authenticated: boolean;
     settings: Settings;
 }
 
@@ -19,13 +19,12 @@ actions.setLoading = makeAction('AUTH/SET_LOADING', 'loading');
 actions.setLoginData = makeAction('AUTH/SET_LOGIN_DATA', (state, { payload }) => ({ ...state, ...payload, loading: false }));
 
 export const validate = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> =>
-    await post<ValidateResponse>({ service: 'auth', action: 'validate', referrer: document.referrer })
+    await auth<ValidateResponse>('/authenticate')
         .then(response => {
             dispatch(baseActions.setSettings(response.settings));
-            return response.token ? Promise.resolve(response.token) : Promise.reject();
+            return response.authenticated ? Promise.resolve() : Promise.reject();
         })
-        .then(token => {
-            localStorage.setItem('token', token);
+        .then(() => {
             dispatch(actions.setLoggedIn(true));
         })
         .catch(() => {
@@ -33,13 +32,13 @@ export const validate = (): ThunkResult<Promise<void>> => async (dispatch): Prom
             dispatch(actions.setLoggedIn(false));
         });
 
-export const login = (data: object): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+export const login = (username: string | null, password: string | null): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(actions.setLoading(true));
+    localStorage.setItem('token', window.btoa(`${username}:${password}`));
 
-    await post<string>({ service: 'auth', action: 'login', ...data })
-        .then(token => (token ? Promise.resolve(token) : Promise.reject()))
-        .then(token => {
-            localStorage.setItem('token', token);
+    await auth<string>('/login')
+        .then(authenticated => (authenticated ? Promise.resolve() : Promise.reject()))
+        .then(() => {
             dispatch(actions.setLoginData({ isLoggedIn: true, redirect: true, error: false }));
         })
         .catch(() => {

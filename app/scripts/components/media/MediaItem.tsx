@@ -5,6 +5,7 @@ import { MediaItemEntry, MediaType } from '../../interfaces';
 
 import { FavouriteIcon, SeenIcon } from './MediaIcons';
 
+const cdnUrl = 'https://cdn.tomlin.no/images/media';
 const defaultPoster = require('../../../images/media/poster.png');
 
 interface MediaItemProps {
@@ -43,7 +44,7 @@ const MediaItem: React.FC<MediaItemProps> = props => {
             <div className="media-poster" onClick={props.showItem} role="button" tabIndex={0}>
                 <img
                     className="pointer"
-                    src={props.data.poster ? `/assets/images/media${props.data.poster}` : defaultPoster}
+                    src={props.data.poster ? `${cdnUrl}${props.data.poster}` : defaultPoster}
                     alt={props.data.poster ? `Poster: ${props.data.title}` : 'No poster'}
                     onError={(event: React.InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
                 />

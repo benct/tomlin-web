@@ -51,7 +51,10 @@ const defaultState: DefaultState = {
         tv: null,
         watchlist: null,
         search: [],
-        existing: [],
+        existing: {
+            movie: [],
+            tv: [],
+        },
         showModal: false,
         item: null,
         sort: 'rating-desc',

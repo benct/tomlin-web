@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { DefaultState, Log, ThunkDispatchProp } from '../../interfaces';
-import { getLogs } from '../../actions/admin';
+import { deleteLog, getLogs } from '../../actions/admin';
 
 interface LogProps {
     logs: Log[];
@@ -18,11 +18,21 @@ const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, isLoggedIn, dispat
 
     const renderLog = (log: Log, idx: number): React.ReactElement => (
         <div className="admin-logs" key={`logs${idx}`}>
-            <code>{log.timestamp}</code>
+            <code onClick={(): Promise<void> => dispatch(deleteLog(log.id))} role="button" tabIndex={0}>
+                {log.timestamp}
+            </code>
             <code>
                 {log.message}
-                <br />
-                {log.details}
+                {log.details && (
+                    <>
+                        <br />* {log.details}
+                    </>
+                )}
+                {log.path && (
+                    <>
+                        <br />* {log.path}
+                    </>
+                )}
             </code>
         </div>
     );

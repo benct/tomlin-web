@@ -12,19 +12,21 @@ interface FileListProps {
     handleDelete: (item: FileItem) => void;
 }
 
+const cdnUrl = 'https://cdn.tomlin.no/icons/file';
+
 const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete }): React.ReactElement => {
     const renderItem = (item: FileItem, i: number): React.ReactElement => (
         <tr key={i}>
             <td>
                 {item.icon ? (
-                    <img className="file-icon" src={require(`../../../images/file/${item.icon}`)} alt={item.icon} />
+                    <img className="file-icon" src={`${cdnUrl}/${item.type}.png`} alt={item.type} />
                 ) : (
                     <Icon path={mdiFileQuestion} title="Unknown type" className="file-icon" />
                 )}
             </td>
             <td className="file-name">
                 <span onClick={(): void => handleClick(item)} className={i === focused ? 'focused' : ''} role="button" tabIndex={0}>
-                    {item.short}
+                    {item.short} {item.dir && <span>({item.files})</span>}
                 </span>
                 <span onClick={(): void => handleDelete(item)} className="file-info monospace float-right" role="button" tabIndex={0}>
                     [x]
@@ -61,7 +63,9 @@ const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, hand
                     content.map(renderItem)
                 ) : (
                     <tr>
-                        <td colSpan={5}>This folder is empty...</td>
+                        <td colSpan={5} className="ptl">
+                            This folder is empty...
+                        </td>
                     </tr>
                 )}
             </tbody>

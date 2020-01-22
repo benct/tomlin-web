@@ -33,7 +33,7 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
         const formData = new FormData();
         for (const key in files) {
             if (Object.prototype.hasOwnProperty.call(files, key) && files[key] instanceof File) {
-                formData.append(key, files[key]);
+                formData.append('files', files[key]);
             }
         }
 
@@ -58,12 +58,12 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
     };
 
     const forceDownload = (item: FileItem): void => {
-        window.setTimeout((): Window | null => window.open(item.href), 100);
+        window.setTimeout((): Window | null => window.open(item.path), 100);
     };
 
     const previewFile = (item: FileItem): void => {
         if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
-            props.dispatch(fileActions.setPreview({ src: item.href, image: true }));
+            props.dispatch(fileActions.setPreview({ src: item.path, image: true }));
         } else {
             props.dispatch(open(item));
         }

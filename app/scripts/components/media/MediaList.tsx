@@ -13,7 +13,7 @@ import MediaModal from './MediaModal';
 import MediaItem from './MediaItem';
 
 interface MediaListStateProps {
-    data: MediaResults | null;
+    data: MediaResults<MediaItemEntry> | null;
     item: MediaItemEntry | null;
     showModal: boolean;
     sort: string;
@@ -98,7 +98,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
         );
     }
 
-    renderWatchlist(data: MediaResults): React.ReactElement {
+    renderWatchlist(data: MediaResults<MediaItemEntry>): React.ReactElement {
         return (
             <>
                 <div>TV-Shows:</div>
@@ -113,7 +113,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
         );
     }
 
-    renderList(data: MediaResults): React.ReactElement {
+    renderList(data: MediaResults<MediaItemEntry>): React.ReactElement {
         return (
             <>
                 <div className="text-center mbl">
@@ -167,12 +167,12 @@ const mapDispatchToProps = (dispatch: ThunkDispatchFunc, ownProps: RouteComponen
     const { type, page } = ownProps.match.params;
     return {
         loadMedia: (query?: string): void => {
-            dispatch(getMedia({ action: type, query, page: Number(page || 1) }));
+            dispatch(getMedia({ type, query, page: Number(page || 1) }));
             window.scrollTo(0, 0);
         },
         setSort: (sort: string): void => {
             dispatch(mediaActions.setSort(sort));
-            dispatch(getMedia({ action: type, sort, page: Number(page || 1) }));
+            dispatch(getMedia({ type, sort, page: Number(page || 1) }));
         },
         setPagination: (page: number): Action => dispatch(paginationActions.set(page)),
         resetPagination: (): Action => dispatch(paginationActions.reset()),
