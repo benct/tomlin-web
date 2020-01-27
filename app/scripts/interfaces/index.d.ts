@@ -32,9 +32,9 @@ export interface AuthState {
 }
 
 export interface HomeState {
-    temperature: HomeTemperature;
-    consumption?: HomeConsumption;
-    day: boolean | null;
+    livingroom?: number;
+    outside?: number;
+    day?: boolean;
 }
 
 export interface QuoteState {
@@ -66,21 +66,6 @@ export interface GitHubRepo {
     forks: number;
     stars: number;
     issues: number | null;
-}
-
-export interface HomeTemperature {
-    livingroom?: number;
-    office?: number;
-    bedroom?: number;
-    storeroom?: number;
-    kitchen?: number;
-    bathroom?: number;
-    outside?: number;
-}
-
-export interface HomeConsumption {
-    tv?: number;
-    pc?: number;
 }
 
 export interface FileState {

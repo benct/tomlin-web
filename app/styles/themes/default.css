@@ -66,8 +66,7 @@ body.default {
     background-color: rgba(255, 255, 255, 0.95);
 }
 
-.default .home-header,
-.default .home-sensors,
+.default .home-state,
 .default .countdown,
 .default .changelog h1,
 .default .changelog h2 {

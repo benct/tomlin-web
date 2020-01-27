@@ -19,11 +19,7 @@ const defaultState: DefaultState = {
         loading: false,
     },
 
-    home: {
-        temperature: {},
-        consumption: {},
-        day: null,
-    },
+    home: {},
 
     quote: {
         text: null,
