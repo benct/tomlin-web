@@ -59,7 +59,7 @@ const GitHub: React.FC<GitHubProps & ThunkDispatchProp> = props => {
                     <Icon path={mdiStarOutline} size="22px" title="Stargazers" />
                     <span className="color-base">{repo.stars}</span>
                 </a>
-                {repo.issues !== null && (
+                {repo.issues && (
                     <a href={`${repo.url}/issues`} target="_blank" rel="noopener noreferrer">
                         <Icon path={mdiAlertCircleOutline} size="22px" title="Open Issues" />
                         <span className="color-base">{repo.issues}</span>

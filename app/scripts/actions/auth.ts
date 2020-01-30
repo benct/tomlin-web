@@ -32,7 +32,7 @@ export const validate = (): ThunkResult<Promise<void>> => async (dispatch): Prom
             dispatch(actions.setLoggedIn(false));
         });
 
-export const login = (username: string | null, password: string | null): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+export const login = (username?: string, password?: string): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(actions.setLoading(true));
     localStorage.setItem('token', window.btoa(`${username}:${password}`));
 

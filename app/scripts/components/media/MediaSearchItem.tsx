@@ -19,8 +19,8 @@ const defaultPoster = require('../../../images/media/poster_small.png');
 const MediaSearchItem: React.FC<MediaSearchItemProps> = props => {
     const [overview, setOverview] = React.useState<boolean>(false);
 
-    const title = props.data.title ? props.data.title : props.data.name;
-    const originalTitle = props.data.original_title ? props.data.original_title : props.data.original_name;
+    const title = props.data.title ?? props.data.name;
+    const originalTitle = props.data.original_title ?? props.data.original_name;
     const release = props.data.release_date ?? props.data.first_air_date;
     const text = props.stored ? 'Remove' : 'Add';
     const change = props.stored ? props.remove : props.add;

@@ -18,7 +18,7 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, isLoggedIn, di
     const [selected, setSelected] = React.useState<Note>();
 
     React.useEffect(() => {
-        if (!notes || !notes.length) {
+        if (!notes?.length) {
             dispatch(getNotes());
         }
     }, [isLoggedIn]);
@@ -35,7 +35,7 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, isLoggedIn, di
 
     return (
         <>
-            {notes && notes.length ? (
+            {notes?.length ? (
                 notes.map(
                     (note: Note): React.ReactElement => (
                         <div className="admin-logs admin-note" key={`note${note.id}`}>

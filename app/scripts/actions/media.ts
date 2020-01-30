@@ -294,8 +294,7 @@ export const goToIMDb = ({ type, id }: MediaActionProps): ThunkResult<Promise<vo
     await post(`/media/${type}/external/${id}`)
         .then(response => {
             if (response) {
-                const win = window.open(`https://www.imdb.com/title/${response}`, '_blank');
-                win ? win.focus() : undefined;
+                window.open(`https://www.imdb.com/title/${response}`, '_blank')?.focus();
             } else {
                 dispatch(showToast('No external ID found...'));
             }

@@ -25,8 +25,8 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
     const fileLabel = React.useRef<HTMLLabelElement>(null);
 
     const handleUpload = (): void => {
-        const files = fileInput.current && fileInput.current.files;
-        if (!files || !files.length) {
+        const files = fileInput.current?.files ?? [];
+        if (!files.length) {
             return;
         }
 
@@ -47,7 +47,7 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (fileLabel.current) {
-            if (fileInput.current && fileInput.current.files && fileInput.current.files.length > 1) {
+            if (fileInput.current?.files && fileInput.current.files.length > 1) {
                 fileLabel.current.innerHTML = `${fileInput.current.files.length} files selected`;
             } else if (event.target.value) {
                 fileLabel.current.innerHTML = event.target.value.split('\\').pop() ?? '1 file selected';

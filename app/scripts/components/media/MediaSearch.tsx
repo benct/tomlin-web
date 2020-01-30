@@ -64,7 +64,7 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
     }
 
     handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-        if (event.target.value && event.target.value.length > 1) {
+        if (event.target.value?.length > 1) {
             this.props.search(event.target.value);
         }
     }

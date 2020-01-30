@@ -18,7 +18,7 @@ const NotesModal: React.FC<NotesModalProps & ThunkDispatchProp> = ({ note, close
     const content = React.useRef<HTMLTextAreaElement>(null);
 
     const save = (): void => {
-        if (!title.current || !content.current || !title.current.value || !title.current.value.length) {
+        if (!content.current || !title.current?.value?.length) {
             return;
         }
         dispatch(saveNote(note.id, title.current.value, content.current.value));
