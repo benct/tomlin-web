@@ -133,9 +133,9 @@ const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, isLoggedI
                             <td>{flight.origin}</td>
                             <td>{flight.destination}</td>
                             <td className="hide-lt480">{`${flight.carrier} ${flight.number}`}</td>
-                            <td className="hide-lt480">{flight.aircraft || '—'}</td>
-                            <td className="hide-lt600">{flight.seat || '—'}</td>
-                            <td className="hide-lt768">{flight.reference || '—'}</td>
+                            <td className="hide-lt480">{flight.aircraft ?? '—'}</td>
+                            <td className="hide-lt600">{flight.seat ?? '—'}</td>
+                            <td className="hide-lt768">{flight.reference ?? '—'}</td>
                             <td className="text-right">
                                 <button className="button-icon pan" onClick={(): void => handleEdit(flight)}>
                                     <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />

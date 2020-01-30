@@ -18,7 +18,7 @@ actions.setUploading = makeAction('FILES/SET_UPLOADING', 'uploading');
 actions.setDirectory = makeAction('FILES/CHANGE_DIR', (state, { payload }) => ({ ...state, cwd: payload, focused: null }));
 
 export const refresh = (cwd?: string): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
-    await get('/file/tree', { path: cwd || getState().files.cwd })
+    await get('/file/tree', { path: cwd ?? getState().files.cwd })
         .then(data => dispatch(actions.setContent(data)))
         .catch(() => dispatch(showToast('Could not fetch content...')));
 };

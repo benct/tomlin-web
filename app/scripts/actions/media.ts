@@ -31,7 +31,7 @@ const actions: ActionsObject<MediaState> = {};
 actions.setMedia = makeAction('MEDIA/SET', (state, { payload }) => ({
     ...state,
     [payload.key]: {
-        results: payload.results || [],
+        results: payload.results ?? [],
         page: {
             current: payload.page,
             total: payload.total_pages,
@@ -43,7 +43,7 @@ actions.setStats = makeAction('MEDIA/SET_STATS', 'stats');
 
 actions.setSort = makeAction('MEDIA/SET_SORT', 'sort');
 
-actions.showModal = makeAction('MEDIA/SHOW_MODAL', (state, { payload }) => ({ ...state, showModal: true, item: payload || state.item }));
+actions.showModal = makeAction('MEDIA/SHOW_MODAL', (state, { payload }) => ({ ...state, showModal: true, item: payload ?? state.item }));
 
 actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => ({ ...state, showModal: false }));
 
@@ -132,8 +132,8 @@ export const getMedia = ({ type, sort, page, query }: MediaActionProps): ThunkRe
 ): Promise<void> =>
     await get<MediaResults<MediaItemEntry>>(`/media/${type}`, {
         query,
-        page: page || getState().pagination.current,
-        sort: sort || getState().media.sort,
+        page: page ?? getState().pagination.current,
+        sort: sort ?? getState().media.sort,
     })
         .then(response => {
             dispatch(actions.setMedia({ ...response, key: type }));
@@ -148,9 +148,9 @@ export const getTmdbMedia = ({ action, type, id, page }: MediaActionProps): Thun
     dispatch,
     getState
 ): Promise<void> =>
-    await get<MediaResults<MediaSearchItemEntry>>(`/media/${type}/${action}/${id || ''}`, { page: page || getState().pagination.current })
+    await get<MediaResults<MediaSearchItemEntry>>(`/media/${type}/${action}/${id ?? ''}`, { page: page ?? getState().pagination.current })
         .then(response => {
-            dispatch(actions.setSearch(response.results || []));
+            dispatch(actions.setSearch(response.results ?? []));
             dispatch(paginationActions.set({ current: response.page, total: Math.min(response.total_pages, 1000) }));
         })
         .catch(() => {

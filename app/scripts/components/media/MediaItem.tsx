@@ -26,7 +26,7 @@ const MediaItem: React.FC<MediaItemProps> = props => {
     );
 
     const renderSeasons = (): React.ReactNode => {
-        const seen = props.data.seen_episodes || 0;
+        const seen = props.data.seen_episodes ?? 0;
 
         return props.data.number_of_episodes ? (
             <>

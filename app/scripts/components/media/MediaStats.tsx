@@ -43,7 +43,7 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
             ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map(
                   (num: number): MediaGraphEntry => ({
                       x: `${num} +`,
-                      y: (data.find((item: MediaStatsEntry): boolean => item.score === num) || { count: 0 }).count,
+                      y: (data.find((item: MediaStatsEntry): boolean => item.score === num) ?? { count: 0 }).count,
                   })
               )
             : [];
@@ -82,13 +82,13 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
 
     const renderStats = (stats: MediaStatsType): React.ReactElement => (
         <div className="text-small mbl" style={{ height: '60px' }}>
-            Total <span className="strong prl">{stats.total || '-'}</span>
-            Seen <span className="strong prl">{stats.seen || '-'}</span>
-            Favourite <span className="strong">{stats.favourite || '-'}</span>
+            Total <span className="strong prl">{stats.total ?? '-'}</span>
+            Seen <span className="strong prl">{stats.seen ?? '-'}</span>
+            Favourite <span className="strong">{stats.favourite ?? '-'}</span>
             {stats.episodes ? (
                 <div className="text-smaller mts">
-                    Episodes <span className="strong prl">{stats.episodes || '-'}</span>
-                    Seen <span className="strong prl">{stats.seen_episodes || '-'}</span>
+                    Episodes <span className="strong prl">{stats.episodes ?? '-'}</span>
+                    Seen <span className="strong prl">{stats.seen_episodes ?? '-'}</span>
                 </div>
             ) : null}
         </div>
@@ -108,7 +108,7 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
                             <span className="valign-middle">Tracked Movies</span>
                         </div>
                         {renderStats(props.movie)}
-                        {renderLineChart(`Rating (avg: ${props.movie.rating || '-'})`, '#006080', mapRatings(props.movie.ratings))}
+                        {renderLineChart(`Rating (avg: ${props.movie.rating ?? '-'})`, '#006080', mapRatings(props.movie.ratings))}
                         {renderBarChart('Release (by decade)', '#006080', mapYears(props.movie.years))}
                     </div>
                     <div>
@@ -117,7 +117,7 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
                             <span className="valign-middle">Tracked TV-Shows</span>
                         </div>
                         {renderStats(props.tv)}
-                        {renderLineChart(`Rating (avg: ${props.tv.rating || '-'})`, '#008060', mapRatings(props.tv.ratings))}
+                        {renderLineChart(`Rating (avg: ${props.tv.rating ?? '-'})`, '#008060', mapRatings(props.tv.ratings))}
                         {renderBarChart('First aired (by decade)', '#008060', mapYears(props.tv.years))}
                     </div>
                 </div>

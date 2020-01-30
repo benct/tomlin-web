@@ -5,7 +5,7 @@ import { DefaultState } from '../interfaces';
 const defaultState: DefaultState = {
     showMenu: false,
     toast: null,
-    theme: localStorage.getItem('theme') || 'default',
+    theme: localStorage.getItem('theme') ?? 'default',
 
     loading: false,
     loadingOverlay: false,

@@ -21,7 +21,7 @@ const MediaSearchItem: React.FC<MediaSearchItemProps> = props => {
 
     const title = props.data.title ? props.data.title : props.data.name;
     const originalTitle = props.data.original_title ? props.data.original_title : props.data.original_name;
-    const release = props.data.release_date || props.data.first_air_date;
+    const release = props.data.release_date ?? props.data.first_air_date;
     const text = props.stored ? 'Remove' : 'Add';
     const change = props.stored ? props.remove : props.add;
 
@@ -57,7 +57,7 @@ const MediaSearchItem: React.FC<MediaSearchItemProps> = props => {
                 {props.data.vote_average ? (
                     <span>
                         ,&nbsp;
-                        <span className="strong" data-tooltip={`${props.data.vote_count || 0} votes`}>
+                        <span className="strong" data-tooltip={`${props.data.vote_count ?? 0} votes`}>
                             {props.data.vote_average}
                         </span>
                     </span>

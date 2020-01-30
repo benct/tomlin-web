@@ -70,7 +70,7 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
     }
 
     renderItem(data: MediaSearchItemEntry, idx: number): React.ReactNode {
-        const existing = this.props.existing[data.media_type || this.props.type] || [];
+        const existing = this.props.existing[data.media_type ?? this.props.type] ?? [];
         return (
             <MediaSearchItem
                 data={data}
@@ -111,7 +111,7 @@ const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<Medi
     type: ownProps.match.params.type,
     action: ownProps.match.params.action,
     id: ownProps.match.params.id,
-    page: Number(ownProps.match.params.page || 1),
+    page: Number(ownProps.match.params.page ?? 1),
 });
 
 const mapDispatchToProps = (
@@ -119,10 +119,10 @@ const mapDispatchToProps = (
     ownProps: RouteComponentProps<MediaSearchRouteProps>
 ): MediaSearchDispatchProps => ({
     search: debounce((query: string): Promise<void> => dispatch(searchTmdbMedia(query)), 500),
-    get: (): Promise<void> => dispatch(getTmdbMedia({ ...ownProps.match.params, page: Number(ownProps.match.params.page || 1) })),
-    add: (type: string, id: number): Promise<void> => dispatch(add({ type: type || ownProps.match.params.type, id })),
-    remove: (type: string, id: number): Promise<void> => dispatch(remove({ type: type || ownProps.match.params.type, id })),
-    goToIMDb: (type: string, id: number): Promise<void> => dispatch(goToIMDb({ type: type || ownProps.match.params.type, id })),
+    get: (): Promise<void> => dispatch(getTmdbMedia({ ...ownProps.match.params, page: Number(ownProps.match.params.page ?? 1) })),
+    add: (type: string, id: number): Promise<void> => dispatch(add({ type: type ?? ownProps.match.params.type, id })),
+    remove: (type: string, id: number): Promise<void> => dispatch(remove({ type: type ?? ownProps.match.params.type, id })),
+    goToIMDb: (type: string, id: number): Promise<void> => dispatch(goToIMDb({ type: type ?? ownProps.match.params.type, id })),
     resetPagination: (): Action => dispatch(paginationActions.reset()),
     getExisting: (): Promise<void> => dispatch(existing()),
 });

@@ -43,10 +43,10 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, isLoggedIn, di
                                 {note.updated}
                                 <br />
                                 <button className="button-blank text-left strong mts" onClick={(): void => edit(note)}>
-                                    {note.title || 'No title'}
+                                    {note.title ?? 'No title'}
                                 </button>
                             </code>
-                            <pre style={{ whiteSpace: 'pre-wrap' }}>{note.content || 'No content...'}</pre>
+                            <pre style={{ whiteSpace: 'pre-wrap' }}>{note.content ?? 'No content...'}</pre>
                         </div>
                     )
                 )

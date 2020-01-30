@@ -157,7 +157,7 @@ const MediaModal: React.FC<MediaModalProps> = props => {
     const renderContent = (): React.ReactElement => (
         <div className="media-overlay-overview">
             <span>Original</span>
-            <span>{props.data.original_title || props.data.title}</span>
+            <span>{props.data.original_title ?? props.data.title}</span>
             <span>Language</span>
             <span>{props.data.language}</span>
             <span>Links</span>

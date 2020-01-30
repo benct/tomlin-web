@@ -14,7 +14,7 @@ const Login: React.FC<LoginProps> = ({ loading, redirect, error, location, dispa
     const username = React.useRef<HTMLInputElement>(null);
     const password = React.useRef<HTMLInputElement>(null);
 
-    const { from } = location.state || { from: { pathname: '/' } };
+    const { from } = location.state ?? { from: { pathname: '/' } };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();

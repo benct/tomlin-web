@@ -20,7 +20,7 @@ const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }): React.Reac
     const locations = isSimple
         ? `${flights[0].origin} - ${flights[0].destination}`
         : flights
-              .flatMap((flight: Flight): string[] => [flight.origin || '', flight.destination || ''])
+              .flatMap((flight: Flight): string[] => [flight.origin ?? '', flight.destination ?? ''])
               .filter(
                   (location: string, idx: number, arr: string[]): boolean => location !== '' && (idx === 0 || arr[idx - 1] !== location)
               )
@@ -52,8 +52,8 @@ const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }): React.Reac
                             <td className="hide-lt600">
                                 <div className="grid grid-col-3">
                                     <span>{`${flight.carrier} ${flight.number}`}</span>
-                                    <span>{flight.aircraft || '—'}</span>
-                                    <span>{flight.seat || '—'}</span>
+                                    <span>{flight.aircraft ?? '—'}</span>
+                                    <span>{flight.seat ?? '—'}</span>
                                 </div>
                             </td>
                             <td className="text-right">

@@ -62,7 +62,7 @@ export const getGitHubData = (): ThunkResult<Promise<void>> => async (dispatch):
         .catch(() => dispatch(showToast('Could not load GitHub data...')))
         .finally(() => dispatch(baseActions.setLoading(false)));
     await getExternal('https://api.github.com/users/benct/repos')
-        .then(data => dispatch(actions.setGitHubRepos(data || [])))
+        .then(data => dispatch(actions.setGitHubRepos(data ?? [])))
         .catch(() => dispatch(showToast('Could not load GitHub data...')));
 };
 

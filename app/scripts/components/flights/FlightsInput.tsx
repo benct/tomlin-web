@@ -11,19 +11,19 @@ interface FlightInputProps {
 }
 
 const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required, fraction, onChange, extraProps }): React.ReactElement => (
-    <div className={`pure-u-1-${fraction || 2}`}>
+    <div className={`pure-u-1-${fraction ?? 2}`}>
         <label htmlFor={`form-${name}`} className="text-smaller capitalize">
             {name}
         </label>
         <input
             className="pure-u-23-24"
-            type={type || 'text'}
+            type={type ?? 'text'}
             name={name}
             id={`form-${name}`}
             required={required}
             autoComplete="off"
             onChange={onChange}
-            value={value || ''}
+            value={value ?? ''}
             {...extraProps}
         />
     </div>

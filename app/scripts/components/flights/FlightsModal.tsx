@@ -53,7 +53,7 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, c
                             autoComplete="off"
                             onChange={change}
                             onBlur={change}
-                            defaultValue={form.cabin || 'economy'}>
+                            defaultValue={form.cabin ?? 'economy'}>
                             <option value="economy">Economy</option>
                             <option value="premium_economy">Premium</option>
                             <option value="business">Business</option>
@@ -72,7 +72,7 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, c
                             autoComplete="off"
                             rows={4}
                             onChange={change}
-                            defaultValue={form.info || undefined}
+                            defaultValue={form.info ?? undefined}
                         />
                     </div>
                 </div>

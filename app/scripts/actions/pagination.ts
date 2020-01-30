@@ -29,7 +29,7 @@ actions.set = makeAction(
     'PAGINATION/SET',
     (state, { payload }): PaginationState => {
         const previousPages = createListOfPreviousPages(payload.total, payload.current);
-        const consecutivePages = createListOfConsecutivePages(payload.total, previousPages[0] || 1, payload.current);
+        const consecutivePages = createListOfConsecutivePages(payload.total, previousPages[0] ?? 1, payload.current);
 
         return {
             ...state,
