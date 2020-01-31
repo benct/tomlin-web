@@ -1,6 +1,29 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.14.0] - 2020-Q1 - *New API, Performance*
+### Added
+- Full support for new backend API
+- Improved HTTP fetching utility functions
+- Support new login and authentication handling
+- Pre-connect link tag for API endpoint in HTML template
+- Proper font-face CSS rules (skip google lookup query)
+- Single log-entry deletion support
+- Direct download button on file previews
+
+### Changed
+- Refactor async actions and calls to support new API
+- Update interfaces to represent response data changes
+- Replace short circuiting with nullish coalescing operator
+- More use of optional chaining operator
+- Make about-link text more descriptive
+- Specify start_url in manifest.json
+- Load day/night icon only when state is known
+
+### Removed
+- Most home state temperature and consumption data
+- Fetch polyfill package whatwg-fetch
+
 ## [2.13.2] - 2019-12-02 - *Changelog View*
 ### Added
 - Changelog view in modal overlay
