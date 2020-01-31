@@ -1,7 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '@mdi/react';
-import { mdiCloseCircleOutline, mdiCloudUploadOutline, mdiFolderPlusOutline, mdiFolderSyncOutline, mdiFolderUploadOutline } from '@mdi/js';
+import {
+    mdiCloseCircleOutline,
+    mdiCloudUploadOutline,
+    mdiFileDownloadOutline,
+    mdiFolderPlusOutline,
+    mdiFolderSyncOutline,
+    mdiFolderUploadOutline,
+} from '@mdi/js';
 
 import { DefaultState, FileItem, FilePreview, ThunkDispatchProp } from '../../interfaces';
 import fileActions, { changeDirectory, createDirectory, download, preview, refresh, remove, rename, upload } from '../../actions/files';
@@ -59,6 +66,10 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
 
     const closePreview = (): void => {
         props.dispatch(fileActions.setPreview(null));
+    };
+
+    const downloadPreview = (): void => {
+        if (props.preview?.item) props.dispatch(download(props.preview.item));
     };
 
     const handleClick = (item: FileItem): void => {
@@ -163,7 +174,15 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
             {props.preview ? (
                 <div className="overlay">
                     <button className="button-blank" onClick={closePreview}>
-                        <Icon path={mdiCloseCircleOutline} className="file-close" title="Close" color="white" />
+                        <Icon path={mdiCloseCircleOutline} className="file-preview-icon file-preview-close" title="Close" color="white" />
+                    </button>
+                    <button className="button-blank" onClick={downloadPreview}>
+                        <Icon
+                            path={mdiFileDownloadOutline}
+                            className="file-preview-icon file-preview-download"
+                            title="Download"
+                            color="white"
+                        />
                     </button>
                     {props.preview.image ? (
                         <img className="overlay-image" src={props.preview.src} alt="Preview" />
