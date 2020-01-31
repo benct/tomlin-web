@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [2.14.0] - 2020-Q1 - *New API, Performance*
+## [2.14.0] - 2020-01-31 - *New API, Performance*
 ### Added
 - Full support for new backend API
 - Improved HTTP fetching utility functions
