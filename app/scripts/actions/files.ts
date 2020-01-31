@@ -2,7 +2,7 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { FileItem, FileState, ThunkResult } from '../interfaces';
 
-import { get, getContent, post } from '../util/api';
+import { blob, get, post, text } from '../util/api';
 import { showToast } from './base';
 
 const actions: ActionsObject<FileState> = {};
@@ -76,10 +76,44 @@ export const upload = (files: FormData): ThunkResult<Promise<void>> => async (di
         });
 };
 
-export const open = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
-    await getContent(item.path)
-        .then(data => dispatch(actions.setPreview({ content: data, image: false })))
+export const download = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+    await blob('/file/download', { path: item.path })
+        .then(blob => {
+            if (typeof window.navigator?.msSaveOrOpenBlob !== 'undefined') {
+                window.navigator.msSaveOrOpenBlob(blob, item.name);
+                return;
+            }
+
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.style.display = 'none';
+            link.href = url;
+            link.setAttribute('download', item.name);
+            if (typeof link.download === 'undefined') {
+                link.setAttribute('target', '_blank');
+            }
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            window.setTimeout(() => {
+                window.URL.revokeObjectURL(url);
+            }, 100);
+        })
         .catch(() => dispatch(showToast('Could not fetch file...')));
+};
+
+export const preview = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+    if ('jpg|jpeg|png|bmp|gif|svg|ico'.includes(item.type)) {
+        await blob('/file/download', { path: item.path })
+            .then(blob => dispatch(actions.setPreview({ src: window.URL.createObjectURL(blob), image: true, item })))
+            .catch(() => dispatch(showToast('Could not fetch image...')));
+    } else {
+        await text('/file/download', { path: item.path })
+            .then(data => dispatch(actions.setPreview({ content: data, image: false, item })))
+            .catch(() => dispatch(showToast('Could not fetch content...')));
+    }
 };
 
 export default actions;

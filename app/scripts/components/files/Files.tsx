@@ -4,7 +4,7 @@ import Icon from '@mdi/react';
 import { mdiCloseCircleOutline, mdiCloudUploadOutline, mdiFolderPlusOutline, mdiFolderSyncOutline, mdiFolderUploadOutline } from '@mdi/js';
 
 import { DefaultState, FileItem, FilePreview, ThunkDispatchProp } from '../../interfaces';
-import fileActions, { changeDirectory, createDirectory, open, refresh, remove, rename, upload } from '../../actions/files';
+import fileActions, { changeDirectory, createDirectory, download, preview, refresh, remove, rename, upload } from '../../actions/files';
 
 import FileList from './FileList';
 
@@ -57,18 +57,6 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
         }
     };
 
-    const forceDownload = (item: FileItem): void => {
-        window.setTimeout((): Window | null => window.open(item.path), 100);
-    };
-
-    const previewFile = (item: FileItem): void => {
-        if ('jpg|jpeg|png|bmp|gif|svg|ico|pdf'.indexOf(item.type) >= 0) {
-            props.dispatch(fileActions.setPreview({ src: item.path, image: true }));
-        } else {
-            props.dispatch(open(item));
-        }
-    };
-
     const closePreview = (): void => {
         props.dispatch(fileActions.setPreview(null));
     };
@@ -77,9 +65,9 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
         if (item.dir) {
             props.dispatch(changeDirectory(item.name));
         } else if (item.preview) {
-            previewFile(item);
+            props.dispatch(preview(item));
         } else {
-            forceDownload(item);
+            props.dispatch(download(item));
         }
     };
 

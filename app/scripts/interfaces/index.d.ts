@@ -91,9 +91,10 @@ export interface FileItem {
 }
 
 export interface FilePreview {
-    src: string;
-    image: string;
     content: string;
+    src: string;
+    image: boolean;
+    item: FileItem;
 }
 
 export type MediaType = 'movie' | 'tv' | 'watchlist';
