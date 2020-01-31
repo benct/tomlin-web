@@ -81,7 +81,6 @@
     "react-vis": "^1.11.7",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "regenerator-runtime": "^0.13.3",
-    "whatwg-fetch": "^3.0.0"
+    "regenerator-runtime": "^0.13.3"
   }
 }

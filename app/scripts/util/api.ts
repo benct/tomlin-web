@@ -1,4 +1,3 @@
-import 'whatwg-fetch';
 import { Action } from 'redux';
 
 import debounce from './debounce';
