@@ -20,8 +20,6 @@ interface MediaModalProps {
     setFavourite: () => void;
 }
 
-const cdnUrl = 'https://cdn.tomlin.no/images/media';
-
 const MediaModal: React.FC<MediaModalProps> = props => {
     const [showSeasons, setShowSeasons] = React.useState<boolean>(false);
 
@@ -45,7 +43,7 @@ const MediaModal: React.FC<MediaModalProps> = props => {
     const renderPoster = (poster: string, title: string): React.ReactElement =>
         poster ? (
             <img
-                src={cdnUrl + poster}
+                src={`https://cdn.tomlin.no/images/media${poster}`}
                 alt={`Poster: ${title}`}
                 onError={(event: React.InvalidEvent<HTMLImageElement>): void =>
                     (event.target.src = require('../../../images/media/poster.png'))

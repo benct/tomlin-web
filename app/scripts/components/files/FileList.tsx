@@ -12,14 +12,12 @@ interface FileListProps {
     handleDelete: (item: FileItem) => void;
 }
 
-const cdnUrl = 'https://cdn.tomlin.no/icons/file';
-
 const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete }): React.ReactElement => {
     const renderItem = (item: FileItem, i: number): React.ReactElement => (
         <tr key={i}>
             <td>
                 {item.icon ? (
-                    <img className="file-icon" src={`${cdnUrl}/${item.type}.png`} alt={item.type} />
+                    <img className="file-icon" src={`https://cdn.tomlin.no/icons/file/${item.type}.png`} alt={item.type} />
                 ) : (
                     <Icon path={mdiFileQuestion} title="Unknown type" className="file-icon" />
                 )}
