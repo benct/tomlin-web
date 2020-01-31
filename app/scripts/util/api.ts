@@ -52,6 +52,7 @@ export const api = <T>(method: string, path: string, options: ApiOptions = {}): 
         method: method,
         body: method !== 'GET' ? buildForm(options.params, options.files) : null,
         headers: authHeader(),
+        mode: 'cors',
     })
         .then(checkStatus)
         .then((response: Response): Promise<T> => response.json())
