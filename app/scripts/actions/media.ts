@@ -120,7 +120,7 @@ actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload:
 export const getStats = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(baseActions.setLoading(true));
 
-    await api('GET', '/media', { loading: false })
+    await api('GET', '/media')
         .then(response => dispatch(actions.setStats(response)))
         .catch(() => dispatch(showToast('Could not fetch stats...')))
         .finally(() => dispatch(baseActions.setLoading(false)));

@@ -4,17 +4,8 @@ import debounce from './debounce';
 import actions from '../actions/base';
 import store from '../redux/store';
 
-export interface ApiParams {
-    [key: string]: any;
-}
+type ApiParams = Record<string, any>;
 
-export interface ApiOptions {
-    params?: ApiParams;
-    files?: FormData;
-    loading?: boolean;
-}
-
-const baseUrl = 'https://tomlin.no';
 const baseApiUrl = 'https://api.tomlin.no';
 
 const delayedLoading = debounce((value: boolean): Action => store.dispatch(actions.setLoadingOverlay(value)), 150);
@@ -45,34 +36,33 @@ const buildForm = (data?: ApiParams, files?: FormData): FormData => {
     return formData;
 };
 
-export const api = <T>(method: string, path: string, options: ApiOptions = {}): Promise<T> => {
-    if (options.loading !== false) delayedLoading(true);
-
-    return fetch(baseApiUrl + path, {
+export const api = <T>(method: string, path: string, body?: FormData, type?: string): Promise<T> =>
+    fetch(baseApiUrl + path, {
         method: method,
-        body: method !== 'GET' ? buildForm(options.params, options.files) : null,
+        body: body ?? null,
         headers: authHeader(),
         mode: 'cors',
     })
         .then(checkStatus)
-        .then((response: Response): Promise<T> => response.json())
-        .finally(() => {
-            if (options.loading !== false) delayedLoading(false);
-        });
+        .then((response: Response): Promise<T> => (type == 'text' ? response.text() : type == 'blob' ? response.blob() : response.json()));
+
+export const load = <T>(method: string, path: string, body?: FormData, type?: string): Promise<T> => {
+    delayedLoading(true);
+
+    return api<T>(method, path, body, type).finally(() => delayedLoading(false));
 };
 
-export const get = <T>(path: string, params?: ApiParams): Promise<T> => api('GET', path + query(params));
+export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));
 
-export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => api('POST', path, { params, files });
+export const get = <T>(path: string, params?: ApiParams): Promise<T> => load('GET', path + query(params));
 
-export const del = <T>(path: string): Promise<T> => api('DELETE', path);
+export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => load('POST', path, buildForm(params, files));
 
-export const auth = <T>(path: string): Promise<T> => api('POST', path, { params: { referrer: document.referrer }, loading: false });
+export const del = <T>(path: string): Promise<T> => load('DELETE', path);
 
-export const getContent = (path: string): Promise<string> =>
-    fetch(`${baseUrl}${path}`)
-        .then(checkStatus)
-        .then((response: Response): Promise<string> => response.text());
+export const text = (path: string, params?: ApiParams): Promise<string> => load('POST', path, buildForm(params), 'text');
+
+export const blob = (path: string, params?: ApiParams): Promise<Blob> => load('POST', path, buildForm(params), 'blob');
 
 export const getExternal = <T>(url: string): Promise<T> =>
     fetch(url)

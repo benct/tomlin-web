@@ -39,7 +39,7 @@ export const showToast = (payload: string): ThunkResult<Promise<void>> => async 
 export const getHomeState = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(actions.setLoading(true));
 
-    await api('GET', '/hass/states', { loading: false })
+    await api('GET', '/hass/states')
         .then(response => dispatch(actions.setHomeState(response)))
         .finally(() => dispatch(actions.setLoading(false)));
 };
