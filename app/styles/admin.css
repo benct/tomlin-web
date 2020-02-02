@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 1fr auto auto;
     grid-gap: 10px;
+    text-align: left;
 }
 
 .admin-stats {

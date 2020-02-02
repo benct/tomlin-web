@@ -13,9 +13,11 @@ actions.setVisits = makeAction('ADMIN/SET_VISITS', 'visits');
 
 actions.setFlights = makeAction('ADMIN/SET_FLIGHTS', 'flights');
 
+actions.setNotes = makeAction('ADMIN/SET_NOTES', 'notes');
+
 actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
 
-actions.setNotes = makeAction('ADMIN/SET_NOTES', 'notes');
+actions.setHass = makeAction('ADMIN/SET_HASS', 'hass');
 
 export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
@@ -141,6 +143,14 @@ export const saveSetting = (key: string, value: string | null): ThunkResult<Prom
         await post('/settings/set', { key, value })
             .then(() => dispatch(showToast('Successfully saved settings!')))
             .catch(() => dispatch(showToast('Could not save settings...')));
+    }
+};
+
+export const getHass = (count = 25): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn) {
+        await get(`/hass/latest/${count}`)
+            .then(response => dispatch(actions.setHass(response || [])))
+            .catch(() => dispatch(showToast('Could not fetch home-assistant data...')));
     }
 };
 

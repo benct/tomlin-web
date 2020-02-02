@@ -63,6 +63,7 @@ const defaultState: DefaultState = {
     admin: {
         stats: {},
         logs: [],
+        hass: [],
         flights: [],
         visits: [],
         notes: [],

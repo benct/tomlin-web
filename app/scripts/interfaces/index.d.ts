@@ -215,15 +215,19 @@ export interface MediaStatsEntry {
 }
 
 export interface AdminState {
-    stats: AdminStats;
+    stats: Record<string, number>;
     logs: Log[];
+    hass: Hass[];
     flights: Flight[][];
     visits: Visit[];
     notes: Note[];
 }
 
-export interface AdminStats {
-    [key: string]: number;
+export interface Hass {
+    id: number;
+    sensor: string;
+    value: string;
+    updated: string;
 }
 
 export interface Log {

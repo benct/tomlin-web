@@ -1,17 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { AdminStats, DefaultState, Settings, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, Hass, Settings, ThunkDispatchProp } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
-import { clearLogs, getLogs, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
+import { clearLogs, getHass, getLogs, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
 
 interface ControlProps {
-    stats: AdminStats;
+    stats: Record<string, number>;
+    hass: Hass[];
     isLoggedIn: boolean;
     settings: Settings;
 }
 
-const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn, settings, dispatch }) => {
+const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, hass, isLoggedIn, settings, dispatch }) => {
     const logCount = React.useRef<HTMLSelectElement>(null);
     const updateMovieCount = React.useRef<HTMLSelectElement>(null);
     const updateTvCount = React.useRef<HTMLSelectElement>(null);
@@ -65,7 +66,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 </div>
             </div>
             <hr className="divider" />
-            <div className="admin-list text text-left">
+            <div className="admin-list text">
                 <span className="truncate">Countdown icon</span>
                 <select className="input input-small" defaultValue={settings.countdownIcon} ref={countdownIcon}>
                     <option value="none">None</option>
@@ -89,7 +90,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 </button>
             </div>
             <hr className="divider" />
-            <div className="admin-list text text-left">
+            <div className="admin-list text">
                 <span className="truncate">Update number of stored movies</span>
                 <select className="input input-small" defaultValue="50" ref={updateMovieCount}>
                     {renderOptions([10, 50, 100, 250, 500])}
@@ -110,7 +111,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 </button>
             </div>
             <hr className="divider" />
-            <div className="admin-list text text-left">
+            <div className="admin-list text">
                 <span className="truncate">Update IATA airline entries</span>
                 <span />
                 <button className="input input-small" onClick={(): Promise<void> => dispatch(updateIata('airlines'))}>
@@ -123,7 +124,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                 </button>
             </div>
             <hr className="divider" />
-            <div className="admin-list text text-left">
+            <div className="admin-list text">
                 <span className="truncate">Clear all log messages</span>
                 <span />
                 <button className="input input-small" onClick={(): Promise<void> => dispatch(clearLogs())}>
@@ -137,10 +138,34 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, isLoggedIn
                     Load
                 </button>
             </div>
+            <hr className="divider" />
+            <div className="admin-list text">
+                <span className="truncate">Latest Home Assistant states</span>
+                <select className="input input-small" defaultValue="25" ref={logCount}>
+                    {renderOptions([10, 25, 50, 100, 250, 500])}
+                </select>
+                <button className="input input-small" onClick={(): Promise<void> => dispatch(getHass(getCount(logCount.current)))}>
+                    Load
+                </button>
+            </div>
+            <div className="admin-list text-small mtl">
+                {hass.map(state => (
+                    <React.Fragment key={`hass${state.id}`}>
+                        <span className="truncate">{state.sensor}</span>
+                        <span className="strong">{state.value}</span>
+                        <span>{state.updated}</span>
+                    </React.Fragment>
+                ))}
+            </div>
         </>
     );
 };
 
 export default connect(
-    (state: DefaultState): ControlProps => ({ stats: state.admin.stats, isLoggedIn: state.auth.isLoggedIn, settings: state.settings })
+    (state: DefaultState): ControlProps => ({
+        stats: state.admin.stats,
+        hass: state.admin.hass,
+        isLoggedIn: state.auth.isLoggedIn,
+        settings: state.settings,
+    })
 )(Control);
