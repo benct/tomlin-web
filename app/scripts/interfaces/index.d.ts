@@ -100,9 +100,9 @@ export interface FilePreview {
 export type MediaType = 'movie' | 'tv' | 'watchlist';
 
 export interface MediaState {
-    movie: MediaResults<MediaItemEntry> | null;
-    tv: MediaResults<MediaItemEntry> | null;
-    watchlist: MediaResults<MediaItemEntry> | null;
+    movie: PaginationResponse<MediaItemEntry> | null;
+    tv: PaginationResponse<MediaItemEntry> | null;
+    watchlist: PaginationResponse<MediaItemEntry> | null;
     item: MediaItemEntry | null;
     sort: string;
     showModal: boolean;
@@ -115,13 +115,6 @@ export interface MediaState {
         movie: MediaStatsType;
         tv: MediaStatsType;
     };
-}
-
-export interface MediaResults<T extends MediaItemEntry | MediaSearchItemEntry> {
-    results: T[];
-    page: number;
-    total_pages: number;
-    total_results: number;
 }
 
 export type MediaItemEntry = MediaItemCommon & MediaItemMovie & MediaItemTv;
@@ -269,6 +262,13 @@ export interface PaginationState {
     last: boolean;
     previousPages: number[];
     consecutivePages: number[];
+}
+
+export interface PaginationResponse<T> {
+    results: T[];
+    page: number;
+    total_pages: number;
+    total_results: number;
 }
 
 export type ThunkResult<R> = ThunkAction<R, DefaultState, undefined, Action>;

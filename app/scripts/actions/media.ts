@@ -3,11 +3,11 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 import {
     MediaEpisodeEntry,
     MediaItemEntry,
-    MediaResults,
     MediaSearchItemEntry,
     MediaSeasonEntry,
     MediaState,
     MediaType,
+    PaginationResponse,
     ThunkResult,
 } from '../interfaces';
 
@@ -53,7 +53,7 @@ actions.setExisting = makeAction('MEDIA/SET_EXISTING', 'existing');
 
 actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload }) => {
     const action: MediaType = payload.action;
-    const actionState: MediaResults<MediaItemEntry> | null = state[action];
+    const actionState: PaginationResponse<MediaItemEntry> | null = state[action];
     const results: MediaItemEntry[] = actionState ? actionState.results : [];
 
     return {
@@ -75,7 +75,7 @@ actions.setFavourite = makeAction('MEDIA/SET_FAV', (state, { payload }) => {
 
 actions.setSeen = makeAction('MEDIA/SET_SEEN', (state, { payload }) => {
     const action: MediaType = payload.action;
-    const actionState: MediaResults<MediaItemEntry> | null = state[action];
+    const actionState: PaginationResponse<MediaItemEntry> | null = state[action];
     const results: MediaItemEntry[] = actionState ? actionState.results : [];
 
     return {
@@ -130,7 +130,7 @@ export const getMedia = ({ type, sort, page, query }: MediaActionProps): ThunkRe
     dispatch,
     getState
 ): Promise<void> =>
-    await get<MediaResults<MediaItemEntry>>(`/media/${type}`, {
+    await get<PaginationResponse<MediaItemEntry>>(`/media/${type}`, {
         query,
         page: page ?? getState().pagination.current,
         sort: sort ?? getState().media.sort,
@@ -148,7 +148,9 @@ export const getTmdbMedia = ({ action, type, id, page }: MediaActionProps): Thun
     dispatch,
     getState
 ): Promise<void> =>
-    await get<MediaResults<MediaSearchItemEntry>>(`/media/${type}/${action}/${id ?? ''}`, { page: page ?? getState().pagination.current })
+    await get<PaginationResponse<MediaSearchItemEntry>>(`/media/${type}/${action}/${id ?? ''}`, {
+        page: page ?? getState().pagination.current,
+    })
         .then(response => {
             dispatch(actions.setSearch(response.results ?? []));
             dispatch(paginationActions.set({ current: response.page, total: Math.min(response.total_pages, 1000) }));
@@ -159,7 +161,7 @@ export const getTmdbMedia = ({ action, type, id, page }: MediaActionProps): Thun
         });
 
 export const searchTmdbMedia = (query: string): ThunkResult<Promise<void>> => async (dispatch): Promise<void> =>
-    await get<MediaResults<MediaSearchItemEntry>>('/media/search', { query: encodeURI(query) })
+    await get<PaginationResponse<MediaSearchItemEntry>>('/media/search', { query: encodeURI(query) })
         .then(response => {
             dispatch(
                 actions.setSearch(

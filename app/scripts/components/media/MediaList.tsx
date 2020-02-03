@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Action } from 'redux';
 import { RouteComponentProps } from 'react-router';
 
-import { DefaultState, MediaItemEntry, MediaResults, MediaType, ThunkDispatchFunc } from '../../interfaces';
+import { DefaultState, MediaItemEntry, MediaType, ThunkDispatchFunc } from '../../interfaces';
 
 import mediaActions, { favourite, getMedia, remove, seen, setItem, update } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
@@ -13,7 +13,7 @@ import MediaModal from './MediaModal';
 import MediaItem from './MediaItem';
 
 interface MediaListStateProps {
-    data: MediaResults<MediaItemEntry> | null;
+    data?: MediaItemEntry[];
     item: MediaItemEntry | null;
     showModal: boolean;
     sort: string;
@@ -42,7 +42,7 @@ interface MediaListRouteProps {
 class MediaList extends React.Component<MediaListStateProps & MediaListDispatchProps> {
     componentDidMount(): void {
         if (this.props.data) {
-            this.props.setPagination(this.props.data.page);
+            this.props.setPagination(this.props.page);
         } else {
             this.props.loadMedia();
         }
@@ -98,22 +98,22 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
         );
     }
 
-    renderWatchlist(data: MediaResults<MediaItemEntry>): React.ReactElement {
+    renderWatchlist(data: MediaItemEntry[]): React.ReactElement {
         return (
             <>
                 <div>TV-Shows:</div>
                 <div className="clear-fix text-center">
-                    {data.results.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(this.renderRow.bind(this))}
+                    {data.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(this.renderRow.bind(this))}
                 </div>
                 <div>Movies:</div>
                 <div className="clear-fix text-center">
-                    {data.results.filter((item: MediaItemEntry): boolean => item.type === 'movie').map(this.renderRow.bind(this))}
+                    {data.filter((item: MediaItemEntry): boolean => item.type === 'movie').map(this.renderRow.bind(this))}
                 </div>
             </>
         );
     }
 
-    renderList(data: MediaResults<MediaItemEntry>): React.ReactElement {
+    renderList(data: MediaItemEntry[]): React.ReactElement {
         return (
             <>
                 <div className="text-center mbl">
@@ -138,7 +138,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
                         onKeyPress={this.handleKey.bind(this)}
                     />
                 </div>
-                <div className="clear-fix text-center">{data.results.map(this.renderRow.bind(this))}</div>
+                <div className="clear-fix text-center">{data.map(this.renderRow.bind(this))}</div>
                 <Pagination path={`/media/${this.props.type}/`} />
             </>
         );
@@ -155,7 +155,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
 }
 
 const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListStateProps => ({
-    data: state.media[ownProps.match.params.type],
+    data: state.media[ownProps.match.params.type]?.results,
     item: state.media.item,
     showModal: state.media.showModal,
     sort: state.media.sort,
