@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { DefaultState, Hass, Settings, ThunkDispatchProp } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
-import { clearLogs, getHass, getLogs, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
+import { clearLogs, getHass, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
 
 interface ControlProps {
     stats: Record<string, number>;
@@ -13,7 +13,7 @@ interface ControlProps {
 }
 
 const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, hass, isLoggedIn, settings, dispatch }) => {
-    const logCount = React.useRef<HTMLSelectElement>(null);
+    const hassCount = React.useRef<HTMLSelectElement>(null);
     const updateMovieCount = React.useRef<HTMLSelectElement>(null);
     const updateTvCount = React.useRef<HTMLSelectElement>(null);
     const countdownIcon = React.useRef<HTMLSelectElement>(null);
@@ -130,21 +130,14 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, hass, isLo
                 <button className="input input-small" onClick={(): Promise<void> => dispatch(clearLogs())}>
                     Clear
                 </button>
-                <span className="truncate">Default number of log messages</span>
-                <select className="input input-small" defaultValue="25" ref={logCount}>
-                    {renderOptions([10, 25, 50, 100, 250, 500])}
-                </select>
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(getLogs(getCount(logCount.current)))}>
-                    Load
-                </button>
             </div>
             <hr className="divider" />
             <div className="admin-list text">
                 <span className="truncate">Latest Home Assistant states</span>
-                <select className="input input-small" defaultValue="25" ref={logCount}>
+                <select className="input input-small" defaultValue="25" ref={hassCount}>
                     {renderOptions([10, 25, 50, 100, 250, 500])}
                 </select>
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(getHass(getCount(logCount.current)))}>
+                <button className="input input-small" onClick={(): Promise<void> => dispatch(getHass(getCount(hassCount.current)))}>
                     Load
                 </button>
             </div>

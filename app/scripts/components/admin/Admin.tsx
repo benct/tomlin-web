@@ -28,8 +28,8 @@ const Admin: React.FC = (): React.ReactElement => (
         <div className="wrapper min-height ptm">
             <Switch>
                 <Route path="/admin" exact component={Control} />
-                <Route path="/admin/logs" component={Logs} />
-                <Route path="/admin/visits" component={Visits} />
+                <Route path="/admin/logs/:page?" component={Logs} />
+                <Route path="/admin/visits/:page?" component={Visits} />
                 <SuspendedRoute path="/admin/flights" component={Flights} />
                 <SuspendedRoute path="/admin/notes" component={Notes} />
                 <SuspendedRoute path="/admin/files" component={Files} />

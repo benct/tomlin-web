@@ -1,20 +1,30 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 
 import { DefaultState, ThunkDispatchProp, Visit } from '../../interfaces';
 import { getVisits } from '../../actions/admin';
+import paginationActions from '../../actions/pagination';
+
+import Pagination from '../page/Pagination';
 
 interface VisitProps {
-    visits: Visit[];
+    visits?: Visit[];
     isLoggedIn: boolean;
+    page: number;
 }
 
-const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, isLoggedIn, dispatch }) => {
+const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, page, isLoggedIn, dispatch }) => {
     useEffect(() => {
-        if (!visits.length) {
-            dispatch(getVisits());
-        }
-    }, [isLoggedIn]);
+        dispatch(getVisits(page));
+        window.scrollTo(0, 0);
+
+        dispatch(paginationActions.set(page));
+
+        return (): void => {
+            dispatch(paginationActions.reset());
+        };
+    }, [page, isLoggedIn]);
 
     const renderVisit = (visit: Visit, idx: number): React.ReactElement => (
         <div className="admin-logs" key={`visits${idx}`}>
@@ -33,7 +43,20 @@ const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, isLoggedIn, 
         </div>
     );
 
-    return visits.length ? <>{visits.map(renderVisit)}</> : <span>No tracking data found...</span>;
+    return visits ? (
+        <>
+            {visits.map(renderVisit)}
+            <Pagination path="/admin/visits/" />
+        </>
+    ) : (
+        <span>No tracking data found...</span>
+    );
 };
 
-export default connect((state: DefaultState): VisitProps => ({ visits: state.admin.visits, isLoggedIn: state.auth.isLoggedIn }))(Visits);
+export default connect(
+    (state: DefaultState, ownProps: RouteComponentProps<{ page?: string }>): VisitProps => ({
+        visits: state.admin.visits?.results,
+        isLoggedIn: state.auth.isLoggedIn,
+        page: Number(ownProps.match.params.page ?? 1),
+    })
+)(Visits);

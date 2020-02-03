@@ -1,9 +1,10 @@
 import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
-import { AdminState, ThunkResult } from '../interfaces';
+import { AdminState, Log, PaginationResponse, ThunkResult, Visit } from '../interfaces';
 
 import { del, get, post } from '../util/api';
 import { showToast } from './base';
+import paginationActions from './pagination';
 
 const actions: ActionsObject<AdminState> = {};
 
@@ -27,19 +28,31 @@ export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getSt
     }
 };
 
-export const getVisits = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+export const getVisits = (page: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await get('/admin/visits')
-            .then(response => dispatch(actions.setVisits(response || [])))
-            .catch(() => dispatch(showToast('Could not fetch visiting data...')));
+        await get<PaginationResponse<Visit>>(`/admin/visits/${page}`)
+            .then(response => {
+                dispatch(actions.setVisits(response));
+                dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
+            })
+            .catch(() => {
+                dispatch(paginationActions.reset());
+                dispatch(showToast('Could not fetch visit data...'));
+            });
     }
 };
 
-export const getLogs = (count = 25): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+export const getLogs = (page: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await get(`/admin/logs/${count}`)
-            .then(response => dispatch(actions.setLogs(response || [])))
-            .catch(() => dispatch(showToast('Could not fetch log data...')));
+        await get<PaginationResponse<Log>>(`/admin/logs/${page}`)
+            .then(response => {
+                dispatch(actions.setLogs(response));
+                dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
+            })
+            .catch(() => {
+                dispatch(paginationActions.reset());
+                dispatch(showToast('Could not fetch log data...'));
+            });
     }
 };
 
@@ -51,10 +64,10 @@ export const clearLogs = (): ThunkResult<Promise<void>> => async (dispatch, getS
     }
 };
 
-export const deleteLog = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+export const deleteLog = (id: number, page: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this entry?')) {
         await del(`/admin/logs/${id}`)
-            .then(response => (response ? dispatch(getLogs()) : null))
+            .then(response => (response ? dispatch(getLogs(page)) : null))
             .catch(() => dispatch(showToast('Could not clear log data...')));
     }
 };

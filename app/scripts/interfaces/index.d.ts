@@ -209,10 +209,10 @@ export interface MediaStatsEntry {
 
 export interface AdminState {
     stats: Record<string, number>;
-    logs: Log[];
+    logs: PaginationResponse<Log> | null;
+    visits: PaginationResponse<Visit> | null;
     hass: Hass[];
     flights: Flight[][];
-    visits: Visit[];
     notes: Note[];
 }
 
