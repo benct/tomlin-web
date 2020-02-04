@@ -12,7 +12,13 @@ const Logout: React.FC<RouteComponentProps & ThunkDispatchProp> = ({ history, di
         window.setTimeout((): void => history.push('/'), 3000);
     }, []);
 
-    return <div className="wrapper min-height text">You have been logged out!</div>;
+    return (
+        <div className="wrapper min-height text">
+            <div>You have been logged out...</div>
+            <img src={require('../../images/icon/exit.svg')} alt="Exit" style={{ width: '200px' }} />
+            <div>Bye bye!</div>
+        </div>
+    );
 };
 
 export default connect()(withRouter(Logout));
