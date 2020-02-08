@@ -87,15 +87,16 @@ export interface FileItem {
     files: number;
     perms: string;
     date: string;
-    preview: object;
+    preview: FilePreviewType;
 }
 
 export interface FilePreview {
     content: string;
-    src: string;
-    image: boolean;
+    type: FilePreviewType;
     item: FileItem;
 }
+
+export type FilePreviewType = 'image' | 'video' | 'text' | null;
 
 export type MediaType = 'movie' | 'tv' | 'watchlist';
 

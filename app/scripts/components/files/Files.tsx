@@ -184,8 +184,12 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
                             color="white"
                         />
                     </button>
-                    {props.preview.image ? (
-                        <img className="overlay-image" src={props.preview.src} alt="Preview" />
+                    {props.preview.type == 'image' ? (
+                        <img className="overlay-image" src={props.preview.content} alt="Preview" />
+                    ) : props.preview.type == 'video' ? (
+                        <video className="overlay-image" controls>
+                            <source src={props.preview.content} type={`video/${props.preview.item.type}`} />
+                        </video>
                     ) : (
                         <pre className="overlay-preview">{props.preview.content}</pre>
                     )}

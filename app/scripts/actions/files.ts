@@ -105,13 +105,13 @@ export const download = (item: FileItem): ThunkResult<Promise<void>> => async (d
 };
 
 export const preview = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
-    if ('jpg|jpeg|png|bmp|gif|svg|ico'.includes(item.type)) {
+    if (item.preview == 'image' || item.preview == 'video') {
         await blob('/file/download', { path: item.path })
-            .then(blob => dispatch(actions.setPreview({ src: window.URL.createObjectURL(blob), image: true, item })))
+            .then(blob => dispatch(actions.setPreview({ content: window.URL.createObjectURL(blob), type: item.preview, item })))
             .catch(() => dispatch(showToast('Could not fetch image...')));
     } else {
         await text('/file/download', { path: item.path })
-            .then(data => dispatch(actions.setPreview({ content: data, image: false, item })))
+            .then(data => dispatch(actions.setPreview({ content: data, type: item.preview, item })))
             .catch(() => dispatch(showToast('Could not fetch content...')));
     }
 };
