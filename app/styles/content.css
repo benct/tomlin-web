@@ -135,6 +135,24 @@
     border-bottom: 1px dotted #dddddd !important;
 }
 
+.table-striped {
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    border: 1px solid #dddddd;
+}
+
+.table-striped thead {
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.table-striped th,
+.table-striped td {
+    overflow: visible;
+    padding: .5em 1em;
+}
+
 .shadow {
     position: relative;
     background-color: rgba(255, 255, 255, 0.95);

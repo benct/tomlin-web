@@ -108,3 +108,10 @@ body.default {
 .default .file-table .file-name span:active {
     color: #04879c;
 }
+
+.default .table-striped thead {
+    background-color: #e0e0e0;
+}
+.default .table-striped tr:nth-child(2n-1) td {
+    background-color: #f2f2f2;
+}

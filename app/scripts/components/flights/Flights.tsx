@@ -80,7 +80,7 @@ const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, isLoggedI
     };
 
     const renderGrouped = (): React.ReactElement => (
-        <table className="pure-table pure-table-horizontal pure-table-striped text-small" style={{ width: '100%' }}>
+        <table className="table-striped text-small" style={{ width: '100%' }}>
             <thead>
                 <tr className="text-smaller">
                     <th>Departure</th>
@@ -104,7 +104,7 @@ const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, isLoggedI
     );
 
     const renderAll = (): React.ReactElement => (
-        <table className="pure-table pure-table-horizontal pure-table-striped text-small" style={{ width: '100%' }}>
+        <table className="table-striped text-small" style={{ width: '100%' }}>
             <thead>
                 <tr className="text-smaller">
                     <th>Departure</th>
