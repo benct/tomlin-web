@@ -165,7 +165,6 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
                         Choose a file
                     </span>
                 </label>
-                <br />
                 <button className="input text-small mtl" onClick={handleUpload} disabled={props.uploading}>
                     {props.uploading ? 'Uploading...' : 'Upload'}
                 </button>
