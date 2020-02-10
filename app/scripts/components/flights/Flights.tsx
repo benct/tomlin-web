@@ -66,7 +66,11 @@ const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, isLoggedI
     };
 
     const validateForm = (form: Flight): boolean =>
-        form && required.filter((key: string): boolean => form[key]?.trim() === '').length === 0;
+        form &&
+        required.filter((key: string): boolean => {
+            const value = form[key];
+            return !value || value.trim() === '';
+        }).length === 0;
 
     const handleSubmit = (event: React.SyntheticEvent): void => {
         event.preventDefault();
