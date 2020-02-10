@@ -167,6 +167,14 @@ export const getHass = (count = 25): ThunkResult<Promise<void>> => async (dispat
     }
 };
 
+export const backup = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn) {
+        await post('/admin/backup')
+            .then(response => (response ? dispatch(showToast('Successful backup!')) : Promise.reject()))
+            .catch(() => dispatch(showToast('Backup process failed...')));
+    }
+};
+
 export default actions;
 
 export const reducer = makeReducer<AdminState>(actions);

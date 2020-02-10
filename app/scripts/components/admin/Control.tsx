@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { DefaultState, Hass, Settings, ThunkDispatchProp } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
-import { clearLogs, getHass, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
+import { backup, clearLogs, getHass, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
 
 interface ControlProps {
     stats: Record<string, number>;
@@ -129,6 +129,11 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, hass, isLo
                 <span />
                 <button className="input input-small" onClick={(): Promise<void> => dispatch(clearLogs())}>
                     Clear
+                </button>
+                <span className="truncate">Run database backup</span>
+                <span />
+                <button className="input input-small" onClick={(): Promise<void> => dispatch(backup())}>
+                    Backup
                 </button>
             </div>
             <hr className="divider" />
