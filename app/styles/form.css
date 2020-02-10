@@ -7,6 +7,35 @@ button {
     color: inherit;
 }
 
+label {
+    display: block;
+    margin: .25em 0;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.form-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-element {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 5px;
+}
+
+.form-element .input,
+.form-element .input-textarea {
+    width: 100%;
+    text-align: left;
+}
+
 .input {
     height: 44px;
     line-height: 42px;
@@ -28,7 +57,7 @@ button {
 }
 
 .input-small {
-    height: auto;
+    height: 28px;
     line-height: initial;
     margin: 0;
     padding: 3px 8px;

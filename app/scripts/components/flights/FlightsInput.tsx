@@ -5,18 +5,18 @@ interface FlightInputProps {
     type?: string;
     value?: string | null;
     required?: boolean;
-    fraction?: number;
+    fraction?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
     extraProps?: object;
 }
 
 const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required, fraction, onChange, extraProps }): React.ReactElement => (
-    <div className={`pure-u-1-${fraction ?? 2}`}>
+    <div className="form-element" style={{ width: fraction ?? '48%' }}>
         <label htmlFor={`form-${name}`} className="text-smaller capitalize">
             {name}
         </label>
         <input
-            className="pure-u-23-24"
+            className="input input-small"
             type={type ?? 'text'}
             name={name}
             id={`form-${name}`}

@@ -42,17 +42,20 @@ const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, isLoggedI
     };
 
     const handleNew = (): void => {
-        setForm(form.id ? {} : form);
+        setForm({});
+        setInvalid(false);
         setShowModal(true);
     };
 
     const handleEdit = (flight: Flight): void => {
         setForm(flight);
+        setInvalid(false);
         setShowModal(true);
     };
 
     const handleCopy = (flight: Flight): void => {
         setForm({ ...flight, id: undefined });
+        setInvalid(false);
         setShowModal(true);
     };
 
