@@ -52,20 +52,20 @@ export interface GitHubState {
 
 export interface GitHubUser {
     name: string;
-    image: string;
-    url: string;
-    repos: number;
+    avatarUrl: string;
+    htmlUrl: string;
+    publicRepos: number;
     followers: number;
     following: number;
 }
 
 export interface GitHubRepo {
     name: string;
-    url: string;
+    htmlUrl: string;
     language: string;
-    forks: number;
-    stars: number;
-    issues: number | null;
+    forksCount: number;
+    stargazersCount: number;
+    openIssuesCount: number;
 }
 
 export interface FileState {

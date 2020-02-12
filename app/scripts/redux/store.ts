@@ -6,7 +6,6 @@ import defaultState from './defaultState';
 import { DefaultState } from '../interfaces';
 import { reducer as baseReducer } from '../actions/base';
 import { reducer as authReducer } from '../actions/auth';
-import { reducer as githubReducer } from '../actions/github';
 import { reducer as fileReducer } from '../actions/files';
 import { reducer as mediaReducer } from '../actions/media';
 import { reducer as adminReducer } from '../actions/admin';
@@ -16,7 +15,6 @@ const reducer = (state: DefaultState = defaultState, action: Action): DefaultSta
     ...state,
     ...baseReducer(state, action),
     auth: authReducer(state.auth, action),
-    github: githubReducer(state.github, action),
     files: fileReducer(state.files, action),
     media: mediaReducer(state.media, action),
     admin: adminReducer(state.admin, action),

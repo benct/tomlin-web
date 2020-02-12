@@ -63,8 +63,3 @@ export const del = <T>(path: string): Promise<T> => load('DELETE', path);
 export const text = (path: string, params?: ApiParams): Promise<string> => load('POST', path, buildForm(params), 'text');
 
 export const blob = (path: string, params?: ApiParams): Promise<Blob> => load('POST', path, buildForm(params), 'blob');
-
-export const getExternal = <T>(url: string): Promise<T> =>
-    fetch(url)
-        .then(checkStatus)
-        .then((response: Response): Promise<T> => response.json());

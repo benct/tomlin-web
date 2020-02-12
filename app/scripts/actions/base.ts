@@ -30,6 +30,8 @@ actions.setSettings = makeAction('BASE/SET_SETTINGS', 'settings');
 
 actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 
+actions.setGitHubData = makeAction('BASE/SET_GITHUB_DATA', 'github');
+
 export const showToast = (payload: string): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(actions.setToast(payload));
 
@@ -41,6 +43,15 @@ export const getHomeState = (): ThunkResult<Promise<void>> => async (dispatch): 
 
     await api('GET', '/hass/states')
         .then(response => dispatch(actions.setHomeState(response)))
+        .finally(() => dispatch(actions.setLoading(false)));
+};
+
+export const getGitHubData = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+    dispatch(actions.setLoading(true));
+
+    await api('GET', '/github')
+        .then(data => dispatch(actions.setGitHubData(data)))
+        .catch(() => dispatch(showToast('Could not load GitHub data...')))
         .finally(() => dispatch(actions.setLoading(false)));
 };
 
