@@ -50,7 +50,7 @@
 .overlay-modal-content {
     max-width: 100%;
     height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .overlay-container {
