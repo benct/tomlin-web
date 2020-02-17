@@ -8,7 +8,7 @@ interface LoadingProps {
     className?: string;
 }
 
-const Loading: React.FC<LoadingProps> = ({ isLoading, children, className, text }): React.ReactElement =>
+const Loading: React.FC<LoadingProps> = ({ isLoading, text, className, children }): React.ReactElement =>
     isLoading ? (
         <div className={`text color-bg ${className ?? ''}`}>
             <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" />

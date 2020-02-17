@@ -2,8 +2,8 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { AdminState, Log, PaginationResponse, ThunkResult, Visit } from '../interfaces';
 
-import { del, get, post } from '../util/api';
-import { showToast } from './base';
+import { api, del, get, post } from '../util/api';
+import baseActions, { showToast } from './base';
 import paginationActions from './pagination';
 
 const actions: ActionsObject<AdminState> = {};
@@ -22,9 +22,12 @@ actions.setHass = makeAction('ADMIN/SET_HASS', 'hass');
 
 export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await get('/admin/stats')
+        dispatch(baseActions.setLoading(true));
+
+        await api('GET', '/admin/stats')
             .then(response => dispatch(actions.setStats(response || {})))
-            .catch(() => dispatch(showToast('Could not fetch stats...')));
+            .catch(() => dispatch(showToast('Could not fetch stats...')))
+            .finally(() => dispatch(baseActions.setLoading(false)));
     }
 };
 

@@ -5,14 +5,17 @@ import { DefaultState, Hass, Settings, ThunkDispatchProp } from '../../interface
 import { formatThousands } from '../../util/formatting';
 import { backup, clearLogs, getHass, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
 
+import Loading from '../page/Loading';
+
 interface ControlProps {
     stats: Record<string, number>;
-    hass: Hass[];
-    isLoggedIn: boolean;
     settings: Settings;
+    hass: Hass[];
+    loading: boolean;
+    isLoggedIn: boolean;
 }
 
-const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, hass, isLoggedIn, settings, dispatch }) => {
+const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, hass, loading, isLoggedIn, dispatch }) => {
     const hassCount = React.useRef<HTMLSelectElement>(null);
     const updateMovieCount = React.useRef<HTMLSelectElement>(null);
     const updateTvCount = React.useRef<HTMLSelectElement>(null);
@@ -43,28 +46,30 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, hass, isLo
 
     return (
         <>
-            <div className="admin-stats text-center text-small">
-                <div>
-                    Movies: {formatStat('movie')}
-                    <br />
-                    TV: {formatStat('tv')}
+            <Loading isLoading={loading} text="Loading stats...">
+                <div className="admin-stats text-center text-small">
+                    <div>
+                        Movies: {formatStat('movie')}
+                        <br />
+                        TV: {formatStat('tv')}
+                    </div>
+                    <div>
+                        Seasons: {formatStat('season')}
+                        <br />
+                        Episodes: {formatStat('episode')}
+                    </div>
+                    <div>
+                        Airlines: {formatStat('airline')}
+                        <br />
+                        Locations: {formatStat('location')}
+                    </div>
+                    <div>
+                        HA Events: {formatStat('hass')}
+                        <br />
+                        Logs: {formatStat('log')}
+                    </div>
                 </div>
-                <div>
-                    Seasons: {formatStat('season')}
-                    <br />
-                    Episodes: {formatStat('episode')}
-                </div>
-                <div>
-                    Airlines: {formatStat('airline')}
-                    <br />
-                    Locations: {formatStat('location')}
-                </div>
-                <div>
-                    HA Events: {formatStat('hass')}
-                    <br />
-                    Logs: {formatStat('log')}
-                </div>
-            </div>
+            </Loading>
             <hr className="divider" />
             <div className="admin-list text">
                 <span className="truncate">Countdown icon</span>
@@ -162,8 +167,9 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, hass, isLo
 export default connect(
     (state: DefaultState): ControlProps => ({
         stats: state.admin.stats,
-        hass: state.admin.hass,
-        isLoggedIn: state.auth.isLoggedIn,
         settings: state.settings,
+        hass: state.admin.hass,
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
     })
 )(Control);
