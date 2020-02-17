@@ -119,3 +119,8 @@ body.midnight {
     color: #eeeeee;
     fill: #eeeeee;
 }
+
+.midnight .toast {
+    background-color: #222831;
+    color: #eeeeee;
+}
