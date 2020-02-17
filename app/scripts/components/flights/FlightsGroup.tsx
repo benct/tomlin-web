@@ -28,7 +28,7 @@ const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }): React.Reac
 
     return (
         <>
-            <tr className="pointer" onClick={(): void => setShowFlights(!showFlights)} role="button">
+            <tr onClick={(): void => setShowFlights(!showFlights)} role="button">
                 <td className="no-wrap">{formatDate(flights[0].departure)}</td>
                 <td className="no-wrap hide-lt600">{flights.length > 1 ? formatDate(flights[flights.length - 1].arrival) : '—'}</td>
                 <td>{locations}</td>

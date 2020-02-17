@@ -48,7 +48,7 @@ const MediaItem: React.FC<MediaItemProps> = props => {
                     onError={(event: React.InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
                 />
             </div>
-            <div className="media-title truncate color-primary strong pointer" onClick={props.showItem} role="button" tabIndex={0}>
+            <div className="media-title truncate color-primary strong" onClick={props.showItem} role="button" tabIndex={0}>
                 {props.data.title}
             </div>
             <div className="media-data text-small truncate">
