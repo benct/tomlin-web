@@ -76,12 +76,12 @@
 
 .file-preview-close {
     right: 60px;
-    top: 62px;
+    top: 60px;
 }
 
 .file-preview-download {
-    right: 100px;
-    top: 62px;
+    right: 120px;
+    top: 60px;
 }
 
 @media screen and (max-width: 480px) {
