@@ -74,7 +74,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
     renderRow(item: MediaItemEntry): React.ReactElement {
         return (
             <MediaItem
-                key={`${item.id}-${item.imdb_id}`}
+                key={`mediaItem${item.id}`}
                 type={item.type ?? this.props.type}
                 data={item}
                 setSeen={this.props.setSeen.bind(this, item.type, item.id, item.seen)}

@@ -69,7 +69,7 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
         }
     }
 
-    renderItem(data: MediaSearchItemEntry, idx: number): React.ReactNode {
+    renderItem(data: MediaSearchItemEntry): React.ReactNode {
         const existing = this.props.existing[data.media_type ?? this.props.type] ?? [];
         return (
             <MediaSearchItem
@@ -78,7 +78,7 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
                 add={this.props.add.bind(this, data.media_type, data.id)}
                 remove={this.props.remove.bind(this, data.media_type, data.id)}
                 imdb={this.props.goToIMDb.bind(this, data.media_type, data.id)}
-                key={`mediaResult${idx}`}
+                key={`mediaResult${data.id}`}
             />
         );
     }
