@@ -13,6 +13,7 @@ import {
 import { DefaultState, FileItem, FilePreview, ThunkDispatchProp } from '../../interfaces';
 import fileActions, { changeDirectory, createDirectory, download, preview, refresh, remove, rename, upload } from '../../actions/files';
 
+import Loading from '../page/Loading';
 import FileList from './FileList';
 
 import '../../../styles/files.css';
@@ -141,14 +142,15 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
                     </button>
                 </div>
             </div>
-            <FileList
-                content={props.content}
-                focused={props.focused}
-                handleClick={handleClick}
-                handleRename={(item: FileItem): Promise<void> => props.dispatch(rename(item))}
-                handleDelete={(item: FileItem): Promise<void> => props.dispatch(remove(item))}
-                loading={props.loading}
-            />
+            <Loading isLoading={props.loading} text="Loading file list...">
+                <FileList
+                    content={props.content}
+                    focused={props.focused}
+                    handleClick={handleClick}
+                    handleRename={(item: FileItem): Promise<void> => props.dispatch(rename(item))}
+                    handleDelete={(item: FileItem): Promise<void> => props.dispatch(remove(item))}
+                />
+            </Loading>
             <div className="text-center">
                 <label htmlFor="file" className="color-primary pointer">
                     <input
