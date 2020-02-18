@@ -142,7 +142,7 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
                     </button>
                 </div>
             </div>
-            <Loading isLoading={props.loading} text="Loading file list...">
+            <Loading isLoading={props.loading} text="Loading file list..." className="file-table">
                 <FileList
                     content={props.content}
                     focused={props.focused}
