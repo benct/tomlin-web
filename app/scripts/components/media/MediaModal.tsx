@@ -91,17 +91,11 @@ const MediaModal: React.FC<MediaModalProps> = props => {
                 href={`https://www.themoviedb.org/${props.type}/${id}`}
                 target="_blank"
                 rel="noopener noreferrer external"
-                className="pointer"
-                data-tooltip="TMDb">
+                className="pointer">
                 <img className="valign-middle" src={require(`../../../images/icon/tmdb.svg`)} alt="TMDb" width={24} height={24} />
             </a>
             {imdb ? (
-                <a
-                    className="mlm pointer"
-                    href={`https://www.imdb.com/title/${imdb}`}
-                    target="_blank"
-                    rel="noopener noreferrer external"
-                    data-tooltip="IMDb">
+                <a className="mlm pointer" href={`https://www.imdb.com/title/${imdb}`} target="_blank" rel="noopener noreferrer external">
                     <img
                         className="valign-middle"
                         src={require(`../../../images/icon/imdb.svg`)}
@@ -111,18 +105,10 @@ const MediaModal: React.FC<MediaModalProps> = props => {
                     />
                 </a>
             ) : null}
-            <Link
-                to={`/media/search/${props.type}/similar/1/${id}`}
-                className="mlm pointer"
-                data-tooltip="Find similar"
-                onClick={props.close}>
+            <Link to={`/media/search/${props.type}/similar/1/${id}`} className="mlm pointer" onClick={props.close}>
                 <Icon path={mdiApproximatelyEqualBox} size="26px" title="Find similar" className="valign-middle" />
             </Link>
-            <Link
-                to={`/media/search/${props.type}/recommended/1/${id}`}
-                className="mlm pointer"
-                data-tooltip="Recommendations"
-                onClick={props.close}>
+            <Link to={`/media/search/${props.type}/recommended/1/${id}`} className="mlm pointer" onClick={props.close}>
                 <Icon path={mdiThumbUpOutline} size="26px" title="Recommendations" className="valign-middle" />
             </Link>
         </span>
@@ -207,15 +193,15 @@ const MediaModal: React.FC<MediaModalProps> = props => {
             </div>
             <div className="overlay-modal-content">{showSeasons ? renderSeasons() : renderContent()}</div>
             <div className="border-top ptm">
-                <button className="button-blank mrl" data-tooltip="Remove" onClick={props.remove}>
+                <button className="button-blank mrl" onClick={props.remove}>
                     <Icon path={mdiDeleteOutline} size="28px" title="Update" />
                 </button>
-                <button className="button-blank mrl" data-tooltip="Update" onClick={props.update}>
+                <button className="button-blank mrl" onClick={props.update}>
                     <Icon path={mdiRefresh} size="28px" title="Update" />
                 </button>
                 <SeenIcon seen={props.data.seen} setSeen={props.setSeen} size="28px" className="mrl" />
                 <FavouriteIcon favourite={props.data.favourite} setFavourite={props.setFavourite} size="28px" />
-                <button className="button-blank float-right" data-tooltip="Close" onClick={props.close}>
+                <button className="button-blank float-right" onClick={props.close}>
                     <Icon path={mdiCloseCircleOutline} size="28px" title="Close" />
                 </button>
             </div>

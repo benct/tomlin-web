@@ -16,7 +16,7 @@ const Changelog: React.FC<ChangelogProps> = ({ close }) => (
             <a href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer">
                 View on GitHub
             </a>
-            <button className="button-blank float-right" data-tooltip="Close" onClick={close}>
+            <button className="button-blank float-right" onClick={close}>
                 <Icon path={mdiCloseCircleOutline} size="28px" title="Close" />
             </button>
         </div>
