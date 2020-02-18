@@ -2,8 +2,8 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { AdminState, Log, PaginationResponse, ThunkResult, Visit } from '../interfaces';
 
-import { api, del, get, post } from '../util/api';
-import baseActions, { showToast } from './base';
+import { del, get, load, post } from '../util/api';
+import { showToast } from './base';
 import paginationActions from './pagination';
 
 const actions: ActionsObject<AdminState> = {};
@@ -22,12 +22,9 @@ actions.setHass = makeAction('ADMIN/SET_HASS', 'hass');
 
 export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        dispatch(baseActions.setLoading(true));
-
-        await api('GET', '/admin/stats')
+        await get('/admin/stats')
             .then(response => dispatch(actions.setStats(response || {})))
-            .catch(() => dispatch(showToast('Could not fetch stats...')))
-            .finally(() => dispatch(baseActions.setLoading(false)));
+            .catch(() => dispatch(showToast('Could not fetch stats...')));
     }
 };
 
@@ -164,7 +161,7 @@ export const saveSetting = (key: string, value: string | null): ThunkResult<Prom
 
 export const getHass = (count = 25): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await get(`/hass/latest/${count}`)
+        await load('GET', `/hass/latest/${count}`)
             .then(response => dispatch(actions.setHass(response || [])))
             .catch(() => dispatch(showToast('Could not fetch home-assistant data...')));
     }

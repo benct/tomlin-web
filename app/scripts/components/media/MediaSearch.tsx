@@ -9,6 +9,7 @@ import debounce from '../../util/debounce';
 import { add, existing, getTmdbMedia, goToIMDb, remove, searchTmdbMedia } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
 
+import Loading from '../page/Loading';
 import Pagination from '../page/Pagination';
 import MediaSearchItem from './MediaSearchItem';
 
@@ -19,6 +20,7 @@ interface MediaSearchStateProps {
     action?: string;
     id?: string;
     page?: number;
+    loading: boolean;
 }
 
 interface MediaSearchDispatchProps {
@@ -93,13 +95,15 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
                     <Link to={'/media/search/movie/now/'}>Now Playing (Movie)</Link>
                     <Link to={'/media/search/movie/upcoming/'}>Upcoming (Movie)</Link>
                 </div>
-                <div className="media-search mbm">
+                <div className="media-search mbl">
                     <Link to={'/media/search/tv/popular/'}>Popular (TV)</Link>
                     <Link to={'/media/search/tv/top/'}>Top Rated (TV)</Link>
                     <Link to={'/media/search/tv/now/'}>Now Playing (TV)</Link>
                 </div>
-                {this.props.data.map(this.renderItem.bind(this))}
-                <Pagination path={`/media/search/${this.props.type}/${this.props.action}/`} postfix={this.props.id} />
+                <Loading isLoading={this.props.loading} text="Loading media...">
+                    {this.props.data.map(this.renderItem.bind(this))}
+                    <Pagination path={`/media/search/${this.props.type}/${this.props.action}/`} postfix={this.props.id} />
+                </Loading>
             </div>
         );
     }
@@ -112,6 +116,7 @@ const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<Medi
     action: ownProps.match.params.action,
     id: ownProps.match.params.id,
     page: Number(ownProps.match.params.page ?? 1),
+    loading: state.loading,
 });
 
 const mapDispatchToProps = (

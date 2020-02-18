@@ -3,7 +3,7 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 import { DefaultState, ThunkResult } from '../interfaces';
 
 import { quotes } from '../util/quotes';
-import { api } from '../util/api';
+import { get } from '../util/api';
 
 const actions: ActionsObject<DefaultState> = {};
 
@@ -39,20 +39,15 @@ export const showToast = (payload: string): ThunkResult<Promise<void>> => async 
 };
 
 export const getHomeState = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
-    dispatch(actions.setLoading(true));
-
-    await api('GET', '/hass/states')
+    await get('/hass/states')
         .then(response => dispatch(actions.setHomeState(response)))
         .finally(() => dispatch(actions.setLoading(false)));
 };
 
 export const getGitHubData = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
-    dispatch(actions.setLoading(true));
-
-    await api('GET', '/github')
+    await get('/github')
         .then(data => dispatch(actions.setGitHubData(data)))
-        .catch(() => dispatch(showToast('Could not load GitHub data...')))
-        .finally(() => dispatch(actions.setLoading(false)));
+        .catch(() => dispatch(showToast('Could not load GitHub data...')));
 };
 
 export default actions;

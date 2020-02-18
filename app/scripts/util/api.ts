@@ -36,7 +36,7 @@ const buildForm = (data?: ApiParams, files?: FormData): FormData => {
     return formData;
 };
 
-export const api = <T>(method: string, path: string, body?: FormData, type?: string): Promise<T> =>
+const api = <T>(method: string, path: string, body?: FormData, type?: string): Promise<T> =>
     fetch(baseApiUrl + path, {
         method: method,
         body: body ?? null,
@@ -52,9 +52,13 @@ export const load = <T>(method: string, path: string, body?: FormData, type?: st
     return api<T>(method, path, body, type).finally(() => delayedLoading(false));
 };
 
-export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));
+export const get = <T>(path: string, params?: ApiParams): Promise<T> => {
+    store.dispatch(actions.setLoading(true));
 
-export const get = <T>(path: string, params?: ApiParams): Promise<T> => load('GET', path + query(params));
+    return api<T>('GET', path + query(params)).finally(() => store.dispatch(actions.setLoading(false)));
+};
+
+export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));
 
 export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => load('POST', path, buildForm(params, files));
 

@@ -7,14 +7,16 @@ import { getVisits } from '../../actions/admin';
 import paginationActions from '../../actions/pagination';
 
 import Pagination from '../page/Pagination';
+import Loading from '../page/Loading';
 
 interface VisitProps {
-    visits?: Visit[];
-    isLoggedIn: boolean;
+    visits: Visit[];
     page: number;
+    loading: boolean;
+    isLoggedIn: boolean;
 }
 
-const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, page, isLoggedIn, dispatch }) => {
+const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, page, loading, isLoggedIn, dispatch }) => {
     useEffect(() => {
         dispatch(getVisits(page));
         window.scrollTo(0, 0);
@@ -43,20 +45,25 @@ const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, page, isLogg
         </div>
     );
 
-    return visits ? (
-        <>
-            {visits.map(renderVisit)}
-            <Pagination path="/admin/visits/" />
-        </>
-    ) : (
-        <span>No tracking data found...</span>
+    return (
+        <Loading isLoading={loading} text="Loading visits...">
+            {visits.length ? (
+                <>
+                    {visits.map(renderVisit)}
+                    <Pagination path="/admin/visits/" />
+                </>
+            ) : (
+                <span>No tracking data found...</span>
+            )}
+        </Loading>
     );
 };
 
 export default connect(
     (state: DefaultState, ownProps: RouteComponentProps<{ page?: string }>): VisitProps => ({
-        visits: state.admin.visits?.results,
-        isLoggedIn: state.auth.isLoggedIn,
+        visits: state.admin.visits?.results ?? [],
         page: Number(ownProps.match.params.page ?? 1),
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
     })
 )(Visits);

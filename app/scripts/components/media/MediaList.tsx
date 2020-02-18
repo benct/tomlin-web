@@ -8,17 +8,19 @@ import { DefaultState, MediaItemEntry, MediaType, ThunkDispatchFunc } from '../.
 import mediaActions, { favourite, getMedia, remove, seen, setItem, update } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
 
+import Loading from '../page/Loading';
 import Pagination from '../page/Pagination';
 import MediaModal from './MediaModal';
 import MediaItem from './MediaItem';
 
 interface MediaListStateProps {
-    data?: MediaItemEntry[];
+    data: MediaItemEntry[];
     item: MediaItemEntry | null;
     showModal: boolean;
     sort: string;
     type: MediaType;
     page: number;
+    loading: boolean;
 }
 
 interface MediaListDispatchProps {
@@ -41,7 +43,7 @@ interface MediaListRouteProps {
 
 class MediaList extends React.Component<MediaListStateProps & MediaListDispatchProps> {
     componentDidMount(): void {
-        if (this.props.data) {
+        if (this.props.data.length) {
             this.props.setPagination(this.props.page);
         } else {
             this.props.loadMedia();
@@ -100,7 +102,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
 
     renderWatchlist(data: MediaItemEntry[]): React.ReactElement {
         return (
-            <>
+            <Loading isLoading={this.props.loading} text="Loading media...">
                 <div>TV-Shows:</div>
                 <div className="clear-fix text-center">
                     {data.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(this.renderRow.bind(this))}
@@ -109,7 +111,7 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
                 <div className="clear-fix text-center">
                     {data.filter((item: MediaItemEntry): boolean => item.type === 'movie').map(this.renderRow.bind(this))}
                 </div>
-            </>
+            </Loading>
         );
     }
 
@@ -138,29 +140,32 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
                         onKeyPress={this.handleKey.bind(this)}
                     />
                 </div>
-                <div className="clear-fix text-center">{data.map(this.renderRow.bind(this))}</div>
-                <Pagination path={`/media/${this.props.type}/`} />
+                <Loading isLoading={this.props.loading} text="Loading media...">
+                    <div className="clear-fix text-center">{data.map(this.renderRow.bind(this))}</div>
+                    <Pagination path={`/media/${this.props.type}/`} />
+                </Loading>
             </>
         );
     }
 
-    render(): React.ReactNode {
-        return this.props.data ? (
+    render(): React.ReactElement {
+        return (
             <>
                 {this.props.type === 'watchlist' ? this.renderWatchlist(this.props.data) : this.renderList(this.props.data)}
                 {this.props.showModal && this.props.item ? this.renderModal(this.props.item) : null}
             </>
-        ) : null;
+        );
     }
 }
 
 const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListStateProps => ({
-    data: state.media[ownProps.match.params.type]?.results,
+    data: state.media[ownProps.match.params.type]?.results ?? [],
     item: state.media.item,
     showModal: state.media.showModal,
     sort: state.media.sort,
     type: ownProps.match.params.type,
     page: Number(ownProps.match.params.page ?? 1),
+    loading: state.loading,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatchFunc, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListDispatchProps => {

@@ -7,14 +7,16 @@ import { deleteLog, getLogs } from '../../actions/admin';
 import paginationActions from '../../actions/pagination';
 
 import Pagination from '../page/Pagination';
+import Loading from '../page/Loading';
 
 interface LogProps {
-    logs?: Log[];
+    logs: Log[];
     page: number;
+    loading: boolean;
     isLoggedIn: boolean;
 }
 
-const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, page, isLoggedIn, dispatch }) => {
+const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, page, loading, isLoggedIn, dispatch }) => {
     useEffect(() => {
         dispatch(getLogs(page));
         window.scrollTo(0, 0);
@@ -33,34 +35,31 @@ const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, page, isLoggedIn, 
             </code>
             <code>
                 {log.message}
-                {log.details && (
-                    <>
-                        <br />* {log.details}
-                    </>
-                )}
-                {log.path && (
-                    <>
-                        <br />* {log.path}
-                    </>
-                )}
+                {log.details && <div>{log.details}</div>}
+                {log.path && <div>{log.path}</div>}
             </code>
         </div>
     );
 
-    return logs ? (
-        <>
-            {logs.map(renderLog)}
-            <Pagination path="/admin/logs/" />
-        </>
-    ) : (
-        <span>Server log is empty...</span>
+    return (
+        <Loading isLoading={loading} text="Loading logs...">
+            {logs.length ? (
+                <>
+                    {logs.map(renderLog)}
+                    <Pagination path="/admin/logs/" />
+                </>
+            ) : (
+                <span>Server logs are empty...</span>
+            )}
+        </Loading>
     );
 };
 
 export default connect(
     (state: DefaultState, ownProps: RouteComponentProps<{ page?: string }>): LogProps => ({
-        logs: state.admin.logs?.results,
-        isLoggedIn: state.auth.isLoggedIn,
+        logs: state.admin.logs?.results ?? [],
         page: Number(ownProps.match.params.page ?? 1),
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
     })
 )(Logs);

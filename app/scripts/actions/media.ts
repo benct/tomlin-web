@@ -11,8 +11,8 @@ import {
     ThunkResult,
 } from '../interfaces';
 
-import { api, del, get, post } from '../util/api';
-import baseActions, { showToast } from './base';
+import { del, get, load, post } from '../util/api';
+import { showToast } from './base';
 import paginationActions from './pagination';
 
 interface MediaActionProps {
@@ -118,12 +118,9 @@ actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload:
 }));
 
 export const getStats = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
-    dispatch(baseActions.setLoading(true));
-
-    await api('GET', '/media')
+    await get('/media')
         .then(response => dispatch(actions.setStats(response)))
-        .catch(() => dispatch(showToast('Could not fetch stats...')))
-        .finally(() => dispatch(baseActions.setLoading(false)));
+        .catch(() => dispatch(showToast('Could not fetch stats...')));
 };
 
 export const getMedia = ({ type, sort, page, query }: MediaActionProps): ThunkResult<Promise<void>> => async (
@@ -183,7 +180,7 @@ export const setItem = ({ type, id, override }: MediaActionProps): ThunkResult<P
     const item = getState().media.item;
 
     if (override || !item || item.id !== id) {
-        await get(`/media/${type}/${id}`)
+        await load('GET', `/media/${type}/${id}`)
             .then(response => {
                 dispatch(actions.showModal(response));
             })
@@ -198,7 +195,7 @@ export const setItem = ({ type, id, override }: MediaActionProps): ThunkResult<P
 
 export const existing = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await get('/media/existing')
+        await load('GET', '/media/existing')
             .then(response => dispatch(actions.setExisting(response)))
             .catch(() => dispatch(showToast('Could not fetch media content...')));
     }

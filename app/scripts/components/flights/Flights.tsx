@@ -10,15 +10,17 @@ import { deleteFlight, getFlights, saveFlight } from '../../actions/admin';
 
 import FlightsModal from './FlightsModal';
 import FlightsGroup from './FlightsGroup';
+import Loading from '../page/Loading';
 
 interface FlightProps {
     flights: Flight[][];
+    loading: boolean;
     isLoggedIn: boolean;
 }
 
 const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 
-const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, isLoggedIn, dispatch }) => {
+const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, loading, isLoggedIn, dispatch }) => {
     const [showGrouped, setShowGrouped] = React.useState<boolean>(true);
     const [showModal, setShowModal] = React.useState<boolean>(false);
     const [invalid, setInvalid] = React.useState<boolean>(false);
@@ -151,14 +153,16 @@ const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, isLoggedI
         </table>
     );
 
-    return flights.length ? (
+    return (
         <>
             <div className="text-center mbm">
                 <button className="input input-small" onClick={(): void => setShowGrouped(!showGrouped)}>
                     Display: {showGrouped ? 'Grouped' : 'All'}
                 </button>
             </div>
-            {showGrouped ? renderGrouped() : renderAll()}
+            <Loading isLoading={loading} text="Loading flights...">
+                {flights.length ? showGrouped ? renderGrouped() : renderAll() : <div className="text">No flights...</div>}
+            </Loading>
             {showModal && (
                 <FlightsModal
                     form={form}
@@ -172,11 +176,13 @@ const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, isLoggedI
                 />
             )}
         </>
-    ) : (
-        <div className="text">No flights...</div>
     );
 };
 
-export default connect((state: DefaultState): FlightProps => ({ flights: state.admin.flights, isLoggedIn: state.auth.isLoggedIn }))(
-    Flights
-);
+export default connect(
+    (state: DefaultState): FlightProps => ({
+        flights: state.admin.flights,
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
+    })
+)(Flights);
