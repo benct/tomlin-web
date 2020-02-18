@@ -4,15 +4,18 @@ import { mdiFileQuestion } from '@mdi/js';
 
 import { FileItem } from '../../interfaces';
 
+import Loading from '../page/Loading';
+
 interface FileListProps {
     content: FileItem[];
     focused: number | null;
     handleClick: (item: FileItem) => void;
     handleRename: (item: FileItem) => void;
     handleDelete: (item: FileItem) => void;
+    loading: boolean;
 }
 
-const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete }): React.ReactElement => {
+const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete, loading }): React.ReactElement => {
     const renderItem = (item: FileItem, i: number): React.ReactElement => (
         <tr key={i}>
             <td>
@@ -57,15 +60,17 @@ const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, hand
                 </tr>
             </thead>
             <tbody>
-                {content.length ? (
-                    content.map(renderItem)
-                ) : (
-                    <tr>
-                        <td colSpan={5} className="ptl">
-                            This folder is empty...
-                        </td>
-                    </tr>
-                )}
+                <Loading isLoading={loading} text="Loading file list...">
+                    {content.length ? (
+                        content.map(renderItem)
+                    ) : (
+                        <tr>
+                            <td colSpan={5} className="ptl">
+                                This folder is empty...
+                            </td>
+                        </tr>
+                    )}
+                </Loading>
             </tbody>
         </table>
     );
