@@ -1,6 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.15.0] - 2020-02-19 - Improved Admin
+### Added
+- Support pagination for logs and visits
+- Database backup functionality in admin view
+- List of latest Home Assistant states in admin view
+- Caching of several API data endpoints
+
+### Changed
+- Improve file preview support
+- Custom styling of flight list and form
+- Exit icon and text on logout view
+- Move GitHub data handling to backend API
+- Simplify loading indication on GET requests
+- Several admin layout and styling adjustments
+
+### Fixed
+- Flight form validation
+- Button style inheritance
+
+### Removed
+- PureCSS package and CSS styling
+
 ## [2.14.0] - 2020-01-31 - *New API, Performance*
 ### Added
 - Full support for new backend API
