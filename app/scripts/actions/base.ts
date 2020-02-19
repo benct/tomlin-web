@@ -41,7 +41,7 @@ export const showToast = (payload: string): ThunkResult<Promise<void>> => async 
 export const getHomeState = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     await get('/hass/states')
         .then(response => dispatch(actions.setHomeState(response)))
-        .finally(() => dispatch(actions.setLoading(false)));
+        .catch(() => dispatch(showToast('Could not load server data...')));
 };
 
 export const getGitHubData = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
