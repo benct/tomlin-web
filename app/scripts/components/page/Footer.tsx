@@ -1,12 +1,12 @@
 import React from 'react';
 import Icon from '@mdi/react';
-import { mdiAt, mdiFacebook, mdiGithubCircle, mdiInstagram, mdiLinkedin } from '@mdi/js';
+import { mdiAt, mdiFacebook, mdiGithub, mdiInstagram, mdiLinkedin } from '@mdi/js';
 
 const Footer: React.FC = (): React.ReactElement => (
     <footer className="color-bg">
         <div className="social text-center">
             <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">
-                <Icon path={mdiGithubCircle} size={1} title="GitHub" className="valign-middle" />
+                <Icon path={mdiGithub} size={1} title="GitHub" className="valign-middle" />
             </a>
             <a href="https://www.facebook.com/ben.c.tomlin" target="_blank" rel="noopener noreferrer">
                 <Icon path={mdiFacebook} size={1} title="Facebook" className="valign-middle" />

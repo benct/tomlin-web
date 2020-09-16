@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Icon from '@mdi/react';
-import { mdiFileDocumentBoxPlusOutline } from '@mdi/js';
+import { mdiFileDocumentMultipleOutline } from '@mdi/js';
 
 import { DefaultState, Note, ThunkDispatchProp } from '../../interfaces';
 import { getNotes } from '../../actions/admin';
@@ -59,7 +59,7 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, loading, isLog
             </Loading>
             <div className="text-center">
                 <button className="button-icon button-icon-text" onClick={(): void => edit({})}>
-                    New note <Icon path={mdiFileDocumentBoxPlusOutline} size="28px" title="New" />
+                    New note <Icon path={mdiFileDocumentMultipleOutline} size="28px" title="New" />
                 </button>
             </div>
             {showOverlay && selected ? <NotesModal note={selected} close={closeModal} /> : null}
