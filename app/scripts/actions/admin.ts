@@ -1,6 +1,6 @@
 import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
-import { AdminState, Log, PaginationResponse, ThunkResult, Visit } from '../interfaces';
+import { AdminState, Flight, Log, PaginationResponse, ThunkResult, Visit } from '../interfaces';
 
 import { del, get, load, post } from '../util/api';
 import { showToast } from './base';
@@ -23,7 +23,7 @@ actions.setHass = makeAction('ADMIN/SET_HASS', 'hass');
 export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await get('/admin/stats')
-            .then(response => dispatch(actions.setStats(response || {})))
+            .then((response) => dispatch(actions.setStats(response || {})))
             .catch(() => dispatch(showToast('Could not fetch stats...')));
     }
 };
@@ -31,7 +31,7 @@ export const getStats = (): ThunkResult<Promise<void>> => async (dispatch, getSt
 export const getVisits = (page: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await get<PaginationResponse<Visit>>(`/admin/visits/${page}`)
-            .then(response => {
+            .then((response) => {
                 dispatch(actions.setVisits(response));
                 dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
             })
@@ -45,7 +45,7 @@ export const getVisits = (page: number): ThunkResult<Promise<void>> => async (di
 export const getLogs = (page: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await get<PaginationResponse<Log>>(`/admin/logs/${page}`)
-            .then(response => {
+            .then((response) => {
                 dispatch(actions.setLogs(response));
                 dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
             })
@@ -59,7 +59,7 @@ export const getLogs = (page: number): ThunkResult<Promise<void>> => async (disp
 export const clearLogs = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete all logs?')) {
         await del('/admin/logs')
-            .then(response => (response ? dispatch(actions.setLogs([])) : null))
+            .then((response) => (response ? dispatch(actions.setLogs([])) : null))
             .catch(() => dispatch(showToast('Could not clear log data...')));
     }
 };
@@ -67,7 +67,7 @@ export const clearLogs = (): ThunkResult<Promise<void>> => async (dispatch, getS
 export const deleteLog = (id: number, page: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this entry?')) {
         await del(`/admin/logs/${id}`)
-            .then(response => (response ? dispatch(getLogs(page)) : null))
+            .then((response) => (response ? dispatch(getLogs(page)) : null))
             .catch(() => dispatch(showToast('Could not clear log data...')));
     }
 };
@@ -75,7 +75,7 @@ export const deleteLog = (id: number, page: number): ThunkResult<Promise<void>> 
 export const updateMedia = (type: string, count = 10): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await post(`/media/${type}/update/${count}`)
-            .then(response => dispatch(showToast(`Successfully updated ${response} items!`)))
+            .then((response) => dispatch(showToast(`Successfully updated ${response} items!`)))
             .catch(() => dispatch(showToast('Failed to update media content...')));
     }
 };
@@ -83,7 +83,7 @@ export const updateMedia = (type: string, count = 10): ThunkResult<Promise<void>
 export const updateIata = (type: string): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await post(`/iata/${type}`)
-            .then(response => dispatch(showToast(`Successfully updated ${response} entries!`)))
+            .then((response) => dispatch(showToast(`Successfully updated ${response} entries!`)))
             .catch(() => dispatch(showToast('Failed to update IATA entries...')));
     }
 };
@@ -91,7 +91,7 @@ export const updateIata = (type: string): ThunkResult<Promise<void>> => async (d
 export const getNotes = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await get('/admin/notes')
-            .then(response => dispatch(actions.setNotes(response || [])))
+            .then((response) => dispatch(actions.setNotes(response || [])))
             .catch(() => dispatch(showToast('Could not fetch notes...')));
     }
 };
@@ -124,12 +124,12 @@ export const deleteNote = (id: number): ThunkResult<Promise<void>> => async (dis
 export const getFlights = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await get('/flight')
-            .then(response => dispatch(actions.setFlights(response || [])))
+            .then((response) => dispatch(actions.setFlights(response || [])))
             .catch(() => dispatch(showToast('Could not fetch flights data...')));
     }
 };
 
-export const saveFlight = (data: object): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+export const saveFlight = (data: Flight): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await post('/flight', data)
             .then(() => {
@@ -162,7 +162,7 @@ export const saveSetting = (key: string, value: string | null): ThunkResult<Prom
 export const getHass = (count = 25): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load('GET', `/hass/latest/${count}`)
-            .then(response => dispatch(actions.setHass(response || [])))
+            .then((response) => dispatch(actions.setHass(response || [])))
             .catch(() => dispatch(showToast('Could not fetch home-assistant data...')));
     }
 };
@@ -170,7 +170,7 @@ export const getHass = (count = 25): ThunkResult<Promise<void>> => async (dispat
 export const backup = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await post('/admin/backup')
-            .then(response => (response ? dispatch(showToast('Successful backup!')) : Promise.reject()))
+            .then((response) => (response ? dispatch(showToast('Successful backup!')) : Promise.reject()))
             .catch(() => dispatch(showToast('Backup process failed...')));
     }
 };

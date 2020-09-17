@@ -8,7 +8,9 @@ import { login } from '../actions/auth';
 
 import Loading from './page/Loading';
 
-type LoginProps = RouteComponentProps<{}, StaticContext, { from: { pathname: string } }> & AuthState & ThunkDispatchProp;
+type LoginProps = RouteComponentProps<Record<string, string>, StaticContext, { from: { pathname: string } }> &
+    AuthState &
+    ThunkDispatchProp;
 
 const Login: React.FC<LoginProps> = ({ loading, redirect, error, location, dispatch }) => {
     const username = React.useRef<HTMLInputElement>(null);

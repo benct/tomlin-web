@@ -17,7 +17,7 @@ interface PaginationImage {
     rotate?: boolean;
 }
 
-const Pagination: React.FC<PaginationState & PaginationProps> = props => {
+const Pagination: React.FC<PaginationState & PaginationProps> = (props) => {
     const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = props;
 
     const renderImage = (image: PaginationImage): React.ReactElement => (

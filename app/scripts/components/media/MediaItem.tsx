@@ -15,7 +15,7 @@ interface MediaItemProps {
     showItem: () => void;
 }
 
-const MediaItem: React.FC<MediaItemProps> = props => {
+const MediaItem: React.FC<MediaItemProps> = (props) => {
     const renderRating = (): React.ReactElement => (
         <>
             &nbsp;|&nbsp;

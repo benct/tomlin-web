@@ -21,7 +21,7 @@ import Loading from '../page/Loading';
 
 type GitHubProps = GitHubState & Pick<DefaultState, 'loading'>;
 
-const GitHub: React.FC<GitHubProps & ThunkDispatchProp> = props => {
+const GitHub: React.FC<GitHubProps & ThunkDispatchProp> = (props) => {
     React.useEffect(() => {
         if (!props.user) {
             props.dispatch(getGitHubData());

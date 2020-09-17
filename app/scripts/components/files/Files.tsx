@@ -29,7 +29,7 @@ interface FilesProps {
 
 const PARENT_DIR = '..';
 
-const Files: React.FC<FilesProps & ThunkDispatchProp> = props => {
+const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
     const fileInput = React.useRef<HTMLInputElement>(null);
     const fileLabel = React.useRef<HTMLLabelElement>(null);
 

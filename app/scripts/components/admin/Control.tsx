@@ -152,7 +152,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, 
                 </button>
             </div>
             <div className="admin-list text-small mtl">
-                {hass.map(state => (
+                {hass.map((state) => (
                     <React.Fragment key={`hass${state.id}`}>
                         <span className="truncate">{state.sensor}</span>
                         <span className="strong">{state.value}</span>

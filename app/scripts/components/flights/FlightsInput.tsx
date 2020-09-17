@@ -7,7 +7,7 @@ interface FlightInputProps {
     required?: boolean;
     fraction?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
-    extraProps?: object;
+    extraProps?: Record<string, number>;
 }
 
 const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required, fraction, onChange, extraProps }): React.ReactElement => (

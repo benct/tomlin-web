@@ -46,7 +46,7 @@ actions.set = makeAction(
     }
 );
 
-actions.reset = makeAction('PAGINATION/RESET', state => ({ ...state, ...defaultState.pagination }));
+actions.reset = makeAction('PAGINATION/RESET', (state) => ({ ...state, ...defaultState.pagination }));
 
 export default actions;
 

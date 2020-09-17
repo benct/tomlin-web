@@ -10,7 +10,7 @@ import Time from './Time';
 
 type HomeStateProps = HomeState & Pick<DefaultState, 'loading'>;
 
-const State: React.FC<HomeStateProps & ThunkDispatchProp> = props => {
+const State: React.FC<HomeStateProps & ThunkDispatchProp> = (props) => {
     React.useEffect(() => {
         props.dispatch(getHomeState());
     }, []);

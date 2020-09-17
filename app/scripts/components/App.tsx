@@ -29,7 +29,7 @@ const Admin = React.lazy(() => import('./admin/Admin'));
 
 type AppStateProps = Pick<DefaultState, 'toast' | 'theme' | 'loading'>;
 
-const App: React.FC<AppStateProps & ThunkDispatchProp> = props => {
+const App: React.FC<AppStateProps & ThunkDispatchProp> = (props) => {
     React.useEffect(() => {
         props.dispatch(validate());
     }, []);

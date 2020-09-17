@@ -45,7 +45,7 @@ actions.setSort = makeAction('MEDIA/SET_SORT', 'sort');
 
 actions.showModal = makeAction('MEDIA/SHOW_MODAL', (state, { payload }) => ({ ...state, showModal: true, item: payload ?? state.item }));
 
-actions.hideModal = makeAction('MEDIA/HIDE_MODAL', state => ({ ...state, showModal: false }));
+actions.hideModal = makeAction('MEDIA/HIDE_MODAL', (state) => ({ ...state, showModal: false }));
 
 actions.setSearch = makeAction('MEDIA/SET_SEARCH', 'search');
 
@@ -119,7 +119,7 @@ actions.setEpisodeSeen = makeAction('MEDIA/SET_EPISODE_SEEN', (state, { payload:
 
 export const getStats = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     await get('/media')
-        .then(response => dispatch(actions.setStats(response)))
+        .then((response) => dispatch(actions.setStats(response)))
         .catch(() => dispatch(showToast('Could not fetch stats...')));
 };
 
@@ -132,7 +132,7 @@ export const getMedia = ({ type, sort, page, query }: MediaActionProps): ThunkRe
         page: page ?? getState().pagination.current,
         sort: sort ?? getState().media.sort,
     })
-        .then(response => {
+        .then((response) => {
             dispatch(actions.setMedia({ ...response, key: type }));
             dispatch(paginationActions.set({ current: response.page, total: response.total_pages }));
         })
@@ -148,7 +148,7 @@ export const getTmdbMedia = ({ action, type, id, page }: MediaActionProps): Thun
     await get<PaginationResponse<MediaSearchItemEntry>>(`/media/${type}/${action}/${id ?? ''}`, {
         page: page ?? getState().pagination.current,
     })
-        .then(response => {
+        .then((response) => {
             dispatch(actions.setSearch(response.results ?? []));
             dispatch(paginationActions.set({ current: response.page, total: Math.min(response.total_pages, 1000) }));
         })
@@ -159,7 +159,7 @@ export const getTmdbMedia = ({ action, type, id, page }: MediaActionProps): Thun
 
 export const searchTmdbMedia = (query: string): ThunkResult<Promise<void>> => async (dispatch): Promise<void> =>
     await get<PaginationResponse<MediaSearchItemEntry>>('/media/search', { query: encodeURI(query) })
-        .then(response => {
+        .then((response) => {
             dispatch(
                 actions.setSearch(
                     response.results
@@ -181,7 +181,7 @@ export const setItem = ({ type, id, override }: MediaActionProps): ThunkResult<P
 
     if (override || !item || item.id !== id) {
         await load('GET', `/media/${type}/${id}`)
-            .then(response => {
+            .then((response) => {
                 dispatch(actions.showModal(response));
             })
             .catch(() => {
@@ -196,7 +196,7 @@ export const setItem = ({ type, id, override }: MediaActionProps): ThunkResult<P
 export const existing = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await load('GET', '/media/existing')
-            .then(response => dispatch(actions.setExisting(response)))
+            .then((response) => dispatch(actions.setExisting(response)))
             .catch(() => dispatch(showToast('Could not fetch media content...')));
     }
 };
@@ -291,7 +291,7 @@ export const seenEpisodes = (seasonId: number): ThunkResult<Promise<void>> => as
 
 export const goToIMDb = ({ type, id }: MediaActionProps): ThunkResult<Promise<void>> => async (dispatch): Promise<void> =>
     await post(`/media/${type}/external/${id}`)
-        .then(response => {
+        .then((response) => {
             if (response) {
                 window.open(`https://www.imdb.com/title/${response}`, '_blank')?.focus();
             } else {

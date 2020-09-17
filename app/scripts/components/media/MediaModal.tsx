@@ -20,7 +20,7 @@ interface MediaModalProps {
     setFavourite: () => void;
 }
 
-const MediaModal: React.FC<MediaModalProps> = props => {
+const MediaModal: React.FC<MediaModalProps> = (props) => {
     const [showSeasons, setShowSeasons] = React.useState<boolean>(false);
 
     React.useEffect(() => {

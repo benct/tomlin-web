@@ -19,7 +19,7 @@ actions.setDirectory = makeAction('FILES/CHANGE_DIR', (state, { payload }) => ({
 
 export const refresh = (cwd?: string): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     await get('/file/tree', { path: cwd ?? getState().files.cwd })
-        .then(data => dispatch(actions.setContent(data)))
+        .then((data) => dispatch(actions.setContent(data)))
         .catch(() => dispatch(showToast('Could not fetch content...')));
 };
 
@@ -78,7 +78,7 @@ export const upload = (files: FormData): ThunkResult<Promise<void>> => async (di
 
 export const download = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     await blob('/file/download', { path: item.path })
-        .then(blob => {
+        .then((blob) => {
             if (typeof window.navigator?.msSaveOrOpenBlob !== 'undefined') {
                 window.navigator.msSaveOrOpenBlob(blob, item.name);
                 return;
@@ -107,11 +107,11 @@ export const download = (item: FileItem): ThunkResult<Promise<void>> => async (d
 export const preview = (item: FileItem): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     if (item.preview == 'image' || item.preview == 'video') {
         await blob('/file/download', { path: item.path })
-            .then(blob => dispatch(actions.setPreview({ content: window.URL.createObjectURL(blob), type: item.preview, item })))
+            .then((blob) => dispatch(actions.setPreview({ content: window.URL.createObjectURL(blob), type: item.preview, item })))
             .catch(() => dispatch(showToast('Could not fetch image...')));
     } else {
         await text('/file/download', { path: item.path })
-            .then(data => dispatch(actions.setPreview({ content: data, type: item.preview, item })))
+            .then((data) => dispatch(actions.setPreview({ content: data, type: item.preview, item })))
             .catch(() => dispatch(showToast('Could not fetch content...')));
     }
 };

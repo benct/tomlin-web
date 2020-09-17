@@ -9,7 +9,7 @@ interface SuspendedProps {
     path: string;
     component: SuspendedComponent;
     requireAuth?: boolean;
-    extraProps?: object;
+    extraProps?: Record<string, string>;
 }
 
 const isLoggedIn = (): boolean => !!localStorage.getItem('token');

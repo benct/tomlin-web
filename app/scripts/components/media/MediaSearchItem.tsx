@@ -14,7 +14,7 @@ interface MediaSearchItemProps {
 
 const defaultPoster = require('../../../images/media/poster_small.png');
 
-const MediaSearchItem: React.FC<MediaSearchItemProps> = props => {
+const MediaSearchItem: React.FC<MediaSearchItemProps> = (props) => {
     const [overview, setOverview] = React.useState<boolean>(false);
 
     const title = props.data.title ?? props.data.name;

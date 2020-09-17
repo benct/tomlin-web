@@ -31,7 +31,7 @@ interface MediaGraphEntry {
     y: number;
 }
 
-const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
+const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = (props) => {
     React.useEffect(() => {
         if (!props.movie.total) {
             props.dispatch(getStats());
@@ -49,7 +49,7 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = props => {
             : [];
 
     const mapYears = (data?: MediaStatsEntry[]): MediaGraphEntry[] =>
-        data?.filter(item => item.year).map((item: MediaStatsEntry): MediaGraphEntry => ({ x: `${item.year}0`, y: item.count })) ?? [];
+        data?.filter((item) => item.year).map((item: MediaStatsEntry): MediaGraphEntry => ({ x: `${item.year}0`, y: item.count })) ?? [];
 
     const renderLineChart = (title: string, color: string, data: MediaGraphEntry[]): React.ReactElement => (
         <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
