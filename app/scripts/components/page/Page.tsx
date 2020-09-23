@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
+import { useLocation } from 'react-router';
 
 import { DefaultState, ThunkDispatchProp } from '../../interfaces';
 
@@ -12,6 +13,12 @@ type PageProps = {
 type PageStateProps = Pick<DefaultState, 'toast' | 'theme' | 'loading'>;
 
 const Page: React.FC<PageProps & PageStateProps & ThunkDispatchProp> = (props) => {
+    const location = useLocation();
+
+    React.useEffect(() => {
+        document.title = `Tomlin - ${location.pathname}`;
+    });
+
     React.useEffect(() => {
         document.body.classList.remove('default', 'midnight');
         document.body.classList.add(props.theme);
