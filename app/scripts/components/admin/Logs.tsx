@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router';
 
 import { DefaultState, Log, ThunkDispatchProp } from '../../interfaces';
 import { deleteLog, getLogs } from '../../actions/admin';
@@ -11,12 +11,14 @@ import Loading from '../page/Loading';
 
 interface LogProps {
     logs: Log[];
-    page: number;
     loading: boolean;
     isLoggedIn: boolean;
 }
 
-const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, page, loading, isLoggedIn, dispatch }) => {
+const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, loading, isLoggedIn, dispatch }) => {
+    const routeParams = useParams<{ page?: string }>();
+    const page = Number(routeParams.page ?? 1);
+
     useEffect(() => {
         dispatch(getLogs(page));
         window.scrollTo(0, 0);
@@ -56,9 +58,8 @@ const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, page, loading, isL
 };
 
 export default connect(
-    (state: DefaultState, ownProps: RouteComponentProps<{ page?: string }>): LogProps => ({
+    (state: DefaultState): LogProps => ({
         logs: state.admin.logs?.results ?? [],
-        page: Number(ownProps.match.params.page ?? 1),
         loading: state.loading,
         isLoggedIn: state.auth.isLoggedIn,
     })

@@ -46,13 +46,27 @@ const App: React.FC<AppStateProps & ThunkDispatchProp> = (props) => {
                 <Header />
                 <main>
                     <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/about" component={About} />
-                        <Route path="/logout" component={Logout} />
-                        <Route path="/login" component={Login} />
-                        <SuspendedRoute path="/media" component={Media} />
-                        <SuspendedRoute path="/admin" component={Admin} requireAuth />
-                        <Route render={(): React.ReactElement => <Error code={404} />} />
+                        <Route path="/" exact>
+                            <Home />
+                        </Route>
+                        <Route path="/about">
+                            <About />
+                        </Route>
+                        <Route path="/logout">
+                            <Logout />
+                        </Route>
+                        <Route path="/login">
+                            <Login />
+                        </Route>
+                        <SuspendedRoute path="/media">
+                            <Media />
+                        </SuspendedRoute>
+                        <SuspendedRoute path="/admin" authentication>
+                            <Admin />
+                        </SuspendedRoute>
+                        <Route>
+                            <Error code={404} />
+                        </Route>
                     </Switch>
                 </main>
                 <Footer />

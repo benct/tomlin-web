@@ -27,13 +27,27 @@ const Admin: React.FC = (): React.ReactElement => (
         <Navigation type="sub" data={menu} />
         <div className="wrapper min-height ptm">
             <Switch>
-                <Route path="/admin" exact component={Control} />
-                <Route path="/admin/logs/:page?" component={Logs} />
-                <Route path="/admin/visits/:page?" component={Visits} />
-                <SuspendedRoute path="/admin/flights" component={Flights} />
-                <SuspendedRoute path="/admin/notes" component={Notes} />
-                <SuspendedRoute path="/admin/files" component={Files} />
-                <Route render={(): React.ReactNode => <Error code={404} />} />
+                <Route path="/admin" exact>
+                    <Control />
+                </Route>
+                <Route path="/admin/logs/:page?">
+                    <Logs />
+                </Route>
+                <Route path="/admin/visits/:page?">
+                    <Visits />
+                </Route>
+                <SuspendedRoute path="/admin/flights">
+                    <Flights />
+                </SuspendedRoute>
+                <SuspendedRoute path="/admin/notes">
+                    <Notes />
+                </SuspendedRoute>
+                <SuspendedRoute path="/admin/files">
+                    <Files />
+                </SuspendedRoute>
+                <Route>
+                    <Error code={404} />
+                </Route>
             </Switch>
         </div>
     </>

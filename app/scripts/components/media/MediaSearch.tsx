@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { DefaultState, MediaSearchItemEntry, ThunkDispatchFunc } from '../../interfaces';
 
@@ -109,25 +110,24 @@ class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDis
     }
 }
 
-const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<MediaSearchRouteProps>): MediaSearchStateProps => ({
+const routeProps = useParams<MediaSearchRouteProps>(); // TODO TEMP DOES NOT WORK
+
+const mapStateToProps = (state: DefaultState): MediaSearchStateProps => ({
     data: state.media.search,
     existing: state.media.existing,
-    type: ownProps.match.params.type,
-    action: ownProps.match.params.action,
-    id: ownProps.match.params.id,
-    page: Number(ownProps.match.params.page ?? 1),
+    type: routeProps.type,
+    action: routeProps.action,
+    id: routeProps.id,
+    page: Number(routeProps.page ?? 1),
     loading: state.loading,
 });
 
-const mapDispatchToProps = (
-    dispatch: ThunkDispatchFunc,
-    ownProps: RouteComponentProps<MediaSearchRouteProps>
-): MediaSearchDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatchFunc): MediaSearchDispatchProps => ({
     search: debounce((query: string): Promise<void> => dispatch(searchTmdbMedia(query)), 500),
-    get: (): Promise<void> => dispatch(getTmdbMedia({ ...ownProps.match.params, page: Number(ownProps.match.params.page ?? 1) })),
-    add: (type: string, id: number): Promise<void> => dispatch(add({ type: type ?? ownProps.match.params.type, id })),
-    remove: (type: string, id: number): Promise<void> => dispatch(remove({ type: type ?? ownProps.match.params.type, id })),
-    goToIMDb: (type: string, id: number): Promise<void> => dispatch(goToIMDb({ type: type ?? ownProps.match.params.type, id })),
+    get: (): Promise<void> => dispatch(getTmdbMedia({ ...routeProps, page: Number(routeProps.page ?? 1) })),
+    add: (type: string, id: number): Promise<void> => dispatch(add({ type: type ?? routeProps.type, id })),
+    remove: (type: string, id: number): Promise<void> => dispatch(remove({ type: type ?? routeProps.type, id })),
+    goToIMDb: (type: string, id: number): Promise<void> => dispatch(goToIMDb({ type: type ?? routeProps.type, id })),
     resetPagination: (): Action => dispatch(paginationActions.reset()),
     getExisting: (): Promise<void> => dispatch(existing()),
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router';
 
 import { DefaultState, MediaItemEntry, MediaType, ThunkDispatchFunc } from '../../interfaces';
 
@@ -158,18 +158,22 @@ class MediaList extends React.Component<MediaListStateProps & MediaListDispatchP
     }
 }
 
-const mapStateToProps = (state: DefaultState, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListStateProps => ({
-    data: state.media[ownProps.match.params.type]?.results ?? [],
-    item: state.media.item,
-    showModal: state.media.showModal,
-    sort: state.media.sort,
-    type: ownProps.match.params.type,
-    page: Number(ownProps.match.params.page ?? 1),
-    loading: state.loading,
-});
+const mapStateToProps = (state: DefaultState): MediaListStateProps => {
+    const { type, page } = useParams<MediaListRouteProps>(); // TODO DOES NOT WORK
+    return {
+        data: state.media[type]?.results ?? [],
+        item: state.media.item,
+        showModal: state.media.showModal,
+        sort: state.media.sort,
+        type: type,
+        page: Number(page ?? 1),
+        loading: state.loading,
+    };
+};
 
-const mapDispatchToProps = (dispatch: ThunkDispatchFunc, ownProps: RouteComponentProps<MediaListRouteProps>): MediaListDispatchProps => {
-    const { type, page } = ownProps.match.params;
+const mapDispatchToProps = (dispatch: ThunkDispatchFunc): MediaListDispatchProps => {
+    const { type, page } = useParams<MediaListRouteProps>(); // TODO TEMP DOES NOT WORK
+
     return {
         loadMedia: (query?: string): void => {
             dispatch(getMedia({ type, query, page: Number(page ?? 1) }));

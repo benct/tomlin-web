@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router';
 
 import { DefaultState, ThunkDispatchProp, Visit } from '../../interfaces';
 import { getVisits } from '../../actions/admin';
@@ -11,12 +11,14 @@ import Loading from '../page/Loading';
 
 interface VisitProps {
     visits: Visit[];
-    page: number;
     loading: boolean;
     isLoggedIn: boolean;
 }
 
-const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, page, loading, isLoggedIn, dispatch }) => {
+const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, loading, isLoggedIn, dispatch }) => {
+    const routeParams = useParams<{ page?: string }>();
+    const page = Number(routeParams.page ?? 1);
+
     useEffect(() => {
         dispatch(getVisits(page));
         window.scrollTo(0, 0);
@@ -60,9 +62,8 @@ const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, page, loadin
 };
 
 export default connect(
-    (state: DefaultState, ownProps: RouteComponentProps<{ page?: string }>): VisitProps => ({
+    (state: DefaultState): VisitProps => ({
         visits: state.admin.visits?.results ?? [],
-        page: Number(ownProps.match.params.page ?? 1),
         loading: state.loading,
         isLoggedIn: state.auth.isLoggedIn,
     })

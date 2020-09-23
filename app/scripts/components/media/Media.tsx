@@ -23,10 +23,18 @@ const Media: React.FC = (): React.ReactElement => (
         <Navigation type="sub" data={menu} />
         <div className="wrapper min-height ptm">
             <Switch>
-                <Route path="/media" exact component={Stats} />
-                <SuspendedRoute path="/media/:type(movie|tv|watchlist)/:page?" component={MediaList} requireAuth />
-                <SuspendedRoute path="/media/search/:type?/:action?/:page?/:id?" component={MediaSearch} requireAuth />
-                <Route render={(): React.ReactNode => <Error code={404} />} />
+                <Route path="/media" exact>
+                    <Stats />
+                </Route>
+                <SuspendedRoute path="/media/:type(movie|tv|watchlist)/:page?" authentication>
+                    <MediaList />
+                </SuspendedRoute>
+                <SuspendedRoute path="/media/search/:type?/:action?/:page?/:id?" authentication>
+                    <MediaSearch />
+                </SuspendedRoute>
+                <Route>
+                    <Error code={404} />
+                </Route>
             </Switch>
         </div>
     </>
