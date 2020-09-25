@@ -26,6 +26,14 @@ interface MediaActionProps {
     set?: boolean;
 }
 
+interface MediaExternal {
+    id: number;
+    facebook_id: string | null;
+    imdb_id: string | null;
+    instagram_id: string | null;
+    twitter_id: string | null;
+}
+
 const actions: ActionsObject<MediaState> = {};
 
 actions.setMedia = makeAction('MEDIA/SET', (state, { payload }) => ({
@@ -290,10 +298,10 @@ export const seenEpisodes = (seasonId: number): ThunkResult<Promise<void>> => as
 };
 
 export const goToIMDb = ({ type, id }: MediaActionProps): ThunkResult<Promise<void>> => async (dispatch): Promise<void> =>
-    await post(`/media/${type}/external/${id}`)
+    await load<MediaExternal>('GET', `/media/${type}/external/${id}`)
         .then((response) => {
             if (response) {
-                window.open(`https://www.imdb.com/title/${response}`, '_blank')?.focus();
+                window.open(`https://www.imdb.com/title/${response.imdb_id}`, '_blank')?.focus();
             } else {
                 dispatch(showToast('No external ID found...'));
             }
