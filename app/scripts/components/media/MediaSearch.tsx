@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Action } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { DefaultState, MediaSearchItemEntry, ThunkDispatchFunc } from '../../interfaces';
+import { DefaultState, MediaSearchItemEntry } from '../../interfaces';
 
 import debounce from '../../util/debounce';
 import { add, existing, getTmdbMedia, goToIMDb, remove, searchTmdbMedia } from '../../actions/media';
@@ -14,24 +13,10 @@ import Loading from '../page/Loading';
 import Pagination from '../page/Pagination';
 import MediaSearchItem from './MediaSearchItem';
 
-interface MediaSearchStateProps {
+interface MediaSearchProps {
     data: MediaSearchItemEntry[];
     existing: { movie: number[]; tv: number[] };
-    type?: string;
-    action?: string;
-    id?: string;
-    page?: number;
     loading: boolean;
-}
-
-interface MediaSearchDispatchProps {
-    search: (query: string) => void;
-    get: () => void;
-    add: (type: string, id: number) => void;
-    remove: (type: string, id: number) => void;
-    goToIMDb: (type: string, id: number) => void;
-    resetPagination: () => void;
-    getExisting: () => void;
 }
 
 export interface MediaSearchRouteProps {
@@ -41,95 +26,78 @@ export interface MediaSearchRouteProps {
     page?: string;
 }
 
-class MediaSearch extends React.Component<MediaSearchStateProps & MediaSearchDispatchProps> {
-    componentDidMount(): void {
-        this.props.getExisting();
+const MediaSearch: React.FC = () => {
+    const dispatch = useDispatch();
+    const routeProps = useParams<MediaSearchRouteProps>();
+    const props = useSelector<DefaultState, MediaSearchProps>((state) => ({
+        data: state.media.search,
+        existing: state.media.existing,
+        loading: state.loading,
+    }));
 
-        if (this.props.action && this.props.type) {
-            this.props.get();
+    const search = debounce((query: string) => dispatch(searchTmdbMedia(query)), 500);
+
+    const getMedia = () => {
+        if (routeProps.action && routeProps.type) {
+            dispatch(getTmdbMedia({ ...routeProps, page: Number(routeProps.page ?? 1) }));
             window.scrollTo(0, 0);
         }
-    }
+    };
 
-    componentDidUpdate(prevProps: MediaSearchStateProps & MediaSearchDispatchProps): void {
-        if (
-            this.props.action &&
-            this.props.type &&
-            (this.props.action !== prevProps.action || this.props.type !== prevProps.type || this.props.page !== prevProps.page)
-        ) {
-            this.props.get();
-            window.scrollTo(0, 0);
-        }
-    }
+    React.useEffect(() => {
+        dispatch(existing());
 
-    componentWillUnmount(): void {
-        this.props.resetPagination();
-    }
+        getMedia();
 
-    handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+        return () => {
+            dispatch(paginationActions.reset());
+        };
+    }, []);
+
+    React.useEffect(() => {
+        getMedia();
+    }, [routeProps.action, routeProps.type, routeProps.page]);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.value?.length > 1) {
-            this.props.search(event.target.value);
+            search(event.target.value);
         }
-    }
+    };
 
-    renderItem(data: MediaSearchItemEntry): React.ReactNode {
-        const existing = this.props.existing[data.media_type ?? this.props.type] ?? [];
+    const renderItem = (data: MediaSearchItemEntry): React.ReactNode => {
+        const existing = props.existing[data.media_type ?? routeProps.type] ?? [];
         return (
             <MediaSearchItem
                 data={data}
                 stored={existing.includes(data.id)}
-                add={this.props.add.bind(this, data.media_type, data.id)}
-                remove={this.props.remove.bind(this, data.media_type, data.id)}
-                imdb={this.props.goToIMDb.bind(this, data.media_type, data.id)}
+                add={() => dispatch(add({ type: data.media_type ?? routeProps.type, id: data.id }))}
+                remove={() => dispatch(remove({ type: data.media_type ?? routeProps.type, id: data.id }))}
+                imdb={() => dispatch(goToIMDb({ type: data.media_type ?? routeProps.type, id: data.id }))}
                 key={`mediaResult${data.id}`}
             />
         );
-    }
+    };
 
-    render(): React.ReactElement {
-        return (
-            <div className="text-center">
-                <input type="text" name="query" className="input mbl" aria-label="Search" onChange={this.handleChange.bind(this)} />
-                <div className="media-search">
-                    <Link to={'/media/search/movie/popular/'}>Popular (Movie)</Link>
-                    <Link to={'/media/search/movie/top/'}>Top Rated (Movie)</Link>
-                    <Link to={'/media/search/movie/now/'}>Now Playing (Movie)</Link>
-                    <Link to={'/media/search/movie/upcoming/'}>Upcoming (Movie)</Link>
-                </div>
-                <div className="media-search mbl">
-                    <Link to={'/media/search/tv/popular/'}>Popular (TV)</Link>
-                    <Link to={'/media/search/tv/top/'}>Top Rated (TV)</Link>
-                    <Link to={'/media/search/tv/now/'}>Now Playing (TV)</Link>
-                </div>
-                <Loading isLoading={this.props.loading} text="Loading media...">
-                    {this.props.data.map(this.renderItem.bind(this))}
-                    <Pagination path={`/media/search/${this.props.type}/${this.props.action}/`} postfix={this.props.id} />
-                </Loading>
+    return (
+        <div className="text-center">
+            <input type="text" name="query" className="input mbl" aria-label="Search" onChange={handleChange} />
+            <div className="media-search">
+                <Link to="/media/search/movie/popular/">Popular (Movie)</Link>
+                <Link to="/media/search/movie/top/">Top Rated (Movie)</Link>
+                <Link to="/media/search/movie/now/">Now Playing (Movie)</Link>
+                <Link to="/media/search/movie/upcoming/">Upcoming (Movie)</Link>
             </div>
-        );
-    }
-}
+            <div className="media-search mbl">
+                <Link to="/media/search/tv/popular/">Popular (TV)</Link>
+                <Link to="/media/search/tv/top/">Top Rated (TV)</Link>
+                <Link to="/media/search/tv/now/">Now Playing (TV)</Link>
+            </div>
+            <Loading isLoading={props.loading} text="Loading media...">
+                {props.data.map(renderItem)}
+                <Pagination path={`/media/search/${routeProps.type}/${routeProps.action}/`} postfix={routeProps.id} />
+            </Loading>
+        </div>
+    );
+};
 
-const routeProps = useParams<MediaSearchRouteProps>(); // TODO TEMP DOES NOT WORK
-
-const mapStateToProps = (state: DefaultState): MediaSearchStateProps => ({
-    data: state.media.search,
-    existing: state.media.existing,
-    type: routeProps.type,
-    action: routeProps.action,
-    id: routeProps.id,
-    page: Number(routeProps.page ?? 1),
-    loading: state.loading,
-});
-
-const mapDispatchToProps = (dispatch: ThunkDispatchFunc): MediaSearchDispatchProps => ({
-    search: debounce((query: string): Promise<void> => dispatch(searchTmdbMedia(query)), 500),
-    get: (): Promise<void> => dispatch(getTmdbMedia({ ...routeProps, page: Number(routeProps.page ?? 1) })),
-    add: (type: string, id: number): Promise<void> => dispatch(add({ type: type ?? routeProps.type, id })),
-    remove: (type: string, id: number): Promise<void> => dispatch(remove({ type: type ?? routeProps.type, id })),
-    goToIMDb: (type: string, id: number): Promise<void> => dispatch(goToIMDb({ type: type ?? routeProps.type, id })),
-    resetPagination: (): Action => dispatch(paginationActions.reset()),
-    getExisting: (): Promise<void> => dispatch(existing()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MediaSearch);
+export default MediaSearch;
