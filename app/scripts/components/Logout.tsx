@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { ThunkDispatchProp } from '../interfaces';
 import { logout } from '../actions/auth';
 
-const Logout: React.FC<RouteComponentProps & ThunkDispatchProp> = ({ history, dispatch }) => {
+const Logout: React.FC<ThunkDispatchProp> = ({ dispatch }) => {
+    const history = useHistory();
+
     React.useEffect(() => {
         dispatch(logout());
 
@@ -21,4 +23,4 @@ const Logout: React.FC<RouteComponentProps & ThunkDispatchProp> = ({ history, di
     );
 };
 
-export default connect()(withRouter(Logout));
+export default connect()(Logout);
