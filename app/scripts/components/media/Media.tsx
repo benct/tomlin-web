@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import SuspendedRoute from '../route/Suspended';
@@ -8,8 +8,8 @@ import Stats from './MediaStats';
 
 import '../../../styles/media.css';
 
-const MediaSearch = React.lazy(() => import('./MediaSearch'));
-const MediaList = React.lazy(() => import('./MediaList'));
+const MediaSearch = lazy(() => import('./MediaSearch'));
+const MediaList = lazy(() => import('./MediaList'));
 
 const menu: NavigationItem[] = [
     { text: 'Movies', path: '/media/movie' },
@@ -18,7 +18,7 @@ const menu: NavigationItem[] = [
     { text: 'Search', path: '/media/search' },
 ];
 
-const Media: React.FC = (): React.ReactElement => (
+const Media: React.FC = () => (
     <>
         <Navigation type="sub" data={menu} />
         <div className="wrapper min-height ptm">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '@mdi/react';
 import {
     mdiAlertCircleOutline,
@@ -14,17 +14,21 @@ import {
     mdiStarOutline,
 } from '@mdi/js';
 
-import { DefaultState, GitHubRepo, GitHubState, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, GitHubRepo, GitHubState } from '../../interfaces';
 import { getGitHubData } from '../../actions/base';
 
 import Loading from '../page/Loading';
 
-type GitHubProps = GitHubState & Pick<DefaultState, 'loading'>;
+const GitHub: React.FC = () => {
+    const dispatch = useDispatch();
+    const state = useSelector<DefaultState, GitHubState & Pick<DefaultState, 'loading'>>((state) => ({
+        ...state.github,
+        loading: state.loading,
+    }));
 
-const GitHub: React.FC<GitHubProps & ThunkDispatchProp> = (props) => {
-    React.useEffect(() => {
-        if (!props.user) {
-            props.dispatch(getGitHubData());
+    useEffect(() => {
+        if (!state.user) {
+            dispatch(getGitHubData());
         }
     }, []);
 
@@ -72,31 +76,31 @@ const GitHub: React.FC<GitHubProps & ThunkDispatchProp> = (props) => {
     );
 
     return (
-        <Loading isLoading={props.loading} text="Loading GitHub data..." className="wrapper">
-            {props.user ? (
+        <Loading isLoading={state.loading} text="Loading GitHub data..." className="wrapper">
+            {state.user ? (
                 <div className="wrapper text-center">
                     <div className="text mbl color-primary">GitHub</div>
                     <div className="github-user">
-                        <a href={props.user.htmlUrl} target="_blank" rel="noopener noreferrer">
-                            <img className="github-avatar" src={props.user.avatarUrl} alt="Avatar" />
+                        <a href={state.user.htmlUrl} target="_blank" rel="noopener noreferrer">
+                            <img className="github-avatar" src={state.user.avatarUrl} alt="Avatar" />
                         </a>
                         <div className="github-count">
-                            <div className="monospace">{props.user.publicRepos}</div>
+                            <div className="monospace">{state.user.publicRepos}</div>
                             <span className="text-smaller">Repositories</span>
                         </div>
                         <div className="github-count">
-                            <div className="monospace">{props.stars}</div>
+                            <div className="monospace">{state.stars}</div>
                             <span className="text-smaller">Stargazers</span>
                         </div>
                         <div className="github-count">
-                            <div className="monospace">{props.user.followers}</div>
+                            <div className="monospace">{state.user.followers}</div>
                             <span className="text-smaller">Followers</span>
                         </div>
                     </div>
                     <div className="github-wrapper ptm mha">
                         <div className="text-smaller mbs">Featured</div>
-                        {props.top.map(renderRepo)}
-                        {props.featured.map(renderRepo)}
+                        {state.top.map(renderRepo)}
+                        {state.featured.map(renderRepo)}
                     </div>
                 </div>
             ) : (
@@ -109,4 +113,4 @@ const GitHub: React.FC<GitHubProps & ThunkDispatchProp> = (props) => {
     );
 };
 
-export default connect((state: DefaultState): GitHubProps => ({ ...state.github, loading: state.loading }))(GitHub);
+export default GitHub;

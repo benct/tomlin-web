@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ISO6391 from 'iso-639-1';
 
 import { MediaSearchItemEntry } from '../../interfaces';
@@ -15,7 +15,7 @@ interface MediaSearchItemProps {
 const defaultPoster = require('../../../images/media/poster_small.png');
 
 const MediaSearchItem: React.FC<MediaSearchItemProps> = (props) => {
-    const [overview, setOverview] = React.useState<boolean>(false);
+    const [overview, setOverview] = useState<boolean>(false);
 
     const title = props.data.title ?? props.data.name;
     const originalTitle = props.data.original_title ?? props.data.original_name;

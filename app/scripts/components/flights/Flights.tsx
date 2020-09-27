@@ -1,9 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiAirplane, mdiBriefcaseEditOutline } from '@mdi/js';
 
-import { DefaultState, Flight, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, Flight } from '../../interfaces';
 
 import { formatDate } from '../../util/formatting';
 import { deleteFlight, getFlights, saveFlight } from '../../actions/admin';
@@ -12,7 +12,7 @@ import FlightsModal from './FlightsModal';
 import FlightsGroup from './FlightsGroup';
 import Loading from '../page/Loading';
 
-interface FlightProps {
+interface FlightState {
     flights: Flight[][];
     loading: boolean;
     isLoggedIn: boolean;
@@ -20,13 +20,20 @@ interface FlightProps {
 
 const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 
-const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, loading, isLoggedIn, dispatch }) => {
-    const [showGrouped, setShowGrouped] = React.useState<boolean>(true);
-    const [showModal, setShowModal] = React.useState<boolean>(false);
-    const [invalid, setInvalid] = React.useState<boolean>(false);
-    const [form, setForm] = React.useState<Flight>({});
+const Flights: React.FC = () => {
+    const [showGrouped, setShowGrouped] = useState<boolean>(true);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [invalid, setInvalid] = useState<boolean>(false);
+    const [form, setForm] = useState<Flight>({});
 
-    React.useEffect(() => {
+    const dispatch = useDispatch();
+    const { flights, loading, isLoggedIn } = useSelector<DefaultState, FlightState>((state) => ({
+        flights: state.admin.flights,
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
+    }));
+
+    useEffect(() => {
         if (!flights.length) {
             dispatch(getFlights());
         }
@@ -179,10 +186,4 @@ const Flights: React.FC<FlightProps & ThunkDispatchProp> = ({ flights, loading, 
     );
 };
 
-export default connect(
-    (state: DefaultState): FlightProps => ({
-        flights: state.admin.flights,
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    })
-)(Flights);
+export default Flights;

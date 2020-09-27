@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface ModalProps {
     children: React.ReactNode;
@@ -7,7 +7,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ close, className, children }) => {
-    React.useEffect(() => {
+    useEffect(() => {
         document.body.classList.add('no-scroll');
 
         return (): void => document.body.classList.remove('no-scroll');

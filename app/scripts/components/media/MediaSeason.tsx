@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { MediaEpisodeEntry, MediaSeasonEntry, ThunkDispatchProp } from '../../interfaces';
+import { MediaEpisodeEntry, MediaSeasonEntry } from '../../interfaces';
 
 import { formatDate, formatGradientHSL } from '../../util/formatting';
 import { seenEpisode, seenEpisodes } from '../../actions/media';
@@ -12,10 +12,12 @@ interface MediaSeasonProps {
     data: MediaSeasonEntry;
 }
 
-const MediaSeason: React.FC<MediaSeasonProps & ThunkDispatchProp> = ({ data, dispatch }) => {
-    const [showEpisodes, setShowEpisodes] = React.useState<boolean>(false);
-    const [title, setTitle] = React.useState<string>();
-    const [overview, setOverview] = React.useState<string>();
+const MediaSeason: React.FC<MediaSeasonProps> = ({ data }) => {
+    const [showEpisodes, setShowEpisodes] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>();
+    const [overview, setOverview] = useState<string>();
+
+    const dispatch = useDispatch();
 
     const toggleEpisodes = (): void => {
         setShowEpisodes(!showEpisodes);
@@ -33,7 +35,7 @@ const MediaSeason: React.FC<MediaSeasonProps & ThunkDispatchProp> = ({ data, dis
                     <span className="text-small pll">{episode.episode}</span>
                     <button
                         className="button-blank text-small text-left truncate"
-                        onClick={(): void => showOverview(episode.title, episode.overview)}>
+                        onClick={() => showOverview(episode.title, episode.overview)}>
                         {episode.title}
                     </button>
                     <span className="text-small text-right">
@@ -41,7 +43,7 @@ const MediaSeason: React.FC<MediaSeasonProps & ThunkDispatchProp> = ({ data, dis
                     </span>
                     <SeenIcon
                         seen={episode.seen}
-                        setSeen={(): Promise<void> => dispatch(seenEpisode({ id: episode.id, set: !episode.seen }))}
+                        setSeen={() => dispatch(seenEpisode({ id: episode.id, set: !episode.seen }))}
                         size="22px"
                         className="mrm"
                     />
@@ -62,7 +64,7 @@ const MediaSeason: React.FC<MediaSeasonProps & ThunkDispatchProp> = ({ data, dis
                     {episodesSeen}/{episodesTotal}
                 </button>
                 {episodesSeen === 0 ? (
-                    <button className="input input-small float-right mrm" onClick={(): Promise<void> => dispatch(seenEpisodes(data.id))}>
+                    <button className="input input-small float-right mrm" onClick={() => dispatch(seenEpisodes(data.id))}>
                         Mark all
                     </button>
                 ) : null}
@@ -76,7 +78,7 @@ const MediaSeason: React.FC<MediaSeasonProps & ThunkDispatchProp> = ({ data, dis
                 <div className="media-overlay-episodes">
                     {renderEpisodes()}
                     {overview ? (
-                        <div className="media-overlay-episode-overview shadow" role="dialog" onClick={(): void => showOverview()}>
+                        <div className="media-overlay-episode-overview shadow" role="dialog" onClick={() => showOverview()}>
                             <span>{title}</span>
                             <span className="text-small">{overview}</span>
                         </div>
@@ -87,4 +89,4 @@ const MediaSeason: React.FC<MediaSeasonProps & ThunkDispatchProp> = ({ data, dis
     );
 };
 
-export default connect()(MediaSeason);
+export default MediaSeason;

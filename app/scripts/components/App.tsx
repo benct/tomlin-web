@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -21,13 +21,13 @@ import '../../styles/util.css';
 import '../../styles/themes/default.css';
 import '../../styles/themes/midnight.css';
 
-const Media = React.lazy(() => import('./media/Media'));
-const Admin = React.lazy(() => import('./admin/Admin'));
+const Media = lazy(() => import('./media/Media'));
+const Admin = lazy(() => import('./admin/Admin'));
 
 export const App: React.FC = () => {
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(validate());
     }, []);
 

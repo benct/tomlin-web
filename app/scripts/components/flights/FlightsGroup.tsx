@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from '@mdi/react';
 import { mdiBriefcaseEditOutline, mdiChevronDown, mdiChevronUp } from '@mdi/js';
 
@@ -10,8 +10,8 @@ interface FlightGroupProps {
     edit: (flight: Flight) => void;
 }
 
-const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }): React.ReactElement => {
-    const [showFlights, setShowFlights] = React.useState<boolean>(false);
+const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }) => {
+    const [showFlights, setShowFlights] = useState<boolean>(false);
 
     const isSimple =
         flights.length === 1 ||

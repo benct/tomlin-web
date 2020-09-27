@@ -1,51 +1,47 @@
-import React, { ReactNode } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 
-import { DefaultState, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState } from '../../interfaces';
 
 import Header from './Header';
 import Footer from './Footer';
 
-type PageProps = {
-    children: ReactNode;
-};
-type PageStateProps = Pick<DefaultState, 'toast' | 'theme' | 'loading'>;
+type PageState = Pick<DefaultState, 'toast' | 'theme' | 'loading'>;
 
-const Page: React.FC<PageProps & PageStateProps & ThunkDispatchProp> = (props) => {
+const Page: React.FC = ({ children }) => {
     const location = useLocation();
+    const state = useSelector<DefaultState, PageState>((state) => ({
+        toast: state.toast,
+        theme: state.theme,
+        loading: state.loadingOverlay,
+    }));
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.title = `Tomlin - ${location.pathname}`;
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.body.classList.remove('default', 'midnight');
-        document.body.classList.add(props.theme);
-        localStorage.setItem('theme', props.theme);
-    }, [props.theme]);
+        document.body.classList.add(state.theme);
+        localStorage.setItem('theme', state.theme);
+    }, [state.theme]);
 
     return (
         <>
             <Header />
-            <main>{props.children}</main>
+            <main>{children}</main>
             <Footer />
-            {props.loading ? (
+            {state.loading ? (
                 <div className="overlay overlay-loading">
                     <div className="overlay-container shadow">
                         <div className="pac-man" />
                     </div>
                 </div>
             ) : null}
-            {props.toast ? <div className="toast">{props.toast}</div> : null}
+            {state.toast ? <div className="toast">{state.toast}</div> : null}
         </>
     );
 };
 
-const mapStateToProps = (state: DefaultState): PageStateProps => ({
-    toast: state.toast,
-    theme: state.theme,
-    loading: state.loadingOverlay,
-});
-
-export default connect(mapStateToProps)(Page);
+export default Page;

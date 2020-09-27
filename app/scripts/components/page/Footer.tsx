@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from '@mdi/react';
 import { mdiAt, mdiFacebook, mdiGithub, mdiInstagram, mdiLinkedin } from '@mdi/js';
 
-const Footer: React.FC = (): React.ReactElement => (
+const Footer: React.FC = () => (
     <footer className="color-bg">
         <div className="social text-center">
             <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">

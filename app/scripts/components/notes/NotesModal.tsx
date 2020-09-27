@@ -1,9 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
-import { Note, ThunkDispatchProp } from '../../interfaces';
+import { Note } from '../../interfaces';
 import { deleteNote, saveNote } from '../../actions/admin';
 
 import Modal from '../page/Modal';
@@ -13,9 +13,10 @@ interface NotesModalProps {
     note: Note;
 }
 
-const NotesModal: React.FC<NotesModalProps & ThunkDispatchProp> = ({ note, close, dispatch }) => {
-    const title = React.useRef<HTMLInputElement>(null);
-    const content = React.useRef<HTMLTextAreaElement>(null);
+const NotesModal: React.FC<NotesModalProps> = ({ note, close }) => {
+    const title = useRef<HTMLInputElement>(null);
+    const content = useRef<HTMLTextAreaElement>(null);
+    const dispatch = useDispatch();
 
     const save = (): void => {
         if (!content.current || !title.current?.value?.length) {
@@ -70,4 +71,4 @@ const NotesModal: React.FC<NotesModalProps & ThunkDispatchProp> = ({ note, close
     );
 };
 
-export default connect()(NotesModal);
+export default NotesModal;

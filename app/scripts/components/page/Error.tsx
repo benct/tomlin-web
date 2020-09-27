@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import '../../../styles/error.css';
 
@@ -29,7 +29,7 @@ const error: { [key: number]: ErrorType } = {
 const Error: React.FC<ErrorProps> = ({ code }) => {
     const title: string = document.title;
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.title += ` - ${error[code].title}`;
 
         return (): void => {

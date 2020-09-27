@@ -1,23 +1,30 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
-import { DefaultState, ThunkDispatchProp, Visit } from '../../interfaces';
+import { DefaultState, Visit } from '../../interfaces';
 import { getVisits } from '../../actions/admin';
 import paginationActions from '../../actions/pagination';
 
 import Pagination from '../page/Pagination';
 import Loading from '../page/Loading';
 
-interface VisitProps {
+interface VisitState {
     visits: Visit[];
     loading: boolean;
     isLoggedIn: boolean;
 }
 
-const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, loading, isLoggedIn, dispatch }) => {
+const Visits: React.FC = () => {
     const routeParams = useParams<{ page?: string }>();
     const page = Number(routeParams.page ?? 1);
+
+    const dispatch = useDispatch();
+    const { visits, loading, isLoggedIn } = useSelector<DefaultState, VisitState>((state) => ({
+        visits: state.admin.visits?.results ?? [],
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
+    }));
 
     useEffect(() => {
         dispatch(getVisits(page));
@@ -61,10 +68,4 @@ const Visits: React.FC<VisitProps & ThunkDispatchProp> = ({ visits, loading, isL
     );
 };
 
-export default connect(
-    (state: DefaultState): VisitProps => ({
-        visits: state.admin.visits?.results ?? [],
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    })
-)(Visits);
+export default Visits;

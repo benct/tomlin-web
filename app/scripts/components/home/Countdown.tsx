@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface CountdownProps {
     title: string;
@@ -7,15 +7,15 @@ interface CountdownProps {
 }
 
 const Countdown: React.FC<CountdownProps> = ({ title, timestamp, icon }) => {
-    const interval = React.useRef<number>(0);
-    const countdownTarget = React.useRef<Date | null>(null);
+    const interval = useRef<number>(0);
+    const countdownTarget = useRef<Date | null>(null);
 
-    const [days, setDays] = React.useState<number>(0);
-    const [hours, setHours] = React.useState<number>(0);
-    const [minutes, setMinutes] = React.useState<number>(0);
-    const [seconds, setSeconds] = React.useState<number>(0);
+    const [days, setDays] = useState<number>(0);
+    const [hours, setHours] = useState<number>(0);
+    const [minutes, setMinutes] = useState<number>(0);
+    const [seconds, setSeconds] = useState<number>(0);
 
-    React.useEffect(() => {
+    useEffect(() => {
         countdownTarget.current = timestamp ? new Date(timestamp) : null;
 
         const timeComponent = (x: number, v: number): number => Math.floor(x / v);

@@ -1,13 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { DefaultState, Hass, Settings, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, Hass, Settings } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
 import { backup, clearLogs, getHass, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
 
 import Loading from '../page/Loading';
 
-interface ControlProps {
+interface ControlState {
     stats: Record<string, number>;
     settings: Settings;
     hass: Hass[];
@@ -15,14 +15,23 @@ interface ControlProps {
     isLoggedIn: boolean;
 }
 
-const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, hass, loading, isLoggedIn, dispatch }) => {
-    const hassCount = React.useRef<HTMLSelectElement>(null);
-    const updateMovieCount = React.useRef<HTMLSelectElement>(null);
-    const updateTvCount = React.useRef<HTMLSelectElement>(null);
-    const countdownIcon = React.useRef<HTMLSelectElement>(null);
-    const countdownTarget = React.useRef<HTMLInputElement>(null);
+const Control: React.FC = () => {
+    const hassCount = useRef<HTMLSelectElement>(null);
+    const updateMovieCount = useRef<HTMLSelectElement>(null);
+    const updateTvCount = useRef<HTMLSelectElement>(null);
+    const countdownIcon = useRef<HTMLSelectElement>(null);
+    const countdownTarget = useRef<HTMLInputElement>(null);
 
-    React.useEffect(() => {
+    const dispatch = useDispatch();
+    const { stats, settings, hass, loading, isLoggedIn } = useSelector<DefaultState, ControlState>((state) => ({
+        stats: state.admin.stats,
+        hass: state.admin.hass,
+        settings: state.settings,
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
+    }));
+
+    useEffect(() => {
         if (!stats.log) {
             dispatch(getStats());
         }
@@ -83,14 +92,14 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, 
                 </select>
                 <button
                     className="input input-small"
-                    onClick={(): Promise<void> => dispatch(saveSetting('countdownIcon', getValue(countdownIcon.current)))}>
+                    onClick={() => dispatch(saveSetting('countdownIcon', getValue(countdownIcon.current)))}>
                     Set
                 </button>
                 <span className="truncate">Countdown target date</span>
                 <input className="input input-small" type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
                 <button
                     className="input input-small"
-                    onClick={(): Promise<void> => dispatch(saveSetting('countdownTarget', getValue(countdownTarget.current)))}>
+                    onClick={() => dispatch(saveSetting('countdownTarget', getValue(countdownTarget.current)))}>
                     Set
                 </button>
             </div>
@@ -100,18 +109,14 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, 
                 <select className="input input-small" defaultValue="50" ref={updateMovieCount}>
                     {renderOptions([10, 50, 100, 250, 500])}
                 </select>
-                <button
-                    className="input input-small"
-                    onClick={(): Promise<void> => dispatch(updateMedia('movie', getCount(updateMovieCount.current)))}>
+                <button className="input input-small" onClick={() => dispatch(updateMedia('movie', getCount(updateMovieCount.current)))}>
                     Run
                 </button>
                 <span className="truncate">Update number of stored tv-shows</span>
                 <select className="input input-small" defaultValue="10" ref={updateTvCount}>
                     {renderOptions([5, 10, 50, 100])}
                 </select>
-                <button
-                    className="input input-small"
-                    onClick={(): Promise<void> => dispatch(updateMedia('tv', getCount(updateTvCount.current)))}>
+                <button className="input input-small" onClick={() => dispatch(updateMedia('tv', getCount(updateTvCount.current)))}>
                     Run
                 </button>
             </div>
@@ -119,12 +124,12 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, 
             <div className="admin-list text">
                 <span className="truncate">Update IATA airline entries</span>
                 <span />
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(updateIata('airlines'))}>
+                <button className="input input-small" onClick={() => dispatch(updateIata('airlines'))}>
                     Run
                 </button>
                 <span className="truncate">Update IATA location entries</span>
                 <span />
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(updateIata('locations'))}>
+                <button className="input input-small" onClick={() => dispatch(updateIata('locations'))}>
                     Run
                 </button>
             </div>
@@ -132,12 +137,12 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, 
             <div className="admin-list text">
                 <span className="truncate">Clear all log messages</span>
                 <span />
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(clearLogs())}>
+                <button className="input input-small" onClick={() => dispatch(clearLogs())}>
                     Clear
                 </button>
                 <span className="truncate">Run database backup</span>
                 <span />
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(backup())}>
+                <button className="input input-small" onClick={() => dispatch(backup())}>
                     Backup
                 </button>
             </div>
@@ -147,7 +152,7 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, 
                 <select className="input input-small" defaultValue="25" ref={hassCount}>
                     {renderOptions([10, 25, 50, 100, 250, 500])}
                 </select>
-                <button className="input input-small" onClick={(): Promise<void> => dispatch(getHass(getCount(hassCount.current)))}>
+                <button className="input input-small" onClick={() => dispatch(getHass(getCount(hassCount.current)))}>
                     Load
                 </button>
             </div>
@@ -164,12 +169,4 @@ const Control: React.FC<ControlProps & ThunkDispatchProp> = ({ stats, settings, 
     );
 };
 
-export default connect(
-    (state: DefaultState): ControlProps => ({
-        stats: state.admin.stats,
-        settings: state.settings,
-        hass: state.admin.hass,
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    })
-)(Control);
+export default Control;

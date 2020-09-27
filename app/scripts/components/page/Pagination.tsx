@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
 import { mdiChevronDoubleRight, mdiChevronRight } from '@mdi/js';
@@ -17,8 +17,11 @@ interface PaginationImage {
     rotate?: boolean;
 }
 
-const Pagination: React.FC<PaginationState & PaginationProps> = (props) => {
-    const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = props;
+const Pagination: React.FC<PaginationProps> = ({ path, postfix }) => {
+    const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = useSelector<
+        DefaultState,
+        PaginationState
+    >((state) => ({ ...state.pagination }));
 
     const renderImage = (image: PaginationImage): React.ReactElement => (
         <Icon
@@ -31,7 +34,7 @@ const Pagination: React.FC<PaginationState & PaginationProps> = (props) => {
     );
 
     const renderPage = (page: number, image?: PaginationImage): React.ReactElement => (
-        <Link to={props.path + page + (props.postfix ? `/${props.postfix}` : '')} className="button-icon phm" key={`pagination${page}`}>
+        <Link to={path + page + (postfix ? `/${postfix}` : '')} className="button-icon phm" key={`pagination${page}`}>
             {image ? renderImage(image) : <span>{page}</span>}
         </Link>
     );
@@ -54,4 +57,4 @@ const Pagination: React.FC<PaginationState & PaginationProps> = (props) => {
     ) : null;
 };
 
-export default connect((state: DefaultState): PaginationState => ({ ...state.pagination }))(Pagination);
+export default Pagination;

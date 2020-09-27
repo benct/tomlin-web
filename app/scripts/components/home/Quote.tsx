@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiRefresh } from '@mdi/js';
 
@@ -7,17 +7,15 @@ import { DefaultState, QuoteState } from '../../interfaces';
 
 import actions from '../../actions/base';
 
-interface QuoteProps {
-    text: string | null;
-    author: string | null;
-}
+const Quote: React.FC = () => {
+    const dispatch = useDispatch();
+    const { text, author } = useSelector((state: DefaultState): QuoteState => ({ ...state.quote }));
 
-const Quote: React.FC<QuoteProps & DispatchProp> = ({ text, author, dispatch }) => {
     const refreshQuote = (): void => {
         dispatch(actions.refreshQuote());
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         refreshQuote();
     }, []);
 
@@ -30,10 +28,4 @@ const Quote: React.FC<QuoteProps & DispatchProp> = ({ text, author, dispatch }) 
     ) : null;
 };
 
-export default connect(
-    (state: DefaultState): QuoteState => ({
-        text: state.quote.text,
-        author: state.quote.author,
-        current: state.quote.current,
-    })
-)(Quote);
+export default Quote;

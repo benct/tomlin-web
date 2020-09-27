@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import Loading from '../page/Loading';
 import Pagination from '../page/Pagination';
 import MediaSearchItem from './MediaSearchItem';
 
-interface MediaSearchProps {
+interface MediaSearchState {
     data: MediaSearchItemEntry[];
     existing: { movie: number[]; tv: number[] };
     loading: boolean;
@@ -29,7 +29,7 @@ export interface MediaSearchRouteProps {
 const MediaSearch: React.FC = () => {
     const dispatch = useDispatch();
     const routeProps = useParams<MediaSearchRouteProps>();
-    const props = useSelector<DefaultState, MediaSearchProps>((state) => ({
+    const props = useSelector<DefaultState, MediaSearchState>((state) => ({
         data: state.media.search,
         existing: state.media.existing,
         loading: state.loading,
@@ -44,7 +44,7 @@ const MediaSearch: React.FC = () => {
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(existing());
 
         getMedia();
@@ -54,7 +54,7 @@ const MediaSearch: React.FC = () => {
         };
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         getMedia();
     }, [routeProps.action, routeProps.type, routeProps.page]);
 

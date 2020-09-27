@@ -18,7 +18,7 @@ interface FlightModalProps {
     close: () => void;
 }
 
-const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }): React.ReactElement => (
+const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }) => (
     <Modal close={close}>
         <form onSubmit={save} className="overlay-modal-content admin-flight-form">
             <fieldset>

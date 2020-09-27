@@ -1,5 +1,5 @@
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { Action, Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { Action } from 'redux';
 
 export interface DefaultState {
     showMenu: boolean;
@@ -273,9 +273,3 @@ export interface PaginationResponse<T> {
 }
 
 export type ThunkResult<R> = ThunkAction<R, DefaultState, undefined, Action>;
-
-export type ThunkDispatchFunc = ThunkDispatch<DefaultState, undefined, Action>;
-
-export interface ThunkDispatchProp {
-    dispatch: Dispatch<Action> & ThunkDispatchFunc;
-}

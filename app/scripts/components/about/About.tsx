@@ -6,7 +6,7 @@ import GitHub from './GitHub';
 
 import '../../../styles/about.css';
 
-const About: React.FC = (): React.ReactElement => (
+const About: React.FC = () => (
     <>
         <div className="wrapper text">
             <div className="cv-header color-primary">Ben Christopher Tomlin</div>

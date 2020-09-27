@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiMovieOutline, mdiTelevisionClassic } from '@mdi/js';
 import {
@@ -14,12 +14,12 @@ import {
 } from 'react-vis';
 import 'react-vis/dist/style.css';
 
-import { DefaultState, MediaStatsEntry, MediaStatsType, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
 import { getStats } from '../../actions/media';
 
 import Loading from '../page/Loading';
 
-interface MediaStatsProps {
+interface MediaStatsState {
     movie: MediaStatsType;
     tv: MediaStatsType;
     loading: boolean;
@@ -31,10 +31,18 @@ interface MediaGraphEntry {
     y: number;
 }
 
-const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = (props) => {
-    React.useEffect(() => {
-        if (!props.movie.total) {
-            props.dispatch(getStats());
+const MediaStats: React.FC = () => {
+    const dispatch = useDispatch();
+    const state = useSelector<DefaultState, MediaStatsState>((state) => ({
+        movie: state.media.stats.movie,
+        tv: state.media.stats.tv,
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
+    }));
+
+    useEffect(() => {
+        if (!state.movie.total) {
+            dispatch(getStats());
         }
     }, []);
 
@@ -98,27 +106,27 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = (props) => {
         <>
             <div className="text mbl">
                 Personal movie and TV-show watchlist.
-                {!props.isLoggedIn && <span className="no-wrap"> Login required.</span>}
+                {!state.isLoggedIn && <span className="no-wrap"> Login required.</span>}
             </div>
-            <Loading isLoading={props.loading} text="Loading stats...">
+            <Loading isLoading={state.loading} text="Loading stats...">
                 <div className="media-stats text-center">
                     <div>
                         <div className="border-bottom pbs mam">
                             <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" />
                             <span className="valign-middle">Tracked Movies</span>
                         </div>
-                        {renderStats(props.movie)}
-                        {renderLineChart(`Rating (avg: ${props.movie.rating ?? '-'})`, '#006080', mapRatings(props.movie.ratings))}
-                        {renderBarChart('Release (by decade)', '#006080', mapYears(props.movie.years))}
+                        {renderStats(state.movie)}
+                        {renderLineChart(`Rating (avg: ${state.movie.rating ?? '-'})`, '#006080', mapRatings(state.movie.ratings))}
+                        {renderBarChart('Release (by decade)', '#006080', mapYears(state.movie.years))}
                     </div>
                     <div>
                         <div className="border-bottom pbs mam">
                             <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" />
                             <span className="valign-middle">Tracked TV-Shows</span>
                         </div>
-                        {renderStats(props.tv)}
-                        {renderLineChart(`Rating (avg: ${props.tv.rating ?? '-'})`, '#008060', mapRatings(props.tv.ratings))}
-                        {renderBarChart('First aired (by decade)', '#008060', mapYears(props.tv.years))}
+                        {renderStats(state.tv)}
+                        {renderLineChart(`Rating (avg: ${state.tv.rating ?? '-'})`, '#008060', mapRatings(state.tv.ratings))}
+                        {renderBarChart('First aired (by decade)', '#008060', mapYears(state.tv.years))}
                     </div>
                 </div>
             </Loading>
@@ -126,11 +134,4 @@ const MediaStats: React.FC<MediaStatsProps & ThunkDispatchProp> = (props) => {
     );
 };
 
-export default connect(
-    (state: DefaultState): MediaStatsProps => ({
-        movie: state.media.stats.movie,
-        tv: state.media.stats.tv,
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    })
-)(MediaStats);
+export default MediaStats;

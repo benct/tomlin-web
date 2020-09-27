@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import SuspendedRoute from '../route/Suspended';
@@ -10,9 +10,9 @@ import Visits from './Visits';
 
 import '../../../styles/admin.css';
 
-const Flights = React.lazy(() => import('../flights/Flights'));
-const Notes = React.lazy(() => import('../notes/Notes'));
-const Files = React.lazy(() => import('../files/Files'));
+const Flights = lazy(() => import('../flights/Flights'));
+const Notes = lazy(() => import('../notes/Notes'));
+const Files = lazy(() => import('../files/Files'));
 
 const menu: NavigationItem[] = [
     { text: 'Logs', path: '/admin/logs' },
@@ -22,7 +22,7 @@ const menu: NavigationItem[] = [
     { text: 'Files', path: '/admin/files' },
 ];
 
-const Admin: React.FC = (): React.ReactElement => (
+const Admin: React.FC = () => (
     <>
         <Navigation type="sub" data={menu} />
         <div className="wrapper min-height ptm">

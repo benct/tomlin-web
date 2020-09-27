@@ -1,19 +1,19 @@
 import React from 'react';
 import { Action } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { DefaultState, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState } from '../../interfaces';
 import actions from '../../actions/base';
-
-interface NavigationProps {
-    type?: string;
-    data?: NavigationItem[];
-}
 
 interface NavigationState {
     isLoggedIn: boolean;
     showMenu: boolean;
+}
+
+interface NavigationProps {
+    type?: string;
+    data?: NavigationItem[];
 }
 
 export interface NavigationItem {
@@ -23,8 +23,12 @@ export interface NavigationItem {
     hide?: boolean;
 }
 
-const Navigation: React.FC<NavigationProps & NavigationState & ThunkDispatchProp> = (props): React.ReactElement => {
-    const { type, data, isLoggedIn, showMenu, dispatch } = props;
+const Navigation: React.FC<NavigationProps> = ({ type, data }) => {
+    const dispatch = useDispatch();
+    const { isLoggedIn, showMenu } = useSelector<DefaultState, NavigationState>((state) => ({
+        isLoggedIn: state.auth.isLoggedIn,
+        showMenu: state.showMenu,
+    }));
 
     const menu = [
         { text: 'Home', path: '/', exact: true },
@@ -73,9 +77,4 @@ const Navigation: React.FC<NavigationProps & NavigationState & ThunkDispatchProp
     }
 };
 
-export default connect(
-    (state: DefaultState): NavigationState => ({
-        isLoggedIn: state.auth.isLoggedIn,
-        showMenu: state.showMenu,
-    })
-)(Navigation);
+export default Navigation;

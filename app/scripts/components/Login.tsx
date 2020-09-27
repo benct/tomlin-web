@@ -1,20 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
-import { AuthState, DefaultState, ThunkDispatchProp } from '../interfaces';
+import { AuthState, DefaultState } from '../interfaces';
 import { login } from '../actions/auth';
 
 import Loading from './page/Loading';
 
-type LoginProps = AuthState & ThunkDispatchProp;
+const Login: React.FC = () => {
+    const dispatch = useDispatch();
+    const { loading, redirect, error } = useSelector<DefaultState, AuthState>((state) => ({ ...state.auth }));
 
-const Login: React.FC<LoginProps> = ({ loading, redirect, error, dispatch }) => {
     const location = useLocation<{ from: { pathname: string } }>();
 
-    const username = React.useRef<HTMLInputElement>(null);
-    const password = React.useRef<HTMLInputElement>(null);
+    const username = useRef<HTMLInputElement>(null);
+    const password = useRef<HTMLInputElement>(null);
 
     const { from } = location.state ?? { from: { pathname: '/' } };
 
@@ -44,4 +45,4 @@ const Login: React.FC<LoginProps> = ({ loading, redirect, error, dispatch }) => 
     );
 };
 
-export default connect((state: DefaultState): AuthState => ({ ...state.auth }))(Login);
+export default Login;

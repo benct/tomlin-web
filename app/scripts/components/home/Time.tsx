@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface TimeProps {
     locale: string;
@@ -8,10 +8,10 @@ interface TimeProps {
 const Time: React.FC<TimeProps> = ({ locale, timeZone }) => {
     const now = (): string => new Date().toLocaleTimeString(locale, { timeZone });
 
-    const interval = React.useRef<number>(0);
-    const [time, setTime] = React.useState<string>(now());
+    const interval = useRef<number>(0);
+    const [time, setTime] = useState<string>(now());
 
-    React.useEffect(() => {
+    useEffect(() => {
         const tick = (): void => setTime(now());
 
         tick();

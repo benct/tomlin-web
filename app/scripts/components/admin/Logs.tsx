@@ -1,23 +1,30 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
-import { DefaultState, Log, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, Log } from '../../interfaces';
 import { deleteLog, getLogs } from '../../actions/admin';
 import paginationActions from '../../actions/pagination';
 
 import Pagination from '../page/Pagination';
 import Loading from '../page/Loading';
 
-interface LogProps {
+interface LogState {
     logs: Log[];
     loading: boolean;
     isLoggedIn: boolean;
 }
 
-const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, loading, isLoggedIn, dispatch }) => {
+const Logs: React.FC = () => {
     const routeParams = useParams<{ page?: string }>();
     const page = Number(routeParams.page ?? 1);
+
+    const dispatch = useDispatch();
+    const { logs, loading, isLoggedIn } = useSelector<DefaultState, LogState>((state) => ({
+        logs: state.admin.logs?.results ?? [],
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
+    }));
 
     useEffect(() => {
         dispatch(getLogs(page));
@@ -32,7 +39,7 @@ const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, loading, isLoggedI
 
     const renderLog = (log: Log, idx: number): React.ReactElement => (
         <div className="admin-logs" key={`logs${idx}`}>
-            <code onClick={(): Promise<void> => dispatch(deleteLog(log.id, page))} role="button" tabIndex={0}>
+            <code onClick={() => dispatch(deleteLog(log.id, page))} role="button" tabIndex={0}>
                 {log.timestamp}
             </code>
             <code>
@@ -57,10 +64,4 @@ const Logs: React.FC<LogProps & ThunkDispatchProp> = ({ logs, loading, isLoggedI
     );
 };
 
-export default connect(
-    (state: DefaultState): LogProps => ({
-        logs: state.admin.logs?.results ?? [],
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    })
-)(Logs);
+export default Logs;

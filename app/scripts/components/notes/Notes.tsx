@@ -1,25 +1,32 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiFileDocumentMultipleOutline } from '@mdi/js';
 
-import { DefaultState, Note, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, Note } from '../../interfaces';
 import { getNotes } from '../../actions/admin';
 
 import NotesModal from './NotesModal';
 import Loading from '../page/Loading';
 
-interface NotesProps {
+interface NotesState {
     notes: Note[];
     loading: boolean;
     isLoggedIn: boolean;
 }
 
-const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, loading, isLoggedIn, dispatch }) => {
-    const [showOverlay, setShowOverlay] = React.useState<boolean>(false);
-    const [selected, setSelected] = React.useState<Note>();
+const Notes: React.FC = () => {
+    const [showOverlay, setShowOverlay] = useState<boolean>(false);
+    const [selected, setSelected] = useState<Note>();
 
-    React.useEffect(() => {
+    const dispatch = useDispatch();
+    const { notes, loading, isLoggedIn } = useSelector<DefaultState, NotesState>((state) => ({
+        notes: state.admin.notes,
+        loading: state.loading,
+        isLoggedIn: state.auth.isLoggedIn,
+    }));
+
+    useEffect(() => {
         if (!notes.length) {
             dispatch(getNotes());
         }
@@ -67,10 +74,4 @@ const Notes: React.FC<NotesProps & ThunkDispatchProp> = ({ notes, loading, isLog
     );
 };
 
-export default connect(
-    (state: DefaultState): NotesProps => ({
-        notes: state.admin.notes,
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    })
-)(Notes);
+export default Notes;

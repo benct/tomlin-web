@@ -10,7 +10,7 @@ interface FlightInputProps {
     extraProps?: Record<string, number>;
 }
 
-const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required, fraction, onChange, extraProps }): React.ReactElement => (
+const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required, fraction, onChange, extraProps }) => (
     <div className="form-element" style={{ width: fraction ?? '48%' }}>
         <label htmlFor={`form-${name}`} className="text-smaller capitalize">
             {name}

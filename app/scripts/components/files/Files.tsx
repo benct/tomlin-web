@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '@mdi/react';
 import {
     mdiCloseCircleOutline,
@@ -10,7 +10,7 @@ import {
     mdiFolderUploadOutline,
 } from '@mdi/js';
 
-import { DefaultState, FileItem, FilePreview, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, FileItem, FileState } from '../../interfaces';
 import fileActions, { changeDirectory, createDirectory, download, preview, refresh, remove, rename, upload } from '../../actions/files';
 
 import Loading from '../page/Loading';
@@ -18,20 +18,17 @@ import FileList from './FileList';
 
 import '../../../styles/files.css';
 
-interface FilesProps {
-    cwd: string;
-    content: FileItem[];
-    focused: number | null;
-    preview: FilePreview | null;
-    uploading: boolean;
-    loading: boolean;
-}
-
 const PARENT_DIR = '..';
 
-const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
-    const fileInput = React.useRef<HTMLInputElement>(null);
-    const fileLabel = React.useRef<HTMLLabelElement>(null);
+const Files: React.FC = () => {
+    const fileInput = useRef<HTMLInputElement>(null);
+    const fileLabel = useRef<HTMLLabelElement>(null);
+
+    const dispatch = useDispatch();
+    const state = useSelector<DefaultState, FileState & Pick<DefaultState, 'loading'>>((state) => ({
+        ...state.files,
+        loading: state.loading,
+    }));
 
     const handleUpload = (): void => {
         const files = fileInput.current?.files ?? [];
@@ -46,7 +43,7 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
             }
         }
 
-        props.dispatch(upload(formData));
+        dispatch(upload(formData));
 
         if (fileInput.current && fileLabel.current) {
             fileInput.current.value = '';
@@ -67,20 +64,20 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
     };
 
     const closePreview = (): void => {
-        props.dispatch(fileActions.setPreview(null));
+        dispatch(fileActions.setPreview(null));
     };
 
     const downloadPreview = (): void => {
-        if (props.preview?.item) props.dispatch(download(props.preview.item));
+        if (state.preview?.item) dispatch(download(state.preview.item));
     };
 
     const handleClick = (item: FileItem): void => {
         if (item.dir) {
-            props.dispatch(changeDirectory(item.name));
+            dispatch(changeDirectory(item.name));
         } else if (item.preview) {
-            props.dispatch(preview(item));
+            dispatch(preview(item));
         } else {
-            props.dispatch(download(item));
+            dispatch(download(item));
         }
     };
 
@@ -89,35 +86,35 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
 
         switch (event.keyCode) {
             case 8: // backspace
-                props.dispatch(changeDirectory(PARENT_DIR));
+                dispatch(changeDirectory(PARENT_DIR));
                 break;
             case 13: // enter
-                if (props.focused !== null) {
-                    handleClick(props.content[props.focused]);
+                if (state.focused !== null) {
+                    handleClick(state.content[state.focused]);
                 }
                 break;
             case 27: // escape
                 closePreview();
                 break;
             case 38: // up
-                if (props.focused === null) {
-                    props.dispatch(fileActions.setFocus(0));
-                } else if (props.focused > 0) {
-                    props.dispatch(fileActions.setFocus(props.focused - 1));
+                if (state.focused === null) {
+                    dispatch(fileActions.setFocus(0));
+                } else if (state.focused > 0) {
+                    dispatch(fileActions.setFocus(state.focused - 1));
                 }
                 break;
             case 40: // down
-                if (props.focused === null) {
-                    props.dispatch(fileActions.setFocus(0));
-                } else if (props.focused < props.content.length - 1) {
-                    props.dispatch(fileActions.setFocus(props.focused + 1));
+                if (state.focused === null) {
+                    dispatch(fileActions.setFocus(0));
+                } else if (state.focused < state.content.length - 1) {
+                    dispatch(fileActions.setFocus(state.focused + 1));
                 }
                 break;
         }
     };
 
-    React.useEffect(() => {
-        props.dispatch(refresh());
+    useEffect(() => {
+        dispatch(refresh());
 
         document.addEventListener('keyup', handleKeyboard, false);
 
@@ -127,28 +124,25 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
     return (
         <>
             <div className="file-table-header">
-                <button
-                    className="button-icon"
-                    onClick={(): void => props.dispatch(changeDirectory(PARENT_DIR))}
-                    disabled={props.cwd === ''}>
+                <button className="button-icon" onClick={() => dispatch(changeDirectory(PARENT_DIR))} disabled={state.cwd === ''}>
                     <Icon path={mdiFolderUploadOutline} size="28px" title="Parent directory" />
                 </button>
                 <div className="text-right">
-                    <button className="button-icon mrm" onClick={(): Promise<void> => props.dispatch(createDirectory())}>
+                    <button className="button-icon mrm" onClick={() => dispatch(createDirectory())}>
                         <Icon path={mdiFolderPlusOutline} size="28px" title="New directory" />
                     </button>
-                    <button className="button-icon" onClick={(): Promise<void> => props.dispatch(refresh())}>
+                    <button className="button-icon" onClick={() => dispatch(refresh())}>
                         <Icon path={mdiFolderSyncOutline} size="28px" title="Refresh content" />
                     </button>
                 </div>
             </div>
-            <Loading isLoading={props.loading} text="Loading file list..." className="file-table">
+            <Loading isLoading={state.loading} text="Loading file list..." className="file-table">
                 <FileList
-                    content={props.content}
-                    focused={props.focused}
+                    content={state.content}
+                    focused={state.focused}
                     handleClick={handleClick}
-                    handleRename={(item: FileItem): Promise<void> => props.dispatch(rename(item))}
-                    handleDelete={(item: FileItem): Promise<void> => props.dispatch(remove(item))}
+                    handleRename={(item: FileItem) => dispatch(rename(item))}
+                    handleDelete={(item: FileItem) => dispatch(remove(item))}
                 />
             </Loading>
             <div className="text-center">
@@ -161,7 +155,7 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
                         aria-label="Add files"
                         onChange={handleFileChange}
                         ref={fileInput}
-                        disabled={props.uploading}
+                        disabled={state.uploading}
                         multiple
                     />
                     <Icon path={mdiCloudUploadOutline} size="20px" title="Upload" />
@@ -169,12 +163,12 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
                         Choose a file
                     </span>
                 </label>
-                <button className="input text-small mtl" onClick={handleUpload} disabled={props.uploading}>
-                    {props.uploading ? 'Uploading...' : 'Upload'}
+                <button className="input text-small mtl" onClick={handleUpload} disabled={state.uploading}>
+                    {state.uploading ? 'Uploading...' : 'Upload'}
                 </button>
             </div>
 
-            {props.preview ? (
+            {state.preview ? (
                 <div className="overlay">
                     <button className="button-blank" onClick={closePreview}>
                         <Icon path={mdiCloseCircleOutline} className="file-preview-icon file-preview-close" title="Close" color="white" />
@@ -187,14 +181,14 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
                             color="white"
                         />
                     </button>
-                    {props.preview.type == 'image' ? (
-                        <img className="overlay-image" src={props.preview.content} alt="Preview" />
-                    ) : props.preview.type == 'video' ? (
+                    {state.preview.type == 'image' ? (
+                        <img className="overlay-image" src={state.preview.content} alt="Preview" />
+                    ) : state.preview.type == 'video' ? (
                         <video className="overlay-image" controls>
-                            <source src={props.preview.content} type={`video/${props.preview.item.type}`} />
+                            <source src={state.preview.content} type={`video/${state.preview.item.type}`} />
                         </video>
                     ) : (
-                        <pre className="overlay-preview">{props.preview.content}</pre>
+                        <pre className="overlay-preview">{state.preview.content}</pre>
                     )}
                 </div>
             ) : null}
@@ -202,13 +196,4 @@ const Files: React.FC<FilesProps & ThunkDispatchProp> = (props) => {
     );
 };
 
-export default connect(
-    (state: DefaultState): FilesProps => ({
-        cwd: state.files.cwd,
-        content: state.files.content,
-        focused: state.files.focused,
-        preview: state.files.preview,
-        uploading: state.files.uploading,
-        loading: state.loading,
-    })
-)(Files);
+export default Files;

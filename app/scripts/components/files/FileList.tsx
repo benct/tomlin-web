@@ -12,7 +12,7 @@ interface FileListProps {
     handleDelete: (item: FileItem) => void;
 }
 
-const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete }): React.ReactElement => {
+const FileList: React.FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete }) => {
     const renderItem = (item: FileItem, i: number): React.ReactElement => (
         <tr key={i}>
             <td>

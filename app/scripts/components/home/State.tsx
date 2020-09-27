@@ -1,18 +1,22 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiInformationOutline, mdiLoading } from '@mdi/js';
 
-import { DefaultState, HomeState, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState, HomeState } from '../../interfaces';
 import { getHomeState } from '../../actions/base';
 
 import Time from './Time';
 
-type HomeStateProps = HomeState & Pick<DefaultState, 'loading'>;
+const State: React.FC = () => {
+    const dispatch = useDispatch();
+    const state = useSelector<DefaultState, HomeState & Pick<DefaultState, 'loading'>>((state) => ({
+        ...state.home,
+        loading: state.loading,
+    }));
 
-const State: React.FC<HomeStateProps & ThunkDispatchProp> = (props) => {
-    React.useEffect(() => {
-        props.dispatch(getHomeState());
+    useEffect(() => {
+        dispatch(getHomeState());
     }, []);
 
     return (
@@ -24,9 +28,9 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = (props) => {
                     data-tooltip="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
                     data-tooltip-large>
                     <Icon
-                        path={props.loading ? mdiLoading : mdiInformationOutline}
-                        title={props.loading ? 'Loading' : 'Information'}
-                        spin={props.loading}
+                        path={state.loading ? mdiLoading : mdiInformationOutline}
+                        title={state.loading ? 'Loading' : 'Information'}
+                        spin={state.loading}
                         size="16px"
                         description="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
                         className="help-icon"
@@ -35,17 +39,17 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = (props) => {
             </div>
             <div className="home-state">
                 <div className="home-temp pts">
-                    {props.day !== undefined && (
+                    {state.day !== undefined && (
                         <img
                             className="valign-middle prl"
-                            src={require(`../../../images/icon/${props.day ? 'day' : 'night'}.svg`)}
+                            src={require(`../../../images/icon/${state.day ? 'day' : 'night'}.svg`)}
                             alt="Outside temperature"
                             width={54}
                             height={54}
                         />
                     )}
                     <div data-tooltip="Outdoor temperature" style={{ display: 'inline-block' }}>
-                        <span className="home-value home-value-large">{props.outside ?? '-'}</span>
+                        <span className="home-value home-value-large">{state.outside ?? '-'}</span>
                         <span className="home-unit"> &deg;C</span>
                     </div>
                 </div>
@@ -65,7 +69,7 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = (props) => {
                         height={54}
                     />
                     <div data-tooltip="Indoor temperature" style={{ display: 'inline-block' }}>
-                        <span className="home-value home-value-large">{props.livingroom ?? '-'}</span>
+                        <span className="home-value home-value-large">{state.livingroom ?? '-'}</span>
                         <span className="home-unit"> &deg;C</span>
                     </div>
                 </div>
@@ -74,11 +78,4 @@ const State: React.FC<HomeStateProps & ThunkDispatchProp> = (props) => {
     );
 };
 
-export default connect(
-    (state: DefaultState): HomeStateProps => ({
-        livingroom: state.home.livingroom,
-        outside: state.home.outside,
-        day: state.home.day,
-        loading: state.loading,
-    })
-)(State);
+export default State;

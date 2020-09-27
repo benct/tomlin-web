@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -12,7 +12,7 @@ import Pagination from '../page/Pagination';
 import MediaModal from './MediaModal';
 import MediaItem from './MediaItem';
 
-interface MediaListProps {
+interface MediaListState {
     data: MediaItemEntry[];
     item: MediaItemEntry | null;
     showModal: boolean;
@@ -28,11 +28,9 @@ interface MediaListRouteProps {
 const MediaList: React.FC = () => {
     const dispatch = useDispatch();
     const routeProps = useParams<MediaListRouteProps>();
-    const props = useSelector<DefaultState, MediaListProps>((state) => ({
+    const props = useSelector<DefaultState, MediaListState>((state) => ({
+        ...state.media,
         data: state.media[routeProps.type]?.results ?? [],
-        item: state.media.item,
-        showModal: state.media.showModal,
-        sort: state.media.sort,
         loading: state.loading,
     }));
 
@@ -41,7 +39,7 @@ const MediaList: React.FC = () => {
         window.scrollTo(0, 0);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.data.length) {
             dispatch(paginationActions.set(Number(routeProps.page ?? 1)));
         } else {
@@ -53,7 +51,7 @@ const MediaList: React.FC = () => {
         };
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         loadMedia();
     }, [routeProps.type, routeProps.page]);
 

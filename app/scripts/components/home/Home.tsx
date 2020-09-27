@@ -1,9 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { lazy, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Action } from 'redux';
 
-import { DefaultState, ThunkDispatchProp } from '../../interfaces';
+import { DefaultState } from '../../interfaces';
 import actions from '../../actions/base';
 
 import Countdown from './Countdown';
@@ -12,12 +11,16 @@ import Quote from './Quote';
 
 import '../../../styles/home.css';
 
-type HomeProps = Pick<DefaultState, 'theme' | 'settings'> & ThunkDispatchProp;
+const Changelog = lazy(() => import('./Changelog'));
 
-const Changelog = React.lazy(() => import('./Changelog'));
+const Home: React.FC = () => {
+    const [showChangelog, setShowChangelog] = useState(false);
 
-const Home: React.FC<HomeProps> = ({ theme, settings, dispatch }): React.ReactElement => {
-    const [showChangelog, setShowChangelog] = React.useState(false);
+    const dispatch = useDispatch();
+    const { theme, settings } = useSelector<DefaultState, Pick<DefaultState, 'theme' | 'settings'>>((state) => ({
+        theme: state.theme,
+        settings: state.settings,
+    }));
 
     return (
         <>
@@ -29,13 +32,13 @@ const Home: React.FC<HomeProps> = ({ theme, settings, dispatch }): React.ReactEl
                 </p>
                 <div className="home-info text-small">
                     Theme
-                    <button className="input input-small" onClick={(): Action => dispatch(actions.toggleTheme())}>
+                    <button className="input input-small" onClick={() => dispatch(actions.toggleTheme())}>
                         {theme}
                     </button>
                 </div>
                 <div className="home-info text-small">
                     Version
-                    <button className="input input-small" onClick={(): void => setShowChangelog(!showChangelog)}>
+                    <button className="input input-small" onClick={() => setShowChangelog(!showChangelog)}>
                         2.15.0
                     </button>
                 </div>
@@ -48,11 +51,11 @@ const Home: React.FC<HomeProps> = ({ theme, settings, dispatch }): React.ReactEl
             <Quote />
             {showChangelog && (
                 <React.Suspense fallback={null}>
-                    <Changelog close={(): void => setShowChangelog(false)} />
+                    <Changelog close={() => setShowChangelog(false)} />
                 </React.Suspense>
             )}
         </>
     );
 };
 
-export default connect((state: DefaultState) => ({ theme: state.theme, settings: state.settings }))(React.memo(Home));
+export default React.memo(Home);

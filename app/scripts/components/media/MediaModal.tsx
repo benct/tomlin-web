@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
 import { mdiApproximatelyEqualBox, mdiCloseCircleOutline, mdiDeleteOutline, mdiRefresh, mdiThumbUpOutline } from '@mdi/js';
@@ -21,9 +21,9 @@ interface MediaModalProps {
 }
 
 const MediaModal: React.FC<MediaModalProps> = (props) => {
-    const [showSeasons, setShowSeasons] = React.useState<boolean>(false);
+    const [showSeasons, setShowSeasons] = useState<boolean>(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.body.classList.add('no-scroll');
 
         return (): void => document.body.classList.remove('no-scroll');

@@ -9,7 +9,7 @@ interface FavouriteIconProps {
     className?: string;
 }
 
-export const FavouriteIcon: React.FC<FavouriteIconProps> = ({ favourite, setFavourite, size, className, ...props }): React.ReactElement => (
+export const FavouriteIcon: React.FC<FavouriteIconProps> = ({ favourite, setFavourite, size, className, ...props }) => (
     <button className={`button-blank ${className ?? ''}`} onClick={setFavourite} {...props}>
         <Icon
             path={favourite ? mdiStar : mdiStarOutline}
@@ -27,7 +27,7 @@ interface SeenIconProps {
     className?: string;
 }
 
-export const SeenIcon: React.FC<SeenIconProps> = ({ seen, setSeen, size, className, ...props }): React.ReactElement => (
+export const SeenIcon: React.FC<SeenIconProps> = ({ seen, setSeen, size, className, ...props }) => (
     <button className={`button-blank ${className ?? ''}`} onClick={setSeen} {...props}>
         <Icon
             path={seen ? mdiEyeCheckOutline : mdiEyeOffOutline}
