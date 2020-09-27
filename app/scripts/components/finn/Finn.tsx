@@ -70,7 +70,8 @@ const Finn: React.FC = () => {
 
     return (
         <div className="wrapper min-height">
-            <div className="text-center mbl">
+            <div className="text-small text-center mbl pbm">
+                <span>FINNkode&nbsp;</span>
                 <input type="number" className="input input-small mrm" ref={idInput} />
                 <button className="input input-small" onClick={handleSubmit}>
                     Track

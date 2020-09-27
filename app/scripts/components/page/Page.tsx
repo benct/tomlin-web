@@ -7,15 +7,17 @@ import { DefaultState } from '../../interfaces';
 import Header from './Header';
 import Footer from './Footer';
 
-type PageState = Pick<DefaultState, 'toast' | 'theme' | 'loading'>;
+const simplePages = ['/finn'];
 
 const Page: React.FC = ({ children }) => {
     const location = useLocation();
-    const state = useSelector<DefaultState, PageState>((state) => ({
+    const state = useSelector<DefaultState, Pick<DefaultState, 'toast' | 'theme' | 'loading'>>((state) => ({
         toast: state.toast,
         theme: state.theme,
         loading: state.loadingOverlay,
     }));
+
+    const simple = simplePages.includes(location.pathname);
 
     useEffect(() => {
         document.title = `Tomlin - ${location.pathname}`;
@@ -29,9 +31,9 @@ const Page: React.FC = ({ children }) => {
 
     return (
         <>
-            <Header />
+            {simple ? null : <Header />}
             <main>{children}</main>
-            <Footer />
+            {simple ? null : <Footer />}
             {state.loading ? (
                 <div className="overlay overlay-loading">
                     <div className="overlay-container shadow">
