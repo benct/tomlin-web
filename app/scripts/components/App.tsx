@@ -21,6 +21,7 @@ import '../../styles/util.css';
 import '../../styles/themes/default.css';
 import '../../styles/themes/midnight.css';
 
+const Finn = lazy(() => import('./finn/Finn'));
 const Media = lazy(() => import('./media/Media'));
 const Admin = lazy(() => import('./admin/Admin'));
 
@@ -48,6 +49,9 @@ export const App: React.FC = () => {
                         <Route path="/login">
                             <Login />
                         </Route>
+                        <SuspendedRoute path="/finn">
+                            <Finn />
+                        </SuspendedRoute>
                         <SuspendedRoute path="/media">
                             <Media />
                         </SuspendedRoute>

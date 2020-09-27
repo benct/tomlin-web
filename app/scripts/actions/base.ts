@@ -3,7 +3,7 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 import { DefaultState, ThunkResult } from '../interfaces';
 
 import { quotes } from '../util/quotes';
-import { get } from '../util/api';
+import { del, get, post } from '../util/api';
 
 const actions: ActionsObject<DefaultState> = {};
 
@@ -32,6 +32,8 @@ actions.setHomeState = makeAction('BASE/SET_HOME_STATE', 'home');
 
 actions.setGitHubData = makeAction('BASE/SET_GITHUB_DATA', 'github');
 
+actions.setFinnData = makeAction('BASE/SET_FINN_DATA', 'finn');
+
 export const showToast = (payload: string): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
     dispatch(actions.setToast(payload));
 
@@ -48,6 +50,30 @@ export const getGitHubData = (): ThunkResult<Promise<void>> => async (dispatch):
     await get('/github')
         .then((data) => dispatch(actions.setGitHubData(data)))
         .catch(() => dispatch(showToast('Could not load GitHub data...')));
+};
+
+export const getFinnData = (): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+    await get('/finn')
+        .then((data) => dispatch(actions.setFinnData(data)))
+        .catch(() => dispatch(showToast('Could not load FINN data...')));
+};
+
+export const storeFinnId = (id: number): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+    await post(`/finn/${id}`)
+        .then(() => {
+            dispatch(getFinnData());
+            dispatch(showToast(`Tracking id ${id}!`));
+        })
+        .catch(() => dispatch(showToast('Could not store tracking id...')));
+};
+
+export const deleteFinnId = (id: number): ThunkResult<Promise<void>> => async (dispatch): Promise<void> => {
+    await del(`/finn/${id}`)
+        .then(() => {
+            dispatch(getFinnData());
+            dispatch(showToast(`Tracking id ${id} removed!`));
+        })
+        .catch(() => dispatch(showToast('Could not delete tracking id...')));
 };
 
 export default actions;

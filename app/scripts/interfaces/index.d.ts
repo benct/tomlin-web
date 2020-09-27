@@ -14,6 +14,7 @@ export interface DefaultState {
     home: HomeState;
     quote: QuoteState;
     github: GitHubState;
+    finn: FinnState;
     files: FileState;
     media: MediaState;
     admin: AdminState;
@@ -66,6 +67,16 @@ export interface GitHubRepo {
     forksCount: number;
     stargazersCount: number;
     openIssuesCount: number;
+}
+
+export interface FinnState {
+    [key: string]: FinnEntry[];
+}
+
+export interface FinnEntry {
+    id: number;
+    price: string;
+    timestamp: string;
 }
 
 export interface FileState {

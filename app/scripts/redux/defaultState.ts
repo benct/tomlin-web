@@ -34,6 +34,8 @@ const defaultState: DefaultState = {
         featured: [],
     },
 
+    finn: {},
+
     files: {
         cwd: '',
         content: [],
