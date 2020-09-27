@@ -42,8 +42,6 @@ const MediaList: React.FC = () => {
     useEffect(() => {
         if (props.data.length) {
             dispatch(paginationActions.set(Number(routeProps.page ?? 1)));
-        } else {
-            loadMedia();
         }
 
         return () => {

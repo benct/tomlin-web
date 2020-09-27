@@ -35,19 +35,8 @@ const MediaSearch: React.FC = () => {
         loading: state.loading,
     }));
 
-    const search = debounce((query: string) => dispatch(searchTmdbMedia(query)), 500);
-
-    const getMedia = () => {
-        if (routeProps.action && routeProps.type) {
-            dispatch(getTmdbMedia({ ...routeProps, page: Number(routeProps.page ?? 1) }));
-            window.scrollTo(0, 0);
-        }
-    };
-
     useEffect(() => {
         dispatch(existing());
-
-        getMedia();
 
         return () => {
             dispatch(paginationActions.reset());
@@ -55,8 +44,13 @@ const MediaSearch: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        getMedia();
+        if (routeProps.action && routeProps.type) {
+            dispatch(getTmdbMedia({ ...routeProps, page: Number(routeProps.page ?? 1) }));
+            window.scrollTo(0, 0);
+        }
     }, [routeProps.action, routeProps.type, routeProps.page]);
+
+    const search = debounce((query: string) => dispatch(searchTmdbMedia(query)), 500);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.value?.length > 1) {
