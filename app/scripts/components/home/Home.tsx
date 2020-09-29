@@ -39,7 +39,7 @@ const Home: React.FC = () => {
                 <div className="home-info text-small">
                     Version
                     <button className="input input-small" onClick={() => setShowChangelog(!showChangelog)}>
-                        2.15.0
+                        2.16.0
                     </button>
                 </div>
             </div>
