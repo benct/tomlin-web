@@ -1,7 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [2.15.0] - 2020-02-19 - Improved Admin
+## [2.16.0] - 2020-09-30 - *More Hooks, Price Tracker*
+### Added
+- Implement hooks everywhere possible
+- View and manage tracking of price data from a certain site
+- Dynamic descriptive site titles on sub pages
+- Support simple pages without header/footer
+
+### Changed
+- Convert remaining class components to functional components
+- Use react hooks for all Router and Redux handling
+- Refactor and improve routing components
+- Minor code updates and improvements
+
+### Fixed
+- Incorrect request method for fetching external media IDs
+
+## [2.15.0] - 2020-02-19 - *Improved Admin*
 ### Added
 - Support pagination for logs and visits
 - Database backup functionality in admin view
