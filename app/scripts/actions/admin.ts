@@ -12,11 +12,18 @@ actions.setStats = makeAction('ADMIN/SET_STATS', 'stats');
 
 actions.setVisits = makeAction('ADMIN/SET_VISITS', 'visits');
 
-actions.setFlights = makeAction('ADMIN/SET_FLIGHTS', 'flights');
+actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
+
+actions.removeLog = makeAction('ADMIN/REMOVE_LOG', (state, { payload }) => ({
+    ...state,
+    logs: state.logs ? { ...state.logs, results: state.logs.results.filter((log) => log.id != payload) } : null,
+}));
+
+actions.setUsers = makeAction('ADMIN/SET_USERS', 'users');
 
 actions.setNotes = makeAction('ADMIN/SET_NOTES', 'notes');
 
-actions.setLogs = makeAction('ADMIN/SET_LOGS', 'logs');
+actions.setFlights = makeAction('ADMIN/SET_FLIGHTS', 'flights');
 
 actions.setHass = makeAction('ADMIN/SET_HASS', 'hass');
 
@@ -59,15 +66,19 @@ export const getLogs = (page: number): ThunkResult<Promise<void>> => async (disp
 export const clearLogs = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete all logs?')) {
         await del('/admin/logs')
-            .then((response) => (response ? dispatch(actions.setLogs([])) : null))
+            .then((response) => {
+                if (response) dispatch(actions.setLogs(null));
+            })
             .catch(() => dispatch(showToast('Could not clear log data...')));
     }
 };
 
-export const deleteLog = (id: number, page: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+export const deleteLog = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this entry?')) {
         await del(`/admin/logs/${id}`)
-            .then((response) => (response ? dispatch(getLogs(page)) : null))
+            .then((response) => {
+                if (response) dispatch(actions.removeLog(id));
+            })
             .catch(() => dispatch(showToast('Could not clear log data...')));
     }
 };

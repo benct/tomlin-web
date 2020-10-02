@@ -39,7 +39,7 @@ const Logs: React.FC = () => {
 
     const renderLog = (log: Log, idx: number): React.ReactElement => (
         <div className="admin-logs" key={`logs${idx}`}>
-            <code onClick={() => dispatch(deleteLog(log.id, page))} role="button" tabIndex={0}>
+            <code onClick={() => dispatch(deleteLog(log.id))} role="button" tabIndex={0}>
                 {log.timestamp}
             </code>
             <code>
