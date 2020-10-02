@@ -101,7 +101,7 @@ export const updateIata = (type: string): ThunkResult<Promise<void>> => async (d
 
 export const getNotes = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await get('/admin/notes')
+        await get('/note')
             .then((response) => dispatch(actions.setNotes(response || [])))
             .catch(() => dispatch(showToast('Could not fetch notes...')));
     }
@@ -112,7 +112,7 @@ export const saveNote = (id: number | undefined, title: string, content: string)
     getState
 ): Promise<void> => {
     if (getState().auth.isLoggedIn) {
-        await post('/admin/notes', { id, title, content })
+        await post('/note', { id, title, content })
             .then(() => {
                 dispatch(getNotes());
                 dispatch(showToast('Successfully saved note!'));
@@ -123,7 +123,7 @@ export const saveNote = (id: number | undefined, title: string, content: string)
 
 export const deleteNote = (id: number): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this note?')) {
-        await del(`/admin/notes/${id}`)
+        await del(`/note/${id}`)
             .then(() => {
                 dispatch(getNotes());
                 dispatch(showToast('Successfully deleted note!'));
@@ -164,7 +164,7 @@ export const deleteFlight = (id: number): ThunkResult<Promise<void>> => async (d
 
 export const saveSetting = (key: string, value: string | null): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn && confirm('Are you sure you want to change this setting?')) {
-        await post('/settings/set', { key, value })
+        await post('/settings', { key, value })
             .then(() => dispatch(showToast('Successfully saved settings!')))
             .catch(() => dispatch(showToast('Could not save settings...')));
     }
