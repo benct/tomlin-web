@@ -96,7 +96,7 @@ const Flights: React.FC = () => {
     };
 
     const renderGrouped = (): React.ReactElement => (
-        <table className="table-striped text-small" style={{ width: '100%' }}>
+        <table className="table-striped">
             <thead>
                 <tr className="text-smaller">
                     <th>Departure</th>
@@ -120,7 +120,7 @@ const Flights: React.FC = () => {
     );
 
     const renderAll = (): React.ReactElement => (
-        <table className="table-striped text-small" style={{ width: '100%' }}>
+        <table className="table-striped">
             <thead>
                 <tr className="text-smaller">
                     <th>Departure</th>

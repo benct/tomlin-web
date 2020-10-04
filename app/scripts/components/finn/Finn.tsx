@@ -40,7 +40,7 @@ const Finn: React.FC = () => {
     };
 
     const renderEntry = (id: string): React.ReactElement => (
-        <table className="table-striped text-small mbm" style={{ width: '100%' }} key={`finn${id}`}>
+        <table className="table-striped mbm" key={`finn${id}`}>
             <thead>
                 <tr className="text-smaller">
                     <th>

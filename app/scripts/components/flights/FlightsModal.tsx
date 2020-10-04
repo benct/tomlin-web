@@ -63,7 +63,7 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, c
                         />
                         <FlightsInput name="seat" value={form.seat} fraction="31%" onChange={change} extraProps={{ maxLength: 4 }} />
                         <FlightsInput name="reference" value={form.reference} fraction="31%" onChange={change} required />
-                        <div className="form-element" style={{ width: '100%' }}>
+                        <div className="form-element full-width">
                             <label htmlFor="form-info">Info</label>
                             <textarea
                                 className="input-textarea man"

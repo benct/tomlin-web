@@ -38,7 +38,7 @@ const NotesModal: React.FC<NotesModalProps> = ({ note, close }) => {
             <ModalHeader>{`${note.id ? 'Edit' : 'New'} Note`}</ModalHeader>
             <ModalContent>
                 <input
-                    className="input"
+                    className="input full-width"
                     type="text"
                     maxLength={64}
                     placeholder="Title"
@@ -48,8 +48,8 @@ const NotesModal: React.FC<NotesModalProps> = ({ note, close }) => {
                     defaultValue={note.title}
                 />
                 <textarea
-                    className="input-textarea monospace"
-                    rows={20}
+                    className="input-textarea full-width monospace"
+                    rows={18}
                     placeholder="Notes..."
                     autoComplete="off"
                     wrap="off"

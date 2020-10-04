@@ -68,6 +68,11 @@ code {
     overflow: auto;
 }
 
+table,
+.full-width {
+    width: 100%;
+}
+
 .min-height {
     min-height: 250px;
 }
