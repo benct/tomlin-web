@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Icon } from '@mdi/react';
+import { mdiExitRun } from '@mdi/js';
 
 import { logout } from '../actions/auth';
 
@@ -17,7 +19,7 @@ export const Logout: React.FC = () => {
     return (
         <div className="wrapper min-height text">
             <div>You have been logged out...</div>
-            <img src={require('../../images/icon/exit.svg')} alt="Exit" style={{ width: '200px' }} />
+            <Icon path={mdiExitRun} size="150px" title="Logging out!" className="mvl" />
             <div>Bye bye!</div>
         </div>
     );
