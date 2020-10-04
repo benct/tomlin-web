@@ -35,7 +35,7 @@ export const Error: React.FC<ErrorProps> = memo(({ code }) => {
         return (): void => {
             document.title = title;
         };
-    }, []);
+    }, [title, code]);
 
     return (
         <div className="wrapper error-page">

@@ -48,7 +48,7 @@ export const MediaSearch: React.FC = () => {
             dispatch(getTmdbMedia({ ...routeProps, page: Number(routeProps.page ?? 1) }));
             window.scrollTo(0, 0);
         }
-    }, [routeProps.action, routeProps.type, routeProps.page]);
+    }, [routeProps]);
 
     const search = debounce((query: string) => dispatch(searchTmdbMedia(query)), 500);
 
