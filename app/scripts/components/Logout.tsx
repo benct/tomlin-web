@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { logout } from '../actions/auth';
 
-const Logout: React.FC = () => {
+export const Logout: React.FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -22,5 +22,3 @@ const Logout: React.FC = () => {
         </div>
     );
 };
-
-export default Logout;

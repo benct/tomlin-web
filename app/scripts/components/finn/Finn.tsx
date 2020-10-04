@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiDelete } from '@mdi/js';
 
 import { DefaultState, FinnEntry, FinnState } from '../../interfaces';
@@ -8,9 +8,9 @@ import { DefaultState, FinnEntry, FinnState } from '../../interfaces';
 import { formatDate } from '../../util/formatting';
 import { deleteFinnId, getFinnData, storeFinnId } from '../../actions/base';
 
-import Loading from '../page/Loading';
+import { Loading } from '../page/Loading';
 
-const Finn: React.FC = () => {
+export const Finn: React.FC = () => {
     const idInput = useRef<HTMLInputElement>(null);
 
     const dispatch = useDispatch();

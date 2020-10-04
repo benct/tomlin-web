@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiBriefcaseEditOutline, mdiChevronDown, mdiChevronUp } from '@mdi/js';
 
 import { Flight } from '../../interfaces';
@@ -10,7 +10,7 @@ interface FlightGroupProps {
     edit: (flight: Flight) => void;
 }
 
-const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }) => {
+export const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }) => {
     const [showFlights, setShowFlights] = useState<boolean>(false);
 
     const isSimple =
@@ -67,5 +67,3 @@ const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }) => {
         </>
     );
 };
-
-export default FlightsGroup;

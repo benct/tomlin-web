@@ -23,7 +23,7 @@ export interface NavigationItem {
     hide?: boolean;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ type, data }) => {
+export const Navigation: React.FC<NavigationProps> = ({ type, data }) => {
     const dispatch = useDispatch();
     const { isLoggedIn, showMenu } = useSelector<DefaultState, NavigationState>((state) => ({
         isLoggedIn: state.auth.isLoggedIn,
@@ -76,5 +76,3 @@ const Navigation: React.FC<NavigationProps> = ({ type, data }) => {
             );
     }
 };
-
-export default Navigation;

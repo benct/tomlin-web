@@ -2,7 +2,7 @@ import { ActionsObject, makeAction, makeReducer } from '@finn-no/redux-actions';
 
 import { PaginationState } from '../interfaces';
 
-import defaultState from '../redux/defaultState';
+import { defaultState } from '../redux/defaultState';
 
 const actions: ActionsObject<PaginationState> = {};
 

@@ -1,12 +1,12 @@
-import React, { lazy } from 'react';
+import React, { lazy, memo } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import SuspendedRoute from '../route/Suspended';
-import Navigation, { NavigationItem } from '../page/Navigation';
-import Error from '../page/Error';
-import Control from './Control';
-import Logs from './Logs';
-import Visits from './Visits';
+import { SuspendedRoute } from '../route/Suspended';
+import { Navigation, NavigationItem } from '../page/Navigation';
+import { Error } from '../page/Error';
+import { Control } from './Control';
+import { Logs } from './Logs';
+import { Visits } from './Visits';
 
 import '../../../styles/admin.css';
 
@@ -22,7 +22,7 @@ const menu: NavigationItem[] = [
     { text: 'Files', path: '/admin/files' },
 ];
 
-const Admin: React.FC = () => (
+export const Admin: React.FC = memo(() => (
     <>
         <Navigation type="sub" data={menu} />
         <div className="wrapper min-height ptm">
@@ -51,6 +51,7 @@ const Admin: React.FC = () => (
             </Switch>
         </div>
     </>
-);
+));
 
-export default React.memo(Admin);
+Admin.displayName = 'Admin';
+export default Admin;

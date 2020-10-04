@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiApproximatelyEqualBox, mdiCloseCircleOutline, mdiDeleteOutline, mdiRefresh, mdiThumbUpOutline } from '@mdi/js';
 
 import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting';
 import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '../../interfaces';
 
-import { FavouriteIcon, SeenIcon } from './MediaIcons';
 import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
-import MediaSeason from './MediaSeason';
+import { FavouriteIcon, SeenIcon } from './MediaIcons';
+import { MediaSeason } from './MediaSeason';
 
 interface MediaModalProps {
     type: MediaType;
@@ -20,7 +20,7 @@ interface MediaModalProps {
     setFavourite: () => void;
 }
 
-const MediaModal: React.FC<MediaModalProps> = (props) => {
+export const MediaModal: React.FC<MediaModalProps> = memo((props) => {
     const [showSeasons, setShowSeasons] = useState<boolean>(false);
 
     useEffect(() => {
@@ -207,6 +207,6 @@ const MediaModal: React.FC<MediaModalProps> = (props) => {
             </ModalFooter>
         </Modal>
     );
-};
+});
 
-export default React.memo(MediaModal);
+MediaModal.displayName = 'MediaModal';

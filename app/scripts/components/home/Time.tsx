@@ -5,7 +5,7 @@ interface TimeProps {
     timeZone: string;
 }
 
-const Time: React.FC<TimeProps> = ({ locale, timeZone }) => {
+export const Time: React.FC<TimeProps> = ({ locale, timeZone }) => {
     const now = (): string => new Date().toLocaleTimeString(locale, { timeZone });
 
     const interval = useRef<number>(0);
@@ -23,4 +23,4 @@ const Time: React.FC<TimeProps> = ({ locale, timeZone }) => {
     return <>{time}</>;
 };
 
-export default React.memo(Time);
+Time.displayName = 'Time';

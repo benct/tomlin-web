@@ -1,11 +1,11 @@
 import React from 'react';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
 
 import { Flight } from '../../interfaces';
 
 import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
-import FlightsInput from './FlightsInput';
+import { FlightsInput } from './FlightsInput';
 
 interface FlightModalProps {
     form: Flight;
@@ -18,7 +18,7 @@ interface FlightModalProps {
     close: () => void;
 }
 
-const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }) => (
+export const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }) => (
     <Modal close={close}>
         <ModalHeader>{`${form.id ? 'Edit' : 'New'} Flight`}</ModalHeader>
         <ModalContent>
@@ -103,5 +103,3 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, c
         </ModalFooter>
     </Modal>
 );
-
-export default FlightsModal;

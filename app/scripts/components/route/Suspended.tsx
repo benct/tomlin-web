@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import Loading from '../page/Loading';
+import { Loading } from '../page/Loading';
 
 interface SuspendedRouteProps {
     authentication?: boolean;
@@ -9,7 +9,7 @@ interface SuspendedRouteProps {
 
 const isLoggedIn = (): boolean => !!localStorage.getItem('token');
 
-export default class SuspendedRoute extends Route<SuspendedRouteProps & RouteProps> {
+export class SuspendedRoute extends Route<SuspendedRouteProps & RouteProps> {
     render(): React.ReactNode {
         if (this.props.authentication && !isLoggedIn()) {
             return (

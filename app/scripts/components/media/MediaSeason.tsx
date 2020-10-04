@@ -12,7 +12,7 @@ interface MediaSeasonProps {
     data: MediaSeasonEntry;
 }
 
-const MediaSeason: React.FC<MediaSeasonProps> = ({ data }) => {
+export const MediaSeason: React.FC<MediaSeasonProps> = ({ data }) => {
     const [showEpisodes, setShowEpisodes] = useState<boolean>(false);
     const [title, setTitle] = useState<string>();
     const [overview, setOverview] = useState<string>();
@@ -88,5 +88,3 @@ const MediaSeason: React.FC<MediaSeasonProps> = ({ data }) => {
         </>
     );
 };
-
-export default MediaSeason;

@@ -1,5 +1,5 @@
-import React from 'react';
-import Icon from '@mdi/react';
+import React, { memo } from 'react';
+import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiGithub } from '@mdi/js';
 
 import content from '../../../../CHANGELOG.md';
@@ -9,7 +9,7 @@ interface ChangelogProps {
     close: () => void;
 }
 
-const Changelog: React.FC<ChangelogProps> = ({ close }) => (
+export const Changelog: React.FC<ChangelogProps> = memo(({ close }) => (
     <Modal close={close}>
         <ModalHeader>Changelog</ModalHeader>
         <ModalContent>
@@ -25,6 +25,7 @@ const Changelog: React.FC<ChangelogProps> = ({ close }) => (
             </button>
         </ModalFooter>
     </Modal>
-);
+));
 
-export default React.memo(Changelog);
+Changelog.displayName = 'Changelog';
+export default Changelog;

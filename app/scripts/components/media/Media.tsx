@@ -1,10 +1,10 @@
-import React, { lazy } from 'react';
+import React, { lazy, memo } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import SuspendedRoute from '../route/Suspended';
-import Navigation, { NavigationItem } from '../page/Navigation';
-import Error from '../page/Error';
-import Stats from './MediaStats';
+import { SuspendedRoute } from '../route/Suspended';
+import { Navigation, NavigationItem } from '../page/Navigation';
+import { Error } from '../page/Error';
+import { MediaStats } from './MediaStats';
 
 import '../../../styles/media.css';
 
@@ -18,13 +18,13 @@ const menu: NavigationItem[] = [
     { text: 'Search', path: '/media/search' },
 ];
 
-const Media: React.FC = () => (
+export const Media: React.FC = () => (
     <>
         <Navigation type="sub" data={menu} />
         <div className="wrapper min-height ptm">
             <Switch>
                 <Route path="/media" exact>
-                    <Stats />
+                    <MediaStats />
                 </Route>
                 <SuspendedRoute path="/media/:type(movie|tv|watchlist)/:page?" authentication>
                     <MediaList />
@@ -40,4 +40,4 @@ const Media: React.FC = () => (
     </>
 );
 
-export default React.memo(Media);
+export default memo(Media);

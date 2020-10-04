@@ -6,8 +6,8 @@ import { DefaultState, Log } from '../../interfaces';
 import { deleteLog, getLogs } from '../../actions/admin';
 import paginationActions from '../../actions/pagination';
 
-import Pagination from '../page/Pagination';
-import Loading from '../page/Loading';
+import { Loading } from '../page/Loading';
+import { Pagination } from '../page/Pagination';
 
 interface LogState {
     logs: Log[];
@@ -15,7 +15,7 @@ interface LogState {
     isLoggedIn: boolean;
 }
 
-const Logs: React.FC = () => {
+export const Logs: React.FC = () => {
     const routeParams = useParams<{ page?: string }>();
     const page = Number(routeParams.page ?? 1);
 
@@ -63,5 +63,3 @@ const Logs: React.FC = () => {
         </Loading>
     );
 };
-
-export default Logs;

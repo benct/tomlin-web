@@ -6,8 +6,8 @@ import { DefaultState, Visit } from '../../interfaces';
 import { getVisits } from '../../actions/admin';
 import paginationActions from '../../actions/pagination';
 
-import Pagination from '../page/Pagination';
-import Loading from '../page/Loading';
+import { Loading } from '../page/Loading';
+import { Pagination } from '../page/Pagination';
 
 interface VisitState {
     visits: Visit[];
@@ -15,7 +15,7 @@ interface VisitState {
     isLoggedIn: boolean;
 }
 
-const Visits: React.FC = () => {
+export const Visits: React.FC = () => {
     const routeParams = useParams<{ page?: string }>();
     const page = Number(routeParams.page ?? 1);
 
@@ -67,5 +67,3 @@ const Visits: React.FC = () => {
         </Loading>
     );
 };
-
-export default Visits;

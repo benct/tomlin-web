@@ -2,7 +2,7 @@ import { quotes } from '../util/quotes';
 
 import { DefaultState } from '../interfaces';
 
-const defaultState: DefaultState = {
+export const defaultState: DefaultState = {
     showMenu: false,
     toast: null,
     theme: localStorage.getItem('theme') ?? 'default',
@@ -83,5 +83,3 @@ const defaultState: DefaultState = {
         consecutivePages: [],
     },
 };
-
-export default defaultState;

@@ -1,12 +1,12 @@
-import React from 'react';
-import Icon from '@mdi/react';
+import React, { memo } from 'react';
+import { Icon } from '@mdi/react';
 import { mdiMapMarkerOutline } from '@mdi/js';
 
-import GitHub from './GitHub';
+import { GitHub } from './GitHub';
 
 import '../../../styles/about.css';
 
-const About: React.FC = () => (
+export const About: React.FC = memo(() => (
     <>
         <div className="wrapper text">
             <div className="cv-header color-primary">Ben Christopher Tomlin</div>
@@ -52,6 +52,6 @@ const About: React.FC = () => (
         <hr />
         <GitHub />
     </>
-);
+));
 
-export default React.memo(About);
+About.displayName = 'About';

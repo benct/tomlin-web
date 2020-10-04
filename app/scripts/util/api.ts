@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
-import debounce from './debounce';
+import { debounce } from './debounce';
+import { store } from '../redux/store';
 import actions from '../actions/base';
-import store from '../redux/store';
 
 type ApiParams = Record<string, any>;
 

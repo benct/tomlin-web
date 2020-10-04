@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 
 import { DefaultState, MediaSearchItemEntry } from '../../interfaces';
 
-import debounce from '../../util/debounce';
+import { debounce } from '../../util/debounce';
 import { add, existing, getTmdbMedia, goToIMDb, remove, searchTmdbMedia } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
 
-import Loading from '../page/Loading';
-import Pagination from '../page/Pagination';
-import MediaSearchItem from './MediaSearchItem';
+import { Loading } from '../page/Loading';
+import { Pagination } from '../page/Pagination';
+import { MediaSearchItem } from './MediaSearchItem';
 
 interface MediaSearchState {
     data: MediaSearchItemEntry[];
@@ -26,7 +26,7 @@ export interface MediaSearchRouteProps {
     page?: string;
 }
 
-const MediaSearch: React.FC = () => {
+export const MediaSearch: React.FC = () => {
     const dispatch = useDispatch();
     const routeProps = useParams<MediaSearchRouteProps>();
     const props = useSelector<DefaultState, MediaSearchState>((state) => ({

@@ -4,12 +4,12 @@ import { useLocation } from 'react-router';
 
 import { DefaultState } from '../../interfaces';
 
-import Header from './Header';
-import Footer from './Footer';
+import { Header } from './Header';
+import { Footer } from './Footer';
 
 const simplePages = ['/finn'];
 
-const Page: React.FC = ({ children }) => {
+export const Page: React.FC = ({ children }) => {
     const location = useLocation();
     const state = useSelector<DefaultState, Pick<DefaultState, 'toast' | 'theme' | 'loading'>>((state) => ({
         toast: state.toast,
@@ -45,5 +45,3 @@ const Page: React.FC = ({ children }) => {
         </>
     );
 };
-
-export default Page;

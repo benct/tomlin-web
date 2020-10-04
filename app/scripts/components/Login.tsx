@@ -6,9 +6,9 @@ import { Redirect } from 'react-router-dom';
 import { AuthState, DefaultState } from '../interfaces';
 import { login } from '../actions/auth';
 
-import Loading from './page/Loading';
+import { Loading } from './page/Loading';
 
-const Login: React.FC = () => {
+export const Login: React.FC = () => {
     const dispatch = useDispatch();
     const { loading, redirect, error } = useSelector<DefaultState, AuthState>((state) => ({ ...state.auth }));
 
@@ -44,5 +44,3 @@ const Login: React.FC = () => {
         </div>
     );
 };
-
-export default Login;

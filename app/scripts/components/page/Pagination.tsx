@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiChevronDoubleRight, mdiChevronRight } from '@mdi/js';
 
 import { DefaultState, PaginationState } from '../../interfaces';
@@ -17,7 +17,7 @@ interface PaginationImage {
     rotate?: boolean;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ path, postfix }) => {
+export const Pagination: React.FC<PaginationProps> = ({ path, postfix }) => {
     const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = useSelector<
         DefaultState,
         PaginationState
@@ -56,5 +56,3 @@ const Pagination: React.FC<PaginationProps> = ({ path, postfix }) => {
         </div>
     ) : null;
 };
-
-export default Pagination;

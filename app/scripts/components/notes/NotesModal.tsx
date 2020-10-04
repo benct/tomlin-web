@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
 import { Note } from '../../interfaces';
@@ -13,7 +13,7 @@ interface NotesModalProps {
     note: Note;
 }
 
-const NotesModal: React.FC<NotesModalProps> = ({ note, close }) => {
+export const NotesModal: React.FC<NotesModalProps> = memo(({ note, close }) => {
     const title = useRef<HTMLInputElement>(null);
     const content = useRef<HTMLTextAreaElement>(null);
     const dispatch = useDispatch();
@@ -72,6 +72,6 @@ const NotesModal: React.FC<NotesModalProps> = ({ note, close }) => {
             </ModalFooter>
         </Modal>
     );
-};
+});
 
-export default NotesModal;
+NotesModal.displayName = 'NotesModal';

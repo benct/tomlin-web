@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { validate } from '../actions/auth';
 
-import SuspendedRoute from './route/Suspended';
-import Page from './page/Page';
-import Error from './page/Error';
-import About from './about/About';
-import Home from './home/Home';
-import Login from './Login';
-import Logout from './Logout';
+import { SuspendedRoute } from './route/Suspended';
+import { Page } from './page/Page';
+import { Error } from './page/Error';
+import { About } from './about/About';
+import { Home } from './home/Home';
+import { Login } from './Login';
+import { Logout } from './Logout';
 
 import '../../styles/main.css';
 import '../../styles/content.css';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting';
 import { MediaItemEntry, MediaType } from '../../interfaces';
@@ -15,7 +15,7 @@ interface MediaItemProps {
     showItem: () => void;
 }
 
-const MediaItem: React.FC<MediaItemProps> = (props) => {
+export const MediaItem: React.FC<MediaItemProps> = memo((props) => {
     const renderRating = (): React.ReactElement => (
         <>
             &nbsp;|&nbsp;
@@ -76,6 +76,6 @@ const MediaItem: React.FC<MediaItemProps> = (props) => {
             </div>
         </div>
     );
-};
+});
 
-export default React.memo(MediaItem);
+MediaItem.displayName = 'MediaItem';

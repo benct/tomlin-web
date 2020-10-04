@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
 
 interface LoadingProps {
@@ -8,7 +8,7 @@ interface LoadingProps {
     className?: string;
 }
 
-const Loading: React.FC<LoadingProps> = ({ isLoading, text, className, children }) =>
+export const Loading: React.FC<LoadingProps> = ({ isLoading, text, className, children }) =>
     isLoading ? (
         <div className={`text color-bg ${className ?? ''}`}>
             <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" />
@@ -17,5 +17,3 @@ const Loading: React.FC<LoadingProps> = ({ isLoading, text, className, children 
     ) : (
         <>{children}</>
     );
-
-export default Loading;

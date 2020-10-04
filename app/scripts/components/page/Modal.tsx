@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 
 interface ModalProps {
     children: React.ReactNode;
@@ -38,4 +38,4 @@ export const ModalContent: React.FC = ({ children }) => <div className="overlay-
 
 export const ModalFooter: React.FC = ({ children }) => <div className="overlay-modal-footer">{children}</div>;
 
-export const Modal = React.memo(ModalWrapper);
+export const Modal = memo(ModalWrapper);

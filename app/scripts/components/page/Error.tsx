@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 
 import '../../../styles/error.css';
 
@@ -26,7 +26,7 @@ const error: { [key: number]: ErrorType } = {
     },
 };
 
-const Error: React.FC<ErrorProps> = ({ code }) => {
+export const Error: React.FC<ErrorProps> = memo(({ code }) => {
     const title: string = document.title;
 
     useEffect(() => {
@@ -43,6 +43,6 @@ const Error: React.FC<ErrorProps> = ({ code }) => {
             <p>{error[code].message}</p>
         </div>
     );
-};
+});
 
-export default React.memo(Error);
+Error.displayName = 'Error';

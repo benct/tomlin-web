@@ -5,7 +5,7 @@ import { DefaultState, Hass, Settings } from '../../interfaces';
 import { formatThousands } from '../../util/formatting';
 import { backup, clearLogs, getHass, getStats, saveSetting, updateIata, updateMedia } from '../../actions/admin';
 
-import Loading from '../page/Loading';
+import { Loading } from '../page/Loading';
 
 interface ControlState {
     stats: Record<string, number>;
@@ -15,7 +15,7 @@ interface ControlState {
     isLoggedIn: boolean;
 }
 
-const Control: React.FC = () => {
+export const Control: React.FC = () => {
     const hassCount = useRef<HTMLSelectElement>(null);
     const updateMovieCount = useRef<HTMLSelectElement>(null);
     const updateTvCount = useRef<HTMLSelectElement>(null);
@@ -168,5 +168,3 @@ const Control: React.FC = () => {
         </>
     );
 };
-
-export default Control;

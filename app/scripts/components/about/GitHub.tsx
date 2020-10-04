@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import {
     mdiAlertCircleOutline,
     mdiConsole,
@@ -17,9 +17,9 @@ import {
 import { DefaultState, GitHubRepo, GitHubState } from '../../interfaces';
 import { getGitHubData } from '../../actions/base';
 
-import Loading from '../page/Loading';
+import { Loading } from '../page/Loading';
 
-const GitHub: React.FC = () => {
+export const GitHub: React.FC = () => {
     const dispatch = useDispatch();
     const state = useSelector<DefaultState, GitHubState & Pick<DefaultState, 'loading'>>((state) => ({
         ...state.github,
@@ -112,5 +112,3 @@ const GitHub: React.FC = () => {
         </Loading>
     );
 };
-
-export default GitHub;

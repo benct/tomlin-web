@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 interface FlightInputProps {
     name: string;
@@ -10,7 +10,7 @@ interface FlightInputProps {
     extraProps?: Record<string, number>;
 }
 
-const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required, fraction, onChange, extraProps }) => (
+export const FlightsInput: React.FC<FlightInputProps> = memo(({ type, name, value, required, fraction, onChange, extraProps }) => (
     <div className="form-element" style={{ width: fraction ?? '48%' }}>
         <label htmlFor={`form-${name}`} className="text-smaller capitalize">
             {name}
@@ -27,6 +27,6 @@ const FlightsInput: React.FC<FlightInputProps> = ({ type, name, value, required,
             {...extraProps}
         />
     </div>
-);
+));
 
-export default React.memo(FlightsInput);
+FlightsInput.displayName = 'FlightsInput';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiAirplane, mdiBriefcaseEditOutline } from '@mdi/js';
 
 import { DefaultState, Flight } from '../../interfaces';
@@ -8,9 +8,9 @@ import { DefaultState, Flight } from '../../interfaces';
 import { formatDate } from '../../util/formatting';
 import { deleteFlight, getFlights, saveFlight } from '../../actions/admin';
 
-import FlightsModal from './FlightsModal';
-import FlightsGroup from './FlightsGroup';
-import Loading from '../page/Loading';
+import { FlightsModal } from './FlightsModal';
+import { FlightsGroup } from './FlightsGroup';
+import { Loading } from '../page/Loading';
 
 interface FlightState {
     flights: Flight[][];
@@ -20,7 +20,7 @@ interface FlightState {
 
 const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 
-const Flights: React.FC = () => {
+export const Flights: React.FC = () => {
     const [showGrouped, setShowGrouped] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [invalid, setInvalid] = useState<boolean>(false);

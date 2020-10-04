@@ -1,6 +1,6 @@
 type DebounceFunction = (...args: any) => void;
 
-export default function debounce(callback: DebounceFunction, time: number): DebounceFunction {
+export const debounce = (callback: DebounceFunction, time: number): DebounceFunction => {
     let interval: number;
     return (...args): void => {
         window.clearTimeout(interval);
@@ -9,4 +9,4 @@ export default function debounce(callback: DebounceFunction, time: number): Debo
             callback(...args);
         }, time);
     };
-}
+};

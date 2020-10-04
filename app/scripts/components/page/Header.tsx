@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import actions from '../../actions/base';
 
-import Navigation from './Navigation';
+import { Navigation } from './Navigation';
 
-const Header: React.FC = () => {
+export const Header: React.FC = memo(() => {
     const dispatch = useDispatch();
     return (
         <header>
@@ -17,6 +17,6 @@ const Header: React.FC = () => {
             </button>
         </header>
     );
-};
+});
 
-export default React.memo(Header);
+Header.displayName = 'Header';

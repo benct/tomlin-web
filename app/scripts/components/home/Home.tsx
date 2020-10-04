@@ -1,19 +1,19 @@
-import React, { lazy, useState } from 'react';
+import React, { lazy, memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { DefaultState } from '../../interfaces';
 import actions from '../../actions/base';
 
-import Countdown from './Countdown';
-import State from './State';
-import Quote from './Quote';
+import { Countdown } from './Countdown';
+import { State } from './State';
+import { Quote } from './Quote';
 
 import '../../../styles/home.css';
 
 const Changelog = lazy(() => import('./Changelog'));
 
-const Home: React.FC = () => {
+export const Home: React.FC = memo(() => {
     const [showChangelog, setShowChangelog] = useState(false);
 
     const dispatch = useDispatch();
@@ -56,6 +56,6 @@ const Home: React.FC = () => {
             )}
         </>
     );
-};
+});
 
-export default React.memo(Home);
+Home.displayName = 'Home';

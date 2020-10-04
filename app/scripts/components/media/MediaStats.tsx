@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiMovieOutline, mdiTelevisionClassic } from '@mdi/js';
 import {
     AreaSeries,
@@ -17,7 +17,7 @@ import 'react-vis/dist/style.css';
 import { DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
 import { getStats } from '../../actions/media';
 
-import Loading from '../page/Loading';
+import { Loading } from '../page/Loading';
 
 interface MediaStatsState {
     movie: MediaStatsType;
@@ -31,7 +31,7 @@ interface MediaGraphEntry {
     y: number;
 }
 
-const MediaStats: React.FC = () => {
+export const MediaStats: React.FC = () => {
     const dispatch = useDispatch();
     const state = useSelector<DefaultState, MediaStatsState>((state) => ({
         movie: state.media.stats.movie,
@@ -133,5 +133,3 @@ const MediaStats: React.FC = () => {
         </>
     );
 };
-
-export default MediaStats;

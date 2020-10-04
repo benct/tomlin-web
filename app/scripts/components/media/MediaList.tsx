@@ -7,10 +7,10 @@ import { DefaultState, MediaItemEntry, MediaType } from '../../interfaces';
 import mediaActions, { favourite, getMedia, remove, seen, setItem, update } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
 
-import Loading from '../page/Loading';
-import Pagination from '../page/Pagination';
-import MediaModal from './MediaModal';
-import MediaItem from './MediaItem';
+import { Loading } from '../page/Loading';
+import { Pagination } from '../page/Pagination';
+import { MediaModal } from './MediaModal';
+import { MediaItem } from './MediaItem';
 
 interface MediaListState {
     data: MediaItemEntry[];
@@ -25,7 +25,7 @@ interface MediaListRouteProps {
     page?: string;
 }
 
-const MediaList: React.FC = () => {
+export const MediaList: React.FC = () => {
     const dispatch = useDispatch();
     const routeProps = useParams<MediaListRouteProps>();
     const props = useSelector<DefaultState, MediaListState>((state) => ({

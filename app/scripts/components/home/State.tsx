@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiInformationOutline, mdiLoading } from '@mdi/js';
 
 import { DefaultState, HomeState } from '../../interfaces';
 import { getHomeState } from '../../actions/base';
 
-import Time from './Time';
+import { Time } from './Time';
 
-const State: React.FC = () => {
+export const State: React.FC = () => {
     const dispatch = useDispatch();
     const state = useSelector<DefaultState, HomeState & Pick<DefaultState, 'loading'>>((state) => ({
         ...state.home,
@@ -77,5 +77,3 @@ const State: React.FC = () => {
         </div>
     );
 };
-
-export default State;

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import { mdiFileDocumentMultipleOutline } from '@mdi/js';
 
 import { DefaultState, Note } from '../../interfaces';
 import { getNotes } from '../../actions/admin';
 
-import NotesModal from './NotesModal';
-import Loading from '../page/Loading';
+import { Loading } from '../page/Loading';
+import { NotesModal } from './NotesModal';
 
 interface NotesState {
     notes: Note[];
@@ -15,7 +15,7 @@ interface NotesState {
     isLoggedIn: boolean;
 }
 
-const Notes: React.FC = () => {
+export const Notes: React.FC = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [selected, setSelected] = useState<Note>();
 

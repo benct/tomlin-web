@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '@mdi/react';
+import { Icon } from '@mdi/react';
 import {
     mdiCloseCircleOutline,
     mdiCloudUploadOutline,
@@ -13,14 +13,14 @@ import {
 import { DefaultState, FileItem, FileState } from '../../interfaces';
 import fileActions, { changeDirectory, createDirectory, download, preview, refresh, remove, rename, upload } from '../../actions/files';
 
-import Loading from '../page/Loading';
-import FileList from './FileList';
+import { Loading } from '../page/Loading';
+import { FileList } from './FileList';
 
 import '../../../styles/files.css';
 
 const PARENT_DIR = '..';
 
-const Files: React.FC = () => {
+export const Files: React.FC = () => {
     const fileInput = useRef<HTMLInputElement>(null);
     const fileLabel = useRef<HTMLLabelElement>(null);
 

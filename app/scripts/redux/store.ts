@@ -2,7 +2,7 @@ import { Action, applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 
-import defaultState from './defaultState';
+import { defaultState } from './defaultState';
 import { DefaultState } from '../interfaces';
 import { reducer as baseReducer } from '../actions/base';
 import { reducer as authReducer } from '../actions/auth';
@@ -21,10 +21,8 @@ const reducer = (state: DefaultState = defaultState, action: Action): DefaultSta
     pagination: paginationReducer(state.pagination, action),
 });
 
-const store = createStore(
+export const store = createStore(
     reducer,
     defaultState,
     composeWithDevTools(applyMiddleware<ThunkDispatch<DefaultState, undefined, Action>, DefaultState>(thunk))
 );
-
-export default store;
