@@ -196,12 +196,12 @@ const MediaModal: React.FC<MediaModalProps> = (props) => {
                 <button className="button-blank mrl" onClick={props.remove}>
                     <Icon path={mdiDeleteOutline} size="28px" title="Update" />
                 </button>
-                <button className="button-blank mrl" onClick={props.update}>
+                <button className="button-icon mrl" onClick={props.update}>
                     <Icon path={mdiRefresh} size="28px" title="Update" />
                 </button>
                 <SeenIcon seen={props.data.seen} setSeen={props.setSeen} size="28px" className="mrl" />
                 <FavouriteIcon favourite={props.data.favourite} setFavourite={props.setFavourite} size="28px" />
-                <button className="button-blank float-right" onClick={props.close}>
+                <button className="button-icon float-right" onClick={props.close}>
                     <Icon path={mdiCloseCircleOutline} size="28px" title="Close" />
                 </button>
             </div>

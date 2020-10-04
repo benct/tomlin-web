@@ -74,15 +74,15 @@ const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, c
         <div className="border-top ptm">
             {form.id ? (
                 <>
-                    <button className="button-icon mrm" onClick={(): void => remove(form.id)}>
+                    <button className="button-icon mrl" onClick={(): void => remove(form.id)}>
                         <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
                     </button>
-                    <button className="button-icon mrm" onClick={(): void => copy(form)}>
+                    <button className="button-icon mrl" onClick={(): void => copy(form)}>
                         <Icon path={mdiContentCopy} size="26px" title="Copy" />
                     </button>
                 </>
             ) : null}
-            <button className="button-icon mrm" onClick={save}>
+            <button className="button-icon mrl" onClick={save}>
                 <Icon path={mdiContentSaveOutline} size="28px" title="Save" />
             </button>
             <button className="button-icon" onClick={swap}>

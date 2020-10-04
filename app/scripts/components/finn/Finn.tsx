@@ -49,7 +49,7 @@ const Finn: React.FC = () => {
                         </a>
                     </th>
                     <th className="text-right">
-                        <button className="button-icon pan" onClick={() => handleDelete(id)}>
+                        <button className="button-icon" onClick={() => handleDelete(id)}>
                             <Icon path={mdiDelete} size="24px" title="Delete" />
                         </button>
                     </th>

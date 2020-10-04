@@ -69,7 +69,7 @@ const MediaSearchItem: React.FC<MediaSearchItemProps> = (props) => {
                     </span>
                 ) : null}
                 <div className="hide-gt768">
-                    <button className="button-blank" onClick={props.imdb}>
+                    <button className="button-icon" onClick={props.imdb}>
                         <img src={require(`../../../images/icon/imdb.svg`)} alt="IMDb" width={48} />
                     </button>
                     {renderButton('float-right mtm')}

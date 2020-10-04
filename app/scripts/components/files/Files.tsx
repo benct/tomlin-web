@@ -128,7 +128,7 @@ const Files: React.FC = () => {
                     <Icon path={mdiFolderUploadOutline} size="28px" title="Parent directory" />
                 </button>
                 <div className="text-right">
-                    <button className="button-icon mrm" onClick={() => dispatch(createDirectory())}>
+                    <button className="button-icon mrl" onClick={() => dispatch(createDirectory())}>
                         <Icon path={mdiFolderPlusOutline} size="28px" title="New directory" />
                     </button>
                     <button className="button-icon" onClick={() => dispatch(refresh())}>
@@ -170,10 +170,10 @@ const Files: React.FC = () => {
 
             {state.preview ? (
                 <div className="overlay">
-                    <button className="button-blank" onClick={closePreview}>
+                    <button className="button-icon" onClick={closePreview}>
                         <Icon path={mdiCloseCircleOutline} className="file-preview-icon file-preview-close" title="Close" color="white" />
                     </button>
-                    <button className="button-blank" onClick={downloadPreview}>
+                    <button className="button-icon" onClick={downloadPreview}>
                         <Icon
                             path={mdiFileDownloadOutline}
                             className="file-preview-icon file-preview-download"

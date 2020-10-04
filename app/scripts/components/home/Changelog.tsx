@@ -17,7 +17,7 @@ const Changelog: React.FC<ChangelogProps> = ({ close }) => (
                 <Icon path={mdiGithub} size="28px" title="View on GitHub" className="valign-middle" />
                 <span className="valign-middle mlm">View on GitHub</span>
             </a>
-            <button className="button-icon pan float-right" onClick={close}>
+            <button className="button-icon float-right" onClick={close}>
                 <Icon path={mdiCloseCircleOutline} size="28px" title="Close" />
             </button>
         </div>

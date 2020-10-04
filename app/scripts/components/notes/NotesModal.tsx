@@ -56,7 +56,7 @@ const NotesModal: React.FC<NotesModalProps> = ({ note, close }) => {
             />
             <div>
                 {note.id ? (
-                    <button className="button-icon mrm" onClick={remove}>
+                    <button className="button-icon mrl" onClick={remove}>
                         <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
                     </button>
                 ) : null}

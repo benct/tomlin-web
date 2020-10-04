@@ -103,7 +103,7 @@ const Flights: React.FC = () => {
                     <th className="hide-lt600">Return</th>
                     <th>Trip</th>
                     <th className="text-right">
-                        <button className="button-icon pan" onClick={handleNew}>
+                        <button className="button-icon" onClick={handleNew}>
                             <Icon path={mdiAirplane} size="24px" title="New" />
                         </button>
                     </th>
@@ -131,7 +131,7 @@ const Flights: React.FC = () => {
                     <th className="hide-lt600">Seat</th>
                     <th className="hide-lt768">Reference</th>
                     <th className="text-right">
-                        <button className="button-icon pan" onClick={handleNew}>
+                        <button className="button-icon" onClick={handleNew}>
                             <Icon path={mdiAirplane} size="24px" title="New" />
                         </button>
                     </th>
@@ -149,7 +149,7 @@ const Flights: React.FC = () => {
                             <td className="hide-lt600">{flight.seat ?? '—'}</td>
                             <td className="hide-lt768">{flight.reference ?? '—'}</td>
                             <td className="text-right">
-                                <button className="button-icon pan" onClick={(): void => handleEdit(flight)}>
+                                <button className="button-icon" onClick={(): void => handleEdit(flight)}>
                                     <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />
                                 </button>
                             </td>

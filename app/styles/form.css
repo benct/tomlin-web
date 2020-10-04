@@ -1,4 +1,6 @@
-select, button, input[type=submit] {
+select,
+button,
+input[type='submit'] {
     cursor: pointer !important;
 }
 
@@ -9,7 +11,7 @@ button {
 
 label {
     display: block;
-    margin: .25em 0;
+    margin: 0.25em 0;
 }
 
 fieldset {
@@ -47,7 +49,7 @@ fieldset {
     box-sizing: border-box;
     box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease-in-out;
-    font-family: "Open Sans Condensed", "PT Sans Narrow", sans-serif;
+    font-family: 'Open Sans Condensed', 'PT Sans Narrow', sans-serif;
     font-size: 15px;
     font-weight: 700;
     text-align: center;
@@ -95,7 +97,8 @@ fieldset {
     margin-right: 0.25em;
 }
 
-.button-blank {
+.button-blank,
+.button-icon {
     background: transparent no-repeat;
     border: none;
     outline: none;
@@ -103,14 +106,6 @@ fieldset {
     padding: 0;
     line-height: inherit;
     letter-spacing: inherit;
-}
-
-.button-icon {
-    background: transparent no-repeat;
-    border: none;
-    overflow: hidden;
-    outline: none;
-    padding: 5px;
 }
 
 .button-icon svg,
@@ -129,7 +124,7 @@ fieldset {
     margin-left: 5px;
 }
 
-[role=button] {
+[role='button'] {
     cursor: pointer;
     outline: none;
     border: none;

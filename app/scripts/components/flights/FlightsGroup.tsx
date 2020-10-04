@@ -33,7 +33,7 @@ const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }) => {
                 <td className="no-wrap hide-lt600">{flights.length > 1 ? formatDate(flights[flights.length - 1].arrival) : '—'}</td>
                 <td>{locations}</td>
                 <td className="text-right">
-                    <button className="button-icon pan">
+                    <button className="button-icon">
                         <Icon path={showFlights ? mdiChevronUp : mdiChevronDown} size="20px" title="Show flights" />
                     </button>
                 </td>
@@ -57,7 +57,7 @@ const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }) => {
                                 </div>
                             </td>
                             <td className="text-right">
-                                <button className="button-icon pan" onClick={(): void => edit(flight)}>
+                                <button className="button-icon" onClick={(): void => edit(flight)}>
                                     <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />
                                 </button>
                             </td>
