@@ -6,7 +6,11 @@ interface ModalProps {
     className?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ close, className, children }) => {
+interface ModalElementProps {
+    className?: string;
+}
+
+const ModalWrapper: React.FC<ModalProps> = ({ close, className, children }) => {
     useEffect(() => {
         document.body.classList.add('no-scroll');
 
@@ -21,9 +25,17 @@ const Modal: React.FC<ModalProps> = ({ close, className, children }) => {
 
     return (
         <div className="overlay" onClick={handleOutsideClick} role="dialog">
-            <div className={`wrapper overlay-modal shadow ${className}`}>{children}</div>
+            <div className={`wrapper overlay-modal shadow ${className ?? ''}`}>{children}</div>
         </div>
     );
 };
 
-export default React.memo(Modal);
+export const ModalHeader: React.FC<ModalElementProps> = ({ children, className }) => (
+    <div className={`overlay-modal-header color-primary strong ${className ?? ''}`}>{children}</div>
+);
+
+export const ModalContent: React.FC = ({ children }) => <div className="overlay-modal-content">{children}</div>;
+
+export const ModalFooter: React.FC = ({ children }) => <div className="overlay-modal-footer">{children}</div>;
+
+export const Modal = React.memo(ModalWrapper);

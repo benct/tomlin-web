@@ -3,7 +3,7 @@ import Icon from '@mdi/react';
 import { mdiCloseCircleOutline, mdiGithub } from '@mdi/js';
 
 import content from '../../../../CHANGELOG.md';
-import Modal from '../page/Modal';
+import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
 
 interface ChangelogProps {
     close: () => void;
@@ -11,8 +11,11 @@ interface ChangelogProps {
 
 const Changelog: React.FC<ChangelogProps> = ({ close }) => (
     <Modal close={close}>
-        <div className="overlay-modal-content changelog" dangerouslySetInnerHTML={{ __html: content }} />
-        <div className="border-top ptm">
+        <ModalHeader>Changelog</ModalHeader>
+        <ModalContent>
+            <div className="changelog" dangerouslySetInnerHTML={{ __html: content }} />
+        </ModalContent>
+        <ModalFooter>
             <a href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer">
                 <Icon path={mdiGithub} size="28px" title="View on GitHub" className="valign-middle" />
                 <span className="valign-middle mlm">View on GitHub</span>
@@ -20,7 +23,7 @@ const Changelog: React.FC<ChangelogProps> = ({ close }) => (
             <button className="button-icon float-right" onClick={close}>
                 <Icon path={mdiCloseCircleOutline} size="28px" title="Close" />
             </button>
-        </div>
+        </ModalFooter>
     </Modal>
 );
 

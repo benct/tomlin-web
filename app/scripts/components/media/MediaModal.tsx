@@ -7,7 +7,7 @@ import { formatDate, formatDuration, formatThousands, formatYears } from '../../
 import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '../../interfaces';
 
 import { FavouriteIcon, SeenIcon } from './MediaIcons';
-import Modal from '../page/Modal';
+import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
 import MediaSeason from './MediaSeason';
 
 interface MediaModalProps {
@@ -185,15 +185,15 @@ const MediaModal: React.FC<MediaModalProps> = (props) => {
 
     return (
         <Modal close={props.close}>
-            <div className="media-overlay-title border-bottom pbm">
+            <ModalHeader className="media-overlay-title">
                 <span className="color-primary strong">
                     {props.data.title} ({formatYears(props.type, props.data.release_year, props.data.end_year)})
                 </span>
                 {renderSeasonButton()}
-            </div>
-            <div className="overlay-modal-content">{showSeasons ? renderSeasons() : renderContent()}</div>
-            <div className="border-top ptm">
-                <button className="button-blank mrl" onClick={props.remove}>
+            </ModalHeader>
+            <ModalContent>{showSeasons ? renderSeasons() : renderContent()}</ModalContent>
+            <ModalFooter>
+                <button className="button-icon mrl" onClick={props.remove}>
                     <Icon path={mdiDeleteOutline} size="28px" title="Update" />
                 </button>
                 <button className="button-icon mrl" onClick={props.update}>
@@ -204,7 +204,7 @@ const MediaModal: React.FC<MediaModalProps> = (props) => {
                 <button className="button-icon float-right" onClick={props.close}>
                     <Icon path={mdiCloseCircleOutline} size="28px" title="Close" />
                 </button>
-            </div>
+            </ModalFooter>
         </Modal>
     );
 };

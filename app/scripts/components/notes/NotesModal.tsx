@@ -6,7 +6,7 @@ import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '
 import { Note } from '../../interfaces';
 import { deleteNote, saveNote } from '../../actions/admin';
 
-import Modal from '../page/Modal';
+import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
 
 interface NotesModalProps {
     close: () => void;
@@ -35,26 +35,29 @@ const NotesModal: React.FC<NotesModalProps> = ({ note, close }) => {
 
     return (
         <Modal close={close}>
-            <input
-                className="input"
-                type="text"
-                maxLength={64}
-                placeholder="Title"
-                autoComplete="off"
-                required
-                ref={title}
-                defaultValue={note.title}
-            />
-            <textarea
-                className="input-textarea monospace"
-                rows={20}
-                placeholder="Notes..."
-                autoComplete="off"
-                wrap="off"
-                ref={content}
-                defaultValue={note.content}
-            />
-            <div>
+            <ModalHeader>{`${note.id ? 'Edit' : 'New'} Note`}</ModalHeader>
+            <ModalContent>
+                <input
+                    className="input"
+                    type="text"
+                    maxLength={64}
+                    placeholder="Title"
+                    autoComplete="off"
+                    required
+                    ref={title}
+                    defaultValue={note.title}
+                />
+                <textarea
+                    className="input-textarea monospace"
+                    rows={20}
+                    placeholder="Notes..."
+                    autoComplete="off"
+                    wrap="off"
+                    ref={content}
+                    defaultValue={note.content}
+                />
+            </ModalContent>
+            <ModalFooter>
                 {note.id ? (
                     <button className="button-icon mrl" onClick={remove}>
                         <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
@@ -66,7 +69,7 @@ const NotesModal: React.FC<NotesModalProps> = ({ note, close }) => {
                 <button className="button-icon float-right" onClick={close}>
                     <Icon path={mdiCloseCircleOutline} size="28px" title="Cancel" />
                 </button>
-            </div>
+            </ModalFooter>
         </Modal>
     );
 };
