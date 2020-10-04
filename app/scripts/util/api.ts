@@ -62,7 +62,7 @@ export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm
 
 export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => load('POST', path, buildForm(params, files));
 
-export const del = <T>(path: string): Promise<T> => load('DELETE', path);
+export const del = <T>(path: string, params?: ApiParams): Promise<T> => load('DELETE', path, buildForm(params));
 
 export const text = (path: string, params?: ApiParams): Promise<string> => load('POST', path, buildForm(params), 'text');
 
