@@ -10,6 +10,7 @@ import { Visits } from './Visits';
 
 import '../../../styles/admin.css';
 
+const Users = lazy(() => import('../users/Users'));
 const Flights = lazy(() => import('../flights/Flights'));
 const Notes = lazy(() => import('../notes/Notes'));
 const Files = lazy(() => import('../files/Files'));
@@ -17,6 +18,7 @@ const Files = lazy(() => import('../files/Files'));
 const menu: NavigationItem[] = [
     { text: 'Logs', path: '/admin/logs' },
     { text: 'Visits', path: '/admin/visits' },
+    { text: 'Users', path: '/admin/users' },
     { text: 'Flights', path: '/admin/flights' },
     { text: 'Notes', path: '/admin/notes' },
     { text: 'Files', path: '/admin/files' },
@@ -36,6 +38,9 @@ export const Admin: React.FC = memo(() => (
                 <Route path="/admin/visits/:page?">
                     <Visits />
                 </Route>
+                <SuspendedRoute path="/admin/users">
+                    <Users />
+                </SuspendedRoute>
                 <SuspendedRoute path="/admin/flights">
                     <Flights />
                 </SuspendedRoute>

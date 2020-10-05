@@ -224,6 +224,7 @@ export interface AdminState {
     logs: PaginationResponse<Log> | null;
     visits: PaginationResponse<Visit> | null;
     hass: Hass[];
+    users: User[];
     flights: Flight[][];
     notes: Note[];
 }
@@ -251,6 +252,15 @@ export interface Visit {
     referer?: string;
     visits: number;
     timestamp: string;
+}
+
+export interface User {
+    name: string;
+    email: string;
+    enabled: boolean;
+    created: string;
+    lastSeen: string | null;
+    roles: string[];
 }
 
 export interface Flight {

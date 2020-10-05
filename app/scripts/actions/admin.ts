@@ -99,6 +99,39 @@ export const updateIata = (type: string): ThunkResult<Promise<void>> => async (d
     }
 };
 
+export const getUsers = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn) {
+        await get('/user')
+            .then((response) => dispatch(actions.setUsers(response || [])))
+            .catch(() => dispatch(showToast('Could not fetch user data...')));
+    }
+};
+
+export const saveUser = (email: string, name: string, password: string | null, enabled: boolean): ThunkResult<Promise<void>> => async (
+    dispatch,
+    getState
+): Promise<void> => {
+    if (getState().auth.isLoggedIn) {
+        await post('/user', { email, name, password, enabled })
+            .then(() => {
+                dispatch(getUsers());
+                dispatch(showToast('Successfully saved user!'));
+            })
+            .catch(() => dispatch(showToast('Could not store user...')));
+    }
+};
+
+export const deleteUser = (email: string): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
+    if (getState().auth.isLoggedIn && confirm('Are you sure you want to delete this user?')) {
+        await del(`/user`, { email })
+            .then(() => {
+                dispatch(getUsers());
+                dispatch(showToast('Successfully deleted user!'));
+            })
+            .catch(() => dispatch(showToast('Could not delete user...')));
+    }
+};
+
 export const getNotes = (): ThunkResult<Promise<void>> => async (dispatch, getState): Promise<void> => {
     if (getState().auth.isLoggedIn) {
         await get('/note')

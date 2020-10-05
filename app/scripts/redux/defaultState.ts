@@ -67,6 +67,7 @@ export const defaultState: DefaultState = {
         logs: null,
         visits: null,
         hass: [],
+        users: [],
         flights: [],
         notes: [],
     },
