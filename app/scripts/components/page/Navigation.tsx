@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, ReactNode } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -23,7 +23,7 @@ export interface NavigationItem {
     hide?: boolean;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({ type, data }) => {
+export const Navigation: FC<NavigationProps> = ({ type, data }) => {
     const dispatch = useDispatch();
     const { isLoggedIn, showMenu } = useSelector<DefaultState, NavigationState>((state) => ({
         isLoggedIn: state.auth.isLoggedIn,
@@ -39,7 +39,7 @@ export const Navigation: React.FC<NavigationProps> = ({ type, data }) => {
         { text: 'Login', path: '/login', hide: isLoggedIn },
     ];
 
-    const createLink = (item: NavigationItem, idx: number): React.ReactNode =>
+    const createLink = (item: NavigationItem, idx: number): ReactNode =>
         item.hide ? null : (
             <li key={`menuList${idx}`}>
                 <NavLink to={item.path} exact={!!item.exact}>

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { FC, memo } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiGithub } from '@mdi/js';
 
@@ -9,7 +9,7 @@ interface ChangelogProps {
     close: () => void;
 }
 
-export const Changelog: React.FC<ChangelogProps> = memo(({ close }) => (
+export const Changelog: FC<ChangelogProps> = memo(({ close }) => (
     <Modal close={close}>
         <ModalHeader>Changelog</ModalHeader>
         <ModalContent>

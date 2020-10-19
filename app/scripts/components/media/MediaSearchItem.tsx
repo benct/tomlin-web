@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import { FC, InvalidEvent, memo, ReactElement, useState } from 'react';
 import ISO6391 from 'iso-639-1';
 
 import { MediaSearchItemEntry } from '../../interfaces';
@@ -14,7 +14,7 @@ interface MediaSearchItemProps {
 
 const defaultPoster = require('../../../images/media/poster_small.png');
 
-export const MediaSearchItem: React.FC<MediaSearchItemProps> = memo((props) => {
+export const MediaSearchItem: FC<MediaSearchItemProps> = memo((props) => {
     const [overview, setOverview] = useState<boolean>(false);
 
     const title = props.data.title ?? props.data.name;
@@ -26,7 +26,7 @@ export const MediaSearchItem: React.FC<MediaSearchItemProps> = memo((props) => {
 
     const toggleOverview = (): void => setOverview(!overview);
 
-    const renderButton = (className?: string): React.ReactElement => (
+    const renderButton = (className?: string): ReactElement => (
         <button
             className={`input input-small ${className ?? ''}`}
             onClick={props.stored ? props.remove : props.add}
@@ -41,7 +41,7 @@ export const MediaSearchItem: React.FC<MediaSearchItemProps> = memo((props) => {
                 <img
                     src={props.data.poster_path ? `https://image.tmdb.org/t/p/w200${props.data.poster_path}` : defaultPoster}
                     alt={props.data.poster_path ? `Poster: ${title}` : 'No poster'}
-                    onError={(event: React.InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
+                    onError={(event: InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
                     onClick={toggleOverview}
                 />
             </div>

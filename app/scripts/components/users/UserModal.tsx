@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
@@ -13,7 +13,7 @@ interface UserModalProps {
     user?: User;
 }
 
-export const UserModal: React.FC<UserModalProps> = ({ user, close }) => {
+export const UserModal: FC<UserModalProps> = ({ user, close }) => {
     const name = useRef<HTMLInputElement>(null);
     const email = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);

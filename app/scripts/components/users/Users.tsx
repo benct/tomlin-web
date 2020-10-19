@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiAccountPlusOutline } from '@mdi/js';
@@ -16,7 +16,7 @@ interface UsersState {
     isLoggedIn: boolean;
 }
 
-export const Users: React.FC = () => {
+export const Users: FC = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [selected, setSelected] = useState<User>();
 

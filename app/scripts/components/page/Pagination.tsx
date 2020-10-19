@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Icon } from '@mdi/react';
@@ -17,13 +17,13 @@ interface PaginationImage {
     rotate?: boolean;
 }
 
-export const Pagination: React.FC<PaginationProps> = ({ path, postfix }) => {
+export const Pagination: FC<PaginationProps> = ({ path, postfix }) => {
     const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = useSelector<
         DefaultState,
         PaginationState
     >((state) => ({ ...state.pagination }));
 
-    const renderImage = (image: PaginationImage): React.ReactElement => (
+    const renderImage = (image: PaginationImage): ReactElement => (
         <Icon
             path={image.double ? mdiChevronDoubleRight : mdiChevronRight}
             rotate={image.rotate ? 180 : 0}
@@ -33,7 +33,7 @@ export const Pagination: React.FC<PaginationProps> = ({ path, postfix }) => {
         />
     );
 
-    const renderPage = (page: number, image?: PaginationImage): React.ReactElement => (
+    const renderPage = (page: number, image?: PaginationImage): ReactElement => (
         <Link to={path + page + (postfix ? `/${postfix}` : '')} className="button-icon phm" key={`pagination${page}`}>
             {image ? renderImage(image) : <span>{page}</span>}
         </Link>
@@ -47,9 +47,9 @@ export const Pagination: React.FC<PaginationProps> = ({ path, postfix }) => {
                 <span className="valign-middle phm">Page {current}</span>
             </span>
             <span className="hide-lt480 phm">
-                {previousPages.map((page: number): React.ReactElement => renderPage(page))}
+                {previousPages.map((page: number): ReactElement => renderPage(page))}
                 <span className="valign-middle phm strong">{current}</span>
-                {consecutivePages.map((page: number): React.ReactElement => renderPage(page))}
+                {consecutivePages.map((page: number): ReactElement => renderPage(page))}
             </span>
             {consecutivePages.length ? renderPage(next, { title: 'Next page' }) : null}
             {last ? renderPage(total, { title: 'Last page', double: true }) : null}

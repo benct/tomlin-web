@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode, Suspense } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import { Loading } from '../page/Loading';
@@ -10,7 +10,7 @@ interface SuspendedRouteProps {
 const isLoggedIn = (): boolean => !!localStorage.getItem('token');
 
 export class SuspendedRoute extends Route<SuspendedRouteProps & RouteProps> {
-    render(): React.ReactNode {
+    render(): ReactNode {
         if (this.props.authentication && !isLoggedIn()) {
             return (
                 <Redirect
@@ -22,6 +22,6 @@ export class SuspendedRoute extends Route<SuspendedRouteProps & RouteProps> {
             );
         }
 
-        return <React.Suspense fallback={<Loading isLoading className="wrapper min-height" />}>{super.render()}</React.Suspense>;
+        return <Suspense fallback={<Loading isLoading className="wrapper min-height" />}>{super.render()}</Suspense>;
     }
 }

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { FC, FormEvent, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { Redirect } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { login } from '../actions/auth';
 
 import { Loading } from './page/Loading';
 
-export const Login: React.FC = () => {
+export const Login: FC = () => {
     const dispatch = useDispatch();
     const { loading, redirect, error } = useSelector<DefaultState, AuthState>((state) => ({ ...state.auth }));
 
@@ -19,7 +19,7 @@ export const Login: React.FC = () => {
 
     const { from } = location.state ?? { from: { pathname: '/' } };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
 
         dispatch(login(username.current?.value, password.current?.value));

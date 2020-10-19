@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiBriefcaseEditOutline, mdiChevronDown, mdiChevronUp } from '@mdi/js';
 
@@ -10,7 +10,7 @@ interface FlightGroupProps {
     edit: (flight: Flight) => void;
 }
 
-export const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }) => {
+export const FlightsGroup: FC<FlightGroupProps> = ({ flights, edit }) => {
     const [showFlights, setShowFlights] = useState<boolean>(false);
 
     const isSimple =
@@ -40,7 +40,7 @@ export const FlightsGroup: React.FC<FlightGroupProps> = ({ flights, edit }) => {
             </tr>
             {showFlights &&
                 flights.map(
-                    (flight: Flight): React.ReactElement => (
+                    (flight: Flight): ReactElement => (
                         <tr key={`flight${flight.id}`} className="admin-flight-group">
                             <td className="no-wrap">{formatDate(flight.departure)}</td>
                             <td>

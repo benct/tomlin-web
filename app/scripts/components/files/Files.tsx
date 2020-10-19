@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { ChangeEvent, FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '@mdi/react';
 import {
@@ -20,7 +20,7 @@ import '../../../styles/files.css';
 
 const PARENT_DIR = '..';
 
-export const Files: React.FC = () => {
+export const Files: FC = () => {
     const fileInput = useRef<HTMLInputElement>(null);
     const fileLabel = useRef<HTMLLabelElement>(null);
 
@@ -51,7 +51,7 @@ export const Files: React.FC = () => {
         }
     };
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
         if (fileLabel.current) {
             if (fileInput.current?.files && fileInput.current.files.length > 1) {
                 fileLabel.current.innerHTML = `${fileInput.current.files.length} files selected`;

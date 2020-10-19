@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { FC, memo } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiMapMarkerOutline } from '@mdi/js';
 
@@ -6,7 +6,7 @@ import { GitHub } from './GitHub';
 
 import '../../../styles/about.css';
 
-export const About: React.FC = memo(() => (
+export const About: FC = memo(() => (
     <>
         <div className="wrapper text">
             <div className="cv-header color-primary">Ben Christopher Tomlin</div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
 
@@ -8,7 +8,7 @@ interface LoadingProps {
     className?: string;
 }
 
-export const Loading: React.FC<LoadingProps> = ({ isLoading, text, className, children }) =>
+export const Loading: FC<LoadingProps> = ({ isLoading, text, className, children }) =>
     isLoading ? (
         <div className={`text color-bg ${className ?? ''}`}>
             <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiInformationOutline, mdiLoading } from '@mdi/js';
@@ -8,7 +8,7 @@ import { getHomeState } from '../../actions/base';
 
 import { Time } from './Time';
 
-export const State: React.FC = () => {
+export const State: FC = () => {
     const dispatch = useDispatch();
     const state = useSelector<DefaultState, HomeState & Pick<DefaultState, 'loading'>>((state) => ({
         ...state.home,

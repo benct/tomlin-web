@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react';
+import { FC, memo, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
@@ -13,7 +13,7 @@ interface NotesModalProps {
     note: Note;
 }
 
-export const NotesModal: React.FC<NotesModalProps> = memo(({ note, close }) => {
+export const NotesModal: FC<NotesModalProps> = memo(({ note, close }) => {
     const title = useRef<HTMLInputElement>(null);
     const content = useRef<HTMLTextAreaElement>(null);
     const dispatch = useDispatch();

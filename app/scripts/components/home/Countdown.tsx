@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import { FC, memo, ReactElement, useEffect, useRef, useState } from 'react';
 
 interface CountdownProps {
     title: string;
@@ -6,7 +6,7 @@ interface CountdownProps {
     icon?: string;
 }
 
-export const Countdown: React.FC<CountdownProps> = memo(({ title, timestamp, icon }) => {
+export const Countdown: FC<CountdownProps> = memo(({ title, timestamp, icon }) => {
     const interval = useRef<number>(0);
     const countdownTarget = useRef<Date | null>(null);
 
@@ -39,7 +39,7 @@ export const Countdown: React.FC<CountdownProps> = memo(({ title, timestamp, ico
         };
     }, [timestamp]);
 
-    const renderTimeUnit = (time: number, unit: string): React.ReactElement => (
+    const renderTimeUnit = (time: number, unit: string): ReactElement => (
         <li className="countdown-time-wrap">
             <span className="countdown-time">{time}</span>
             <p className="countdown-unit">{unit}</p>

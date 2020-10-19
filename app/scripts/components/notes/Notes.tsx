@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiFileDocumentMultipleOutline } from '@mdi/js';
@@ -15,7 +15,7 @@ interface NotesState {
     isLoggedIn: boolean;
 }
 
-export const Notes: React.FC = () => {
+export const Notes: FC = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [selected, setSelected] = useState<Note>();
 
@@ -47,7 +47,7 @@ export const Notes: React.FC = () => {
             <Loading isLoading={loading} text="Loading notes...">
                 {notes.length ? (
                     notes.map(
-                        (note: Note): React.ReactElement => (
+                        (note: Note): ReactElement => (
                             <div className="admin-logs admin-note" key={`note${note.id}`}>
                                 <code>
                                     {note.updated}

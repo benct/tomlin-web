@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, Fragment, ReactElement, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { MediaEpisodeEntry, MediaSeasonEntry } from '../../interfaces';
@@ -12,7 +12,7 @@ interface MediaSeasonProps {
     data: MediaSeasonEntry;
 }
 
-export const MediaSeason: React.FC<MediaSeasonProps> = ({ data }) => {
+export const MediaSeason: FC<MediaSeasonProps> = ({ data }) => {
     const [showEpisodes, setShowEpisodes] = useState<boolean>(false);
     const [title, setTitle] = useState<string>();
     const [overview, setOverview] = useState<string>();
@@ -28,10 +28,10 @@ export const MediaSeason: React.FC<MediaSeasonProps> = ({ data }) => {
         setOverview(overview);
     };
 
-    const renderEpisodes = (): React.ReactElement[] =>
+    const renderEpisodes = (): ReactElement[] =>
         data.episodes.map(
-            (episode): React.ReactElement => (
-                <React.Fragment key={`episode${episode.id}`}>
+            (episode): ReactElement => (
+                <Fragment key={`episode${episode.id}`}>
                     <span className="text-small pll">{episode.episode}</span>
                     <button
                         className="button-blank text-small text-left truncate"
@@ -47,7 +47,7 @@ export const MediaSeason: React.FC<MediaSeasonProps> = ({ data }) => {
                         size="22px"
                         className="mrm"
                     />
-                </React.Fragment>
+                </Fragment>
             )
         );
 

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import { FC, InvalidEvent, memo, ReactElement, ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@mdi/react';
 import { mdiApproximatelyEqualBox, mdiCloseCircleOutline, mdiDeleteOutline, mdiRefresh, mdiThumbUpOutline } from '@mdi/js';
@@ -20,7 +20,7 @@ interface MediaModalProps {
     setFavourite: () => void;
 }
 
-export const MediaModal: React.FC<MediaModalProps> = memo((props) => {
+export const MediaModal: FC<MediaModalProps> = memo((props) => {
     const [showSeasons, setShowSeasons] = useState<boolean>(false);
 
     useEffect(() => {
@@ -40,20 +40,18 @@ export const MediaModal: React.FC<MediaModalProps> = memo((props) => {
             0
         );
 
-    const renderPoster = (poster: string, title: string): React.ReactElement =>
+    const renderPoster = (poster: string, title: string): ReactElement =>
         poster ? (
             <img
                 src={`https://cdn.tomlin.no/images/media${poster}`}
                 alt={`Poster: ${title}`}
-                onError={(event: React.InvalidEvent<HTMLImageElement>): void =>
-                    (event.target.src = require('../../../images/media/poster.png'))
-                }
+                onError={(event: InvalidEvent<HTMLImageElement>): void => (event.target.src = require('../../../images/media/poster.png'))}
             />
         ) : (
             <span>No poster</span>
         );
 
-    const renderRating = (rating?: number, votes?: number): React.ReactElement =>
+    const renderRating = (rating?: number, votes?: number): ReactElement =>
         rating ? (
             <span>
                 {rating} <span className="text-smaller pls">({votes} votes)</span>
@@ -62,7 +60,7 @@ export const MediaModal: React.FC<MediaModalProps> = memo((props) => {
             <span>No rating</span>
         );
 
-    const renderRuntime = (runtime: number | null): React.ReactNode =>
+    const renderRuntime = (runtime: number | null): ReactNode =>
         runtime ? (
             <>
                 <span>Runtime</span>
@@ -70,14 +68,14 @@ export const MediaModal: React.FC<MediaModalProps> = memo((props) => {
             </>
         ) : null;
 
-    const renderCost = (key: string, value?: number): React.ReactElement => (
+    const renderCost = (key: string, value?: number): ReactElement => (
         <>
             <span>{key}</span>
             <span>{value ? `$ ${formatThousands(value)}` : ' - '}</span>
         </>
     );
 
-    const renderOptional = (key: string, value?: string, clazz?: string): React.ReactNode =>
+    const renderOptional = (key: string, value?: string, clazz?: string): ReactNode =>
         value ? (
             <>
                 <span>{key}</span>
@@ -85,7 +83,7 @@ export const MediaModal: React.FC<MediaModalProps> = memo((props) => {
             </>
         ) : null;
 
-    const renderLinks = (id: number, imdb: string | null): React.ReactElement => (
+    const renderLinks = (id: number, imdb: string | null): ReactElement => (
         <span>
             <a
                 href={`https://www.themoviedb.org/${props.type}/${id}`}
@@ -114,7 +112,7 @@ export const MediaModal: React.FC<MediaModalProps> = memo((props) => {
         </span>
     );
 
-    const renderSeasonButton = (): React.ReactNode =>
+    const renderSeasonButton = (): ReactNode =>
         props.type === 'tv' ? (
             <span>
                 <button className="input input-small" onClick={toggleSeasons}>
@@ -125,20 +123,20 @@ export const MediaModal: React.FC<MediaModalProps> = memo((props) => {
             </span>
         ) : null;
 
-    const renderSeasons = (): React.ReactNode =>
+    const renderSeasons = (): ReactNode =>
         props.data.seasons ? (
             <div className="media-overlay-seasons">
                 {props.data.seasons
                     .filter((s: MediaSeasonEntry): boolean => s.season > 0)
                     .map(
-                        (season: MediaSeasonEntry): React.ReactNode => (
+                        (season: MediaSeasonEntry): ReactNode => (
                             <MediaSeason key={`season${season.id}`} data={season} />
                         )
                     )}
             </div>
         ) : null;
 
-    const renderContent = (): React.ReactElement => (
+    const renderContent = (): ReactElement => (
         <div className="media-overlay-overview">
             <span>Original</span>
             <span>{props.data.original_title ?? props.data.title}</span>

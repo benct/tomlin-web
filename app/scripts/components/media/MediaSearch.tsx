@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { ChangeEvent, FC, ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -26,7 +26,7 @@ export interface MediaSearchRouteProps {
     page?: string;
 }
 
-export const MediaSearch: React.FC = () => {
+export const MediaSearch: FC = () => {
     const dispatch = useDispatch();
     const routeProps = useParams<MediaSearchRouteProps>();
     const props = useSelector<DefaultState, MediaSearchState>((state) => ({
@@ -52,13 +52,13 @@ export const MediaSearch: React.FC = () => {
 
     const search = debounce((query: string) => dispatch(searchTmdbMedia(query)), 500);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         if (event.target.value?.length > 1) {
             search(event.target.value);
         }
     };
 
-    const renderItem = (data: MediaSearchItemEntry): React.ReactNode => {
+    const renderItem = (data: MediaSearchItemEntry): ReactNode => {
         const existing = props.existing[data.media_type ?? routeProps.type] ?? [];
         return (
             <MediaSearchItem

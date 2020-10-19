@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '@mdi/react';
 import {
@@ -19,7 +19,7 @@ import { getGitHubData } from '../../actions/base';
 
 import { Loading } from '../page/Loading';
 
-export const GitHub: React.FC = () => {
+export const GitHub: FC = () => {
     const dispatch = useDispatch();
     const state = useSelector<DefaultState, GitHubState & Pick<DefaultState, 'loading'>>((state) => ({
         ...state.github,
@@ -52,7 +52,7 @@ export const GitHub: React.FC = () => {
         }
     };
 
-    const renderRepo = (repo: GitHubRepo): React.ReactElement => (
+    const renderRepo = (repo: GitHubRepo): ReactElement => (
         <div className="github-repo mbm" key={repo.name}>
             <a href={repo.htmlUrl} target="_blank" rel="noopener noreferrer" className="truncate">
                 <Icon path={getLanguageIcon(repo.language)} size="22px" title={repo.language} className="text-icon" />

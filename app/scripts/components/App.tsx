@@ -1,4 +1,4 @@
-import React, { lazy, useEffect } from 'react';
+import { FC, lazy, StrictMode, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ const Finn = lazy(() => import('./finn/Finn'));
 const Media = lazy(() => import('./media/Media'));
 const Admin = lazy(() => import('./admin/Admin'));
 
-export const App: React.FC = () => {
+export const App: FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export const App: React.FC = () => {
 
     return (
         <Router>
-            <React.StrictMode>
+            <StrictMode>
                 <Page>
                     <Switch>
                         <Route path="/" exact>
@@ -63,7 +63,7 @@ export const App: React.FC = () => {
                         </Route>
                     </Switch>
                 </Page>
-            </React.StrictMode>
+            </StrictMode>
         </Router>
     );
 };

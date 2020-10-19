@@ -1,4 +1,4 @@
-import React, { lazy, memo } from 'react';
+import { FC, lazy, memo } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { SuspendedRoute } from '../route/Suspended';
@@ -18,7 +18,7 @@ const menu: NavigationItem[] = [
     { text: 'Search', path: '/media/search' },
 ];
 
-export const Media: React.FC = () => (
+export const Media: FC = () => (
     <>
         <Navigation type="sub" data={menu} />
         <div className="wrapper min-height ptm">

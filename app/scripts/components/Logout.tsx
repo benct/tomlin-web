@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Icon } from '@mdi/react';
@@ -6,7 +6,7 @@ import { mdiExitRun } from '@mdi/js';
 
 import { logout } from '../actions/auth';
 
-export const Logout: React.FC = () => {
+export const Logout: FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 

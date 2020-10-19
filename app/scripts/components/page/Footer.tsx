@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import { FC, memo } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiAt, mdiFacebook, mdiGithub, mdiInstagram, mdiLinkedin } from '@mdi/js';
 
-export const Footer: React.FC = memo(() => (
+export const Footer: FC = memo(() => (
     <footer className="color-bg">
         <div className="social text-center">
             <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">

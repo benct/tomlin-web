@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { ChangeEvent, FC, ReactElement, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiAirplane, mdiBriefcaseEditOutline } from '@mdi/js';
@@ -20,7 +20,7 @@ interface FlightState {
 
 const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 
-export const Flights: React.FC = () => {
+export const Flights: FC = () => {
     const [showGrouped, setShowGrouped] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [invalid, setInvalid] = useState<boolean>(false);
@@ -39,7 +39,7 @@ export const Flights: React.FC = () => {
         }
     }, [isLoggedIn]);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
         const { value, name } = event.target;
         const overrideArrival = name === 'departure' && !form.arrival ? { arrival: value } : {};
 
@@ -84,7 +84,7 @@ export const Flights: React.FC = () => {
             return !value || value.trim() === '';
         }).length === 0;
 
-    const handleSubmit = (event: React.SyntheticEvent): void => {
+    const handleSubmit = (event: SyntheticEvent): void => {
         event.preventDefault();
 
         if (validateForm(form)) {
@@ -95,7 +95,7 @@ export const Flights: React.FC = () => {
         }
     };
 
-    const renderGrouped = (): React.ReactElement => (
+    const renderGrouped = (): ReactElement => (
         <table className="table-striped">
             <thead>
                 <tr className="text-smaller">
@@ -111,7 +111,7 @@ export const Flights: React.FC = () => {
             </thead>
             <tbody>
                 {flights.map(
-                    (group, idx): React.ReactElement => (
+                    (group, idx): ReactElement => (
                         <FlightsGroup flights={group} edit={handleEdit} key={`flightGroup${idx}`} />
                     )
                 )}
@@ -119,7 +119,7 @@ export const Flights: React.FC = () => {
         </table>
     );
 
-    const renderAll = (): React.ReactElement => (
+    const renderAll = (): ReactElement => (
         <table className="table-striped">
             <thead>
                 <tr className="text-smaller">
@@ -139,7 +139,7 @@ export const Flights: React.FC = () => {
             </thead>
             <tbody>
                 {flights.flat().map(
-                    (flight: Flight): React.ReactElement => (
+                    (flight: Flight): ReactElement => (
                         <tr key={`flight${flight.id}`}>
                             <td className="no-wrap">{formatDate(flight.departure)}</td>
                             <td>{flight.origin}</td>

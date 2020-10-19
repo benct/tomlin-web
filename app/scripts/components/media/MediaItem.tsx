@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { FC, InvalidEvent, memo, ReactElement, ReactNode } from 'react';
 
 import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting';
 import { MediaItemEntry, MediaType } from '../../interfaces';
@@ -15,8 +15,8 @@ interface MediaItemProps {
     showItem: () => void;
 }
 
-export const MediaItem: React.FC<MediaItemProps> = memo((props) => {
-    const renderRating = (): React.ReactElement => (
+export const MediaItem: FC<MediaItemProps> = memo((props) => {
+    const renderRating = (): ReactElement => (
         <>
             &nbsp;|&nbsp;
             <span className="strong">{props.data.rating}</span>
@@ -24,7 +24,7 @@ export const MediaItem: React.FC<MediaItemProps> = memo((props) => {
         </>
     );
 
-    const renderSeasons = (): React.ReactNode => {
+    const renderSeasons = (): ReactNode => {
         const seen = props.data.seen_episodes ?? 0;
 
         return props.data.number_of_episodes ? (
@@ -45,7 +45,7 @@ export const MediaItem: React.FC<MediaItemProps> = memo((props) => {
                     className="pointer"
                     src={props.data.poster ? `https://cdn.tomlin.no/images/media${props.data.poster}` : defaultPoster}
                     alt={props.data.poster ? `Poster: ${props.data.title}` : 'No poster'}
-                    onError={(event: React.InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
+                    onError={(event: InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
                 />
             </div>
             <div className="media-title truncate color-primary strong" onClick={props.showItem} role="button" tabIndex={0}>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -15,7 +15,7 @@ interface VisitState {
     isLoggedIn: boolean;
 }
 
-export const Visits: React.FC = () => {
+export const Visits: FC = () => {
     const routeParams = useParams<{ page?: string }>();
     const page = Number(routeParams.page ?? 1);
 
@@ -37,7 +37,7 @@ export const Visits: React.FC = () => {
         };
     }, [page, isLoggedIn]);
 
-    const renderVisit = (visit: Visit, idx: number): React.ReactElement => (
+    const renderVisit = (visit: Visit, idx: number): ReactElement => (
         <div className="admin-logs" key={`visits${idx}`}>
             <code>
                 {visit.timestamp}

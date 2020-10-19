@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent, FC, SyntheticEvent } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
 
@@ -10,15 +10,15 @@ import { FlightsInput } from './FlightsInput';
 interface FlightModalProps {
     form: Flight;
     invalid: boolean;
-    save: (event: React.SyntheticEvent) => void;
+    save: (event: SyntheticEvent) => void;
     swap: () => void;
-    change: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+    change: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
     copy: (flight: Flight) => void;
     remove: (id?: string) => void;
     close: () => void;
 }
 
-export const FlightsModal: React.FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }) => (
+export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }) => (
     <Modal close={close}>
         <ModalHeader>{`${form.id ? 'Edit' : 'New'} Flight`}</ModalHeader>
         <ModalContent>

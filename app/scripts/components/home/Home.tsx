@@ -1,4 +1,4 @@
-import React, { lazy, memo, useState } from 'react';
+import { FC, lazy, memo, Suspense, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ import '../../../styles/home.css';
 
 const Changelog = lazy(() => import('./Changelog'));
 
-export const Home: React.FC = memo(() => {
+export const Home: FC = memo(() => {
     const [showChangelog, setShowChangelog] = useState(false);
 
     const dispatch = useDispatch();
@@ -50,9 +50,9 @@ export const Home: React.FC = memo(() => {
             <hr />
             <Quote />
             {showChangelog && (
-                <React.Suspense fallback={null}>
+                <Suspense fallback={null}>
                     <Changelog close={() => setShowChangelog(false)} />
-                </React.Suspense>
+                </Suspense>
             )}
         </>
     );

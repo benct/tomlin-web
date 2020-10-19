@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 
@@ -9,7 +9,7 @@ import { Footer } from './Footer';
 
 const simplePages = ['/finn'];
 
-export const Page: React.FC = ({ children }) => {
+export const Page: FC = ({ children }) => {
     const location = useLocation();
     const state = useSelector<DefaultState, Pick<DefaultState, 'toast' | 'theme' | 'loading'>>((state) => ({
         toast: state.toast,

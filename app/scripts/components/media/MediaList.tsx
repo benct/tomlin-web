@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { ChangeEvent, FC, KeyboardEvent, ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -25,7 +25,7 @@ interface MediaListRouteProps {
     page?: string;
 }
 
-export const MediaList: React.FC = () => {
+export const MediaList: FC = () => {
     const dispatch = useDispatch();
     const routeProps = useParams<MediaListRouteProps>();
     const props = useSelector<DefaultState, MediaListState>((state) => ({
@@ -53,14 +53,14 @@ export const MediaList: React.FC = () => {
         loadMedia();
     }, [routeProps.type, routeProps.page]);
 
-    const handleKey = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    const handleKey = (event: KeyboardEvent<HTMLInputElement>): void => {
         if ((event.keyCode === 13 || event.key === 'Enter') && event.target) {
             const target = event.target as HTMLInputElement;
             loadMedia(target.value.length ? target.value : undefined);
         }
     };
 
-    const handleSort = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    const handleSort = (event: ChangeEvent<HTMLSelectElement>): void => {
         if (props.sort !== event.target.value) {
             dispatch(mediaActions.setSort(event.target.value));
             dispatch(
@@ -73,7 +73,7 @@ export const MediaList: React.FC = () => {
         }
     };
 
-    const renderRow = (item: MediaItemEntry): React.ReactElement => (
+    const renderRow = (item: MediaItemEntry): ReactElement => (
         <MediaItem
             key={`mediaItem${item.id}`}
             data={item}
@@ -86,7 +86,7 @@ export const MediaList: React.FC = () => {
         />
     );
 
-    const renderModal = (item: MediaItemEntry): React.ReactElement => (
+    const renderModal = (item: MediaItemEntry): ReactElement => (
         <MediaModal
             data={item}
             type={item.type ?? routeProps.type}
@@ -100,7 +100,7 @@ export const MediaList: React.FC = () => {
         />
     );
 
-    const renderWatchlist = (data: MediaItemEntry[]): React.ReactElement => (
+    const renderWatchlist = (data: MediaItemEntry[]): ReactElement => (
         <Loading isLoading={props.loading} text="Loading media...">
             <div>TV-Shows:</div>
             <div className="clear-fix text-center">{data.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(renderRow)}</div>
@@ -111,12 +111,12 @@ export const MediaList: React.FC = () => {
         </Loading>
     );
 
-    const renderList = (data: MediaItemEntry[]): React.ReactElement => (
+    const renderList = (data: MediaItemEntry[]): ReactElement => (
         <>
             <div className="text-center mbl">
                 <select
                     className="input input-small media-input mrs"
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>): void => e.target.blur()}
+                    onChange={(e: ChangeEvent<HTMLSelectElement>): void => e.target.blur()}
                     onBlur={handleSort}
                     defaultValue={props.sort}>
                     <option value="rating-desc">Rating (high-low)</option>

@@ -1,11 +1,11 @@
-import React, { memo } from 'react';
+import { FC, memo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import actions from '../../actions/base';
 
 import { Navigation } from './Navigation';
 
-export const Header: React.FC = memo(() => {
+export const Header: FC = memo(() => {
     const dispatch = useDispatch();
     return (
         <header>

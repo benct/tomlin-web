@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { FC, ReactElement, SyntheticEvent, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiDelete } from '@mdi/js';
@@ -10,7 +10,7 @@ import { deleteFinnId, getFinnData, storeFinnId } from '../../actions/base';
 
 import { Loading } from '../page/Loading';
 
-export const Finn: React.FC = () => {
+export const Finn: FC = () => {
     const idInput = useRef<HTMLInputElement>(null);
 
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const Finn: React.FC = () => {
         }
     }, []);
 
-    const handleSubmit = (event: React.SyntheticEvent): void => {
+    const handleSubmit = (event: SyntheticEvent): void => {
         event.preventDefault();
 
         if (idInput.current && idInput.current.value.length && Number.isFinite(+idInput.current.value)) {
@@ -39,7 +39,7 @@ export const Finn: React.FC = () => {
         }
     };
 
-    const renderEntry = (id: string): React.ReactElement => (
+    const renderEntry = (id: string): ReactElement => (
         <table className="table-striped mbm" key={`finn${id}`}>
             <thead>
                 <tr className="text-smaller">
@@ -57,7 +57,7 @@ export const Finn: React.FC = () => {
             </thead>
             <tbody>
                 {data[id].map(
-                    (entry: FinnEntry): React.ReactElement => (
+                    (entry: FinnEntry): ReactElement => (
                         <tr key={`finn${id}${entry.timestamp}`}>
                             <td className="no-wrap">{formatDate(entry.timestamp, 'MMM d - HH:mm')}</td>
                             <td className="no-wrap">{entry.price}</td>

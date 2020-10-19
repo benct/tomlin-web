@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -15,7 +15,7 @@ interface LogState {
     isLoggedIn: boolean;
 }
 
-export const Logs: React.FC = () => {
+export const Logs: FC = () => {
     const routeParams = useParams<{ page?: string }>();
     const page = Number(routeParams.page ?? 1);
 
@@ -37,7 +37,7 @@ export const Logs: React.FC = () => {
         };
     }, [page, isLoggedIn]);
 
-    const renderLog = (log: Log, idx: number): React.ReactElement => (
+    const renderLog = (log: Log, idx: number): ReactElement => (
         <div className="admin-logs" key={`logs${idx}`}>
             <code onClick={() => dispatch(deleteLog(log.id))} role="button" tabIndex={0}>
                 {log.timestamp}

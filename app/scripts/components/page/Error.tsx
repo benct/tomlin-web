@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import { FC, memo, useEffect } from 'react';
 
 import '../../../styles/error.css';
 
@@ -26,7 +26,7 @@ const error: { [key: number]: ErrorType } = {
     },
 };
 
-export const Error: React.FC<ErrorProps> = memo(({ code }) => {
+export const Error: FC<ErrorProps> = memo(({ code }) => {
     const title: string = document.title;
 
     useEffect(() => {

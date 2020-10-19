@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { FC, Fragment, ReactElement, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DefaultState, Hass, Settings } from '../../interfaces';
@@ -15,7 +15,7 @@ interface ControlState {
     isLoggedIn: boolean;
 }
 
-export const Control: React.FC = () => {
+export const Control: FC = () => {
     const hassCount = useRef<HTMLSelectElement>(null);
     const updateMovieCount = useRef<HTMLSelectElement>(null);
     const updateTvCount = useRef<HTMLSelectElement>(null);
@@ -44,9 +44,9 @@ export const Control: React.FC = () => {
     const getValue = (field: HTMLSelectElement | HTMLInputElement | null): string | null =>
         field && field.value !== 'none' ? field.value : null;
 
-    const renderOptions = (values: number[]): React.ReactElement[] =>
+    const renderOptions = (values: number[]): ReactElement[] =>
         values.map(
-            (opt, idx): React.ReactElement => (
+            (opt, idx): ReactElement => (
                 <option key={`ctrlOpt${idx}`} value={opt}>
                     {opt}
                 </option>
@@ -158,11 +158,11 @@ export const Control: React.FC = () => {
             </div>
             <div className="admin-list text-small mtl">
                 {hass.map((state) => (
-                    <React.Fragment key={`hass${state.id}`}>
+                    <Fragment key={`hass${state.id}`}>
                         <span className="truncate">{state.sensor}</span>
                         <span className="strong">{state.value}</span>
                         <span>{state.updated}</span>
-                    </React.Fragment>
+                    </Fragment>
                 ))}
             </div>
         </>

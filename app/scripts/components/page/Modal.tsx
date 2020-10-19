@@ -1,7 +1,7 @@
-import React, { memo, useEffect } from 'react';
+import { FC, memo, MouseEvent, ReactNode, useEffect } from 'react';
 
 interface ModalProps {
-    children: React.ReactNode;
+    children: ReactNode;
     close: () => void;
     className?: string;
 }
@@ -10,14 +10,14 @@ interface ModalElementProps {
     className?: string;
 }
 
-const ModalWrapper: React.FC<ModalProps> = ({ close, className, children }) => {
+const ModalWrapper: FC<ModalProps> = ({ close, className, children }) => {
     useEffect(() => {
         document.body.classList.add('no-scroll');
 
         return (): void => document.body.classList.remove('no-scroll');
     }, []);
 
-    const handleOutsideClick = (event: React.MouseEvent): void => {
+    const handleOutsideClick = (event: MouseEvent): void => {
         if (event.target === event.currentTarget) {
             close();
         }
@@ -30,12 +30,12 @@ const ModalWrapper: React.FC<ModalProps> = ({ close, className, children }) => {
     );
 };
 
-export const ModalHeader: React.FC<ModalElementProps> = ({ children, className }) => (
+export const ModalHeader: FC<ModalElementProps> = ({ children, className }) => (
     <div className={`overlay-modal-header color-primary strong ${className ?? ''}`}>{children}</div>
 );
 
-export const ModalContent: React.FC = ({ children }) => <div className="overlay-modal-content">{children}</div>;
+export const ModalContent: FC = ({ children }) => <div className="overlay-modal-content">{children}</div>;
 
-export const ModalFooter: React.FC = ({ children }) => <div className="overlay-modal-footer">{children}</div>;
+export const ModalFooter: FC = ({ children }) => <div className="overlay-modal-footer">{children}</div>;
 
 export const Modal = memo(ModalWrapper);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiRefresh } from '@mdi/js';
@@ -7,7 +7,7 @@ import { DefaultState, QuoteState } from '../../interfaces';
 
 import actions from '../../actions/base';
 
-export const Quote: React.FC = () => {
+export const Quote: FC = () => {
     const dispatch = useDispatch();
     const { text, author } = useSelector((state: DefaultState): QuoteState => ({ ...state.quote }));
 
