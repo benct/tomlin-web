@@ -11,8 +11,8 @@ module.exports = {
     entry: path.join(PATHS.app, 'scripts', 'index.tsx'),
     output: {
         path: PATHS.dist,
-        filename: 'assets/scripts/bundle.[hash].js',
-        chunkFilename: 'assets/scripts/[id].[hash].js',
+        filename: 'assets/scripts/bundle.[contenthash].js',
+        chunkFilename: 'assets/scripts/[id].[contenthash].js',
         publicPath: '/',
     },
     resolve: {
