@@ -12,7 +12,7 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "noImplicitAny": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node"
