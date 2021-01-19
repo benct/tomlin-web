@@ -21,7 +21,7 @@ export const Footer: FC = memo(() => (
                 <Icon path={mdiAt} size={1} title="E-mail" className="valign-middle" />
             </a>
         </div>
-        <div className="text color-offset no-select mtl">Ben Tomlin © 2020</div>
+        <div className="text color-offset no-select mtl">Ben Tomlin © 2021</div>
     </footer>
 ));
 
