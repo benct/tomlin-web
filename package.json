@@ -1,6 +1,6 @@
 {
   "name": "tomlin-web",
-  "version": "2.16.0",
+  "version": "2.17.0",
   "description": "tomlin.no website",
   "main": "index.tsx",
   "scripts": {
