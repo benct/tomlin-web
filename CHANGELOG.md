@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.17.0] - 2021-01-20 - *User Management*
+### Added
+- Support for proper user management
+- Switch-styled checkbox CSS
+
+### Changed
+- Use named instead of default imports and exports
+- Improve log management actions
+- Improve common modal overlay components
+- Simplify styling for buttons with icon
+- Replace logout image with MDI icon
+- Upgrade to React 17, Webpack 5, etc.
+
 ## [2.16.0] - 2020-09-30 - *More Hooks, Price Tracker*
 ### Added
 - Implement hooks everywhere possible
