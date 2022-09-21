@@ -25,26 +25,23 @@ const createListOfConsecutivePages = (totalPages: number, firstPage: number, cur
     return consecutivePages;
 };
 
-actions.set = makeAction(
-    'PAGINATION/SET',
-    (state, { payload }): PaginationState => {
-        const previousPages = createListOfPreviousPages(payload.total, payload.current);
-        const consecutivePages = createListOfConsecutivePages(payload.total, previousPages[0] ?? 1, payload.current);
+actions.set = makeAction('PAGINATION/SET', (state, { payload }): PaginationState => {
+    const previousPages = createListOfPreviousPages(payload.total, payload.current);
+    const consecutivePages = createListOfConsecutivePages(payload.total, previousPages[0] ?? 1, payload.current);
 
-        return {
-            ...state,
-            enabled: payload.total > 1,
-            first: payload.current > 2,
-            previousPages,
-            previous: payload.current - 1,
-            current: payload.current,
-            next: payload.current + 1,
-            consecutivePages,
-            last: payload.current < payload.total - 1,
-            total: payload.total,
-        };
-    }
-);
+    return {
+        ...state,
+        enabled: payload.total > 1,
+        first: payload.current > 2,
+        previousPages,
+        previous: payload.current - 1,
+        current: payload.current,
+        next: payload.current + 1,
+        consecutivePages,
+        last: payload.current < payload.total - 1,
+        total: payload.total,
+    };
+});
 
 actions.reset = makeAction('PAGINATION/RESET', (state) => ({ ...state, ...defaultState.pagination }));
 
