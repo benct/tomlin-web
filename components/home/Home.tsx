@@ -1,6 +1,6 @@
-import { FC, lazy, memo, Suspense, useState } from 'react';
+import { FC, lazy, Suspense, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { DefaultState } from '../../interfaces';
 import actions from '../../actions/base';
@@ -9,14 +9,14 @@ import { Countdown } from './Countdown';
 import { State } from './State';
 import { Quote } from './Quote';
 
-import '../../../styles/home.css';
+// import '../../styles/home.css';
 
 const Changelog = lazy(() => import('./Changelog'));
 
-export const Home: FC = memo(() => {
+export const Home: FC = () => {
+    const dispatch = useDispatch();
     const [showChangelog, setShowChangelog] = useState(false);
 
-    const dispatch = useDispatch();
     const { theme, settings } = useSelector<DefaultState, Pick<DefaultState, 'theme' | 'settings'>>((state) => ({
         theme: state.theme,
         settings: state.settings,
@@ -25,10 +25,10 @@ export const Home: FC = memo(() => {
     return (
         <>
             <div className="wrapper text">
-                <h2 className="home-title color-primary man mbm">Hello</h2>
+                <h2 className="home-title color-primary man mbm">Hello..</h2>
                 <p className="limit-width mvl">
                     This site is just a personal website project I doodle with from time to time. See more in the{' '}
-                    <Link to="/about">about section</Link> or follow the social media links at the bottom of the page.
+                    <Link href="/about">about section</Link> or follow the social media links at the bottom of the page.
                 </p>
                 <div className="home-info text-small">
                     Theme
@@ -56,6 +56,4 @@ export const Home: FC = memo(() => {
             )}
         </>
     );
-});
-
-Home.displayName = 'Home';
+};

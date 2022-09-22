@@ -23,7 +23,7 @@ export const Quote: FC = () => {
         <div className="wrapper text-center no-select" onClick={refreshQuote} role="button" tabIndex={0}>
             <div className="limit-width">{text}</div>
             <div>{author ? <i>- {author}</i> : null}</div>
-            <Icon path={mdiRefresh} size="16px" className="help-icon float-right" title="Show new quote" />
+            <Icon path={mdiRefresh} size="16px" className="help-icon float-right" title="Show new quote" id="refreshIcon" />
         </div>
     ) : null;
 };

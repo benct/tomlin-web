@@ -6,25 +6,6 @@ header {
     border-bottom: 1px solid #ddd;
 }
 
-header::after {
-    content: '';
-    opacity: 0.3;
-    background: #fff url(../images/header.jpg) no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -ms-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-}
-
 .site-title {
     color: white;
     text-align: center;

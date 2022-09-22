@@ -9,7 +9,7 @@ export const Time: FC<TimeProps> = ({ locale, timeZone }) => {
     const now = useCallback((): string => new Date().toLocaleTimeString(locale, { timeZone }), [locale, timeZone]);
 
     const interval = useRef<number>(0);
-    const [time, setTime] = useState<string>(now());
+    const [time, setTime] = useState<string>('00:00:00');
 
     useEffect(() => {
         const tick = (): void => setTime(now());

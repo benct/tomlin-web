@@ -6,7 +6,7 @@ import actions from '../actions/base';
 
 type ApiParams = Record<string, any>;
 
-const baseApiUrl = 'https://api.tomlin.no';
+const baseApiUrl = 'http://localhost:8081'; // 'https://api.tomlin.no';
 
 const delayedLoading = debounce((value: boolean): Action => store.dispatch(actions.setLoadingOverlay(value)), 150);
 
@@ -14,7 +14,7 @@ const checkStatus = (response: Response): Promise<Response> =>
     response.ok ? Promise.resolve(response) : Promise.reject(response.statusText);
 
 const authHeader = (): Record<string, string> => {
-    const token = localStorage.getItem('token');
+    const token = window.localStorage.getItem('token');
     return token ? { Authorization: `Basic ${token}` } : {};
 };
 

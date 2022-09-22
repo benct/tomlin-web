@@ -34,6 +34,7 @@ export const State: FC = () => {
                         size="16px"
                         description="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
                         className="help-icon"
+                        id="helpIcon"
                     />
                 </span>
             </div>
@@ -42,7 +43,7 @@ export const State: FC = () => {
                     {state.day !== undefined && (
                         <img
                             className="valign-middle prl"
-                            src={require(`../../../images/icon/${state.day ? 'day' : 'night'}.svg`)}
+                            src={`/images/icon/${state.day ? 'day' : 'night'}.svg`}
                             alt="Outside temperature"
                             width={54}
                             height={54}
@@ -61,13 +62,7 @@ export const State: FC = () => {
                     </span>
                 </div>
                 <div className="home-temp pts">
-                    <img
-                        className="valign-middle prl"
-                        src={require(`../../../images/icon/home.svg`)}
-                        alt="Indoor temperature"
-                        width={54}
-                        height={54}
-                    />
+                    <img className="valign-middle prl" src={`/images/icon/home.svg`} alt="Indoor temperature" width={54} height={54} />
                     <div data-tooltip="Indoor temperature" style={{ display: 'inline-block' }}>
                         <span className="home-value home-value-large">{state.livingroom ?? '-'}</span>
                         <span className="home-unit"> &deg;C</span>

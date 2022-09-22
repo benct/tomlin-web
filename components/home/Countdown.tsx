@@ -50,15 +50,7 @@ export const Countdown: FC<CountdownProps> = memo(({ title, timestamp, icon }) =
         <div className="wrapper text-center">
             <div className="countdown-title color-primary">
                 {title}{' '}
-                {icon ? (
-                    <img
-                        src={require(`../../../images/icon/${icon}.svg`)}
-                        alt={icon}
-                        width={26}
-                        height={26}
-                        style={{ verticalAlign: 'top' }}
-                    />
-                ) : null}
+                {icon ? <img src={`/images/icon/${icon}.svg`} alt={icon} width={26} height={26} style={{ verticalAlign: 'top' }} /> : null}
             </div>
             <ul className="countdown">
                 {renderTimeUnit(days, 'days')}

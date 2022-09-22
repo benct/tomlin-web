@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { DefaultState } from '../../interfaces';
 import actions from '../../actions/base';
@@ -31,7 +31,7 @@ export const Navigation: FC<NavigationProps> = ({ type, data }) => {
     }));
 
     const menu = [
-        { text: 'Home', path: '/', exact: true },
+        { text: 'Home', path: '/' },
         { text: 'About', path: '/about' },
         { text: 'Media', path: '/media' },
         { text: 'Admin', path: '/admin' },
@@ -42,9 +42,7 @@ export const Navigation: FC<NavigationProps> = ({ type, data }) => {
     const createLink = (item: NavigationItem, idx: number): ReactNode =>
         item.hide ? null : (
             <li key={`menuList${idx}`}>
-                <NavLink to={item.path} exact={!!item.exact}>
-                    {item.text}
-                </NavLink>
+                <Link href={item.path}>{item.text}</Link>
             </li>
         );
 

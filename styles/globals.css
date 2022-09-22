@@ -31,11 +31,16 @@ main {
     margin: 0 auto;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 a, a:visited {
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+    color: inherit;
     text-decoration: none;
     background-color: transparent;
     cursor: pointer;

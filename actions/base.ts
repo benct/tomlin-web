@@ -7,7 +7,13 @@ import { del, get, post } from '../util/api';
 
 const actions: ActionsObject<DefaultState> = {};
 
-actions.toggleTheme = makeAction('BASE/TOGGLE_THEME', (state) => ({ ...state, theme: state.theme === 'default' ? 'midnight' : 'default' }));
+actions.toggleTheme = makeAction('BASE/TOGGLE_THEME', (state, { payload }) => {
+    const theme = payload ?? (state.theme === 'default' ? 'midnight' : 'default');
+    document.body.classList.remove('default', 'midnight');
+    document.body.classList.add(theme);
+    window.localStorage.setItem('theme', theme);
+    return { ...state, theme };
+});
 
 actions.toggleMenu = makeAction('BASE/TOGGLE_MENU', (state) => ({ ...state, showMenu: !state.showMenu }));
 
