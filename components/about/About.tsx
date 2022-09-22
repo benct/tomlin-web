@@ -1,16 +1,15 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiMapMarkerOutline } from '@mdi/js';
 
 import { GitHub } from './GitHub';
 
-import '../../../styles/about.css';
+// import '../../../styles/about.css';
 
-export const About: FC = memo(() => (
+export const About: FC = () => (
     <>
         <div className="wrapper text">
             <div className="cv-header color-primary">Ben Christopher Tomlin</div>
-
             <div className="mbm">
                 <div>
                     Senior Developer at <a href="https://finn.no">FINN.no</a>
@@ -21,19 +20,18 @@ export const About: FC = memo(() => (
                     <span className="valign-middle mrm color-offset">Oslo, Norway</span>
                 </div>
             </div>
-
             <div>
                 <div className="cv-skills">
                     <div className="color-primary underline">Day-to-day</div>
                     <ul>
                         <li>Java / Kotlin</li>
                         <li>JavaScript / TypeScript</li>
-                        <li>React.js / JSX</li>
+                        <li>React / Redux</li>
                         <li>Node.js / NPM / Yarn</li>
                         <li>Webpack / Babel</li>
                         <li>HTML5 / CSS3 / JSON / XML</li>
                         <li>Spring / Spring Boot</li>
-                        <li>PostgreSQL / MySQL / Sybase</li>
+                        <li>PostgreSQL / MySQL</li>
                     </ul>
                 </div>
                 <div className="cv-skills">
@@ -43,7 +41,7 @@ export const About: FC = memo(() => (
                         <li>C / C++</li>
                         <li>Ruby</li>
                         <li>Python</li>
-                        <li>Apache / Tomcat</li>
+                        <li>Apache / Nginx</li>
                         <li>Docker / Kubernetes</li>
                     </ul>
                 </div>
@@ -52,6 +50,4 @@ export const About: FC = memo(() => (
         <hr />
         <GitHub />
     </>
-));
-
-About.displayName = 'About';
+);

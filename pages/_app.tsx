@@ -16,6 +16,8 @@ import '../styles/themes/midnight.css';
 
 // TODO modularize css
 import '../styles/home.css';
+import '../styles/about.css';
+import '../styles/media.css';
 
 const App = ({ Component, pageProps }: AppProps) => (
     <Provider store={store}>

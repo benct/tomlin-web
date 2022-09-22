@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { Home } from '../components/home/Home';
+import { About } from '../components/about/About';
 
-const HomePage: NextPage = () => <Home />;
+const AboutPage: NextPage = () => <About />;
 
 export const getStaticProps: GetStaticProps = async () => ({ props: { standalone: false } });
 
-export default HomePage;
+export default AboutPage;

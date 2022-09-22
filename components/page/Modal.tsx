@@ -1,4 +1,4 @@
-import { FC, memo, MouseEvent, ReactNode, useEffect } from 'react';
+import { FC, memo, MouseEvent, PropsWithChildren, ReactNode, useEffect } from 'react';
 
 interface ModalProps {
     children: ReactNode;
@@ -30,12 +30,12 @@ const ModalWrapper: FC<ModalProps> = ({ close, className, children }) => {
     );
 };
 
-export const ModalHeader: FC<ModalElementProps> = ({ children, className }) => (
+export const ModalHeader: FC<PropsWithChildren<ModalElementProps>> = ({ children, className }) => (
     <div className={`overlay-modal-header color-primary strong ${className ?? ''}`}>{children}</div>
 );
 
-export const ModalContent: FC = ({ children }) => <div className="overlay-modal-content">{children}</div>;
+export const ModalContent: FC<PropsWithChildren> = ({ children }) => <div className="overlay-modal-content">{children}</div>;
 
-export const ModalFooter: FC = ({ children }) => <div className="overlay-modal-footer">{children}</div>;
+export const ModalFooter: FC<PropsWithChildren> = ({ children }) => <div className="overlay-modal-footer">{children}</div>;
 
 export const Modal = memo(ModalWrapper);

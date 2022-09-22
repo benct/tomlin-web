@@ -23,7 +23,7 @@ export const Finn: FC = () => {
         if (!data.length) {
             dispatch(getFinnData());
         }
-    }, []);
+    }, [dispatch, data.length]);
 
     const handleSubmit = (event: SyntheticEvent): void => {
         event.preventDefault();
@@ -89,5 +89,3 @@ export const Finn: FC = () => {
         </div>
     );
 };
-
-export default Finn;

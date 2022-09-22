@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { Home } from '../components/home/Home';
+import { Finn } from '../components/finn/Finn';
 
-const HomePage: NextPage = () => <Home />;
+const FinnPage: NextPage = () => <Finn />;
 
 export const getStaticProps: GetStaticProps = async () => ({ props: { standalone: false } });
 
-export default HomePage;
+export default FinnPage;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 
 import actions from '../actions/base';
+import { validate } from '../actions/auth';
 
 import { DefaultState } from '../interfaces';
 import { Header } from './page/Header';
@@ -23,8 +24,8 @@ export const Layout: FC<LayoutProps> = ({ standalone, children }) => {
 
     useEffect(() => {
         dispatch(actions.toggleTheme(window.localStorage.getItem('theme')));
-        // dispatch(validate());
-    }, []);
+        dispatch(validate());
+    }, [dispatch]);
 
     return (
         <>

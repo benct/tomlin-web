@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
 
@@ -6,6 +6,7 @@ interface LoadingProps {
     isLoading: boolean;
     text?: string;
     className?: string;
+    children?: ReactNode;
 }
 
 export const Loading: FC<LoadingProps> = ({ isLoading, text, className, children }) =>

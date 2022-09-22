@@ -17,10 +17,8 @@ export const Home: FC = () => {
     const dispatch = useDispatch();
     const [showChangelog, setShowChangelog] = useState(false);
 
-    const { theme, settings } = useSelector<DefaultState, Pick<DefaultState, 'theme' | 'settings'>>((state) => ({
-        theme: state.theme,
-        settings: state.settings,
-    }));
+    const theme = useSelector<DefaultState, DefaultState['theme']>((state) => state.theme);
+    const settings = useSelector<DefaultState, DefaultState['settings']>((state) => state.settings);
 
     return (
         <>
