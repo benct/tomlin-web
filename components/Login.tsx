@@ -1,23 +1,26 @@
-import { FC, FormEvent, useRef } from 'react';
+import { FC, FormEvent, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
-import { Redirect } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 import { AuthState, DefaultState } from '../interfaces';
 import { login } from '../actions/auth';
 
 import { Loading } from './page/Loading';
 
-export const Login: FC = () => {
+export const Login: FC<{ redirectTo?: string }> = ({ redirectTo }) => {
     const dispatch = useDispatch();
-    const { loading, redirect, error } = useSelector<DefaultState, AuthState>((state) => ({ ...state.auth }));
+    const router = useRouter();
 
-    const location = useLocation<{ from: { pathname: string } }>();
+    const { loading, redirect, error } = useSelector<DefaultState, AuthState>((state) => state.auth);
 
     const username = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);
 
-    const { from } = location.state ?? { from: { pathname: '/' } };
+    useEffect(() => {
+        if (redirect) {
+            router.replace(redirectTo ?? '/');
+        }
+    }, [router, redirect, redirectTo]);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -25,11 +28,9 @@ export const Login: FC = () => {
         dispatch(login(username.current?.value, password.current?.value));
     };
 
-    return redirect ? (
-        <Redirect to={from} />
-    ) : (
+    return (
         <div className="wrapper text">
-            {location.state ? (
+            {redirectTo ? (
                 <div className="mbl">Sorry, you need to log in to view this page.</div>
             ) : (
                 <div className="mbl">Fill out the form below to log in.</div>
