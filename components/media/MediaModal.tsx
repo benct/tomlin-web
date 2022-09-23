@@ -1,5 +1,5 @@
 import { FC, InvalidEvent, memo, ReactElement, ReactNode, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import { mdiApproximatelyEqualBox, mdiCloseCircleOutline, mdiDeleteOutline, mdiRefresh, mdiThumbUpOutline } from '@mdi/js';
 
@@ -45,7 +45,9 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
             <img
                 src={`https://cdn.tomlin.no/images/media${poster}`}
                 alt={`Poster: ${title}`}
-                onError={(event: InvalidEvent<HTMLImageElement>): void => (event.target.src = require('../../../images/media/poster.png'))}
+                onError={(event: InvalidEvent<HTMLImageElement>): void => {
+                    event.target.src = '/images/media/poster.png';
+                }}
             />
         ) : (
             <span>No poster</span>
@@ -84,32 +86,26 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
         ) : null;
 
     const renderLinks = (id: number, imdb: string | null): ReactElement => (
-        <span>
+        <div>
             <a
                 href={`https://www.themoviedb.org/${props.type}/${id}`}
                 target="_blank"
                 rel="noopener noreferrer external"
                 className="pointer">
-                <img className="valign-middle" src={require(`../../../images/icon/tmdb.svg`)} alt="TMDb" width={24} height={24} />
+                <img className="valign-middle" src="/images/icon/tmdb.svg" alt="TMDb" width={24} height={24} />
             </a>
             {imdb ? (
                 <a className="mlm pointer" href={`https://www.imdb.com/title/${imdb}`} target="_blank" rel="noopener noreferrer external">
-                    <img
-                        className="valign-middle"
-                        src={require(`../../../images/icon/imdb.svg`)}
-                        alt="IMDb"
-                        width={38}
-                        style={{ margin: '-12px 0' }}
-                    />
+                    <img className="valign-middle" src="/images/icon/imdb.svg" alt="IMDb" width={38} style={{ margin: '-12px 0' }} />
                 </a>
             ) : null}
-            <Link to={`/media/search/${props.type}/similar/1/${id}`} className="mlm pointer" onClick={props.close}>
+            <Link href={`/media/search/${props.type}/similar/1/${id}`} className="mlm pointer">
                 <Icon path={mdiApproximatelyEqualBox} size="26px" title="Find similar" className="valign-middle" />
             </Link>
-            <Link to={`/media/search/${props.type}/recommended/1/${id}`} className="mlm pointer" onClick={props.close}>
+            <Link href={`/media/search/${props.type}/recommended/1/${id}`} className="mlm pointer">
                 <Icon path={mdiThumbUpOutline} size="26px" title="Recommendations" className="valign-middle" />
             </Link>
-        </span>
+        </div>
     );
 
     const renderSeasonButton = (): ReactNode =>
@@ -192,7 +188,7 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
             <ModalContent>{showSeasons ? renderSeasons() : renderContent()}</ModalContent>
             <ModalFooter>
                 <button className="button-icon mrl" onClick={props.remove}>
-                    <Icon path={mdiDeleteOutline} size="28px" title="Update" />
+                    <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
                 </button>
                 <button className="button-icon mrl" onClick={props.update}>
                     <Icon path={mdiRefresh} size="28px" title="Update" />

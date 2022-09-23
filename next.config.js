@@ -3,7 +3,7 @@ const nextConfig = {
     swcMinify: true,
     trailingSlash: true,
     images: {
-        domains: ['avatars.githubusercontent.com'],
+        domains: ['avatars.githubusercontent.com', 'cdn.tomlin.no', 'image.tmdb.org'],
     },
 };
 

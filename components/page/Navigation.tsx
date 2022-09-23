@@ -74,3 +74,15 @@ export const Navigation: FC<NavigationProps> = ({ type, data }) => {
             );
     }
 };
+
+export const NavigationMedia: FC = () => (
+    <Navigation
+        type="sub"
+        data={[
+            { text: 'Movies', path: '/media/movie' },
+            { text: 'TV-Shows', path: '/media/tv' },
+            { text: 'Watchlist', path: '/media/watchlist' },
+            { text: 'Search', path: '/media/search' },
+        ]}
+    />
+);

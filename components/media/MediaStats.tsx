@@ -14,7 +14,7 @@ import {
 } from 'react-vis';
 import 'react-vis/dist/style.css';
 
-import { DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
+import { AuthState, DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
 import { getStats } from '../../actions/media';
 
 import { Loading } from '../page/Loading';
@@ -22,8 +22,8 @@ import { Loading } from '../page/Loading';
 interface MediaStatsState {
     movie: MediaStatsType;
     tv: MediaStatsType;
-    loading: boolean;
-    isLoggedIn: boolean;
+    loading: DefaultState['loading'];
+    isLoggedIn: AuthState['isLoggedIn'];
 }
 
 interface MediaGraphEntry {
@@ -44,7 +44,7 @@ export const MediaStats: FC = () => {
         if (!state.movie.total) {
             dispatch(getStats());
         }
-    }, []);
+    }, [dispatch, state.movie]);
 
     const mapRatings = (data?: MediaStatsEntry[]): MediaGraphEntry[] =>
         data
@@ -60,32 +60,36 @@ export const MediaStats: FC = () => {
         data?.filter((item) => item.year).map((item: MediaStatsEntry): MediaGraphEntry => ({ x: `${item.year}0`, y: item.count })) ?? [];
 
     const renderLineChart = (title: string, color: string, data: MediaGraphEntry[]): ReactElement => (
-        <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
-            <DiscreteColorLegend
-                style={{ position: 'absolute', left: '50px', top: '10px' }}
-                orientation="horizontal"
-                items={[{ title, color }]}
-            />
-            <HorizontalGridLines />
-            <XAxis />
-            <YAxis />
-            <AreaSeries curve="curveMonotoneX" color={color} opacity={0.25} stroke="transparent" data={data} />
-            <LineMarkSeries curve="curveMonotoneX" stroke={color} strokeStyle="solid" size={3} data={data} />
-        </FlexibleWidthXYPlot>
+        <div style={{ height: '250px' }}>
+            <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
+                <DiscreteColorLegend
+                    style={{ position: 'absolute', left: '50px', top: '10px' }}
+                    orientation="horizontal"
+                    items={[{ title, color }]}
+                />
+                <HorizontalGridLines />
+                <XAxis />
+                <YAxis />
+                <AreaSeries curve="curveMonotoneX" color={color} opacity={0.25} stroke="transparent" data={data} />
+                <LineMarkSeries curve="curveMonotoneX" stroke={color} strokeStyle="solid" size={3} data={data} />
+            </FlexibleWidthXYPlot>
+        </div>
     );
 
     const renderBarChart = (title: string, color: string, data: MediaGraphEntry[]): ReactElement => (
-        <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
-            <DiscreteColorLegend
-                style={{ position: 'absolute', left: '50px', top: '10px' }}
-                orientation="horizontal"
-                items={[{ title, color }]}
-            />
-            <HorizontalGridLines />
-            <XAxis />
-            <YAxis />
-            <VerticalBarSeries color={color} opacity={0.8} stroke="#aaa" data={data} />
-        </FlexibleWidthXYPlot>
+        <div style={{ height: '250px' }}>
+            <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
+                <DiscreteColorLegend
+                    style={{ position: 'absolute', left: '50px', top: '10px' }}
+                    orientation="horizontal"
+                    items={[{ title, color }]}
+                />
+                <HorizontalGridLines />
+                <XAxis />
+                <YAxis />
+                <VerticalBarSeries color={color} opacity={0.8} stroke="#aaa" data={data} />
+            </FlexibleWidthXYPlot>
+        </div>
     );
 
     const renderStats = (stats: MediaStatsType): ReactElement => (
@@ -103,7 +107,7 @@ export const MediaStats: FC = () => {
     );
 
     return (
-        <>
+        <div className="wrapper min-height ptm">
             <div className="text mbl">
                 Personal movie and TV-show watchlist.
                 {!state.isLoggedIn && <span className="no-wrap"> Login required.</span>}
@@ -112,7 +116,7 @@ export const MediaStats: FC = () => {
                 <div className="media-stats text-center">
                     <div>
                         <div className="border-bottom pbs mam">
-                            <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" />
+                            <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" id="movieIcon" />
                             <span className="valign-middle">Tracked Movies</span>
                         </div>
                         {renderStats(state.movie)}
@@ -121,7 +125,7 @@ export const MediaStats: FC = () => {
                     </div>
                     <div>
                         <div className="border-bottom pbs mam">
-                            <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" />
+                            <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" id="tvIcon" />
                             <span className="valign-middle">Tracked TV-Shows</span>
                         </div>
                         {renderStats(state.tv)}
@@ -130,6 +134,6 @@ export const MediaStats: FC = () => {
                     </div>
                 </div>
             </Loading>
-        </>
+        </div>
     );
 };

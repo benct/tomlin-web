@@ -1,6 +1,6 @@
 import { FC, ReactElement } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import { mdiChevronDoubleRight, mdiChevronRight } from '@mdi/js';
 
@@ -21,7 +21,7 @@ export const Pagination: FC<PaginationProps> = ({ path, postfix }) => {
     const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = useSelector<
         DefaultState,
         PaginationState
-    >((state) => ({ ...state.pagination }));
+    >((state) => state.pagination);
 
     const renderImage = (image: PaginationImage): ReactElement => (
         <Icon
@@ -34,8 +34,8 @@ export const Pagination: FC<PaginationProps> = ({ path, postfix }) => {
     );
 
     const renderPage = (page: number, image?: PaginationImage): ReactElement => (
-        <Link to={path + page + (postfix ? `/${postfix}` : '')} className="button-icon phm" key={`pagination${page}`}>
-            {image ? renderImage(image) : <span>{page}</span>}
+        <Link href={path + page + (postfix ? `/${postfix}` : '')} className="button-icon phm" key={`pagination${page}`}>
+            {image ? renderImage(image) : page}
         </Link>
     );
 
@@ -47,9 +47,9 @@ export const Pagination: FC<PaginationProps> = ({ path, postfix }) => {
                 <span className="valign-middle phm">Page {current}</span>
             </span>
             <span className="hide-lt480 phm">
-                {previousPages.map((page: number): ReactElement => renderPage(page))}
+                {previousPages.map((page: number) => renderPage(page))}
                 <span className="valign-middle phm strong">{current}</span>
-                {consecutivePages.map((page: number): ReactElement => renderPage(page))}
+                {consecutivePages.map((page: number) => renderPage(page))}
             </span>
             {consecutivePages.length ? renderPage(next, { title: 'Next page' }) : null}
             {last ? renderPage(total, { title: 'Last page', double: true }) : null}

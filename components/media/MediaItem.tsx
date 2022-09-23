@@ -5,8 +5,6 @@ import { MediaItemEntry, MediaType } from '../../interfaces';
 
 import { FavouriteIcon, SeenIcon } from './MediaIcons';
 
-const defaultPoster = require('../../../images/media/poster.png');
-
 interface MediaItemProps {
     type: MediaType;
     data: MediaItemEntry;
@@ -43,9 +41,11 @@ export const MediaItem: FC<MediaItemProps> = memo((props) => {
             <div className="media-poster" onClick={props.showItem} role="button" tabIndex={0}>
                 <img
                     className="pointer"
-                    src={props.data.poster ? `https://cdn.tomlin.no/images/media${props.data.poster}` : defaultPoster}
+                    src={props.data.poster ? `https://cdn.tomlin.no/images/media${props.data.poster}` : '/images/media/poster.png'}
                     alt={props.data.poster ? `Poster: ${props.data.title}` : 'No poster'}
-                    onError={(event: InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
+                    onError={(event: InvalidEvent<HTMLImageElement>): void => {
+                        event.target.src = '/images/media/poster.png';
+                    }}
                 />
             </div>
             <div className="media-title truncate color-primary strong" onClick={props.showItem} role="button" tabIndex={0}>
@@ -54,13 +54,7 @@ export const MediaItem: FC<MediaItemProps> = memo((props) => {
             <div className="media-data text-small truncate">
                 {props.data.imdb_id ? (
                     <a href={`https://www.imdb.com/title/${props.data.imdb_id}`} target="_blank" rel="noopener noreferrer external">
-                        <img
-                            className="mrm"
-                            src={require(`../../../images/icon/imdb.svg`)}
-                            alt="IMDb"
-                            width={38}
-                            style={{ margin: '-12px 0' }}
-                        />
+                        <img className="mrm" src="/images/icon/imdb.svg" alt="IMDb" width={38} style={{ margin: '-12px 0' }} />
                     </a>
                 ) : null}
                 <span>{props.type === 'tv' ? renderSeasons() : formatDuration(props.data.runtime)}</span>

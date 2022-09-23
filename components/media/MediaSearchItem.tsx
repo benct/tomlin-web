@@ -12,8 +12,6 @@ interface MediaSearchItemProps {
     imdb: () => void;
 }
 
-const defaultPoster = require('../../../images/media/poster_small.png');
-
 export const MediaSearchItem: FC<MediaSearchItemProps> = memo((props) => {
     const [overview, setOverview] = useState<boolean>(false);
 
@@ -39,9 +37,15 @@ export const MediaSearchItem: FC<MediaSearchItemProps> = memo((props) => {
         <div className="media-item pvm">
             <div className="media-poster">
                 <img
-                    src={props.data.poster_path ? `https://image.tmdb.org/t/p/w200${props.data.poster_path}` : defaultPoster}
+                    src={
+                        props.data.poster_path
+                            ? `https://image.tmdb.org/t/p/w200${props.data.poster_path}`
+                            : '/images/media/poster_small.png'
+                    }
                     alt={props.data.poster_path ? `Poster: ${title}` : 'No poster'}
-                    onError={(event: InvalidEvent<HTMLImageElement>): void => (event.target.src = defaultPoster)}
+                    onError={(event: InvalidEvent<HTMLImageElement>): void => {
+                        event.target.src = '/images/media/poster_small.png';
+                    }}
                     onClick={toggleOverview}
                 />
             </div>
@@ -70,7 +74,7 @@ export const MediaSearchItem: FC<MediaSearchItemProps> = memo((props) => {
                 ) : null}
                 <div className="hide-gt768">
                     <button className="button-icon" onClick={props.imdb}>
-                        <img src={require(`../../../images/icon/imdb.svg`)} alt="IMDb" width={48} />
+                        <img src="/images/icon/imdb.svg" alt="IMDb" width={48} />
                     </button>
                     {renderButton('float-right mtm')}
                 </div>
@@ -79,7 +83,7 @@ export const MediaSearchItem: FC<MediaSearchItemProps> = memo((props) => {
             <div className="media-external">
                 <img
                     className="pointer"
-                    src={require(`../../../images/icon/imdb.svg`)}
+                    src="/images/icon/imdb.svg"
                     alt="IMDb"
                     width={48}
                     style={{ margin: '-15px 0' }}

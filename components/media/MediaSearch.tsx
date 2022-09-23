@@ -1,12 +1,12 @@
 import { ChangeEvent, FC, ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-import { DefaultState, MediaSearchItemEntry } from '../../interfaces';
+import { DefaultState, MediaSearchItemEntry, MediaState } from '../../interfaces';
 
 import { debounce } from '../../util/debounce';
-import { add, existing, getTmdbMedia, goToIMDb, remove, searchTmdbMedia } from '../../actions/media';
+import { add, getExisting, getTmdbMedia, goToIMDb, remove, searchTmdbMedia } from '../../actions/media';
 import paginationActions from '../../actions/pagination';
 
 import { Loading } from '../page/Loading';
@@ -14,41 +14,36 @@ import { Pagination } from '../page/Pagination';
 import { MediaSearchItem } from './MediaSearchItem';
 
 interface MediaSearchState {
-    data: MediaSearchItemEntry[];
-    existing: { movie: number[]; tv: number[] };
-    loading: boolean;
-}
-
-export interface MediaSearchRouteProps {
-    type?: 'movie' | 'tv';
-    action?: string;
-    id?: string;
-    page?: string;
+    data: MediaState['search'];
+    existing: MediaState['existing'];
 }
 
 export const MediaSearch: FC = () => {
     const dispatch = useDispatch();
-    const routeProps = useParams<MediaSearchRouteProps>();
-    const props = useSelector<DefaultState, MediaSearchState>((state) => ({
+    const router = useRouter();
+
+    const [type, action, page, id] = (router.query.params ?? []) as string[];
+
+    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
+    const { data, existing } = useSelector<DefaultState, MediaSearchState>((state) => ({
         data: state.media.search,
         existing: state.media.existing,
-        loading: state.loading,
     }));
 
     useEffect(() => {
-        dispatch(existing());
+        dispatch(getExisting());
 
         return () => {
             dispatch(paginationActions.reset());
         };
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
-        if (routeProps.action && routeProps.type) {
-            dispatch(getTmdbMedia({ ...routeProps, page: Number(routeProps.page ?? 1) }));
+        if (action && type) {
+            dispatch(getTmdbMedia({ type, action, page: Number(page ?? 1), id }));
             window.scrollTo(0, 0);
         }
-    }, [routeProps]);
+    }, [dispatch, type, action, page, id]);
 
     const search = debounce((query: string) => dispatch(searchTmdbMedia(query)), 500);
 
@@ -59,39 +54,37 @@ export const MediaSearch: FC = () => {
     };
 
     const renderItem = (data: MediaSearchItemEntry): ReactNode => {
-        const existing = props.existing[data.media_type ?? routeProps.type] ?? [];
+        const current = existing[data.media_type ?? type] ?? [];
         return (
             <MediaSearchItem
                 data={data}
-                stored={existing.includes(data.id)}
-                add={() => dispatch(add({ type: data.media_type ?? routeProps.type, id: data.id }))}
-                remove={() => dispatch(remove({ type: data.media_type ?? routeProps.type, id: data.id }))}
-                imdb={() => dispatch(goToIMDb({ type: data.media_type ?? routeProps.type, id: data.id }))}
+                stored={current.includes(data.id)}
+                add={() => dispatch(add({ type: data.media_type ?? type, id: data.id }))}
+                remove={() => dispatch(remove({ type: data.media_type ?? type, id: data.id }))}
+                imdb={() => dispatch(goToIMDb({ type: data.media_type ?? type, id: data.id }))}
                 key={`mediaResult${data.id}`}
             />
         );
     };
 
     return (
-        <div className="text-center">
+        <div className="wrapper min-height ptm text-center">
             <input type="text" name="query" className="input mbl" aria-label="Search" onChange={handleChange} />
             <div className="media-search">
-                <Link to="/media/search/movie/popular/">Popular (Movie)</Link>
-                <Link to="/media/search/movie/top/">Top Rated (Movie)</Link>
-                <Link to="/media/search/movie/now/">Now Playing (Movie)</Link>
-                <Link to="/media/search/movie/upcoming/">Upcoming (Movie)</Link>
+                <Link href="/media/search/movie/popular/">Popular (Movie)</Link>
+                <Link href="/media/search/movie/top/">Top Rated (Movie)</Link>
+                <Link href="/media/search/movie/now/">Now Playing (Movie)</Link>
+                <Link href="/media/search/movie/upcoming/">Upcoming (Movie)</Link>
             </div>
             <div className="media-search mbl">
-                <Link to="/media/search/tv/popular/">Popular (TV)</Link>
-                <Link to="/media/search/tv/top/">Top Rated (TV)</Link>
-                <Link to="/media/search/tv/now/">Now Playing (TV)</Link>
+                <Link href="/media/search/tv/popular/">Popular (TV)</Link>
+                <Link href="/media/search/tv/top/">Top Rated (TV)</Link>
+                <Link href="/media/search/tv/now/">Now Playing (TV)</Link>
             </div>
-            <Loading isLoading={props.loading} text="Loading media...">
-                {props.data.map(renderItem)}
-                <Pagination path={`/media/search/${routeProps.type}/${routeProps.action}/`} postfix={routeProps.id} />
+            <Loading isLoading={loading} text="Loading media...">
+                {data.map(renderItem)}
+                <Pagination path={`/media/search/${type}/${action}/`} postfix={id} />
             </Loading>
         </div>
     );
 };
-
-export default MediaSearch;

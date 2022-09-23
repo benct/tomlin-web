@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
@@ -6,7 +6,7 @@ import { AuthState, DefaultState } from '../interfaces';
 import { Login } from './Login';
 
 type AuthProps = {
-    children: ReactElement;
+    children: ReactNode;
 };
 
 export const Auth: FC<AuthProps> = ({ children }) => {

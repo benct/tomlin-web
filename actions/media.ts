@@ -198,7 +198,7 @@ export const setItem =
         }
     };
 
-export const existing =
+export const getExisting =
     (): ThunkResult<Promise<void>> =>
     async (dispatch, getState): Promise<void> => {
         if (getState().auth.isLoggedIn) {
@@ -214,7 +214,7 @@ export const add =
         if (getState().auth.isLoggedIn) {
             await post(`/media/${type}/${id}`)
                 .then(() => {
-                    dispatch(existing());
+                    dispatch(getExisting());
                     dispatch(showToast('Media successfully added!'));
                 })
                 .catch(() => dispatch(showToast('Failed to add media...')));
@@ -231,7 +231,7 @@ export const remove =
                         dispatch(getMedia({ type: action }));
                     }
                     dispatch(actions.hideModal());
-                    dispatch(existing());
+                    dispatch(getExisting());
                     dispatch(showToast('Media successfully removed!'));
                 })
                 .catch(() => dispatch(showToast('Failed to remove media...')));
