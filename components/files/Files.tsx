@@ -16,8 +16,6 @@ import fileActions, { changeDirectory, createDirectory, download, preview, refre
 import { Loading } from '../page/Loading';
 import { FileList } from './FileList';
 
-import '../../../styles/files.css';
-
 const PARENT_DIR = '..';
 
 export const Files: FC = () => {
@@ -25,10 +23,8 @@ export const Files: FC = () => {
     const fileLabel = useRef<HTMLLabelElement>(null);
 
     const dispatch = useDispatch();
-    const state = useSelector<DefaultState, FileState & Pick<DefaultState, 'loading'>>((state) => ({
-        ...state.files,
-        loading: state.loading,
-    }));
+    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
+    const state = useSelector<DefaultState, FileState>((state) => state.files);
 
     const handleUpload = (): void => {
         const files = fileInput.current?.files ?? [];
@@ -119,10 +115,10 @@ export const Files: FC = () => {
         document.addEventListener('keyup', handleKeyboard, false);
 
         return (): void => document.removeEventListener('keyup', handleKeyboard, false);
-    }, []);
+    }, [dispatch]);
 
     return (
-        <>
+        <div className="wrapper min-height ptm">
             <div className="file-table-header">
                 <button className="button-icon" onClick={() => dispatch(changeDirectory(PARENT_DIR))} disabled={state.cwd === ''}>
                     <Icon path={mdiFolderUploadOutline} size="28px" title="Parent directory" />
@@ -136,7 +132,7 @@ export const Files: FC = () => {
                     </button>
                 </div>
             </div>
-            <Loading isLoading={state.loading} text="Loading file list..." className="file-table">
+            <Loading isLoading={loading} text="Loading file list..." className="file-table">
                 <FileList
                     content={state.content}
                     focused={state.focused}
@@ -192,8 +188,6 @@ export const Files: FC = () => {
                     )}
                 </div>
             ) : null}
-        </>
+        </div>
     );
 };
-
-export default Files;

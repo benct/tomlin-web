@@ -9,28 +9,19 @@ import { getNotes } from '../../actions/admin';
 import { Loading } from '../page/Loading';
 import { NotesModal } from './NotesModal';
 
-interface NotesState {
-    notes: Note[];
-    loading: boolean;
-    isLoggedIn: boolean;
-}
-
 export const Notes: FC = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [selected, setSelected] = useState<Note>();
 
     const dispatch = useDispatch();
-    const { notes, loading, isLoggedIn } = useSelector<DefaultState, NotesState>((state) => ({
-        notes: state.admin.notes,
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    }));
+    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
+    const notes = useSelector<DefaultState, Note[]>((state) => state.admin.notes);
 
     useEffect(() => {
         if (!notes.length) {
             dispatch(getNotes());
         }
-    }, [isLoggedIn]);
+    }, [dispatch, notes]);
 
     const edit = (note: Note): void => {
         setShowOverlay(true);
@@ -43,7 +34,7 @@ export const Notes: FC = () => {
     };
 
     return (
-        <>
+        <div className="wrapper min-height ptm">
             <Loading isLoading={loading} text="Loading notes...">
                 {notes.length ? (
                     notes.map(
@@ -70,8 +61,6 @@ export const Notes: FC = () => {
                 </button>
             </div>
             {showOverlay && selected ? <NotesModal note={selected} close={closeModal} /> : null}
-        </>
+        </div>
     );
 };
-
-export default Notes;

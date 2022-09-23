@@ -1,6 +1,6 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useRouter } from 'next/router';
 
 import { DefaultState, Log } from '../../interfaces';
 import { deleteLog, getLogs } from '../../actions/admin';
@@ -9,22 +9,13 @@ import paginationActions from '../../actions/pagination';
 import { Loading } from '../page/Loading';
 import { Pagination } from '../page/Pagination';
 
-interface LogState {
-    logs: Log[];
-    loading: boolean;
-    isLoggedIn: boolean;
-}
-
 export const Logs: FC = () => {
-    const routeParams = useParams<{ page?: string }>();
-    const page = Number(routeParams.page ?? 1);
+    const router = useRouter();
+    const page = Number(router.query.page?.[0] ?? 1);
 
     const dispatch = useDispatch();
-    const { logs, loading, isLoggedIn } = useSelector<DefaultState, LogState>((state) => ({
-        logs: state.admin.logs?.results ?? [],
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    }));
+    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
+    const logs = useSelector<DefaultState, Log[]>((state) => state.admin.logs?.results ?? []);
 
     useEffect(() => {
         dispatch(getLogs(page));
@@ -35,7 +26,7 @@ export const Logs: FC = () => {
         return (): void => {
             dispatch(paginationActions.reset());
         };
-    }, [page, isLoggedIn]);
+    }, [dispatch, page]);
 
     const renderLog = (log: Log, idx: number): ReactElement => (
         <div className="admin-logs" key={`logs${idx}`}>
@@ -51,15 +42,17 @@ export const Logs: FC = () => {
     );
 
     return (
-        <Loading isLoading={loading} text="Loading logs...">
-            {logs.length ? (
-                <>
-                    {logs.map(renderLog)}
-                    <Pagination path="/admin/logs/" />
-                </>
-            ) : (
-                <span>Server logs are empty...</span>
-            )}
-        </Loading>
+        <div className="wrapper min-height ptm">
+            <Loading isLoading={loading} text="Loading logs...">
+                {logs.length ? (
+                    <>
+                        {logs.map(renderLog)}
+                        <Pagination path="/admin/logs/" />
+                    </>
+                ) : (
+                    <span>Server logs are empty...</span>
+                )}
+            </Loading>
+        </div>
     );
 };

@@ -12,12 +12,6 @@ import { FlightsModal } from './FlightsModal';
 import { FlightsGroup } from './FlightsGroup';
 import { Loading } from '../page/Loading';
 
-interface FlightState {
-    flights: Flight[][];
-    loading: boolean;
-    isLoggedIn: boolean;
-}
-
 const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 
 export const Flights: FC = () => {
@@ -27,17 +21,14 @@ export const Flights: FC = () => {
     const [form, setForm] = useState<Flight>({});
 
     const dispatch = useDispatch();
-    const { flights, loading, isLoggedIn } = useSelector<DefaultState, FlightState>((state) => ({
-        flights: state.admin.flights,
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    }));
+    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
+    const flights = useSelector<DefaultState, Flight[][]>((state) => state.admin.flights);
 
     useEffect(() => {
         if (!flights.length) {
             dispatch(getFlights());
         }
-    }, [isLoggedIn]);
+    }, [dispatch, flights]);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
         const { value, name } = event.target;
@@ -161,7 +152,7 @@ export const Flights: FC = () => {
     );
 
     return (
-        <>
+        <div className="wrapper min-height ptm">
             <div className="text-center mbm">
                 <button className="input input-small" onClick={(): void => setShowGrouped(!showGrouped)}>
                     Display: {showGrouped ? 'Grouped' : 'All'}
@@ -182,8 +173,6 @@ export const Flights: FC = () => {
                     close={(): void => setShowModal(false)}
                 />
             )}
-        </>
+        </div>
     );
 };
-
-export default Flights;

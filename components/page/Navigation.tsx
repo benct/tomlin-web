@@ -86,3 +86,17 @@ export const NavigationMedia: FC = () => (
         ]}
     />
 );
+
+export const NavigationAdmin: FC = () => (
+    <Navigation
+        type="sub"
+        data={[
+            { text: 'Logs', path: '/admin/logs' },
+            { text: 'Visits', path: '/admin/visits' },
+            { text: 'Users', path: '/admin/users' },
+            { text: 'Flights', path: '/admin/flights' },
+            { text: 'Notes', path: '/admin/notes' },
+            { text: 'Files', path: '/admin/files' },
+        ]}
+    />
+);

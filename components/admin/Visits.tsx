@@ -1,6 +1,6 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useRouter } from 'next/router';
 
 import { DefaultState, Visit } from '../../interfaces';
 import { getVisits } from '../../actions/admin';
@@ -9,22 +9,13 @@ import paginationActions from '../../actions/pagination';
 import { Loading } from '../page/Loading';
 import { Pagination } from '../page/Pagination';
 
-interface VisitState {
-    visits: Visit[];
-    loading: boolean;
-    isLoggedIn: boolean;
-}
-
 export const Visits: FC = () => {
-    const routeParams = useParams<{ page?: string }>();
-    const page = Number(routeParams.page ?? 1);
+    const router = useRouter();
+    const page = Number(router.query.page?.[0] ?? 1);
 
     const dispatch = useDispatch();
-    const { visits, loading, isLoggedIn } = useSelector<DefaultState, VisitState>((state) => ({
-        visits: state.admin.visits?.results ?? [],
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    }));
+    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
+    const visits = useSelector<DefaultState, Visit[]>((state) => state.admin.visits?.results ?? []);
 
     useEffect(() => {
         dispatch(getVisits(page));
@@ -35,7 +26,7 @@ export const Visits: FC = () => {
         return (): void => {
             dispatch(paginationActions.reset());
         };
-    }, [page, isLoggedIn]);
+    }, [dispatch, page]);
 
     const renderVisit = (visit: Visit, idx: number): ReactElement => (
         <div className="admin-logs" key={`visits${idx}`}>
@@ -55,15 +46,17 @@ export const Visits: FC = () => {
     );
 
     return (
-        <Loading isLoading={loading} text="Loading visits...">
-            {visits.length ? (
-                <>
-                    {visits.map(renderVisit)}
-                    <Pagination path="/admin/visits/" />
-                </>
-            ) : (
-                <span>No tracking data found...</span>
-            )}
-        </Loading>
+        <div className="wrapper min-height ptm">
+            <Loading isLoading={loading} text="Loading visits...">
+                {visits.length ? (
+                    <>
+                        {visits.map(renderVisit)}
+                        <Pagination path="/admin/visits/" />
+                    </>
+                ) : (
+                    <span>No tracking data found...</span>
+                )}
+            </Loading>
+        </div>
     );
 };

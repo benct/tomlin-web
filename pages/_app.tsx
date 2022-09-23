@@ -18,6 +18,8 @@ import '../styles/themes/midnight.css';
 import '../styles/home.css';
 import '../styles/about.css';
 import '../styles/media.css';
+import '../styles/admin.css';
+import '../styles/files.css';
 
 const App = ({ Component, pageProps }: AppProps) => (
     <Provider store={store}>

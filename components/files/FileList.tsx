@@ -1,4 +1,4 @@
-import { FC, memo, ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiFileQuestion } from '@mdi/js';
 
@@ -12,7 +12,7 @@ interface FileListProps {
     handleDelete: (item: FileItem) => void;
 }
 
-export const FileList: FC<FileListProps> = memo(({ content, focused, handleClick, handleRename, handleDelete }) => {
+export const FileList: FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete }) => {
     const renderItem = (item: FileItem, i: number): ReactElement => (
         <tr key={i}>
             <td>
@@ -69,6 +69,4 @@ export const FileList: FC<FileListProps> = memo(({ content, focused, handleClick
             </tbody>
         </table>
     );
-});
-
-FileList.displayName = 'FileList';
+};

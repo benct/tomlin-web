@@ -10,28 +10,19 @@ import { getUsers } from '../../actions/admin';
 import { UserModal } from './UserModal';
 import { Loading } from '../page/Loading';
 
-interface UsersState {
-    users: User[];
-    loading: boolean;
-    isLoggedIn: boolean;
-}
-
 export const Users: FC = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [selected, setSelected] = useState<User>();
 
     const dispatch = useDispatch();
-    const { users, loading, isLoggedIn } = useSelector<DefaultState, UsersState>((state) => ({
-        users: state.admin.users,
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    }));
+    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
+    const users = useSelector<DefaultState, User[]>((state) => state.admin.users);
 
     useEffect(() => {
         if (!users.length) {
             dispatch(getUsers());
         }
-    }, [isLoggedIn]);
+    }, [dispatch, users]);
 
     const edit = (user?: User): void => {
         setShowOverlay(true);
@@ -58,7 +49,7 @@ export const Users: FC = () => {
     );
 
     return (
-        <>
+        <div className="wrapper min-height ptm">
             <Loading isLoading={loading} text="Loading users...">
                 {users.length ? (
                     <table className="table-striped">
@@ -81,8 +72,6 @@ export const Users: FC = () => {
                 )}
             </Loading>
             {showOverlay ? <UserModal user={selected} close={closeModal} /> : null}
-        </>
+        </div>
     );
 };
-
-export default Users;
