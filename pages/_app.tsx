@@ -22,6 +22,7 @@ import '../styles/about.css';
 import '../styles/media.css';
 import '../styles/admin.css';
 import '../styles/files.css';
+import '../styles/error.css';
 
 const App = ({ Component, pageProps }: AppProps) => (
     <Provider store={store}>
