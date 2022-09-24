@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import { useEffect } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiExitRun } from '@mdi/js';
@@ -20,5 +20,7 @@ const LogoutPage: NextPage = () => {
         </div>
     );
 };
+
+export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Logout', standalone: false } });
 
 export default LogoutPage;

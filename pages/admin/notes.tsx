@@ -1,13 +1,15 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import { NavigationAdmin } from '../../components/page/Navigation';
 import { Auth } from '../../components/Auth';
 import { Notes } from '../../components/notes/Notes';
 
-const FlightsPage: NextPage = () => (
+const NotesPage: NextPage = () => (
     <Auth>
         <NavigationAdmin />
         <Notes />
     </Auth>
 );
 
-export default FlightsPage;
+export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Notes', standalone: false } });
+
+export default NotesPage;

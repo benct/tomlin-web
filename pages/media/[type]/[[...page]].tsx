@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const type = context.params?.type?.toString() ?? 'invalid';
     return {
         notFound: !['movie', 'tv', 'watchlist'].includes(type),
-        props: { type: context.params?.type, page: context.params?.page?.[0] ?? 1 },
+        props: { type: context.params?.type, page: context.params?.page?.[0] ?? 1, title: 'Media' },
     };
 };
 

@@ -3,6 +3,6 @@ import { Login } from '../components/Login';
 
 const LoginPage: NextPage = () => <Login />;
 
-export const getStaticProps: GetStaticProps = async () => ({ props: { standalone: false } });
+export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Login', standalone: false } });
 
 export default LoginPage;

@@ -11,5 +11,11 @@ const MediaSearchPage: NextPage = () => (
 );
 
 // TODO SSR (getServerSideProps)
+export const getStaticPaths = async () => ({
+    paths: [{ params: { params: [] } }],
+    fallback: 'blocking',
+});
+
+export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Media', standalone: false } });
 
 export default MediaSearchPage;

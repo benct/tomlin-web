@@ -9,6 +9,6 @@ const MediaPage: NextPage = () => (
     </>
 );
 
-export const getStaticProps: GetStaticProps = async () => ({ props: { standalone: false } });
+export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Media', standalone: false } });
 
 export default MediaPage;

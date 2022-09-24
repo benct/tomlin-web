@@ -3,6 +3,6 @@ import { Home } from '../components/home/Home';
 
 const HomePage: NextPage = () => <Home />;
 
-export const getStaticProps: GetStaticProps = async () => ({ props: { standalone: false } });
+export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Home', standalone: false } });
 
 export default HomePage;

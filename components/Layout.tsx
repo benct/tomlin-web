@@ -8,11 +8,12 @@ import { Header } from './page/Header';
 import { Footer } from './page/Footer';
 
 type LayoutProps = {
+    title?: string;
     standalone?: boolean;
     children: ReactNode;
 };
 
-export const Layout: FC<LayoutProps> = ({ standalone, children }) => {
+export const Layout: FC<LayoutProps> = ({ title, standalone, children }) => {
     const { toast } = useAppContext();
     const { loading } = useAuthenticate();
 
@@ -20,6 +21,8 @@ export const Layout: FC<LayoutProps> = ({ standalone, children }) => {
         const theme = window.localStorage.getItem('theme');
         document.body.classList.add(theme ?? 'default');
     }, []);
+
+    const siteTitle = `Tomlin - ${title ?? 'Home'}`;
 
     return (
         <>
@@ -29,6 +32,8 @@ export const Layout: FC<LayoutProps> = ({ standalone, children }) => {
                 <meta name="description" content="Homepage of Ben Tomlin. Software developer. Nothing much to see here." />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="robots" content="index, nofollow" />
+
+                <title>{siteTitle}</title>
 
                 <link rel="author" href="/humans.txt" type="text/plain" />
                 <link rel="preconnect" href="https://api.tomlin.no" />
