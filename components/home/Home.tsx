@@ -1,24 +1,32 @@
-import { FC, lazy, Suspense, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, lazy, Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
-
-import { DefaultState } from '../../interfaces';
-import actions from '../../actions/base';
 
 import { Countdown } from './Countdown';
 import { State } from './State';
 import { Quote } from './Quote';
+import { useAppContext } from '../../data/context';
 
 // import '../../styles/home.css';
 
 const Changelog = lazy(() => import('./Changelog'));
 
 export const Home: FC = () => {
-    const dispatch = useDispatch();
     const [showChangelog, setShowChangelog] = useState(false);
+    const [theme, setTheme] = useState('default');
 
-    const theme = useSelector<DefaultState, DefaultState['theme']>((state) => state.theme);
-    const settings = useSelector<DefaultState, DefaultState['settings']>((state) => state.settings);
+    const { settings } = useAppContext();
+
+    useEffect(() => {
+        setTheme(window.localStorage.getItem('theme') ?? 'default');
+    }, []);
+
+    const toggleTheme = () => {
+        const nextTheme = theme === 'default' ? 'midnight' : 'default';
+        document.body.classList.remove('default', 'midnight');
+        document.body.classList.add(nextTheme);
+        window.localStorage.setItem('theme', nextTheme);
+        setTheme(nextTheme);
+    };
 
     return (
         <>
@@ -30,7 +38,7 @@ export const Home: FC = () => {
                 </p>
                 <div className="home-info text-small">
                     Theme
-                    <button className="input input-small" onClick={() => dispatch(actions.toggleTheme())}>
+                    <button className="input input-small" onClick={() => toggleTheme()}>
                         {theme}
                     </button>
                 </div>

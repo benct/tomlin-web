@@ -1,23 +1,12 @@
-import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiInformationOutline, mdiLoading } from '@mdi/js';
 
-import { DefaultState, HomeState } from '../../interfaces';
-import { getHomeState } from '../../actions/base';
-
+import { useHomeState } from '../../data/base';
 import { Time } from './Time';
 
 export const State: FC = () => {
-    const dispatch = useDispatch();
-    const state = useSelector<DefaultState, HomeState & Pick<DefaultState, 'loading'>>((state) => ({
-        ...state.home,
-        loading: state.loading,
-    }));
-
-    useEffect(() => {
-        dispatch(getHomeState());
-    }, []);
+    const { data, loading } = useHomeState();
 
     return (
         <div className="wrapper text-center no-select">
@@ -26,11 +15,11 @@ export const State: FC = () => {
                 <span
                     className="valign-middle mlm"
                     data-tooltip="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
-                    data-tooltip-large>
+                    data-tooltip-large="true">
                     <Icon
-                        path={state.loading ? mdiLoading : mdiInformationOutline}
-                        title={state.loading ? 'Loading' : 'Information'}
-                        spin={state.loading}
+                        path={loading ? mdiLoading : mdiInformationOutline}
+                        title={loading ? 'Loading' : 'Information'}
+                        spin={loading}
                         size="16px"
                         description="For security reasons, the indoor temperature readings are psuedo-random when not logged in."
                         className="help-icon"
@@ -40,17 +29,17 @@ export const State: FC = () => {
             </div>
             <div className="home-state">
                 <div className="home-temp pts">
-                    {state.day !== undefined && (
+                    {data?.day !== undefined && (
                         <img
                             className="valign-middle prl"
-                            src={`/images/icon/${state.day ? 'day' : 'night'}.svg`}
+                            src={`/images/icon/${data.day ? 'day' : 'night'}.svg`}
                             alt="Outside temperature"
                             width={54}
                             height={54}
                         />
                     )}
                     <div data-tooltip="Outdoor temperature" style={{ display: 'inline-block' }}>
-                        <span className="home-value home-value-large">{state.outside ?? '-'}</span>
+                        <span className="home-value home-value-large">{data?.outside ?? '-'}</span>
                         <span className="home-unit"> &deg;C</span>
                     </div>
                 </div>
@@ -64,7 +53,7 @@ export const State: FC = () => {
                 <div className="home-temp pts">
                     <img className="valign-middle prl" src={`/images/icon/home.svg`} alt="Indoor temperature" width={54} height={54} />
                     <div data-tooltip="Indoor temperature" style={{ display: 'inline-block' }}>
-                        <span className="home-value home-value-large">{state.livingroom ?? '-'}</span>
+                        <span className="home-value home-value-large">{data?.livingroom ?? '-'}</span>
                         <span className="home-unit"> &deg;C</span>
                     </div>
                 </div>

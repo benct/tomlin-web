@@ -1,23 +1,16 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
 import { Icon } from '@mdi/react';
 import { mdiExitRun } from '@mdi/js';
 
-import { logout } from '../actions/auth';
+import { useLogout } from '../data/auth';
 
 const LogoutPage: NextPage = () => {
-    const dispatch = useDispatch();
-    const router = useRouter();
+    const logout = useLogout();
 
     useEffect(() => {
-        dispatch(logout());
-
-        setTimeout((): void => {
-            router.replace('/');
-        }, 3000);
-    }, [dispatch, router]);
+        logout();
+    }, [logout]);
 
     return (
         <div className="wrapper min-height text">
@@ -27,7 +20,5 @@ const LogoutPage: NextPage = () => {
         </div>
     );
 };
-
-export const getStaticProps: GetStaticProps = async () => ({ props: { standalone: false } });
 
 export default LogoutPage;

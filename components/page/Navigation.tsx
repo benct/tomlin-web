@@ -1,15 +1,7 @@
-import { FC, ReactNode } from 'react';
-import { Action } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, ReactNode, useState } from 'react';
 import Link from 'next/link';
 
-import { DefaultState } from '../../interfaces';
-import actions from '../../actions/base';
-
-interface NavigationState {
-    isLoggedIn: boolean;
-    showMenu: boolean;
-}
+import { useAppContext } from '../../data/context';
 
 interface NavigationProps {
     type?: string;
@@ -24,11 +16,8 @@ export interface NavigationItem {
 }
 
 export const Navigation: FC<NavigationProps> = ({ type, data }) => {
-    const dispatch = useDispatch();
-    const { isLoggedIn, showMenu } = useSelector<DefaultState, NavigationState>((state) => ({
-        isLoggedIn: state.auth.isLoggedIn,
-        showMenu: state.showMenu,
-    }));
+    const { isLoggedIn } = useAppContext();
+    const [showMenu, setShowMenu] = useState<boolean>(false);
 
     const menu = [
         { text: 'Home', path: '/' },
@@ -36,7 +25,7 @@ export const Navigation: FC<NavigationProps> = ({ type, data }) => {
         { text: 'Media', path: '/media' },
         { text: 'Admin', path: '/admin' },
         { text: 'Logout', path: '/logout', hide: !isLoggedIn },
-        { text: 'Login', path: '/login', hide: isLoggedIn },
+        { text: 'Login', path: '/login', hide: !!isLoggedIn },
     ];
 
     const createLink = (item: NavigationItem, idx: number): ReactNode =>
@@ -62,15 +51,20 @@ export const Navigation: FC<NavigationProps> = ({ type, data }) => {
         case 'full':
         default:
             return (
-                <nav
-                    className="menu-wrap"
-                    style={{ left: showMenu ? '0px' : '100%' }}
-                    onClick={(): Action => dispatch(actions.toggleMenu())}
-                    role="dialog">
-                    <ul className={`no-select menu menu-full`} style={{ opacity: showMenu ? 1 : 0 }}>
-                        {menu.map(createLink)}
-                    </ul>
-                </nav>
+                <>
+                    <nav
+                        className="menu-wrap"
+                        style={{ left: showMenu ? '0px' : '100%' }}
+                        onClick={(): void => setShowMenu(!showMenu)}
+                        role="dialog">
+                        <ul className="no-select menu menu-full" style={{ opacity: showMenu ? 1 : 0 }}>
+                            {menu.map(createLink)}
+                        </ul>
+                    </nav>
+                    <button className="menu-overlay button-blank hide-gt480" aria-label="Menu" onClick={() => setShowMenu(!showMenu)}>
+                        &nbsp;
+                    </button>
+                </>
             );
     }
 };

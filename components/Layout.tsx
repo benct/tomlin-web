@@ -1,11 +1,9 @@
 import { FC, ReactNode, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 
-import actions from '../actions/base';
-import { validate } from '../actions/auth';
+import { useAppContext } from '../data/context';
+import { useAuthenticate } from '../data/auth';
 
-import { DefaultState } from '../interfaces';
 import { Header } from './page/Header';
 import { Footer } from './page/Footer';
 
@@ -15,17 +13,13 @@ type LayoutProps = {
 };
 
 export const Layout: FC<LayoutProps> = ({ standalone, children }) => {
-    const dispatch = useDispatch();
-    const state = useSelector<DefaultState, Pick<DefaultState, 'toast' | 'theme' | 'loading'>>((state) => ({
-        toast: state.toast,
-        theme: state.theme,
-        loading: state.loadingOverlay,
-    }));
+    const { toast } = useAppContext();
+    const { loading } = useAuthenticate();
 
     useEffect(() => {
-        dispatch(actions.toggleTheme(window.localStorage.getItem('theme')));
-        dispatch(validate());
-    }, [dispatch]);
+        const theme = window.localStorage.getItem('theme');
+        document.body.classList.add(theme ?? 'default');
+    }, []);
 
     return (
         <>
@@ -54,14 +48,14 @@ export const Layout: FC<LayoutProps> = ({ standalone, children }) => {
             {standalone ? null : <Header />}
             <main>{children}</main>
             {standalone ? null : <Footer />}
-            {state.loading ? (
+            {loading ? (
                 <div className="overlay overlay-loading">
                     <div className="overlay-container shadow">
                         <div className="pac-man" />
                     </div>
                 </div>
             ) : null}
-            {state.toast ? <div className="toast">{state.toast}</div> : null}
+            {toast ? <div className="toast">{toast}</div> : null}
         </>
     );
 };

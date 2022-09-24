@@ -1,10 +1,8 @@
 import { FC, ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-
-import { AuthState, DefaultState } from '../interfaces';
-import { Login } from './Login';
+import { useAppContext } from '../data/context';
 import { Loading } from './page/Loading';
+import { Login } from './Login';
 
 type AuthProps = {
     children: ReactNode;
@@ -12,11 +10,7 @@ type AuthProps = {
 
 export const Auth: FC<AuthProps> = ({ children }) => {
     const router = useRouter();
+    const { isLoggedIn } = useAppContext();
 
-    const { isLoggedIn, loading } = useSelector<DefaultState, Pick<AuthState, 'isLoggedIn' | 'loading'>>((state) => ({
-        isLoggedIn: state.auth.isLoggedIn,
-        loading: state.auth.loading,
-    }));
-
-    return <Loading isLoading={loading}>{isLoggedIn ? children : <Login redirectTo={router.pathname} />}</Loading>;
+    return <Loading isLoading={isLoggedIn === null}>{isLoggedIn ? children : <Login redirectTo={router.pathname} />}</Loading>;
 };

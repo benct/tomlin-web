@@ -1,31 +1,18 @@
-import { FC, FormEvent, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import { FC, FormEvent, useRef } from 'react';
 
-import { AuthState, DefaultState } from '../interfaces';
-import { login } from '../actions/auth';
-
+import { useLogin } from '../data/auth';
 import { Loading } from './page/Loading';
 
 export const Login: FC<{ redirectTo?: string }> = ({ redirectTo }) => {
-    const dispatch = useDispatch();
-    const router = useRouter();
-
-    const { loading, redirect, error } = useSelector<DefaultState, AuthState>((state) => state.auth);
-
     const username = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        if (redirect) {
-            router.replace(redirectTo ?? '/');
-        }
-    }, [router, redirect, redirectTo]);
+    const { login, loading, error } = useLogin(redirectTo);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
 
-        dispatch(login(username.current?.value, password.current?.value));
+        login(username.current?.value, password.current?.value);
     };
 
     return (

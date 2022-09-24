@@ -1,5 +1,4 @@
-import { FC, ReactElement, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, ReactElement } from 'react';
 import Image from 'next/image';
 import { Icon } from '@mdi/react';
 import {
@@ -15,22 +14,12 @@ import {
     mdiStarOutline,
 } from '@mdi/js';
 
-import { DefaultState, GitHubRepo, GitHubState } from '../../interfaces';
-import { getGitHubData } from '../../actions/base';
-
+import { useGitHub } from '../../data/base';
 import { Loading } from '../page/Loading';
+import { GitHubRepo } from '../../interfaces';
 
 export const GitHub: FC = () => {
-    const dispatch = useDispatch();
-
-    const { user, stars, top, featured } = useSelector<DefaultState, GitHubState>((state) => state.github);
-    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
-
-    useEffect(() => {
-        if (!user) {
-            dispatch(getGitHubData());
-        }
-    }, [dispatch, user]);
+    const { data, loading } = useGitHub();
 
     const getLanguageIcon = (language: string): string => {
         switch (language) {
@@ -77,30 +66,30 @@ export const GitHub: FC = () => {
 
     return (
         <Loading isLoading={loading} text="Loading GitHub data..." className="wrapper">
-            {user ? (
+            {data?.user ? (
                 <div className="wrapper text-center">
                     <div className="text mbl color-primary">GitHub</div>
                     <div className="github-user">
-                        <a href={user.htmlUrl} target="_blank" rel="noopener noreferrer">
-                            <Image src={user.avatarUrl} width={48} height={48} alt="Avatar" style={{ borderRadius: '100%' }} />
+                        <a href={data.user.htmlUrl} target="_blank" rel="noopener noreferrer">
+                            <Image src={data.user.avatarUrl} width={48} height={48} alt="Avatar" style={{ borderRadius: '100%' }} />
                         </a>
                         <div className="github-count">
-                            <div className="monospace">{user.publicRepos}</div>
+                            <div className="monospace">{data.user.publicRepos}</div>
                             <span className="text-smaller">Repositories</span>
                         </div>
                         <div className="github-count">
-                            <div className="monospace">{stars}</div>
+                            <div className="monospace">{data.stars}</div>
                             <span className="text-smaller">Stargazers</span>
                         </div>
                         <div className="github-count">
-                            <div className="monospace">{user.followers}</div>
+                            <div className="monospace">{data.user.followers}</div>
                             <span className="text-smaller">Followers</span>
                         </div>
                     </div>
                     <div className="github-wrapper ptm mha">
                         <div className="text-smaller mbs">Featured</div>
-                        {top.map(renderRepo)}
-                        {featured.map(renderRepo)}
+                        {data.top.map(renderRepo)}
+                        {data.featured.map(renderRepo)}
                     </div>
                 </div>
             ) : (
