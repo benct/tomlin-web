@@ -5,6 +5,9 @@ const nextConfig = {
     images: {
         domains: ['avatars.githubusercontent.com', 'cdn.tomlin.no', 'image.tmdb.org'],
     },
+    eslint: {
+        dirs: ['components', 'data', 'interfaces', 'pages', 'util'],
+    },
 };
 
 module.exports = nextConfig;
