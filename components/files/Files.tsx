@@ -1,5 +1,4 @@
-import { ChangeEvent, FC, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 import { Icon } from '@mdi/react';
 import {
     mdiCloseCircleOutline,
@@ -10,11 +9,11 @@ import {
     mdiFolderUploadOutline,
 } from '@mdi/js';
 
-import { DefaultState, FileItem, FileState } from '../../interfaces';
-import fileActions, { changeDirectory, createDirectory, download, preview, refresh, remove, rename, upload } from '../../actions/files';
+import { useFiles } from '../../data/files';
 
 import { Loading } from '../page/Loading';
 import { FileList } from './FileList';
+import { FileItem } from '../../interfaces';
 
 const PARENT_DIR = '..';
 
@@ -22,9 +21,10 @@ export const Files: FC = () => {
     const fileInput = useRef<HTMLInputElement>(null);
     const fileLabel = useRef<HTMLLabelElement>(null);
 
-    const dispatch = useDispatch();
-    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
-    const state = useSelector<DefaultState, FileState>((state) => state.files);
+    const [focused, setFocus] = useState<number | null>(null);
+
+    const { files, loading, cwd, uploading, preview, refresh, changeDirectory, createDirectory, rename, remove, upload, download, view } =
+        useFiles();
 
     const handleUpload = (): void => {
         const files = fileInput.current?.files ?? [];
@@ -39,7 +39,7 @@ export const Files: FC = () => {
             }
         }
 
-        dispatch(upload(formData));
+        upload(formData);
 
         if (fileInput.current && fileLabel.current) {
             fileInput.current.value = '';
@@ -60,20 +60,20 @@ export const Files: FC = () => {
     };
 
     const closePreview = (): void => {
-        dispatch(fileActions.setPreview(null));
+        view();
     };
 
     const downloadPreview = (): void => {
-        if (state.preview?.item) dispatch(download(state.preview.item));
+        if (preview?.item) download(preview.item);
     };
 
     const handleClick = (item: FileItem): void => {
         if (item.dir) {
-            dispatch(changeDirectory(item.name));
+            changeDirectory(item.name);
         } else if (item.preview) {
-            dispatch(preview(item));
+            view(item);
         } else {
-            dispatch(download(item));
+            download(item);
         }
     };
 
@@ -82,63 +82,61 @@ export const Files: FC = () => {
 
         switch (event.keyCode) {
             case 8: // backspace
-                dispatch(changeDirectory(PARENT_DIR));
+                changeDirectory(PARENT_DIR);
                 break;
             case 13: // enter
-                if (state.focused !== null) {
-                    handleClick(state.content[state.focused]);
+                if (focused !== null) {
+                    handleClick(files[focused]);
                 }
                 break;
             case 27: // escape
                 closePreview();
                 break;
             case 38: // up
-                if (state.focused === null) {
-                    dispatch(fileActions.setFocus(0));
-                } else if (state.focused > 0) {
-                    dispatch(fileActions.setFocus(state.focused - 1));
+                if (focused === null) {
+                    setFocus(0);
+                } else if (focused > 0) {
+                    setFocus(focused - 1);
                 }
                 break;
             case 40: // down
-                if (state.focused === null) {
-                    dispatch(fileActions.setFocus(0));
-                } else if (state.focused < state.content.length - 1) {
-                    dispatch(fileActions.setFocus(state.focused + 1));
+                if (focused === null) {
+                    setFocus(0);
+                } else if (focused < files.length - 1) {
+                    setFocus(focused + 1);
                 }
                 break;
         }
     };
 
     useEffect(() => {
-        dispatch(refresh());
-
         document.addEventListener('keyup', handleKeyboard, false);
 
         return (): void => document.removeEventListener('keyup', handleKeyboard, false);
-    }, [dispatch]);
+    }, []);
 
     return (
         <div className="wrapper min-height ptm">
             <div className="file-table-header">
-                <button className="button-icon" onClick={() => dispatch(changeDirectory(PARENT_DIR))} disabled={state.cwd === ''}>
+                <button className="button-icon" onClick={() => changeDirectory(PARENT_DIR)} disabled={cwd === ''}>
                     <Icon path={mdiFolderUploadOutline} size="28px" title="Parent directory" />
                 </button>
                 <div className="text-right">
-                    <button className="button-icon mrl" onClick={() => dispatch(createDirectory())}>
+                    <button className="button-icon mrl" onClick={() => createDirectory()}>
                         <Icon path={mdiFolderPlusOutline} size="28px" title="New directory" />
                     </button>
-                    <button className="button-icon" onClick={() => dispatch(refresh())}>
+                    <button className="button-icon" onClick={() => refresh()}>
                         <Icon path={mdiFolderSyncOutline} size="28px" title="Refresh content" />
                     </button>
                 </div>
             </div>
             <Loading isLoading={loading} text="Loading file list..." className="file-table">
                 <FileList
-                    content={state.content}
-                    focused={state.focused}
+                    content={files}
+                    focused={focused}
                     handleClick={handleClick}
-                    handleRename={(item: FileItem) => dispatch(rename(item))}
-                    handleDelete={(item: FileItem) => dispatch(remove(item))}
+                    handleRename={(item: FileItem) => rename(item)}
+                    handleDelete={(item: FileItem) => remove(item)}
                 />
             </Loading>
             <div className="text-center">
@@ -151,7 +149,7 @@ export const Files: FC = () => {
                         aria-label="Add files"
                         onChange={handleFileChange}
                         ref={fileInput}
-                        disabled={state.uploading}
+                        disabled={uploading}
                         multiple
                     />
                     <Icon path={mdiCloudUploadOutline} size="20px" title="Upload" />
@@ -159,12 +157,12 @@ export const Files: FC = () => {
                         Choose a file
                     </span>
                 </label>
-                <button className="input text-small mtl" onClick={handleUpload} disabled={state.uploading}>
-                    {state.uploading ? 'Uploading...' : 'Upload'}
+                <button className="input text-small mtl" onClick={handleUpload} disabled={uploading}>
+                    {uploading ? 'Uploading...' : 'Upload'}
                 </button>
             </div>
 
-            {state.preview ? (
+            {preview ? (
                 <div className="overlay">
                     <button className="button-icon" onClick={closePreview}>
                         <Icon path={mdiCloseCircleOutline} className="file-preview-icon file-preview-close" title="Close" color="white" />
@@ -177,14 +175,14 @@ export const Files: FC = () => {
                             color="white"
                         />
                     </button>
-                    {state.preview.type == 'image' ? (
-                        <img className="overlay-image" src={state.preview.content} alt="Preview" />
-                    ) : state.preview.type == 'video' ? (
+                    {preview.type == 'image' ? (
+                        <img className="overlay-image" src={preview.content} alt="Preview" />
+                    ) : preview.type == 'video' ? (
                         <video className="overlay-image" controls>
-                            <source src={state.preview.content} type={`video/${state.preview.item.type}`} />
+                            <source src={preview.content} type={`video/${preview.item.type}`} />
                         </video>
                     ) : (
-                        <pre className="overlay-preview">{state.preview.content}</pre>
+                        <pre className="overlay-preview">{preview.content}</pre>
                     )}
                 </div>
             ) : null}

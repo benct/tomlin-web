@@ -1,12 +1,11 @@
-import { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiAccountPlusOutline } from '@mdi/js';
 
-import { DefaultState, User } from '../../interfaces';
 import { formatDate } from '../../util/formatting';
-import { getUsers } from '../../actions/admin';
+import { useUsers } from '../../data/users';
 
+import { User } from '../../interfaces';
 import { UserModal } from './UserModal';
 import { Loading } from '../page/Loading';
 
@@ -14,15 +13,7 @@ export const Users: FC = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [selected, setSelected] = useState<User>();
 
-    const dispatch = useDispatch();
-    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
-    const users = useSelector<DefaultState, User[]>((state) => state.admin.users);
-
-    useEffect(() => {
-        if (!users.length) {
-            dispatch(getUsers());
-        }
-    }, [dispatch, users]);
+    const { users, loading } = useUsers();
 
     const edit = (user?: User): void => {
         setShowOverlay(true);

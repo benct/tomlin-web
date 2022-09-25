@@ -1,21 +1,22 @@
-import type { NextPage, GetStaticProps } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { NavigationAdmin } from '../../../components/page/Navigation';
 import { Auth } from '../../../components/Auth';
 import { Visits } from '../../../components/admin/Visits';
+import { NextPageProps, PageProps } from '../../../interfaces';
 
-const LogsPage: NextPage = () => (
+const LogsPage: NextPage<PageProps> = ({ page }) => (
     <Auth>
         <NavigationAdmin />
-        <Visits />
+        <Visits page={page} />
     </Auth>
 );
 
-// TODO SSR (getServerSideProps)
-export const getStaticPaths = async () => ({
-    paths: [{ params: { page: [] } }],
-    fallback: 'blocking',
+export const getServerSideProps: GetServerSideProps<NextPageProps & PageProps> = async ({ query }) => ({
+    props: {
+        title: 'Visits',
+        standalone: false,
+        page: Number(query.page?.[0] ?? 1),
+    },
 });
-
-export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Visits', standalone: false } });
 
 export default LogsPage;

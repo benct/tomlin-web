@@ -1,11 +1,10 @@
 import { FC, memo, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
-import { Note } from '../../interfaces';
-import { deleteNote, saveNote } from '../../actions/admin';
+import { useNoteActions } from '../../data/notes';
 
+import { Note } from '../../interfaces';
 import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
 
 interface NotesModalProps {
@@ -16,19 +15,20 @@ interface NotesModalProps {
 export const NotesModal: FC<NotesModalProps> = memo(({ note, close }) => {
     const title = useRef<HTMLInputElement>(null);
     const content = useRef<HTMLTextAreaElement>(null);
-    const dispatch = useDispatch();
+
+    const { saveNote, deleteNote } = useNoteActions();
 
     const save = (): void => {
         if (!content.current || !title.current?.value?.length) {
             return;
         }
-        dispatch(saveNote(note.id, title.current.value, content.current.value));
+        saveNote(note.id, title.current.value, content.current.value);
         close();
     };
 
     const remove = (): void => {
         if (note.id) {
-            dispatch(deleteNote(note.id));
+            deleteNote(note.id);
             close();
         }
     };

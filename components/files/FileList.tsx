@@ -17,7 +17,7 @@ export const FileList: FC<FileListProps> = ({ content, focused, handleClick, han
         <tr key={i}>
             <td>
                 {item.icon ? (
-                    <img className="file-icon" src={`https://cdn.tomlin.no/icons/file/${item.type}.png`} alt={item.type} />
+                    <img className="file-icon" src={`/images/file/${item.type}.png`} alt={item.type} />
                 ) : (
                     <Icon path={mdiFileQuestion} title="Unknown type" className="file-icon" />
                 )}

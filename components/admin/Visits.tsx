@@ -1,32 +1,13 @@
-import { FC, ReactElement, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import { FC, ReactElement } from 'react';
 
-import { DefaultState, Visit } from '../../interfaces';
-import { getVisits } from '../../actions/admin';
-import paginationActions from '../../actions/pagination';
+import { useVisits } from '../../data/admin';
 
+import { PageProps, Visit } from '../../interfaces';
 import { Loading } from '../page/Loading';
 import { Pagination } from '../page/Pagination';
 
-export const Visits: FC = () => {
-    const router = useRouter();
-    const page = Number(router.query.page?.[0] ?? 1);
-
-    const dispatch = useDispatch();
-    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
-    const visits = useSelector<DefaultState, Visit[]>((state) => state.admin.visits?.results ?? []);
-
-    useEffect(() => {
-        dispatch(getVisits(page));
-        window.scrollTo(0, 0);
-
-        dispatch(paginationActions.set(page));
-
-        return (): void => {
-            dispatch(paginationActions.reset());
-        };
-    }, [dispatch, page]);
+export const Visits: FC<PageProps> = ({ page }) => {
+    const { visits, pagination, loading } = useVisits(page);
 
     const renderVisit = (visit: Visit, idx: number): ReactElement => (
         <div className="admin-logs" key={`visits${idx}`}>
@@ -51,7 +32,7 @@ export const Visits: FC = () => {
                 {visits.length ? (
                     <>
                         {visits.map(renderVisit)}
-                        <Pagination path="/admin/visits/" />
+                        <Pagination current={pagination.current} total={pagination.total} path="/admin/visits/" />
                     </>
                 ) : (
                     <span>No tracking data found...</span>

@@ -293,4 +293,13 @@ export interface PaginationResponse<T> {
     total_results: number;
 }
 
+export interface NextPageProps {
+    title?: string;
+    standalone?: boolean;
+}
+
+export interface PageProps {
+    page: number;
+}
+
 export type ThunkResult<R> = ThunkAction<R, DefaultState, undefined, Action>;

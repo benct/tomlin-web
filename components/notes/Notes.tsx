@@ -1,11 +1,10 @@
-import { FC, ReactElement, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, ReactElement, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiFileDocumentMultipleOutline } from '@mdi/js';
 
-import { DefaultState, Note } from '../../interfaces';
-import { getNotes } from '../../actions/admin';
+import { useNotes } from '../../data/notes';
 
+import { Note } from '../../interfaces';
 import { Loading } from '../page/Loading';
 import { NotesModal } from './NotesModal';
 
@@ -13,15 +12,7 @@ export const Notes: FC = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [selected, setSelected] = useState<Note>();
 
-    const dispatch = useDispatch();
-    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
-    const notes = useSelector<DefaultState, Note[]>((state) => state.admin.notes);
-
-    useEffect(() => {
-        if (!notes.length) {
-            dispatch(getNotes());
-        }
-    }, [dispatch, notes]);
+    const { notes, loading } = useNotes();
 
     const edit = (note: Note): void => {
         setShowOverlay(true);

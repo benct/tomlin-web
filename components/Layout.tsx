@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from 'react';
+import { FC, PropsWithChildren, useEffect } from 'react';
 import Head from 'next/head';
 
 import { useAppContext } from '../data/context';
@@ -6,14 +6,9 @@ import { useAuthenticate } from '../data/auth';
 
 import { Header } from './page/Header';
 import { Footer } from './page/Footer';
+import { NextPageProps } from '../interfaces';
 
-type LayoutProps = {
-    title?: string;
-    standalone?: boolean;
-    children: ReactNode;
-};
-
-export const Layout: FC<LayoutProps> = ({ title, standalone, children }) => {
+export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone, children }) => {
     const { toast } = useAppContext();
     const { loading } = useAuthenticate();
 

@@ -1,13 +1,11 @@
-import { ChangeEvent, FC, ReactElement, SyntheticEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, FC, ReactElement, SyntheticEvent, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiAirplane, mdiBriefcaseEditOutline } from '@mdi/js';
 
-import { DefaultState, Flight } from '../../interfaces';
-
 import { formatDate } from '../../util/formatting';
-import { deleteFlight, getFlights, saveFlight } from '../../actions/admin';
+import { useFlightActions, useFlights } from '../../data/flights';
 
+import { Flight } from '../../interfaces';
 import { FlightsModal } from './FlightsModal';
 import { FlightsGroup } from './FlightsGroup';
 import { Loading } from '../page/Loading';
@@ -20,15 +18,8 @@ export const Flights: FC = () => {
     const [invalid, setInvalid] = useState<boolean>(false);
     const [form, setForm] = useState<Flight>({});
 
-    const dispatch = useDispatch();
-    const loading = useSelector<DefaultState, DefaultState['loading']>((state) => state.loading);
-    const flights = useSelector<DefaultState, Flight[][]>((state) => state.admin.flights);
-
-    useEffect(() => {
-        if (!flights.length) {
-            dispatch(getFlights());
-        }
-    }, [dispatch, flights]);
+    const { flights, loading } = useFlights();
+    const { saveFlight, deleteFlight } = useFlightActions();
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
         const { value, name } = event.target;
@@ -61,7 +52,7 @@ export const Flights: FC = () => {
 
     const handleDelete = (id?: string): void => {
         if (id) {
-            dispatch(deleteFlight(+id));
+            deleteFlight(+id);
 
             setForm({});
             setShowModal(false);
@@ -79,7 +70,7 @@ export const Flights: FC = () => {
         event.preventDefault();
 
         if (validateForm(form)) {
-            dispatch(saveFlight(form));
+            saveFlight(form);
             setInvalid(false);
         } else {
             setInvalid(true);

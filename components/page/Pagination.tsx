@@ -1,12 +1,11 @@
 import { FC, ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import { mdiChevronDoubleRight, mdiChevronRight } from '@mdi/js';
 
-import { DefaultState, PaginationState } from '../../interfaces';
-
 interface PaginationProps {
+    current: number;
+    total: number;
     path: string;
     postfix?: string;
 }
@@ -17,11 +16,34 @@ interface PaginationImage {
     rotate?: boolean;
 }
 
-export const Pagination: FC<PaginationProps> = ({ path, postfix }) => {
-    const { enabled, first, previous, current, next, last, total, previousPages, consecutivePages } = useSelector<
-        DefaultState,
-        PaginationState
-    >((state) => state.pagination);
+const listPreviousPages = (totalPages: number, currentPage: number): number[] => {
+    const minPageNr = Math.min(currentPage - 3, totalPages - 5);
+    const firstPage = Math.max(minPageNr, 1);
+    const previousPages = [];
+    for (let i = firstPage; i < currentPage; i++) {
+        previousPages.push(i);
+    }
+    return previousPages;
+};
+
+const listConsecutivePages = (totalPages: number, firstPage: number, currentPage: number): number[] => {
+    const lastPage = Math.min(totalPages, firstPage + 6);
+    const consecutivePages = [];
+    for (let i = currentPage + 1; i <= lastPage; i++) {
+        consecutivePages.push(i);
+    }
+    return consecutivePages;
+};
+
+export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix }) => {
+    const previousPages = listPreviousPages(total, current);
+    const consecutivePages = listConsecutivePages(total, previousPages[0] ?? 1, current);
+
+    const enabled = total > 1;
+    const first = current > 2;
+    const previous = current - 1;
+    const next = current + 1;
+    const last = current < total - 1;
 
     const renderImage = (image: PaginationImage): ReactElement => (
         <Icon

@@ -1,11 +1,10 @@
 import { FC, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
-import { User } from '../../interfaces';
-import { deleteUser, saveUser } from '../../actions/admin';
+import { useUserActions } from '../../data/users';
 
+import { User } from '../../interfaces';
 import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
 
 interface UserModalProps {
@@ -20,11 +19,12 @@ export const UserModal: FC<UserModalProps> = ({ user, close }) => {
     const enabled = useRef<HTMLInputElement>(null);
 
     const [invalid, setInvalid] = useState(false);
-    const dispatch = useDispatch();
+
+    const { saveUser, deleteUser } = useUserActions();
 
     const save = (): void => {
         if (email.current && email.current.value.length && name.current && name.current.value.length) {
-            dispatch(saveUser(email.current.value, name.current.value, password.current?.value ?? null, enabled.current?.checked ?? true));
+            saveUser(email.current.value, name.current.value, password.current?.value ?? null, enabled.current?.checked ?? true);
             close();
         } else {
             setInvalid(true);
@@ -33,7 +33,7 @@ export const UserModal: FC<UserModalProps> = ({ user, close }) => {
 
     const remove = (): void => {
         if (user?.email) {
-            dispatch(deleteUser(user.email));
+            deleteUser(user.email);
             close();
         }
     };
