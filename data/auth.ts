@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import { UrlObject } from 'url';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAppContext } from './context';
@@ -34,7 +35,7 @@ export const useAuthenticate = () => {
     return { loading: !error && !data };
 };
 
-export const useLogin = (redirectTo?: string) => {
+export const useLogin = (redirectTo?: string | UrlObject) => {
     const router = useRouter();
     const { setIsLoggedIn } = useAppContext();
     const [loading, setLoading] = useState<boolean>(false);
