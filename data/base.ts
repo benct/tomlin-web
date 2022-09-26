@@ -1,8 +1,8 @@
 import useSWR from 'swr';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from './context';
-import { get } from '../util/api';
-import { GitHubState, HomeState } from '../interfaces';
+import { del, get, post } from '../util/api';
+import { FinnState, GitHubState, HomeState } from '../interfaces';
 
 export const useToast = (message?: string) => {
     const { setToast } = useAppContext();
@@ -30,4 +30,31 @@ export const useGitHub = () => {
     useToast(error && 'Could not load GitHub data...');
 
     return { data, loading: !error && !data };
+};
+
+export const useFinn = () => {
+    const [toast, setToast] = useState<string>();
+    const { data, error, mutate } = useSWR<FinnState, Error>('/finn', get, { revalidateOnFocus: false });
+
+    useToast(error ? 'Could not load FINN data...' : toast);
+
+    const add = (id: number) => {
+        post(`/finn/${id}`)
+            .then(() => {
+                setToast(`Tracking id ${id}!`);
+                mutate();
+            })
+            .catch(() => setToast('Could not add tracking id...'));
+    };
+
+    const remove = (id: number) => {
+        del(`/finn/${id}`)
+            .then(() => {
+                setToast(`Tracking id ${id} removed!`);
+                mutate();
+            })
+            .catch(() => setToast('Could not remove tracking id...'));
+    };
+
+    return { data, loading: !error && !data, add, remove };
 };

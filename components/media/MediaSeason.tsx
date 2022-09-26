@@ -1,23 +1,20 @@
 import { FC, Fragment, ReactElement, useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { MediaEpisodeEntry, MediaSeasonEntry } from '../../interfaces';
 
 import { formatDate, formatGradientHSL } from '../../util/formatting';
-import { seenEpisode, seenEpisodes } from '../../actions/media';
 
+import { MediaEpisodeEntry, MediaSeasonEntry } from '../../interfaces';
 import { SeenIcon } from './MediaIcons';
 
 interface MediaSeasonProps {
     data: MediaSeasonEntry;
+    setSeenEpisode: (episodeId: number, set: boolean) => void;
+    setSeenEpisodes: (seasonId: number) => void;
 }
 
-export const MediaSeason: FC<MediaSeasonProps> = ({ data }) => {
+export const MediaSeason: FC<MediaSeasonProps> = ({ data, setSeenEpisode, setSeenEpisodes }) => {
     const [showEpisodes, setShowEpisodes] = useState<boolean>(false);
     const [title, setTitle] = useState<string>();
     const [overview, setOverview] = useState<string>();
-
-    const dispatch = useDispatch();
 
     const toggleEpisodes = (): void => {
         setShowEpisodes(!showEpisodes);
@@ -41,12 +38,7 @@ export const MediaSeason: FC<MediaSeasonProps> = ({ data }) => {
                     <span className="text-small text-right">
                         {episode.release_date ? formatDate(episode.release_date, 'MMM do') : null}
                     </span>
-                    <SeenIcon
-                        seen={episode.seen}
-                        setSeen={() => dispatch(seenEpisode({ id: episode.id, set: !episode.seen }))}
-                        size="22px"
-                        className="mrm"
-                    />
+                    <SeenIcon seen={episode.seen} setSeen={() => setSeenEpisode(episode.id, !episode.seen)} size="22px" className="mrm" />
                 </Fragment>
             )
         );
@@ -64,7 +56,7 @@ export const MediaSeason: FC<MediaSeasonProps> = ({ data }) => {
                     {episodesSeen}/{episodesTotal}
                 </button>
                 {episodesSeen === 0 ? (
-                    <button className="input input-small float-right mrm" onClick={() => dispatch(seenEpisodes(data.id))}>
+                    <button className="input input-small float-right mrm" onClick={() => setSeenEpisodes(data.id)}>
                         Mark all
                     </button>
                 ) : null}

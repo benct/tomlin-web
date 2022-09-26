@@ -1,27 +1,29 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { Auth } from '../../../components/Auth';
 import { NavigationMedia } from '../../../components/page/Navigation';
 import { MediaList } from '../../../components/media/MediaList';
-import { MediaType } from '../../../interfaces';
+import { MediaProps, MediaType, NextPageProps } from '../../../interfaces';
 
-const MediaListPage: NextPage<{ type: MediaType; page: number }> = ({ type, page }) => (
+const MediaListPage: NextPage<MediaProps> = ({ type, page, sort, query }) => (
     <Auth>
         <NavigationMedia />
-        <MediaList type={type} page={page} />
+        <MediaList type={type} page={page} sort={sort} query={query} />
     </Auth>
 );
 
-// TODO SSR (getServerSideProps)
-export const getStaticPaths = async () => ({
-    paths: [{ params: { type: 'movie', page: [] } }, { params: { type: 'tv', page: [] } }, { params: { type: 'watchlist', page: [] } }],
-    fallback: 'blocking',
-});
+export const getServerSideProps: GetServerSideProps<NextPageProps & MediaProps> = async ({ query }) => {
+    const type = query.type?.toString() ?? 'invalid';
 
-export const getStaticProps: GetStaticProps = async (context) => {
-    const type = context.params?.type?.toString() ?? 'invalid';
     return {
         notFound: !['movie', 'tv', 'watchlist'].includes(type),
-        props: { type: context.params?.type, page: context.params?.page?.[0] ?? 1, title: 'Media' },
+        props: {
+            title: 'Media Lists',
+            standalone: false,
+            type: type as MediaType,
+            page: Number(query.page?.[0] ?? 1),
+            sort: query.sort?.toString() ?? 'rating-desc',
+            query: query.query?.toString() ?? null,
+        },
     };
 };
 

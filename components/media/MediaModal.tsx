@@ -18,6 +18,8 @@ interface MediaModalProps {
     remove: () => void;
     setSeen: () => void;
     setFavourite: () => void;
+    setSeenEpisode: (episodeId: number, set: boolean) => void;
+    setSeenEpisodes: (seasonId: number) => void;
 }
 
 export const MediaModal: FC<MediaModalProps> = memo((props) => {
@@ -126,7 +128,12 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
                     .filter((s: MediaSeasonEntry): boolean => s.season > 0)
                     .map(
                         (season: MediaSeasonEntry): ReactNode => (
-                            <MediaSeason key={`season${season.id}`} data={season} />
+                            <MediaSeason
+                                key={`season${season.id}`}
+                                data={season}
+                                setSeenEpisode={props.setSeenEpisode}
+                                setSeenEpisodes={props.setSeenEpisodes}
+                            />
                         )
                     )}
             </div>

@@ -202,6 +202,24 @@ export interface MediaSearchItemEntry {
     vote_average: number;
 }
 
+export interface MediaExisting {
+    movie: number[];
+    tv: number[];
+}
+
+export interface MediaExternal {
+    id: number;
+    facebook_id: string | null;
+    imdb_id: string | null;
+    instagram_id: string | null;
+    twitter_id: string | null;
+}
+
+export interface MediaStats {
+    movie: MediaStatsType;
+    tv: MediaStatsType;
+}
+
 export interface MediaStatsType {
     total?: number;
     seen?: number;
@@ -300,6 +318,20 @@ export interface NextPageProps {
 
 export interface PageProps {
     page: number;
+}
+
+export interface MediaProps {
+    type: MediaType;
+    page: number;
+    sort: string;
+    query: string | null;
+}
+
+export interface MediaSearchProps {
+    type?: string;
+    action?: string;
+    page?: number;
+    id?: string;
 }
 
 export type ThunkResult<R> = ThunkAction<R, DefaultState, undefined, Action>;

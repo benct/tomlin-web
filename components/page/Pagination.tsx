@@ -56,7 +56,7 @@ export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix 
     );
 
     const renderPage = (page: number, image?: PaginationImage): ReactElement => (
-        <Link href={path + page + (postfix ? `/${postfix}` : '')} className="button-icon phm" key={`pagination${page}`}>
+        <Link href={`${path}${page}/${postfix ? `${postfix}/` : ''}`} className="button-icon phm" key={`pagination${page}`}>
             {image ? renderImage(image) : page}
         </Link>
     );

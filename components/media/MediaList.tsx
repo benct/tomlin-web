@@ -1,68 +1,34 @@
-import { ChangeEvent, FC, KeyboardEvent, ReactElement, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, FC, KeyboardEvent, ReactElement } from 'react';
+import { useRouter } from 'next/router';
 
-import { DefaultState, MediaItemEntry, MediaType } from '../../interfaces';
-
-import mediaActions, { favourite, getMedia, remove, seen, setItem, update } from '../../actions/media';
-import paginationActions from '../../actions/pagination';
+import { formatQuery } from '../../util/formatting';
+import { useMediaList } from '../../data/media';
 
 import { Loading } from '../page/Loading';
 import { Pagination } from '../page/Pagination';
 import { MediaModal } from './MediaModal';
 import { MediaItem } from './MediaItem';
+import { MediaItemEntry, MediaProps } from '../../interfaces';
 
-interface MediaListState {
-    data: MediaItemEntry[];
-    item: MediaItemEntry | null;
-    showModal: boolean;
-    sort: string;
-    loading: boolean;
-}
-
-interface MediaListProps {
-    type: MediaType;
-    page: number;
-}
-
-export const MediaList: FC<MediaListProps> = ({ type, page }) => {
-    const dispatch = useDispatch();
-
-    const props = useSelector<DefaultState, MediaListState>((state) => ({
-        ...state.media,
-        data: state.media[type]?.results ?? [],
-        loading: state.loading,
-    }));
-
-    const loadMedia = (query?: string): void => {
-        dispatch(getMedia({ type, query, page: query ? 1 : page }));
-        window.scrollTo(0, 0);
-    };
-
-    useEffect(() => {
-        // if (props.data.length) {
-        //     dispatch(paginationActions.set(Number(page ?? 1)));
-        // }
-
-        return () => {
-            dispatch(paginationActions.reset());
-        };
-    }, [dispatch]);
-
-    useEffect(() => {
-        loadMedia();
-    }, [type, page]);
+export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
+    const router = useRouter();
+    const { media, pagination, loading, selected, selectItem, update, remove, favourite, seen, seenEpisode, seenEpisodes } = useMediaList({
+        type,
+        page,
+        sort,
+        query,
+    });
 
     const handleKey = (event: KeyboardEvent<HTMLInputElement>): void => {
         if ((event.keyCode === 13 || event.key === 'Enter') && event.target) {
             const target = event.target as HTMLInputElement;
-            loadMedia(target.value.length ? target.value : undefined);
+            router.push({ pathname: router.pathname, query: { ...router.query, query: target.value } });
         }
     };
 
     const handleSort = (event: ChangeEvent<HTMLSelectElement>): void => {
-        if (props.sort !== event.target.value) {
-            dispatch(mediaActions.setSort(event.target.value));
-            dispatch(getMedia({ type, page, sort: event.target.value }));
+        if (sort !== event.target.value) {
+            router.push({ pathname: router.pathname, query: { ...router.query, sort: event.target.value } });
         }
     };
 
@@ -71,9 +37,9 @@ export const MediaList: FC<MediaListProps> = ({ type, page }) => {
             key={`mediaItem${item.id}`}
             data={item}
             type={item.type ?? type}
-            showItem={() => dispatch(setItem({ type: item.type ?? type, id: item.id }))}
-            setSeen={() => dispatch(seen({ action: type, type: item.type ?? type, id: item.id, set: !item.seen }))}
-            setFavourite={() => dispatch(favourite({ action: type, type: item.type ?? type, id: item.id, set: !item.favourite }))}
+            showItem={() => selectItem(item.type ?? type, item.id)}
+            setSeen={() => seen(item.type ?? type, item.id, !item.seen)}
+            setFavourite={() => favourite(item.type ?? type, item.id, !item.favourite)}
         />
     );
 
@@ -81,16 +47,18 @@ export const MediaList: FC<MediaListProps> = ({ type, page }) => {
         <MediaModal
             data={item}
             type={item.type ?? type}
-            close={() => dispatch(mediaActions.hideModal())}
-            update={() => dispatch(update({ action: type, type: item.type ?? type, id: item.id }))}
-            remove={() => dispatch(remove({ action: type, type: item.type ?? type, id: item.id }))}
-            setSeen={() => dispatch(seen({ action: type, type: item.type ?? type, id: item.id, set: !item.seen }))}
-            setFavourite={() => dispatch(favourite({ action: type, type: item.type ?? type, id: item.id, set: !item.favourite }))}
+            close={() => selectItem()}
+            update={() => update(item.type ?? type, item.id)}
+            remove={() => remove(item.type ?? type, item.id)}
+            setSeen={() => seen(item.type ?? type, item.id, !item.seen)}
+            setFavourite={() => favourite(item.type ?? type, item.id, !item.favourite)}
+            setSeenEpisode={(episodeId: number, set: boolean) => seenEpisode(item.type ?? type, item.id, episodeId, set)}
+            setSeenEpisodes={(seasonId: number) => seenEpisodes(item.type ?? type, item.id, seasonId)}
         />
     );
 
     const renderWatchlist = (data: MediaItemEntry[]): ReactElement => (
-        <Loading isLoading={props.loading} text="Loading media...">
+        <Loading isLoading={loading} text="Loading media...">
             <div>TV-Shows:</div>
             <div className="clear-fix text-center">{data.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(renderRow)}</div>
             <div>Movies:</div>
@@ -107,7 +75,7 @@ export const MediaList: FC<MediaListProps> = ({ type, page }) => {
                     className="input input-small media-input mrs"
                     onChange={(e: ChangeEvent<HTMLSelectElement>): void => e.target.blur()}
                     onBlur={handleSort}
-                    defaultValue={props.sort}>
+                    defaultValue={sort}>
                     <option value="rating-desc">Rating (high-low)</option>
                     <option value="rating-asc">Rating (low-high)</option>
                     <option value="release-asc">Release (first-last)</option>
@@ -124,17 +92,22 @@ export const MediaList: FC<MediaListProps> = ({ type, page }) => {
                     onKeyPress={handleKey}
                 />
             </div>
-            <Loading isLoading={props.loading} text="Loading media...">
+            <Loading isLoading={loading} text="Loading media...">
                 <div className="clear-fix text-center">{data.map(renderRow)}</div>
-                <Pagination path={`/media/${type}/`} />
+                <Pagination
+                    path={`/media/${type}/`}
+                    postfix={formatQuery({ sort: sort !== 'rating-desc' ? sort : null, query })}
+                    current={pagination.current}
+                    total={pagination.total}
+                />
             </Loading>
         </>
     );
 
     return (
         <div className="wrapper min-height ptm">
-            {type === 'watchlist' ? renderWatchlist(props.data) : renderList(props.data)}
-            {props.showModal && props.item ? renderModal(props.item) : null}
+            {type === 'watchlist' ? renderWatchlist(media) : renderList(media)}
+            {selected ? renderModal(selected) : null}
         </div>
     );
 };

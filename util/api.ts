@@ -1,5 +1,6 @@
 import { Action } from 'redux';
 
+import { formatQuery } from './formatting';
 import { debounce } from './debounce';
 import { store } from '../redux/store';
 import actions from '../actions/base';
@@ -16,14 +17,6 @@ const checkStatus = (response: Response): Promise<Response> =>
 const authHeader = (): Record<string, string> => {
     const token = window.localStorage.getItem('token');
     return token ? { Authorization: `Basic ${token}` } : {};
-};
-
-const query = (data: ApiParams = {}): string => {
-    const params = Object.keys(data)
-        .filter((key: string): boolean => typeof data[key] !== 'undefined' && data[key] !== null)
-        .map((key: string): string => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`);
-
-    return params.length > 0 ? `?${params.join('&')}` : '';
 };
 
 const buildForm = (data?: ApiParams, files?: FormData): FormData => {
@@ -55,7 +48,7 @@ export const load = <T>(method: string, path: string, body?: FormData, type?: st
 export const get = <T>(path: string, params?: ApiParams): Promise<T> => {
     store.dispatch(actions.setLoading(true));
 
-    return api<T>('GET', path + query(params)).finally(() => store.dispatch(actions.setLoading(false)));
+    return api<T>('GET', path + formatQuery(params)).finally(() => store.dispatch(actions.setLoading(false)));
 };
 
 export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));

@@ -1,6 +1,14 @@
 import dateParse from 'date-fns/parseISO';
 import dateFormat from 'date-fns/format';
 
+export const formatQuery = (data: Record<string, string | number | boolean | null> = {}): string => {
+    const params = Object.keys(data)
+        .filter((key: string): boolean => typeof data[key] !== 'undefined' && data[key] !== null)
+        .map((key: string): string => `${encodeURIComponent(key)}=${encodeURIComponent(data[key] ?? '')}`);
+
+    return params.length > 0 ? `?${params.join('&')}` : '';
+};
+
 export const formatDate = (date?: string, format = 'MMM d, YYY'): string | null =>
     date && date !== '' ? dateFormat(dateParse(date), format) : null;
 

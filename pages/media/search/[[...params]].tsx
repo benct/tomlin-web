@@ -1,21 +1,29 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage, GetServerSideProps } from 'next';
 import { Auth } from '../../../components/Auth';
 import { NavigationMedia } from '../../../components/page/Navigation';
 import { MediaSearch } from '../../../components/media/MediaSearch';
+import { MediaSearchProps, NextPageProps } from '../../../interfaces';
 
-const MediaSearchPage: NextPage = () => (
+const MediaSearchPage: NextPage<MediaSearchProps> = (props) => (
     <Auth>
         <NavigationMedia />
-        <MediaSearch />
+        <MediaSearch {...props} />
     </Auth>
 );
 
-// TODO SSR (getServerSideProps)
-export const getStaticPaths = async () => ({
-    paths: [{ params: { params: [] } }],
-    fallback: 'blocking',
-});
+export const getServerSideProps: GetServerSideProps<NextPageProps & MediaSearchProps> = async ({ query }) => {
+    const [type, action, page, id] = (query.params ?? []) as string[];
 
-export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Media', standalone: false } });
+    return {
+        props: {
+            title: `Media Search`,
+            standalone: false,
+            ...(type ? { type } : {}),
+            ...(action ? { action } : {}),
+            ...(id ? { id } : {}),
+            page: Number(page ?? 1),
+        },
+    };
+};
 
 export default MediaSearchPage;

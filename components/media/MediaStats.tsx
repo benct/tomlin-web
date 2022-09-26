@@ -1,5 +1,4 @@
-import { FC, ReactElement, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, ReactElement } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiMovieOutline, mdiTelevisionClassic } from '@mdi/js';
 import {
@@ -14,17 +13,11 @@ import {
 } from 'react-vis';
 import 'react-vis/dist/style.css';
 
-import { AuthState, DefaultState, MediaStatsEntry, MediaStatsType } from '../../interfaces';
-import { getStats } from '../../actions/media';
+import { useAppContext } from '../../data/context';
+import { useMediaStats } from '../../data/media';
 
 import { Loading } from '../page/Loading';
-
-interface MediaStatsState {
-    movie: MediaStatsType;
-    tv: MediaStatsType;
-    loading: DefaultState['loading'];
-    isLoggedIn: AuthState['isLoggedIn'];
-}
+import { MediaStatsEntry, MediaStatsType } from '../../interfaces';
 
 interface MediaGraphEntry {
     x: string;
@@ -32,19 +25,8 @@ interface MediaGraphEntry {
 }
 
 export const MediaStats: FC = () => {
-    const dispatch = useDispatch();
-    const state = useSelector<DefaultState, MediaStatsState>((state) => ({
-        movie: state.media.stats.movie,
-        tv: state.media.stats.tv,
-        loading: state.loading,
-        isLoggedIn: state.auth.isLoggedIn,
-    }));
-
-    useEffect(() => {
-        if (!state.movie.total) {
-            dispatch(getStats());
-        }
-    }, [dispatch, state.movie]);
+    const { isLoggedIn } = useAppContext();
+    const { stats, loading } = useMediaStats();
 
     const mapRatings = (data?: MediaStatsEntry[]): MediaGraphEntry[] =>
         data
@@ -110,29 +92,31 @@ export const MediaStats: FC = () => {
         <div className="wrapper min-height ptm">
             <div className="text mbl">
                 Personal movie and TV-show watchlist.
-                {!state.isLoggedIn && <span className="no-wrap"> Login required.</span>}
+                {!isLoggedIn && <span className="no-wrap"> Login required.</span>}
             </div>
-            <Loading isLoading={state.loading} text="Loading stats...">
-                <div className="media-stats text-center">
-                    <div>
-                        <div className="border-bottom pbs mam">
-                            <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" id="movieIcon" />
-                            <span className="valign-middle">Tracked Movies</span>
+            <Loading isLoading={loading} text="Loading stats...">
+                {stats ? (
+                    <div className="media-stats text-center">
+                        <div>
+                            <div className="border-bottom pbs mam">
+                                <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" id="movieIcon" />
+                                <span className="valign-middle">Tracked Movies</span>
+                            </div>
+                            {renderStats(stats.movie)}
+                            {renderLineChart(`Rating (avg: ${stats.movie?.rating ?? '-'})`, '#006080', mapRatings(stats.movie.ratings))}
+                            {renderBarChart('Release (by decade)', '#006080', mapYears(stats.movie.years))}
                         </div>
-                        {renderStats(state.movie)}
-                        {renderLineChart(`Rating (avg: ${state.movie.rating ?? '-'})`, '#006080', mapRatings(state.movie.ratings))}
-                        {renderBarChart('Release (by decade)', '#006080', mapYears(state.movie.years))}
-                    </div>
-                    <div>
-                        <div className="border-bottom pbs mam">
-                            <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" id="tvIcon" />
-                            <span className="valign-middle">Tracked TV-Shows</span>
+                        <div>
+                            <div className="border-bottom pbs mam">
+                                <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" id="tvIcon" />
+                                <span className="valign-middle">Tracked TV-Shows</span>
+                            </div>
+                            {renderStats(stats.tv)}
+                            {renderLineChart(`Rating (avg: ${stats.tv.rating ?? '-'})`, '#008060', mapRatings(stats.tv.ratings))}
+                            {renderBarChart('First aired (by decade)', '#008060', mapYears(stats.tv.years))}
                         </div>
-                        {renderStats(state.tv)}
-                        {renderLineChart(`Rating (avg: ${state.tv.rating ?? '-'})`, '#008060', mapRatings(state.tv.ratings))}
-                        {renderBarChart('First aired (by decade)', '#008060', mapYears(state.tv.years))}
                     </div>
-                </div>
+                ) : null}
             </Loading>
         </div>
     );
