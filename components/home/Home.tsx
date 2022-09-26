@@ -45,7 +45,7 @@ export const Home: FC = () => {
                 <div className="home-info text-small">
                     Version
                     <button className="input input-small" onClick={() => setShowChangelog(!showChangelog)}>
-                        2.17.0
+                        3.0.0
                     </button>
                 </div>
             </div>

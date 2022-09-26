@@ -1,6 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 2022-09-26 - *Next.js*
+### Added
+- Next.js framework version 12
+- Server data fetching with SWR
+- Client side state with Context API
+- Custom hooks for handling async requests
+
+### Changed
+- Major restructuring and refactoring for Next support
+- Several modifications to existing components to support Next
+- Replace react-router with Next's route handling
+- Replace data state and fetching with SWR hooks
+
+### Removed
+- Webpack, loaders and babel configurations
+- Redux, redux-thunk and redux-actions
+- Changelog view and markdown support
+
 ## [2.17.0] - 2021-01-20 - *User Management*
 ### Added
 - Support for proper user management
