@@ -1,8 +1,5 @@
 import { StrictMode } from 'react';
-import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
-
-import { store } from '../redux/store';
 
 import { AppContextProvider } from '../data/context';
 import { Layout } from '../components/Layout';
@@ -25,15 +22,13 @@ import '../styles/files.css';
 import '../styles/error.css';
 
 const App = ({ Component, pageProps }: AppProps) => (
-    <Provider store={store}>
-        <StrictMode>
-            <AppContextProvider>
-                <Layout {...pageProps}>
-                    <Component {...pageProps} />
-                </Layout>
-            </AppContextProvider>
-        </StrictMode>
-    </Provider>
+    <StrictMode>
+        <AppContextProvider>
+            <Layout {...pageProps}>
+                <Component {...pageProps} />
+            </Layout>
+        </AppContextProvider>
+    </StrictMode>
 );
 
 export default App;

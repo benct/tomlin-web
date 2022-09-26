@@ -1,35 +1,5 @@
-import { ThunkAction } from 'redux-thunk';
-import { Action } from 'redux';
-
-export interface DefaultState {
-    showMenu: boolean;
-    toast: string | null;
-    theme: string;
-
-    loading: boolean;
-    loadingOverlay: boolean;
-
-    settings: Settings;
-    auth: AuthState;
-    home: HomeState;
-    quote: QuoteState;
-    github: GitHubState;
-    finn: FinnState;
-    files: FileState;
-    media: MediaState;
-    admin: AdminState;
-    pagination: PaginationState;
-}
-
 export interface Settings {
     [key: string]: string;
-}
-
-export interface AuthState {
-    isLoggedIn: boolean;
-    redirect: boolean;
-    error: boolean;
-    loading: boolean;
 }
 
 export interface HomeState {
@@ -79,14 +49,6 @@ export interface FinnEntry {
     timestamp: string;
 }
 
-export interface FileState {
-    cwd: string;
-    content: FileItem[];
-    focused: number | null;
-    preview: FilePreview | null;
-    uploading: boolean;
-}
-
 export interface FileItem {
     path: string;
     name: string;
@@ -110,24 +72,6 @@ export interface FilePreview {
 export type FilePreviewType = 'image' | 'video' | 'text' | null;
 
 export type MediaType = 'movie' | 'tv' | 'watchlist';
-
-export interface MediaState {
-    movie: PaginationResponse<MediaItemEntry> | null;
-    tv: PaginationResponse<MediaItemEntry> | null;
-    watchlist: PaginationResponse<MediaItemEntry> | null;
-    item: MediaItemEntry | null;
-    sort: string;
-    showModal: boolean;
-    search: MediaSearchItemEntry[];
-    existing: {
-        movie: number[];
-        tv: number[];
-    };
-    stats: {
-        movie: MediaStatsType;
-        tv: MediaStatsType;
-    };
-}
 
 export type MediaItemEntry = MediaItemCommon & MediaItemMovie & MediaItemTv;
 
@@ -237,16 +181,6 @@ export interface MediaStatsEntry {
     count: number;
 }
 
-export interface AdminState {
-    stats: Record<string, number>;
-    logs: PaginationResponse<Log> | null;
-    visits: PaginationResponse<Visit> | null;
-    hass: Hass[];
-    users: User[];
-    flights: Flight[][];
-    notes: Note[];
-}
-
 export interface Hass {
     id: number;
     sensor: string;
@@ -292,18 +226,6 @@ export interface Note {
     updated?: string;
 }
 
-export interface PaginationState {
-    enabled: boolean;
-    current: number;
-    total: number;
-    first: boolean;
-    previous: number;
-    next: number;
-    last: boolean;
-    previousPages: number[];
-    consecutivePages: number[];
-}
-
 export interface PaginationResponse<T> {
     results: T[];
     page: number;
@@ -333,5 +255,3 @@ export interface MediaSearchProps {
     page?: number;
     id?: string;
 }
-
-export type ThunkResult<R> = ThunkAction<R, DefaultState, undefined, Action>;

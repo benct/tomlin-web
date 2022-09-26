@@ -1,15 +1,15 @@
-import { Action } from 'redux';
-
 import { formatQuery } from './formatting';
 import { debounce } from './debounce';
-import { store } from '../redux/store';
-import actions from '../actions/base';
 
 type ApiParams = Record<string, any>;
 
 const baseApiUrl = 'http://localhost:8081'; // 'https://api.tomlin.no';
 
-const delayedLoading = debounce((value: boolean): Action => store.dispatch(actions.setLoadingOverlay(value)), 150);
+// TODO reimplement loading overlay?
+let loadingOverlay = false;
+const delayedLoading = debounce((value: boolean): void => {
+    loadingOverlay = value;
+}, 150);
 
 const checkStatus = (response: Response): Promise<Response> =>
     response.ok ? Promise.resolve(response) : Promise.reject(response.statusText);
@@ -45,11 +45,7 @@ export const load = <T>(method: string, path: string, body?: FormData, type?: st
     return api<T>(method, path, body, type).finally(() => delayedLoading(false));
 };
 
-export const get = <T>(path: string, params?: ApiParams): Promise<T> => {
-    store.dispatch(actions.setLoading(true));
-
-    return api<T>('GET', path + formatQuery(params)).finally(() => store.dispatch(actions.setLoading(false)));
-};
+export const get = <T>(path: string, params?: ApiParams): Promise<T> => api<T>('GET', path + formatQuery(params));
 
 export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));
 
