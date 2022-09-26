@@ -10,7 +10,7 @@ about various web development technologies.
 [![GitHub licence](https://img.shields.io/github/license/benct/tomlin-web.svg)](https://github.com/benct/tomlin-web/blob/master/LICENCE)
 [![Code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 
-<sub><i>Next, React, Redux, TypeScript, ESLint, Node, Yarn, HTML5, CSS3</i></sub>
+<sub><i>Next, React, SWR, TypeScript, ESLint, Node, Yarn, HTML5, CSS3</i></sub>
 
 ## Quick start
 
