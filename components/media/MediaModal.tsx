@@ -101,11 +101,15 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
                     <img className="valign-middle" src="/images/icon/imdb.svg" alt="IMDb" width={38} style={{ margin: '-12px 0' }} />
                 </a>
             ) : null}
-            <Link href={`/media/search/${props.type}/similar/1/${id}`} className="mlm pointer">
-                <Icon path={mdiApproximatelyEqualBox} size="26px" title="Find similar" className="valign-middle" />
+            <Link href={`/media/search/${props.type}/similar/1/${id}`}>
+                <a className="mlm pointer">
+                    <Icon path={mdiApproximatelyEqualBox} size="26px" title="Find similar" className="valign-middle" />
+                </a>
             </Link>
-            <Link href={`/media/search/${props.type}/recommended/1/${id}`} className="mlm pointer">
-                <Icon path={mdiThumbUpOutline} size="26px" title="Recommendations" className="valign-middle" />
+            <Link href={`/media/search/${props.type}/recommended/1/${id}`}>
+                <a className="mlm pointer">
+                    <Icon path={mdiThumbUpOutline} size="26px" title="Recommendations" className="valign-middle" />
+                </a>
             </Link>
         </div>
     );

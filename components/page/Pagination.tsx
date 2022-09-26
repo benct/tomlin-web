@@ -46,18 +46,12 @@ export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix 
     const last = current < total - 1;
 
     const renderImage = (image: PaginationImage): ReactElement => (
-        <Icon
-            path={image.double ? mdiChevronDoubleRight : mdiChevronRight}
-            rotate={image.rotate ? 180 : 0}
-            size={1}
-            title={image.title}
-            className="valign-middle"
-        />
+        <Icon path={image.double ? mdiChevronDoubleRight : mdiChevronRight} rotate={image.rotate ? 180 : 0} size={1} title={image.title} />
     );
 
     const renderPage = (page: number, image?: PaginationImage): ReactElement => (
-        <Link href={`${path}${page}/${postfix ? `${postfix}/` : ''}`} className="button-icon phm" key={`pagination${page}`}>
-            {image ? renderImage(image) : page}
+        <Link href={`${path}${page}/${postfix ? `${postfix}/` : ''}`} key={`pagination${page}`}>
+            <a className="button-icon phm">{image ? renderImage(image) : page}</a>
         </Link>
     );
 
@@ -65,14 +59,12 @@ export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix 
         <div className="text-center clear ptl">
             {first ? renderPage(1, { title: 'First page', double: true, rotate: true }) : null}
             {previousPages.length ? renderPage(previous, { title: 'Previous page', rotate: true }) : null}
-            <span className="hide-gt480">
-                <span className="valign-middle phm">Page {current}</span>
-            </span>
-            <span className="hide-lt480 phm">
+            <span className="phm hide-gt480">Page {current}</span>
+            <div className="phm hide-lt480" style={{ display: 'inline-block' }}>
                 {previousPages.map((page: number) => renderPage(page))}
-                <span className="valign-middle phm strong">{current}</span>
+                <span className="phm strong">{current}</span>
                 {consecutivePages.map((page: number) => renderPage(page))}
-            </span>
+            </div>
             {consecutivePages.length ? renderPage(next, { title: 'Next page' }) : null}
             {last ? renderPage(total, { title: 'Last page', double: true }) : null}
         </div>
