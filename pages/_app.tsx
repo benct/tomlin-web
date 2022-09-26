@@ -1,4 +1,3 @@
-import { StrictMode } from 'react';
 import type { AppProps } from 'next/app';
 
 import { AppContextProvider } from '../data/context';
@@ -22,13 +21,11 @@ import '../styles/files.css';
 import '../styles/error.css';
 
 const App = ({ Component, pageProps }: AppProps) => (
-    <StrictMode>
-        <AppContextProvider>
-            <Layout {...pageProps}>
-                <Component {...pageProps} />
-            </Layout>
-        </AppContextProvider>
-    </StrictMode>
+    <AppContextProvider>
+        <Layout {...pageProps}>
+            <Component {...pageProps} />
+        </Layout>
+    </AppContextProvider>
 );
 
 export default App;

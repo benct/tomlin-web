@@ -1,9 +1,10 @@
+import getConfig from 'next/config';
 import { formatQuery } from './formatting';
 import { debounce } from './debounce';
 
 type ApiParams = Record<string, any>;
 
-const baseApiUrl = 'http://localhost:8081'; // 'https://api.tomlin.no';
+const { publicRuntimeConfig } = getConfig();
 
 // TODO reimplement loading overlay?
 let loadingOverlay = false;
@@ -30,7 +31,7 @@ const buildForm = (data?: ApiParams, files?: FormData): FormData => {
 };
 
 const api = <T>(method: string, path: string, body?: FormData, type?: string): Promise<T> =>
-    fetch(baseApiUrl + path, {
+    fetch(publicRuntimeConfig.apiUrl + path, {
         method: method,
         body: body ?? null,
         headers: authHeader(),
