@@ -1,26 +1,18 @@
 import { FC } from 'react';
-import { Icon } from '@mdi/react';
 import { mdiAt, mdiFacebook, mdiGithub, mdiInstagram, mdiLinkedin } from '@mdi/js';
+import { Button } from './Button';
+
+const renderLink = (url: string, title: string, icon: string) => <Button href={url} text={title} title={title} icon={icon} />;
 
 export const Footer: FC = () => (
-    <footer className="color-bg">
-        <div className="social text-center">
-            <a href="https://github.com/benct" target="_blank" rel="noopener noreferrer">
-                <Icon path={mdiGithub} size={1} title="GitHub" className="valign-middle" id="githubIcon" />
-            </a>
-            <a href="https://www.facebook.com/ben.c.tomlin" target="_blank" rel="noopener noreferrer">
-                <Icon path={mdiFacebook} size={1} title="Facebook" className="valign-middle" id="facebookIcon" />
-            </a>
-            <a href="https://www.instagram.com/benctomlin" target="_blank" rel="noopener noreferrer">
-                <Icon path={mdiInstagram} size={1} title="Instagram" className="valign-middle" id="instagramIcon" />
-            </a>
-            <a href="https://www.linkedin.com/in/bentomlin" target="_blank" rel="noopener noreferrer">
-                <Icon path={mdiLinkedin} size={1} title="LinkedIn" className="valign-middle" id="linkedinIcon" />
-            </a>
-            <a href="mailto:ben@tomlin.no" target="_blank" rel="noopener noreferrer">
-                <Icon path={mdiAt} size={1} title="E-mail" className="valign-middle" id="emailIcon" />
-            </a>
+    <footer className="max-w mx-auto bg-light dark:bg-dark border-t py-40 px-16 sm:px-24 md:px-32 space-y-16">
+        <div className="flex justify-center gap-x-32">
+            {renderLink('https://github.com/benct', 'Github', mdiGithub)}
+            {renderLink('https://www.facebook.com/ben.c.tomlin', 'Facebook', mdiFacebook)}
+            {renderLink('https://www.instagram.com/benctomlin', 'Instagram', mdiInstagram)}
+            {renderLink('https://www.linkedin.com/in/bentomlin', 'LinkedIn', mdiLinkedin)}
+            {renderLink('mailto:ben@tomlin.no', 'Email', mdiAt)}
         </div>
-        <div className="text color-offset no-select mtl">Ben Tomlin © 2022</div>
+        <div className="text-16 text-neutral dark:text-neutral-dark text-center user-select-none">Ben Tomlin © 2022</div>
     </footer>
 );

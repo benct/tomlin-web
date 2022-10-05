@@ -1,4 +1,6 @@
-import { FC, memo, ReactElement, useEffect, useRef, useState } from 'react';
+import { FC, ReactElement, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import { Box } from '../page/Box';
 
 interface CountdownProps {
     title: string;
@@ -6,7 +8,7 @@ interface CountdownProps {
     icon?: string;
 }
 
-export const Countdown: FC<CountdownProps> = memo(({ title, timestamp, icon }) => {
+export const Countdown: FC<CountdownProps> = ({ title, timestamp, icon }) => {
     const interval = useRef<number>(0);
     const countdownTarget = useRef<Date | null>(null);
 
@@ -40,26 +42,26 @@ export const Countdown: FC<CountdownProps> = memo(({ title, timestamp, icon }) =
     }, [timestamp]);
 
     const renderTimeUnit = (time: number, unit: string): ReactElement => (
-        <li className="countdown-time-wrap">
-            <span className="countdown-time">{time}</span>
-            <p className="countdown-unit">{unit}</p>
+        <li className="text-center">
+            <span className="text-28 font-bold">{time}</span>
+            <p className="text-12 uppercase">{unit}</p>
         </li>
     );
 
+    const heading = (
+        <>
+            {title} {icon ? <Image src={`/images/icon/${icon}.svg`} alt={icon} width={26} height={26} /> : null}
+        </>
+    );
+
     return (
-        <div className="wrapper text-center">
-            <div className="countdown-title color-primary">
-                {title}{' '}
-                {icon ? <img src={`/images/icon/${icon}.svg`} alt={icon} width={26} height={26} style={{ verticalAlign: 'top' }} /> : null}
-            </div>
-            <ul className="countdown">
+        <Box title={heading} border="border-b">
+            <ul className="flex justify-evenly py-16">
                 {renderTimeUnit(days, 'days')}
                 {renderTimeUnit(hours, 'hours')}
                 {renderTimeUnit(minutes, 'minutes')}
                 {renderTimeUnit(seconds, 'seconds')}
             </ul>
-        </div>
+        </Box>
     );
-});
-
-Countdown.displayName = 'Countdown';
+};

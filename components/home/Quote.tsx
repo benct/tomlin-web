@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from 'react';
-import { Icon } from '@mdi/react';
 import { mdiRefresh } from '@mdi/js';
 
 import { quotes } from '../../util/quotes';
 import { QuoteState } from '../../interfaces';
+import { Box } from '../page/Box';
+import { Button } from '../page/Button';
 
 export const Quote: FC = () => {
     const [quote, setQuote] = useState<QuoteState>({
@@ -25,10 +26,12 @@ export const Quote: FC = () => {
     }, []);
 
     return quote.text ? (
-        <div className="wrapper text-center no-select" onClick={refreshQuote} role="button" tabIndex={0}>
-            <div className="limit-width">{quote.text}</div>
-            <div>{quote.author ? <i>- {quote.author}</i> : null}</div>
-            <Icon path={mdiRefresh} size="16px" className="help-icon float-right" title="Show new quote" id="refreshIcon" />
-        </div>
+        <Box>
+            <div className="text-center select-none max-w-narrow mx-auto" onClick={refreshQuote} role="button" tabIndex={0}>
+                <div className="limit-width">{quote.text}</div>
+                <div>{quote.author ? <i>- {quote.author}</i> : null}</div>
+            </div>
+            <Button text="Refresh" title="Show new quote" icon={mdiRefresh} size="18px" className="float-right" onClick={refreshQuote} />
+        </Box>
     ) : null;
 };

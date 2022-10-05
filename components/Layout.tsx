@@ -13,8 +13,9 @@ export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone
     const { loading } = useAuthenticate();
 
     useEffect(() => {
-        const theme = window.localStorage.getItem('theme');
-        document.body.classList.add(theme ?? 'default');
+        document.body.classList.add('bg-body-light');
+        document.body.classList.add('dark:bg-body-dark');
+        document.body.classList.add('h-screen');
     }, []);
 
     const siteTitle = `Tomlin - ${title ?? 'Home'}`;
@@ -45,9 +46,15 @@ export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone
                 <meta name="msapplication-config" content="/manifest/browserconfig.xml" />
                 <meta name="theme-color" content="#002080" />
             </Head>
-            {standalone ? null : <Header />}
-            <main>{children}</main>
-            {standalone ? null : <Footer />}
+            {standalone ? (
+                <main>{children}</main>
+            ) : (
+                <>
+                    <Header />
+                    <main className="max-w mx-auto bg-white">{children}</main>
+                    <Footer />
+                </>
+            )}
             {loading ? (
                 <div className="overlay overlay-loading">
                     <div className="overlay-container shadow">
