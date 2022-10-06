@@ -16,6 +16,7 @@ import 'react-vis/dist/style.css';
 import { useAppContext } from '../../data/context';
 import { useMediaStats } from '../../data/media';
 
+import { Box } from '../page/Box';
 import { Loading } from '../page/Loading';
 import { MediaStatsEntry, MediaStatsType } from '../../interfaces';
 
@@ -75,49 +76,65 @@ export const MediaStats: FC = () => {
     );
 
     const renderStats = (stats: MediaStatsType): ReactElement => (
-        <div className="text-small mbl" style={{ height: '60px' }}>
-            Total <span className="strong prl">{stats.total ?? '-'}</span>
-            Seen <span className="strong prl">{stats.seen ?? '-'}</span>
-            Favourite <span className="strong">{stats.favourite ?? '-'}</span>
-            {stats.episodes ? (
-                <div className="text-smaller mts">
-                    Episodes <span className="strong prl">{stats.episodes ?? '-'}</span>
-                    Seen <span className="strong prl">{stats.seen_episodes ?? '-'}</span>
-                </div>
-            ) : null}
+        <div className="flex justify-center items-center text-14 mb-8">
+            Total&nbsp;<span className="font-bold text-16 pr-16">{stats.total ?? '-'}</span>
+            Seen&nbsp;<span className="font-bold text-16 pr-16">{stats.seen ?? '-'}</span>
+            Favourite&nbsp;<span className="font-bold text-16">{stats.favourite ?? '-'}</span>
+        </div>
+    );
+
+    const renderEpisodeStats = (stats: MediaStatsType): ReactElement => (
+        <div className="flex justify-center items-center text-12">
+            Episodes&nbsp;<span className="font-bold text-14 pr-16">{stats.episodes ?? '-'}</span>
+            Seen&nbsp;<span className="font-bold text-14">{stats.seen_episodes ?? '-'}</span>
         </div>
     );
 
     return (
-        <div className="wrapper min-height ptm">
-            <div className="text mbl">
-                Personal movie and TV-show watchlist.
+        <Box title="Media">
+            <div className="text-center mb-16">
+                Personal movie and TV watchlist and tracker.
                 {!isLoggedIn && <span className="no-wrap"> Login required.</span>}
             </div>
             <Loading isLoading={loading} text="Loading stats...">
                 {stats ? (
-                    <div className="media-stats text-center">
+                    <div className="grid md:grid-cols-2 gap-16 text-center">
                         <div>
-                            <div className="border-bottom pbs mam">
-                                <Icon path={mdiMovieOutline} size={1} title="Movies" className="text-icon" id="movieIcon" />
-                                <span className="valign-middle">Tracked Movies</span>
+                            <div className="flex justify-center gap-8 border-b pb-8 m-12">
+                                <Icon
+                                    path={mdiMovieOutline}
+                                    size={1}
+                                    title="Movies"
+                                    className="text-secondary dark:text-secondary-dark"
+                                    id="movie-icon"
+                                />
+                                <span>Tracked Movies</span>
                             </div>
-                            {renderStats(stats.movie)}
+                            <div className="h-56">{renderStats(stats.movie)}</div>
                             {renderLineChart(`Rating (avg: ${stats.movie?.rating ?? '-'})`, '#006080', mapRatings(stats.movie.ratings))}
                             {renderBarChart('Release (by decade)', '#006080', mapYears(stats.movie.years))}
                         </div>
                         <div>
-                            <div className="border-bottom pbs mam">
-                                <Icon path={mdiTelevisionClassic} size={1} title="TV-Shows" className="text-icon" id="tvIcon" />
-                                <span className="valign-middle">Tracked TV-Shows</span>
+                            <div className="flex justify-center gap-8 border-b pb-8 m-12">
+                                <Icon
+                                    path={mdiTelevisionClassic}
+                                    size={1}
+                                    title="TV-Shows"
+                                    className="text-secondary dark:text-secondary-dark"
+                                    id="tv-icon"
+                                />
+                                <span>Tracked TV-Shows</span>
                             </div>
-                            {renderStats(stats.tv)}
+                            <div className="h-56">
+                                {renderStats(stats.tv)}
+                                {renderEpisodeStats(stats.tv)}
+                            </div>
                             {renderLineChart(`Rating (avg: ${stats.tv.rating ?? '-'})`, '#008060', mapRatings(stats.tv.ratings))}
                             {renderBarChart('First aired (by decade)', '#008060', mapYears(stats.tv.years))}
                         </div>
                     </div>
                 ) : null}
             </Loading>
-        </div>
+        </Box>
     );
 };

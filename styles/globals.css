@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dark .rv-discrete-color-legend-item,
+.dark .rv-xy-plot__axis__tick__text {
+    color: #eee;
+    fill: #eee;
+}
