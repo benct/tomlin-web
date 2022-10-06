@@ -4,6 +4,7 @@ import { Icon } from '@mdi/react';
 import { mdiExitRun } from '@mdi/js';
 
 import { useLogout } from '../data/auth';
+import { Box } from '../components/page/Box';
 
 const LogoutPage: NextPage = () => {
     const logout = useLogout();
@@ -13,11 +14,17 @@ const LogoutPage: NextPage = () => {
     }, [logout]);
 
     return (
-        <div className="wrapper min-height text">
+        <Box title="Logout" className="text-center">
             <div>You have been logged out...</div>
-            <Icon path={mdiExitRun} size="150px" title="Logging out!" className="mvl" id="exitIcon" />
+            <Icon
+                path={mdiExitRun}
+                size="100px"
+                title="Logging out!"
+                className="my-32 mx-auto text-neutral dark:text-neutral-dark"
+                id="exit-icon"
+            />
             <div>Bye bye!</div>
-        </div>
+        </Box>
     );
 };
 
