@@ -1,6 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] - 2022-10-06 - *Tailwind*
+### Added
+- Tailwind CSS and configurations
+- Theme handling with Tailwind (dark mode)
+- New menu layout and styling
+
+### Changed
+- Restructuring and refactoring of html structure
+- CSS class names and styling of public components
+- Moved theme and version buttons to header
+- Improved error handling for SWR requests
+
+### Removed
+- All custom CSS modules and code
+- Custom themes and theme handling
+- Changelog modal component
+
 ## [3.0.0] - 2022-09-26 - *Next.js*
 ### Added
 - Next.js framework version 12

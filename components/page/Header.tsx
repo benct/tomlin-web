@@ -52,7 +52,7 @@ export const Header: FC = () => {
                         className="text-neutral dark:text-neutral-dark ml-16"
                         title="Version"
                     />
-                    <Button text="3.0.0" title="View changelog on GitHub" href="https://github.com/benct/tomlin-web" />
+                    <Button text="3.1.0" title="View changelog on GitHub" href="https://github.com/benct/tomlin-web" />
                 </div>
             </header>
             <Navigation show={showMenu} toggle={toggleMenu} />
