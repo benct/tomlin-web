@@ -12,9 +12,6 @@ const delayedLoading = debounce((value: boolean): void => {
     loadingOverlay = value;
 }, 150);
 
-const checkStatus = (response: Response): Promise<Response> =>
-    response.ok ? Promise.resolve(response) : Promise.reject(response.statusText);
-
 const authHeader = (): Record<string, string> => {
     const token = window.localStorage.getItem('token');
     return token ? { Authorization: `Basic ${token}` } : {};
@@ -37,7 +34,10 @@ const api = <T>(method: string, path: string, body?: FormData, type?: string): P
         headers: authHeader(),
         mode: 'cors',
     })
-        .then(checkStatus)
+        .then((response: Response): Promise<Response> => {
+            if (!response.ok) throw new Error(`Error (${response.status}) while fetching data from API.`);
+            return Promise.resolve(response);
+        })
         .then((response: Response): Promise<T> => (type == 'text' ? response.text() : type == 'blob' ? response.blob() : response.json()));
 
 export const load = <T>(method: string, path: string, body?: FormData, type?: string): Promise<T> => {

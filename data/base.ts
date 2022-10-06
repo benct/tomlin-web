@@ -17,7 +17,7 @@ export const useToast = (message?: string) => {
 };
 
 export const useHomeState = () => {
-    const { data, error } = useSWR<HomeState, Error>('/hass/states', get, { revalidateOnFocus: false });
+    const { data, error } = useSWR<HomeState, Error>('/hass/states', get, { revalidateOnFocus: false, errorRetryCount: 1 });
 
     useToast(error && 'Could not load server data...');
 
@@ -25,7 +25,7 @@ export const useHomeState = () => {
 };
 
 export const useGitHub = () => {
-    const { data, error } = useSWR<GitHubState, Error>('/github', get, { revalidateOnFocus: false });
+    const { data, error } = useSWR<GitHubState, Error>('/github', get, { revalidateOnFocus: false, errorRetryCount: 0 });
 
     useToast(error && 'Could not load GitHub data...');
 
@@ -34,7 +34,7 @@ export const useGitHub = () => {
 
 export const useFinn = () => {
     const [toast, setToast] = useState<string>();
-    const { data, error, mutate } = useSWR<FinnState, Error>('/finn', get, { revalidateOnFocus: false });
+    const { data, error, mutate } = useSWR<FinnState, Error>('/finn', get, { revalidateOnFocus: false, errorRetryCount: 1 });
 
     useToast(error ? 'Could not load FINN data...' : toast);
 
