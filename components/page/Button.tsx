@@ -14,7 +14,7 @@ type ButtonProps = {
 export const Button: FC<ButtonProps> = ({ onClick, href, text, title, icon, size, className }) => {
     const conditional = icon
         ? 'p-2 rounded-8 hover:bg-neutral'
-        : 'px-8 py-6 border dark:border-slate-500 hover:shadow rounded-4 text-12 font-bold uppercase';
+        : 'px-8 py-6 border dark:border-slate-400 hover:shadow rounded-4 text-12 font-bold uppercase';
     const classes = `text-primary dark:text-primary-dark dark:hover:bg-neutral-dark ${conditional} ${className ?? ''}`;
 
     const content = icon ? <Icon path={icon} size={size ?? 1} /> : text;

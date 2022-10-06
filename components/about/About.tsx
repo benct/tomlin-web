@@ -2,31 +2,30 @@ import { FC } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiMapMarkerOutline } from '@mdi/js';
 
+import { Box } from '../page/Box';
 import { GitHub } from './GitHub';
-
-// import '../../../styles/about.css';
 
 export const About: FC = () => (
     <>
-        <div className="wrapper text">
-            <div className="cv-header color-primary">Ben Christopher Tomlin</div>
-            <div className="mbm">
-                <div>
-                    Senior Developer at <a href="https://finn.no">FINN.no</a>
-                </div>
-                <div>Full Stack Developer</div>
-                <div className="mtm">
-                    <Icon path={mdiMapMarkerOutline} size={1} className="text-icon" />
-                    <span className="valign-middle mrm color-offset">Oslo, Norway</span>
-                </div>
+        <Box title="Ben Christopher Tomlin" border="border-b" className="text-center text-primary dark:text-primary-dark">
+            <div>
+                Senior Developer at{' '}
+                <a href="https://finn.no" rel="noreferrer" className="text-secondary dark:text-secondary-dark">
+                    FINN.no
+                </a>
+            </div>
+            <div>Full Stack Developer</div>
+            <div className="flex justify-center gap-x-8 pt-16 pb-32">
+                <Icon path={mdiMapMarkerOutline} size={1} />
+                <span className="text-neutral dark:text-neutral-dark">Oslo, Norway</span>
             </div>
             <div>
-                <div className="cv-skills">
-                    <div className="color-primary underline">Day-to-day</div>
-                    <ul>
+                <div className="inline-block text-left text-14 align-top px-12">
+                    <div className="text-secondary dark:text-secondary-dark underline pb-8">Day-to-day</div>
+                    <ul className="space-y-8">
                         <li>Java / Kotlin</li>
                         <li>JavaScript / TypeScript</li>
-                        <li>React / Redux</li>
+                        <li>React / Redux / Tailwind</li>
                         <li>Node.js / NPM / Yarn</li>
                         <li>Webpack / Babel</li>
                         <li>HTML5 / CSS3 / JSON / XML</li>
@@ -34,9 +33,9 @@ export const About: FC = () => (
                         <li>PostgreSQL / MySQL</li>
                     </ul>
                 </div>
-                <div className="cv-skills">
-                    <div className="color-primary underline">Experience with</div>
-                    <ul>
+                <div className="inline-block text-left text-14 align-top px-12">
+                    <div className="text-secondary dark:text-secondary-dark underline pb-8">Experience with</div>
+                    <ul className="space-y-8">
                         <li>PHP</li>
                         <li>C / C++</li>
                         <li>Ruby</li>
@@ -46,8 +45,7 @@ export const About: FC = () => (
                     </ul>
                 </div>
             </div>
-        </div>
-        <hr />
+        </Box>
         <GitHub />
     </>
 );

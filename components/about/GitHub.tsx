@@ -15,6 +15,8 @@ import {
 } from '@mdi/js';
 
 import { useGitHub } from '../../data/base';
+
+import { Box } from '../page/Box';
 import { Loading } from '../page/Loading';
 import { GitHubRepo } from '../../interfaces';
 
@@ -42,62 +44,72 @@ export const GitHub: FC = () => {
     };
 
     const renderRepo = (repo: GitHubRepo): ReactElement => (
-        <div className="github-repo mbm" key={repo.name}>
+        <div className="flex justify-between gap-24 items-center text-left" key={repo.name}>
             <a href={repo.htmlUrl} target="_blank" rel="noopener noreferrer" className="truncate">
-                <Icon path={getLanguageIcon(repo.language)} size="22px" title={repo.language} className="text-icon" id="langIcon" />
-                <span className="valign-middle text-small color-base">{repo.name}</span>
+                <Icon
+                    path={getLanguageIcon(repo.language)}
+                    size="22px"
+                    title={repo.language}
+                    className="inline align-middle text-secondary dark:text-secondary-dark"
+                />
+                <span className="text-14 align-middle pl-8">{repo.name}</span>
             </a>
-            <div className="github-repo-state no-wrap">
-                <a href={`${repo.htmlUrl}/stargazers`} target="_blank" rel="noopener noreferrer">
-                    <Icon path={mdiStarOutline} size="22px" title="Stargazers" id="starIcon" />
-                    <span className="color-base">{repo.stargazersCount}</span>
+            <div className="grid grid-cols-3 gap-8 text-right">
+                <a href={`${repo.htmlUrl}/stargazers`} target="_blank" rel="noopener noreferrer" className="flex gap-8 items-center w-64">
+                    <Icon path={mdiStarOutline} size="22px" title="Stargazers" className="text-neutral dark:text-neutral-dark" />
+                    <span className="font-mono text-14">{repo.stargazersCount}</span>
                 </a>
-                <a href={`${repo.htmlUrl}/issues`} target="_blank" rel="noopener noreferrer">
-                    <Icon path={mdiAlertCircleOutline} size="22px" title="Open Issues" id="issueIcon" />
-                    <span className="color-base">{repo.openIssuesCount}</span>
+                <a href={`${repo.htmlUrl}/issues`} target="_blank" rel="noopener noreferrer" className="flex gap-8 items-center w-64">
+                    <Icon path={mdiAlertCircleOutline} size="22px" title="Open Issues" className="text-neutral dark:text-neutral-dark" />
+                    <span className="font-mono text-14">{repo.openIssuesCount}</span>
                 </a>
-                <a href={`${repo.htmlUrl}/network/members`} target="_blank" rel="noopener noreferrer">
-                    <Icon path={mdiSourceFork} size="22px" title="Forks" id="forkIcon" />
-                    <span className="color-base">{repo.forksCount}</span>
+                <a
+                    href={`${repo.htmlUrl}/network/members`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-8 items-center w-64">
+                    <Icon path={mdiSourceFork} size="22px" title="Forks" className="text-neutral dark:text-neutral-dark" />
+                    <span className="font-mono text-14">{repo.forksCount}</span>
                 </a>
             </div>
         </div>
     );
 
     return (
-        <Loading isLoading={loading} text="Loading GitHub data..." className="wrapper">
-            {data?.user ? (
-                <div className="wrapper text-center">
-                    <div className="text mbl color-primary">GitHub</div>
-                    <div className="github-user">
-                        <a href={data.user.htmlUrl} target="_blank" rel="noopener noreferrer">
-                            <Image src={data.user.avatarUrl} width={48} height={48} alt="Avatar" style={{ borderRadius: '100%' }} />
-                        </a>
-                        <div className="github-count">
-                            <div className="monospace">{data.user.publicRepos}</div>
-                            <span className="text-smaller">Repositories</span>
+        <Box title="GitHub">
+            <Loading isLoading={loading} text="Loading data...">
+                {data?.user ? (
+                    <>
+                        <div className="flex justify-center items-center gap-x-24">
+                            <a href={data.user.htmlUrl} target="_blank" rel="noopener noreferrer">
+                                <Image src={data.user.avatarUrl} width={48} height={48} alt="Avatar" className="rounded-full" />
+                            </a>
+                            <div className="text-center">
+                                <div className="font-mono">{data.user.publicRepos}</div>
+                                <span className="text-12">Repositories</span>
+                            </div>
+                            <div className="text-center">
+                                <div className="font-mono">{data.stars}</div>
+                                <span className="text-12">Stargazers</span>
+                            </div>
+                            <div className="text-center">
+                                <div className="font-mono">{data.user.followers}</div>
+                                <span className="text-12">Followers</span>
+                            </div>
                         </div>
-                        <div className="github-count">
-                            <div className="monospace">{data.stars}</div>
-                            <span className="text-smaller">Stargazers</span>
+                        <div className="mt-32 mx-auto max-w-max space-y-12">
+                            <div className="text-12 text-center mb-8">Featured</div>
+                            {data.top.map(renderRepo)}
+                            {data.featured.map(renderRepo)}
                         </div>
-                        <div className="github-count">
-                            <div className="monospace">{data.user.followers}</div>
-                            <span className="text-smaller">Followers</span>
-                        </div>
+                    </>
+                ) : (
+                    <div className="flex justify-center gap-x-16">
+                        <Icon path={mdiAlertCircleOutline} size={1} title="Error" id="error-icon" />
+                        <span>Could not fetch data...</span>
                     </div>
-                    <div className="github-wrapper ptm mha">
-                        <div className="text-smaller mbs">Featured</div>
-                        {data.top.map(renderRepo)}
-                        {data.featured.map(renderRepo)}
-                    </div>
-                </div>
-            ) : (
-                <div className="wrapper text">
-                    <Icon path={mdiAlertCircleOutline} size={1} title="Error" className="text-icon" id="githubIcon" />
-                    <span className="valign-middle">No GitHub data...</span>
-                </div>
-            )}
-        </Loading>
+                )}
+            </Loading>
+        </Box>
     );
 };

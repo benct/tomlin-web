@@ -11,9 +11,9 @@ interface LoadingProps {
 
 export const Loading: FC<LoadingProps> = ({ isLoading, text, className, children }) =>
     isLoading ? (
-        <div className={`text color-bg ${className ?? ''}`}>
-            <Icon path={mdiLoading} size={1} title="Loading" spin={1} className="text-icon" id="loadingIcon" />
-            <span className="valign-middle">{text ?? 'Loading...'}</span>
+        <div className={`text-primary dark:text-primary-dark flex justify-center gap-x-16 ${className ?? ''}`}>
+            <Icon path={mdiLoading} size={1} title="Loading" spin={1} id="loading-icon" />
+            <span className="italic">{text ?? 'Loading...'}</span>
         </div>
     ) : (
         <>{children}</>
