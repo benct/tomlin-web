@@ -62,7 +62,7 @@ export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone
                     </div>
                 </div>
             ) : null}
-            {toast ? <div className="toast">{toast}</div> : null}
+            {toast ? <div className="toast text-primary dark:text-primary-dark bg-light dark:bg-dark">{toast}</div> : null}
         </>
     );
 };

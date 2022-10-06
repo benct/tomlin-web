@@ -63,6 +63,7 @@
     margin-left: -150px;
     padding: 16px;
     border: 1px solid #ddd;
+    border-radius: 4px;
     text-align: center;
     z-index: 999;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
