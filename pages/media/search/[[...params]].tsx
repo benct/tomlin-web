@@ -1,12 +1,10 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import { Auth } from '../../../components/Auth';
-import { NavigationMedia } from '../../../components/page/Navigation';
 import { MediaSearch } from '../../../components/media/MediaSearch';
 import { MediaSearchProps, NextPageProps } from '../../../interfaces';
 
 const MediaSearchPage: NextPage<MediaSearchProps> = (props) => (
     <Auth>
-        <NavigationMedia />
         <MediaSearch {...props} />
     </Auth>
 );

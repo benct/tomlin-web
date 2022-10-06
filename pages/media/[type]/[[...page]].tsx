@@ -1,12 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import { Auth } from '../../../components/Auth';
-import { NavigationMedia } from '../../../components/page/Navigation';
 import { MediaList } from '../../../components/media/MediaList';
 import { MediaProps, MediaType, NextPageProps } from '../../../interfaces';
 
 const MediaListPage: NextPage<MediaProps> = ({ type, page, sort, query }) => (
     <Auth>
-        <NavigationMedia />
         <MediaList type={type} page={page} sort={sort} query={query} />
     </Auth>
 );

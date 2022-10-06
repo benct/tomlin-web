@@ -1,12 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { NavigationAdmin } from '../../../components/page/Navigation';
 import { Auth } from '../../../components/Auth';
 import { Logs } from '../../../components/admin/Logs';
 import { NextPageProps, PageProps } from '../../../interfaces';
 
 const LogsPage: NextPage<PageProps> = ({ page: number }) => (
     <Auth>
-        <NavigationAdmin />
         <Logs page={number} />
     </Auth>
 );
