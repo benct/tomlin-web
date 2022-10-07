@@ -40,7 +40,10 @@ export const MediaStats: FC = () => {
             : [];
 
     const mapYears = (data?: MediaStatsEntry[]): MediaGraphEntry[] =>
-        data?.filter((item) => item.year).map((item: MediaStatsEntry): MediaGraphEntry => ({ x: `${item.year}0`, y: item.count })) ?? [];
+        data
+            ?.filter((item) => item.year)
+            .sort((a, b) => (a.year ?? 0) - (b.year ?? 0))
+            .map((item: MediaStatsEntry): MediaGraphEntry => ({ x: `${item.year}0`, y: item.count })) ?? [];
 
     const renderLineChart = (title: string, color: string, data: MediaGraphEntry[]): ReactElement => (
         <div style={{ height: '250px' }}>
