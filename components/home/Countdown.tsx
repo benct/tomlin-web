@@ -43,7 +43,7 @@ export const Countdown: FC<CountdownProps> = ({ title, timestamp, icon }) => {
 
     const renderTimeUnit = (time: number, unit: string): ReactElement => (
         <li className="text-center">
-            <span className="text-28 font-bold">{time}</span>
+            <span className="text-28 font-bold">{timestamp ? time : '-'}</span>
             <p className="text-12 uppercase">{unit}</p>
         </li>
     );

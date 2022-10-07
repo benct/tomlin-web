@@ -44,7 +44,7 @@ export const GitHub: FC = () => {
     };
 
     const renderRepo = (repo: GitHubRepo): ReactElement => (
-        <div className="flex justify-between gap-24 items-center text-left" key={repo.name}>
+        <div className="flex justify-between gap-8 items-center" key={repo.name}>
             <a href={repo.htmlUrl} target="_blank" rel="noopener noreferrer" className="truncate">
                 <Icon
                     path={getLanguageIcon(repo.language)}
@@ -54,12 +54,20 @@ export const GitHub: FC = () => {
                 />
                 <span className="text-14 align-middle pl-8">{repo.name}</span>
             </a>
-            <div className="grid grid-cols-3 gap-8 text-right">
-                <a href={`${repo.htmlUrl}/stargazers`} target="_blank" rel="noopener noreferrer" className="flex gap-8 items-center w-64">
+            <div className="grid grid-cols-3 gap-8">
+                <a
+                    href={`${repo.htmlUrl}/stargazers`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex justify-end gap-8 items-center sm:w-64">
                     <Icon path={mdiStarOutline} size="22px" title="Stargazers" className="text-neutral dark:text-neutral-dark" />
                     <span className="font-mono text-14">{repo.stargazersCount}</span>
                 </a>
-                <a href={`${repo.htmlUrl}/issues`} target="_blank" rel="noopener noreferrer" className="flex gap-8 items-center w-64">
+                <a
+                    href={`${repo.htmlUrl}/issues`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex justify-end gap-8 items-center sm:w-64">
                     <Icon path={mdiAlertCircleOutline} size="22px" title="Open Issues" className="text-neutral dark:text-neutral-dark" />
                     <span className="font-mono text-14">{repo.openIssuesCount}</span>
                 </a>
@@ -67,7 +75,7 @@ export const GitHub: FC = () => {
                     href={`${repo.htmlUrl}/network/members`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex gap-8 items-center w-64">
+                    className="flex justify-end gap-8 items-center sm:w-64">
                     <Icon path={mdiSourceFork} size="22px" title="Forks" className="text-neutral dark:text-neutral-dark" />
                     <span className="font-mono text-14">{repo.forksCount}</span>
                 </a>

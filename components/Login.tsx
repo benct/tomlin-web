@@ -19,7 +19,7 @@ export const Login: FC<{ redirectTo?: string | UrlObject }> = ({ redirectTo }) =
 
     const classNames =
         'block px-8 py-6 mx-auto border rounded-4 dark:border-slate-400 hover:shadow ' +
-        'text-primary dark:text-primary-dark bg-light dark:bg-dark dark:hover:bg-neutral-dark ';
+        'text-primary dark:text-primary-dark bg-light dark:bg-dark dark:hover:bg-neutral-dark';
 
     return (
         <Box title="Login">
