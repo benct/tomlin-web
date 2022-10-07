@@ -31,17 +31,22 @@ export interface NavigationLinkProps {
     onClick?: () => void;
 }
 
-const NavLink = forwardRef<HTMLAnchorElement, NavigationLinkProps>(({ onClick, href, title, icon, chevron }, ref) => (
-    <a href={href} onClick={onClick} ref={ref} className="flex gap-16 p-8 rounded-8 hover:bg-neutral dark:hover:bg-neutral-dark">
-        {icon ? <Icon path={icon} size={1} className="text-neutral dark:text-neutral-dark" /> : <span className="w-24" />}
-        <span className="flex-1 text-primary dark:text-primary-dark">{title}</span>
-        {chevron ? <Icon path={mdiChevronDown} size={1} className="text-neutral dark:text-neutral-dark" /> : null}
-    </a>
-));
-NavLink.displayName = 'NavLink';
-
 export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
     const { isLoggedIn } = useAppContext();
+
+    const NavLink = forwardRef<HTMLAnchorElement, NavigationLinkProps>(({ onClick, href, title, icon, chevron }, ref) => (
+        <a
+            ref={ref}
+            href={href}
+            onClick={onClick}
+            tabIndex={show ? 0 : -1}
+            className="flex gap-16 p-8 rounded-8 hover:bg-neutral dark:hover:bg-neutral-dark">
+            {icon ? <Icon path={icon} size={1} className="text-neutral dark:text-neutral-dark" /> : <span className="w-24" />}
+            <span className="flex-1 text-primary dark:text-primary-dark">{title}</span>
+            {chevron ? <Icon path={mdiChevronDown} size={1} className="text-neutral dark:text-neutral-dark" /> : null}
+        </a>
+    ));
+    NavLink.displayName = 'NavLink';
 
     return (
         <>
@@ -58,7 +63,7 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
                     <h2 id="menu-title" className="text-neutral dark:text-neutral-dark uppercase">
                         Menu
                     </h2>
-                    <Button text="Close" icon={mdiClose} onClick={toggle} />
+                    <Button text="Close" icon={mdiClose} onClick={toggle} tabIndex={show ? 0 : -1} />
                 </div>
                 <ul className="space-y-4 py-16">
                     <li>

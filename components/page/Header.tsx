@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiGithub, mdiMenu, mdiThemeLightDark } from '@mdi/js';
 import { Navigation } from './Navigation';
-import { Button } from './Button';
+import { Button, LinkButton } from './Button';
 
 export const Header: FC = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -44,7 +44,7 @@ export const Header: FC = () => {
                         className="text-neutral dark:text-neutral-dark"
                         title="Theme"
                     />
-                    <Button text={darkMode ? 'Dark' : 'Light'} title="Swap theme" onClick={toggleTheme} />
+                    <Button text={darkMode ? 'Dark' : 'Light'} title="Swap theme" onClick={toggleTheme} tabIndex={showMenu ? -1 : 0} />
                     <Icon
                         path={mdiGithub}
                         size="24px"
@@ -52,7 +52,12 @@ export const Header: FC = () => {
                         className="text-neutral dark:text-neutral-dark ml-16"
                         title="Version"
                     />
-                    <Button text="3.1.0" title="View changelog on GitHub" href="https://github.com/benct/tomlin-web" />
+                    <LinkButton
+                        text="3.1.0"
+                        title="View changelog on GitHub"
+                        href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
+                        tabIndex={showMenu ? -1 : 0}
+                    />
                 </div>
             </header>
             <Navigation show={showMenu} toggle={toggleMenu} />

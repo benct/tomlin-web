@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { mdiAt, mdiFacebook, mdiGithub, mdiInstagram, mdiLinkedin } from '@mdi/js';
-import { Button } from './Button';
+import { LinkButton } from './Button';
 
-const renderLink = (url: string, title: string, icon: string) => <Button href={url} text={title} title={title} icon={icon} />;
+const renderLink = (url: string, title: string, icon: string) => <LinkButton href={url} text={title} title={title} icon={icon} />;
 
 export const Footer: FC = () => (
     <footer className="max-w mx-auto bg-light dark:bg-dark border-t py-40 px-16 sm:px-24 md:px-32 space-y-16">
