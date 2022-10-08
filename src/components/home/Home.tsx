@@ -52,7 +52,7 @@ export const Home: FC = () => {
                     ) : (
                         <Image src={`/images/icon/${data ? 'up' : 'down'}.svg`} alt={data ? 'Up' : 'Down'} width={48} height={48} />
                     )}
-                    <span>{loading ? 'Loading...' : data ? 'Running' : 'Down...'}</span>
+                    <span className="italic">{loading ? 'Loading...' : data ? 'Running' : 'Down...'}</span>
                 </Box>
             </div>
             <Countdown title="Countdown to something..." timestamp={settings.countdownTarget} icon={settings.countdownIcon} />

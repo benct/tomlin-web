@@ -50,7 +50,7 @@ export const Countdown: FC<CountdownProps> = ({ title, timestamp, icon }) => {
 
     const heading = (
         <>
-            {title} {icon ? <Image src={`/images/icon/${icon}.svg`} alt={icon} width={26} height={26} /> : null}
+            {title} {icon ? <Image src={`/images/icon/${icon}.svg`} alt={icon} width={24} height={24} /> : null}
         </>
     );
 
