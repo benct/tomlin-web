@@ -2,12 +2,12 @@ import { FC, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiAccountPlusOutline } from '@mdi/js';
 
-import { formatDate } from '../../../util/formatting';
-import { useUsers } from '../../../data/users';
+import { formatDate } from '@/util/formatting';
+import { useUsers } from '@/data/users';
 
-import { User } from '../../../interfaces';
+import { User } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
 import { UserModal } from './UserModal';
-import { Loading } from '../../page/Loading';
 
 export const Users: FC = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);

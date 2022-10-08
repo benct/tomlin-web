@@ -1,5 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { Finn } from '../components/finn/Finn';
+import { Finn } from '@/components/finn/Finn';
 
 const FinnPage: NextPage = () => <Finn />;
 

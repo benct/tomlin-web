@@ -2,8 +2,8 @@ import { FC, ReactElement, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiBriefcaseEditOutline, mdiChevronDown, mdiChevronUp } from '@mdi/js';
 
-import { Flight } from '../../interfaces';
-import { formatDate } from '../../util/formatting';
+import { formatDate } from '@/util/formatting';
+import { Flight } from '@/interfaces';
 
 interface FlightGroupProps {
     flights: Flight[];

@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import { mdiApproximatelyEqualBox, mdiCloseCircleOutline, mdiDeleteOutline, mdiRefresh, mdiThumbUpOutline } from '@mdi/js';
 
-import { formatDate, formatDuration, formatThousands, formatYears } from '../../util/formatting';
-import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '../../interfaces';
+import { formatDate, formatDuration, formatThousands, formatYears } from '@/util/formatting';
 
-import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
+import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '@/interfaces';
+import { Modal, ModalContent, ModalFooter, ModalHeader } from '@/components/page/Modal';
 import { FavouriteIcon, SeenIcon } from './MediaIcons';
 import { MediaSeason } from './MediaSeason';
 

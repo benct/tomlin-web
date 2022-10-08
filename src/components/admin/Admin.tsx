@@ -1,10 +1,10 @@
 import { FC, Fragment, ReactElement, useRef } from 'react';
 
-import { formatThousands } from '../../util/formatting';
-import { useAppContext } from '../../data/context';
-import { useAdminActions, useAdminStats } from '../../data/admin';
+import { formatThousands } from '@/util/formatting';
+import { useAppContext } from '@/data/context';
+import { useAdminActions, useAdminStats } from '@/data/admin';
 
-import { Loading } from '../page/Loading';
+import { Loading } from '@/components/page/Loading';
 
 export const Admin: FC = () => {
     const hassCount = useRef<HTMLSelectElement>(null);

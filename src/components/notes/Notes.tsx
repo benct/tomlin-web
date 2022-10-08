@@ -2,10 +2,10 @@ import { FC, ReactElement, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiFileDocumentMultipleOutline } from '@mdi/js';
 
-import { useNotes } from '../../data/notes';
+import { useNotes } from '@/data/notes';
 
-import { Note } from '../../interfaces';
-import { Loading } from '../page/Loading';
+import { Note } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
 import { NotesModal } from './NotesModal';
 
 export const Notes: FC = () => {

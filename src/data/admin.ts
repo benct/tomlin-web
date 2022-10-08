@@ -2,8 +2,8 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
-import { del, get, post } from '../util/api';
-import { Hass, Log, PaginationResponse, Visit } from '../interfaces';
+import { del, get, post } from '@/util/api';
+import { Hass, Log, PaginationResponse, Visit } from '@/interfaces';
 
 export const useAdminStats = () => {
     const { data, error } = useSWR<Record<string, number>, Error>('/admin/stats', get);

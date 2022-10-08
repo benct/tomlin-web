@@ -1,6 +1,6 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { Box } from '../page/Box';
+import { Box } from '@/components/page/Box';
 
 interface CountdownProps {
     title: string;

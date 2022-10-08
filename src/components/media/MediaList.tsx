@@ -1,14 +1,14 @@
 import { ChangeEvent, FC, KeyboardEvent, ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
-import { formatQuery } from '../../util/formatting';
-import { useMediaList } from '../../data/media';
+import { formatQuery } from '@/util/formatting';
+import { useMediaList } from '@/data/media';
 
-import { Loading } from '../page/Loading';
-import { Pagination } from '../page/Pagination';
+import { MediaItemEntry, MediaProps } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
+import { Pagination } from '@/components/page/Pagination';
 import { MediaModal } from './MediaModal';
 import { MediaItem } from './MediaItem';
-import { MediaItemEntry, MediaProps } from '../../interfaces';
 
 export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
     const router = useRouter();

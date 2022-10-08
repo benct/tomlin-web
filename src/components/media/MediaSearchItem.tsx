@@ -1,8 +1,8 @@
 import { FC, InvalidEvent, memo, ReactElement, useState } from 'react';
 import ISO6391 from 'iso-639-1';
 
-import { MediaSearchItemEntry } from '../../interfaces';
-import { formatDate } from '../../util/formatting';
+import { MediaSearchItemEntry } from '@/interfaces';
+import { formatDate } from '@/util/formatting';
 
 interface MediaSearchItemProps {
     data: MediaSearchItemEntry;

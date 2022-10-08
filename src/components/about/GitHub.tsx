@@ -14,11 +14,11 @@ import {
     mdiStarOutline,
 } from '@mdi/js';
 
-import { useGitHub } from '../../data/base';
+import { useGitHub } from '@/data/base';
 
-import { Box } from '../page/Box';
-import { Loading } from '../page/Loading';
-import { GitHubRepo } from '../../interfaces';
+import { GitHubRepo } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
+import { Box } from '@/components/page/Box';
 
 export const GitHub: FC = () => {
     const { data, loading } = useGitHub();

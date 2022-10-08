@@ -2,7 +2,7 @@ import { FC, ReactElement } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiFileQuestion } from '@mdi/js';
 
-import { FileItem } from '../../interfaces';
+import { FileItem } from '@/interfaces';
 
 interface FileListProps {
     content: FileItem[];

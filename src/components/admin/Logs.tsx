@@ -1,10 +1,10 @@
 import { FC, ReactElement } from 'react';
 
-import { useLogs } from '../../data/admin';
+import { useLogs } from '@/data/admin';
 
-import { Log, PageProps } from '../../interfaces';
-import { Loading } from '../page/Loading';
-import { Pagination } from '../page/Pagination';
+import { Log, PageProps } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
+import { Pagination } from '@/components/page/Pagination';
 
 export const Logs: FC<PageProps> = ({ page }) => {
     const { logs, pagination, loading, deleteLog } = useLogs(page);

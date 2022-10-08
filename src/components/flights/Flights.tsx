@@ -2,13 +2,13 @@ import { ChangeEvent, FC, ReactElement, SyntheticEvent, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiAirplane, mdiBriefcaseEditOutline } from '@mdi/js';
 
-import { formatDate } from '../../util/formatting';
-import { useFlightActions, useFlights } from '../../data/flights';
+import { formatDate } from '@/util/formatting';
+import { useFlightActions, useFlights } from '@/data/flights';
 
-import { Flight } from '../../interfaces';
+import { Flight } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
 import { FlightsModal } from './FlightsModal';
 import { FlightsGroup } from './FlightsGroup';
-import { Loading } from '../page/Loading';
 
 const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 

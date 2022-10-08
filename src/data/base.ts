@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import { useAppContext } from './context';
-import { del, get, post } from '../util/api';
-import { FinnState, GitHubState, HomeState } from '../interfaces';
+import { del, get, post } from '@/util/api';
+import { FinnState, GitHubState, HomeState } from '@/interfaces';
 
 export const useToast = (message?: string) => {
     const { setToast } = useAppContext();

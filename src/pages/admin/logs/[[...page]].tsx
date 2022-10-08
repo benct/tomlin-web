@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { Auth } from '../../../components/Auth';
-import { Logs } from '../../../components/admin/Logs';
-import { NextPageProps, PageProps } from '../../../interfaces';
+import { Auth } from '@/components/Auth';
+import { Logs } from '@/components/admin/Logs';
+import { NextPageProps, PageProps } from '@/interfaces';
 
 const LogsPage: NextPage<PageProps> = ({ page: number }) => (
     <Auth>

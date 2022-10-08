@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { useRouter } from 'next/router';
-import { useAppContext } from '../data/context';
+import { useAppContext } from '@/data/context';
 import { Loading } from './page/Loading';
 import { Login } from './Login';
 

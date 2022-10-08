@@ -15,7 +15,7 @@ import {
     mdiTelevision,
 } from '@mdi/js';
 
-import { useAppContext } from '../../data/context';
+import { useAppContext } from '@/data/context';
 import { Button } from './Button';
 
 interface NavigationProps {

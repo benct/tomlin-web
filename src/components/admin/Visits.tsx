@@ -1,10 +1,10 @@
 import { FC, ReactElement } from 'react';
 
-import { useVisits } from '../../data/admin';
+import { useVisits } from '@/data/admin';
 
-import { PageProps, Visit } from '../../interfaces';
-import { Loading } from '../page/Loading';
-import { Pagination } from '../page/Pagination';
+import { PageProps, Visit } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
+import { Pagination } from '@/components/page/Pagination';
 
 export const Visits: FC<PageProps> = ({ page }) => {
     const { visits, pagination, loading } = useVisits(page);

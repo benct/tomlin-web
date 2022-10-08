@@ -2,10 +2,10 @@ import { FC, memo, useRef } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
-import { useNoteActions } from '../../data/notes';
+import { useNoteActions } from '@/data/notes';
 
-import { Note } from '../../interfaces';
-import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
+import { Note } from '@/interfaces';
+import { Modal, ModalContent, ModalFooter, ModalHeader } from '@/components/page/Modal';
 
 interface NotesModalProps {
     close: () => void;

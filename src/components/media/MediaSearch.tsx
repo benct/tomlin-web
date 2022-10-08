@@ -1,13 +1,13 @@
 import { ChangeEvent, FC, ReactNode } from 'react';
 import Link from 'next/link';
 
-import { debounce } from '../../util/debounce';
-import { useExisting, useMediaSearch } from '../../data/media';
+import { debounce } from '@/util/debounce';
+import { useExisting, useMediaSearch } from '@/data/media';
 
-import { Loading } from '../page/Loading';
-import { Pagination } from '../page/Pagination';
+import { MediaSearchItemEntry, MediaSearchProps } from '@/interfaces';
+import { Pagination } from '@/components/page/Pagination';
+import { Loading } from '@/components/page/Loading';
 import { MediaSearchItem } from './MediaSearchItem';
-import { MediaSearchItemEntry, MediaSearchProps } from '../../interfaces';
 
 export const MediaSearch: FC<MediaSearchProps> = ({ type, action, page, id }) => {
     const existing = useExisting();

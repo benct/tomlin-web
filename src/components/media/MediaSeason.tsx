@@ -1,8 +1,8 @@
 import { FC, Fragment, ReactElement, useState } from 'react';
 
-import { formatDate, formatGradientHSL } from '../../util/formatting';
+import { formatDate, formatGradientHSL } from '@/util/formatting';
 
-import { MediaEpisodeEntry, MediaSeasonEntry } from '../../interfaces';
+import { MediaEpisodeEntry, MediaSeasonEntry } from '@/interfaces';
 import { SeenIcon } from './MediaIcons';
 
 interface MediaSeasonProps {

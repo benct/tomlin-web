@@ -1,13 +1,13 @@
 import { FC, ReactElement, useRef } from 'react';
 import { mdiDelete } from '@mdi/js';
 
-import { formatDate } from '../../util/formatting';
-import { useFinn } from '../../data/base';
+import { formatDate } from '@/util/formatting';
+import { useFinn } from '@/data/base';
 
-import { FinnEntry } from '../../interfaces';
-import { Loading } from '../page/Loading';
-import { Button } from '../page/Button';
-import { Box } from '../page/Box';
+import { FinnEntry } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
+import { Button } from '@/components/page/Button';
+import { Box } from '@/components/page/Box';
 
 const inputClassNames =
     'px-8 py-6 border rounded-4 dark:border-slate-400 hover:shadow ' +

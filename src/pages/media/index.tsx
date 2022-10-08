@@ -1,5 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { MediaStats } from '../../components/media/MediaStats';
+import { MediaStats } from '@/components/media/MediaStats';
 
 const MediaPage: NextPage = () => (
     <>

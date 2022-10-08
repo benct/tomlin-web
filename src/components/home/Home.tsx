@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Icon } from '@mdi/react';
+import { mdiLoading } from '@mdi/js';
 
-import { useAppContext } from '../../data/context';
-import { useHomeState } from '../../data/base';
+import { useAppContext } from '@/data/context';
+import { useHomeState } from '@/data/base';
 
-import { Box } from '../page/Box';
+import { Box } from '@/components/page/Box';
 import { Countdown } from './Countdown';
 import { Quote } from './Quote';
 import { Time } from './Time';
-import { Icon } from '@mdi/react';
-import { mdiLoading } from '@mdi/js';
 
 export const Home: FC = () => {
     const { settings } = useAppContext();

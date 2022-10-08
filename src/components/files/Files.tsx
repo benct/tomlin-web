@@ -9,11 +9,11 @@ import {
     mdiFolderUploadOutline,
 } from '@mdi/js';
 
-import { useFiles } from '../../data/files';
+import { useFiles } from '@/data/files';
 
-import { Loading } from '../page/Loading';
+import { FileItem } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
 import { FileList } from './FileList';
-import { FileItem } from '../../interfaces';
 
 const PARENT_DIR = '..';
 

@@ -2,8 +2,8 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
-import { blob, get, post, text } from '../util/api';
-import { FileItem, FilePreview } from '../interfaces';
+import { blob, get, post, text } from '@/util/api';
+import { FileItem, FilePreview } from '@/interfaces';
 
 export const useFiles = () => {
     const [path, setPath] = useState<string>('');

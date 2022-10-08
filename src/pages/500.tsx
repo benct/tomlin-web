@@ -1,5 +1,5 @@
 import type { NextPage, GetStaticProps } from 'next';
-import { Box } from '../components/page/Box';
+import { Box } from '@/components/page/Box';
 
 const ServerError: NextPage = () => (
     <Box className="py-128">

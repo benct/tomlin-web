@@ -3,8 +3,8 @@ import { UrlObject } from 'url';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAppContext } from './context';
-import { auth } from '../util/api';
-import { Settings } from '../interfaces';
+import { auth } from '@/util/api';
+import { Settings } from '@/interfaces';
 
 interface AuthResponse {
     authenticated: boolean;

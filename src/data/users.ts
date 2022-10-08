@@ -2,8 +2,8 @@ import useSWR, { useSWRConfig } from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
-import { del, get, post } from '../util/api';
-import { User } from '../interfaces';
+import { del, get, post } from '@/util/api';
+import { User } from '@/interfaces';
 
 export const useUsers = () => {
     const { isLoggedIn } = useAppContext();

@@ -1,7 +1,7 @@
 import { FC, InvalidEvent, memo, ReactElement, ReactNode } from 'react';
 
-import { formatDuration, formatGradientHSL, formatYears } from '../../util/formatting';
-import { MediaItemEntry, MediaType } from '../../interfaces';
+import { formatDuration, formatGradientHSL, formatYears } from '@/util/formatting';
+import { MediaItemEntry, MediaType } from '@/interfaces';
 
 import { FavouriteIcon, SeenIcon } from './MediaIcons';
 

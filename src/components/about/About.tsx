@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiMapMarkerOutline } from '@mdi/js';
 
-import { Box } from '../page/Box';
+import { Box } from '@/components/page/Box';
 import { GitHub } from './GitHub';
 
 export const About: FC = () => (

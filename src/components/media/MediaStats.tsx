@@ -13,12 +13,12 @@ import {
 } from 'react-vis';
 import 'react-vis/dist/style.css';
 
-import { useAppContext } from '../../data/context';
-import { useMediaStats } from '../../data/media';
+import { useAppContext } from '@/data/context';
+import { useMediaStats } from '@/data/media';
 
-import { Box } from '../page/Box';
-import { Loading } from '../page/Loading';
-import { MediaStatsEntry, MediaStatsType } from '../../interfaces';
+import { MediaStatsEntry, MediaStatsType } from '@/interfaces';
+import { Loading } from '@/components/page/Loading';
+import { Box } from '@/components/page/Box';
 
 interface MediaGraphEntry {
     x: string;

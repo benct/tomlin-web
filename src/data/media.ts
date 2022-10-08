@@ -2,7 +2,7 @@ import useSWR, { useSWRConfig } from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
-import { del, get, load, post } from '../util/api';
+import { del, get, load, post } from '@/util/api';
 import {
     MediaExisting,
     MediaExternal,
@@ -13,7 +13,7 @@ import {
     MediaStats,
     MediaType,
     PaginationResponse,
-} from '../interfaces';
+} from '@/interfaces';
 
 export const useMediaStats = () => {
     const { data, error } = useSWR<MediaStats, Error>('/media', get, { revalidateOnFocus: false });

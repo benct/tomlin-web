@@ -2,9 +2,8 @@ import { ChangeEvent, FC, SyntheticEvent } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
 
-import { Flight } from '../../interfaces';
-
-import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
+import { Flight } from '@/interfaces';
+import { Modal, ModalContent, ModalFooter, ModalHeader } from '@/components/page/Modal';
 import { FlightsInput } from './FlightsInput';
 
 interface FlightModalProps {

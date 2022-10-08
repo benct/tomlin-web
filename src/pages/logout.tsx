@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiExitRun } from '@mdi/js';
 
-import { useLogout } from '../data/auth';
-import { Box } from '../components/page/Box';
+import { useLogout } from '@/data/auth';
+import { Box } from '@/components/page/Box';
 
 const LogoutPage: NextPage = () => {
     const logout = useLogout();

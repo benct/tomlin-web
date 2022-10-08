@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 import { mdiRefresh } from '@mdi/js';
 
-import { quotes } from '../../util/quotes';
-import { QuoteState } from '../../interfaces';
-import { Box } from '../page/Box';
-import { Button } from '../page/Button';
+import { quotes } from '@/util/quotes';
+import { QuoteState } from '@/interfaces';
+import { Box } from '@/components/page/Box';
+import { Button } from '@/components/page/Button';
 
 export const Quote: FC = () => {
     const [quote, setQuote] = useState<QuoteState>({
