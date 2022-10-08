@@ -1,6 +1,7 @@
 import { FC, ReactElement, useRef } from 'react';
 import { mdiDelete } from '@mdi/js';
 
+import { input } from '@/styles';
 import { formatDate } from '@/util/formatting';
 import { useFinn } from '@/data/base';
 
@@ -9,18 +10,13 @@ import { Loading } from '@/components/page/Loading';
 import { Button } from '@/components/page/Button';
 import { Box } from '@/components/page/Box';
 
-const inputClassNames =
-    'px-8 py-6 border rounded-4 dark:border-slate-400 hover:shadow ' +
-    'text-primary dark:text-primary-dark bg-light dark:bg-dark dark:hover:bg-neutral-dark ' +
-    'focus:outline-none focus:ring focus:ring-sky-500';
-
 export const Finn: FC = () => {
     const idInput = useRef<HTMLInputElement>(null);
 
     const { data, loading, add, remove } = useFinn();
 
     const handleSubmit = (): void => {
-        if (idInput.current && idInput.current.value.length && Number.isFinite(+idInput.current.value)) {
+        if (idInput.current?.value?.length && Number.isFinite(+idInput.current.value)) {
             add(+idInput.current.value);
         }
     };
@@ -59,9 +55,9 @@ export const Finn: FC = () => {
     );
 
     return (
-        <Box className="min-h-[256px]">
+        <Box className="min-h">
             <div className="flex justify-center gap-16 items-center mb-32">
-                <input type="number" placeholder="FINN-kode" className={inputClassNames} ref={idInput} />
+                <input type="number" placeholder="FINN-kode" className={`${input} text-12`} ref={idInput} />
                 <Button text="Track" onClick={handleSubmit} />
             </div>
             <Loading isLoading={loading} text="Loading FINN data...">

@@ -7,7 +7,7 @@ import { GitHub } from './GitHub';
 
 export const About: FC = () => (
     <>
-        <Box title="Ben Tomlin" border="border-b" className="text-center text-primary dark:text-primary-dark">
+        <Box title="Ben Tomlin" border="border-b" className="text-center">
             <div>
                 Senior Developer at{' '}
                 <a href="https://finn.no" rel="noreferrer" className="text-secondary dark:text-secondary-dark">

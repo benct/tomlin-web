@@ -4,7 +4,14 @@ const colors = require('tailwindcss/colors');
 module.exports = {
     content: ['./src/**/*.{js,ts,jsx,tsx}'],
     theme: {
-        extend: {},
+        extend: {
+            gridTemplateColumns: {
+                '3-auto': '1fr auto auto',
+            },
+            minHeight: {
+                DEFAULT: '256px',
+            },
+        },
         spacing: {
             0: '0',
             1: '1px',

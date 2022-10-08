@@ -7,6 +7,7 @@ import {
     mdiClose,
     mdiFileOutline,
     mdiHomeOutline,
+    mdiHomeSearchOutline,
     mdiInformationOutline,
     mdiLogin,
     mdiLogout,
@@ -110,6 +111,9 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
                                 </Link>
                                 <Link href="/admin/users" passHref>
                                     <NavLink title="Users" />
+                                </Link>
+                                <Link href="/finn" passHref>
+                                    <NavLink title="Finn" icon={mdiHomeSearchOutline} />
                                 </Link>
                                 <Link href="/logout" passHref>
                                     <NavLink title="Logout" icon={mdiLogout} />
