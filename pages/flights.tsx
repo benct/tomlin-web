@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps } from 'next';
-import { Auth } from '../../components/Auth';
-import { Flights } from '../../components/flights/Flights';
+import { Auth } from '../components/Auth';
+import { Flights } from '../components/flights/Flights';
 
 const FlightsPage: NextPage = () => (
     <Auth>

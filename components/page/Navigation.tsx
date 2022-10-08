@@ -88,13 +88,13 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
                         <Link href="/media/search" passHref>
                             <NavLink title="Search" />
                         </Link>
-                        <Link href="/admin/flights" passHref>
+                        <Link href="/flights" passHref>
                             <NavLink title="Flights" icon={mdiAirplane} />
                         </Link>
-                        <Link href="/admin/notes" passHref>
+                        <Link href="/notes" passHref>
                             <NavLink title="Notes" icon={mdiNoteOutline} />
                         </Link>
-                        <Link href="/admin/files" passHref>
+                        <Link href="/files" passHref>
                             <NavLink title="Files" icon={mdiFileOutline} />
                         </Link>
                         <Link href="/admin" passHref>

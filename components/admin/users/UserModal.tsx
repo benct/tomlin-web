@@ -2,10 +2,10 @@ import { FC, useRef, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
-import { useUserActions } from '../../data/users';
+import { useUserActions } from '../../../data/users';
 
-import { User } from '../../interfaces';
-import { Modal, ModalContent, ModalFooter, ModalHeader } from '../page/Modal';
+import { User } from '../../../interfaces';
+import { Modal, ModalContent, ModalFooter, ModalHeader } from '../../page/Modal';
 
 interface UserModalProps {
     close: () => void;
