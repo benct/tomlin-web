@@ -1,21 +1,25 @@
-import { FC, ReactElement, SyntheticEvent, useRef } from 'react';
-import { Icon } from '@mdi/react';
+import { FC, ReactElement, useRef } from 'react';
 import { mdiDelete } from '@mdi/js';
 
 import { formatDate } from '../../util/formatting';
 import { useFinn } from '../../data/base';
 
-import { Loading } from '../page/Loading';
 import { FinnEntry } from '../../interfaces';
+import { Loading } from '../page/Loading';
+import { Button } from '../page/Button';
+import { Box } from '../page/Box';
+
+const inputClassNames =
+    'px-8 py-6 border rounded-4 dark:border-slate-400 hover:shadow ' +
+    'text-primary dark:text-primary-dark bg-light dark:bg-dark dark:hover:bg-neutral-dark ' +
+    'focus:outline-none focus:ring focus:ring-sky-500';
 
 export const Finn: FC = () => {
     const idInput = useRef<HTMLInputElement>(null);
 
     const { data, loading, add, remove } = useFinn();
 
-    const handleSubmit = (event: SyntheticEvent): void => {
-        event.preventDefault();
-
+    const handleSubmit = (): void => {
         if (idInput.current && idInput.current.value.length && Number.isFinite(+idInput.current.value)) {
             add(+idInput.current.value);
         }
@@ -28,27 +32,25 @@ export const Finn: FC = () => {
     };
 
     const renderEntry = (id: string): ReactElement => (
-        <table className="table-striped mbm" key={`finn${id}`}>
+        <table className="table-auto border-collapse mb-16 mx-auto" key={`finn${id}`}>
             <thead>
-                <tr className="text-smaller">
+                <tr>
                     <th>
-                        <a href={`https://finn.no/${id}`} rel="noopener noreferrer nofollow" target="_blank">
+                        <a href={`https://finn.no/${id}`} rel="noreferrer nofollow" target="_blank">
                             {id}
                         </a>
                     </th>
                     <th className="text-right">
-                        <button className="button-icon" onClick={() => handleDelete(id)}>
-                            <Icon path={mdiDelete} size="24px" title="Delete" />
-                        </button>
+                        <Button text="Delete" title="Delete" icon={mdiDelete} onClick={() => handleDelete(id)} />
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className="border">
                 {data?.[id].map(
                     (entry: FinnEntry): ReactElement => (
-                        <tr key={`finn${id}${entry.timestamp}`}>
-                            <td className="no-wrap">{formatDate(entry.timestamp, 'MMM d - HH:mm')}</td>
-                            <td className="no-wrap">{entry.price}</td>
+                        <tr className="border-b even:bg-slate-100 dark:even:bg-slate-800" key={`finn${id}${entry.timestamp}`}>
+                            <td className="py-8 px-16">{formatDate(entry.timestamp, 'MMM d - HH:mm')}</td>
+                            <td className="py-8 px-16">{entry.price}</td>
                         </tr>
                     )
                 )}
@@ -57,13 +59,10 @@ export const Finn: FC = () => {
     );
 
     return (
-        <div className="wrapper min-height">
-            <div className="text-small text-center mbl pbm">
-                <span>FINNkode&nbsp;</span>
-                <input type="number" className="input input-small mrm" ref={idInput} />
-                <button className="input input-small" onClick={handleSubmit}>
-                    Track
-                </button>
+        <Box className="min-h-[256px]">
+            <div className="flex justify-center gap-16 items-center mb-32">
+                <input type="number" placeholder="FINN-kode" className={inputClassNames} ref={idInput} />
+                <Button text="Track" onClick={handleSubmit} />
             </div>
             <Loading isLoading={loading} text="Loading FINN data...">
                 {data && Object.keys(data).length ? (
@@ -71,9 +70,9 @@ export const Finn: FC = () => {
                         .sort((a, b) => (b > a ? 1 : -1))
                         .map(renderEntry)
                 ) : (
-                    <div className="text">No data found...</div>
+                    <div className="text-center">No data found...</div>
                 )}
             </Loading>
-        </div>
+        </Box>
     );
 };

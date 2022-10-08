@@ -8,11 +8,7 @@ type BoxProps = {
 
 export const Box: FC<PropsWithChildren<BoxProps>> = ({ title, border, className, children }) => (
     <section className={`text-primary dark:text-primary-dark bg-light dark:bg-dark py-40 px-16 sm:px-24 md:px-32 ${border ?? ''}`}>
-        {title ? (
-            <h2 className="text-secondary dark:text-secondary-dark text-16 uppercase pb-16 flex justify-center items-center gap-x-16">
-                {title}
-            </h2>
-        ) : null}
+        {title ? <h2 className="text-secondary dark:text-secondary-dark text-16 text-center uppercase pb-16">{title}</h2> : null}
         <div className={className}>{children}</div>
     </section>
 );
