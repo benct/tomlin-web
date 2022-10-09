@@ -8,4 +8,5 @@ export const button = text + buttonCommon + buttonDefault + 'text-12 font-bold u
 export const buttonIcon = text + buttonCommon + 'p-2 rounded-8 hover:bg-neutral';
 
 export const input = text + bg + buttonCommon + buttonDefault;
-export const select = text + bg + buttonCommon + buttonDefault + 'text-12 pr-16';
+export const inputBlock = input + 'block mx-auto';
+export const select = input + 'text-12 pr-16';

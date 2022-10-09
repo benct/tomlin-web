@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import { Icon } from '@mdi/react';
 import { mdiAccountPlusOutline } from '@mdi/js';
 
 import { formatDate } from '@/util/formatting';
@@ -7,6 +6,8 @@ import { useUsers } from '@/data/users';
 
 import { User } from '@/interfaces';
 import { Loading } from '@/components/page/Loading';
+import { Button } from '@/components/page/Button';
+import { Box } from '@/components/page/Box';
 import { UserModal } from './UserModal';
 
 export const Users: FC = () => {
@@ -26,43 +27,41 @@ export const Users: FC = () => {
     };
 
     const renderRow = (user: User, idx: number) => (
-        <tr key={`user${idx}`}>
-            <td>
-                <button className="button-blank text-left strong" onClick={(): void => edit(user)}>
+        <tr className="border dark:border-slate-400 odd:bg-slate-100 dark:odd:bg-slate-800" key={`user${idx}`}>
+            <td className="py-8 px-16">
+                <button className="text-secondary dark:text-secondary-dark font-bold" onClick={(): void => edit(user)}>
                     {user.name}
                 </button>
-                <div>{user.email}</div>
+                <div className="text-12 truncate">{user.email}</div>
             </td>
-            <td>{user.roles.join(', ')}</td>
-            <td>{formatDate(user.created)}</td>
-            <td>{user.lastSeen ? formatDate(user.lastSeen) : 'Never'}</td>
+            <td className="py-8 px-16 text-14 hidden sm:table-cell">{user.roles.join(', ')}</td>
+            <td className="py-8 px-16 text-14 whitespace-nowrap">{formatDate(user.created)}</td>
+            <td className="py-8 px-16 text-14 whitespace-nowrap">{user.lastSeen ? formatDate(user.lastSeen) : 'Never'}</td>
         </tr>
     );
 
     return (
-        <div className="wrapper min-height ptm">
+        <Box title="Users" className="min-h">
             <Loading isLoading={loading} text="Loading users...">
                 {users.length ? (
-                    <table className="table-striped">
-                        <thead>
+                    <table className="table-auto border-collapse w-full">
+                        <thead className="text-left">
                             <tr>
-                                <th>
-                                    <button className="button-icon" onClick={(): void => edit()}>
-                                        <Icon path={mdiAccountPlusOutline} size="24px" title="New User" />
-                                    </button>
+                                <th className="px-16">
+                                    <Button text="New User" icon={mdiAccountPlusOutline} onClick={(): void => edit()} />
                                 </th>
-                                <th>Roles</th>
-                                <th>Created</th>
-                                <th>Last Seen</th>
+                                <th className="px-16 hidden sm:table-cell">Roles</th>
+                                <th className="px-16">Created</th>
+                                <th className="px-16">Last Seen</th>
                             </tr>
                         </thead>
-                        <tbody>{users.map(renderRow)}</tbody>
+                        <tbody>{users.sort((a, b) => (a.created < b.created ? -1 : 1)).map(renderRow)}</tbody>
                     </table>
                 ) : (
-                    <div className="text">No users found...</div>
+                    <div className="text-center">No users found...</div>
                 )}
             </Loading>
             {showOverlay ? <UserModal user={selected} close={closeModal} /> : null}
-        </div>
+        </Box>
     );
 };

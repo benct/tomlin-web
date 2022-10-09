@@ -1,20 +1,22 @@
-import { FC, ReactElement } from 'react';
+import { FC, Fragment, ReactElement } from 'react';
 
+import { formatTimestamp } from '@/util/formatting';
 import { useVisits } from '@/data/admin';
 
 import { PageProps, Visit } from '@/interfaces';
 import { Loading } from '@/components/page/Loading';
 import { Pagination } from '@/components/page/Pagination';
+import { Box } from '@/components/page/Box';
 
 export const Visits: FC<PageProps> = ({ page }) => {
     const { visits, pagination, loading } = useVisits(page);
 
     const renderVisit = (visit: Visit, idx: number): ReactElement => (
-        <div className="admin-logs" key={`visits${idx}`}>
+        <Fragment key={`visits${idx}`}>
             <code>
-                {visit.timestamp}
+                {formatTimestamp(visit.timestamp)}
                 <br />
-                <span className="strong">{visit.visits}</span>
+                <span className="font-bold text-secondary dark:text-secondary-dark">{visit.visits}</span>
             </code>
             <code>
                 {visit.ip} / {visit.host}
@@ -23,21 +25,21 @@ export const Visits: FC<PageProps> = ({ page }) => {
                 <br />
                 {visit.page} {visit.referer}
             </code>
-        </div>
+        </Fragment>
     );
 
     return (
-        <div className="wrapper min-height ptm">
+        <Box title="Visits" className="min-h">
             <Loading isLoading={loading} text="Loading visits...">
                 {visits.length ? (
                     <>
-                        {visits.map(renderVisit)}
+                        <div className="grid grid-cols-2-auto gap-12 text-12">{visits.map(renderVisit)}</div>
                         <Pagination current={pagination.current} total={pagination.total} path="/admin/visits/" />
                     </>
                 ) : (
-                    <span>No tracking data found...</span>
+                    <div className="text-center">No tracking data found...</div>
                 )}
             </Loading>
-        </div>
+        </Box>
     );
 };

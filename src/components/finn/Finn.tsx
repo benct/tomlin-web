@@ -41,10 +41,12 @@ export const Finn: FC = () => {
                     </th>
                 </tr>
             </thead>
-            <tbody className="border">
+            <tbody>
                 {data?.[id].map(
                     (entry: FinnEntry): ReactElement => (
-                        <tr className="border-b even:bg-slate-100 dark:even:bg-slate-800" key={`finn${id}${entry.timestamp}`}>
+                        <tr
+                            className="border dark:border-slate-400 odd:bg-slate-100 dark:odd:bg-slate-800"
+                            key={`finn${id}${entry.timestamp}`}>
                             <td className="py-8 px-16">{formatDate(entry.timestamp, 'MMM d - HH:mm')}</td>
                             <td className="py-8 px-16">{entry.price}</td>
                         </tr>

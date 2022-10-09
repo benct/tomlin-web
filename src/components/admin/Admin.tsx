@@ -1,10 +1,13 @@
 import { FC, Fragment, ReactElement, useRef } from 'react';
 
+import { input, select } from '@/styles';
 import { formatThousands } from '@/util/formatting';
 import { useAppContext } from '@/data/context';
 import { useAdminActions, useAdminStats } from '@/data/admin';
 
 import { Loading } from '@/components/page/Loading';
+import { Button } from '@/components/page/Button';
+import { Box } from '@/components/page/Box';
 
 export const Admin: FC = () => {
     const hassCount = useRef<HTMLSelectElement>(null);
@@ -34,9 +37,9 @@ export const Admin: FC = () => {
         );
 
     return (
-        <div className="wrapper min-height ptm">
-            <Loading isLoading={loading} text="Loading stats...">
-                <div className="admin-stats text-center text-small">
+        <>
+            <Box title="Administration" className="grid grid-cols-2 sm:grid-cols-4 gap-x-16 gap-y-8 text-center text-14" border="border-b">
+                <Loading isLoading={loading} text="Loading stats..." className="col-span-2 sm:col-span-4">
                     <div>
                         Movies: {formatStat('movie')}
                         <br />
@@ -57,12 +60,11 @@ export const Admin: FC = () => {
                         <br />
                         Logs: {formatStat('log')}
                     </div>
-                </div>
-            </Loading>
-            <hr className="divider" />
-            <div className="admin-list text">
+                </Loading>
+            </Box>
+            <Box title="Settings" border="border-b" className="grid grid-cols-3-auto gap-12 items-center">
                 <span className="truncate">Countdown icon</span>
-                <select className="input input-small" defaultValue={settings.countdownIcon} ref={countdownIcon}>
+                <select className={select} defaultValue={settings.countdownIcon} ref={countdownIcon}>
                     <option value="none">None</option>
                     <option value="birthday">Birthday</option>
                     <option value="christmas">Christmas</option>
@@ -70,77 +72,51 @@ export const Admin: FC = () => {
                     <option value="anniversary">Anniversary</option>
                     <option value="wedding">Wedding</option>
                 </select>
-                <button className="input input-small" onClick={() => saveSetting('countdownIcon', getValue(countdownIcon.current))}>
-                    Set
-                </button>
+                <Button text="Set" onClick={() => saveSetting('countdownIcon', getValue(countdownIcon.current))} />
                 <span className="truncate">Countdown target date</span>
-                <input className="input input-small" type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
-                <button className="input input-small" onClick={() => saveSetting('countdownTarget', getValue(countdownTarget.current))}>
-                    Set
-                </button>
-            </div>
-            <hr className="divider" />
-            <div className="admin-list text">
+                <input className={`${input} text-12`} type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
+                <Button text="Set" onClick={() => saveSetting('countdownTarget', getValue(countdownTarget.current))} />
+            </Box>
+            <Box title="Tasks" border="border-b" className="grid grid-cols-3-auto gap-12 items-center">
                 <span className="truncate">Update number of stored movies</span>
-                <select className="input input-small" defaultValue="50" ref={updateMovieCount}>
+                <select className={select} defaultValue="50" ref={updateMovieCount}>
                     {renderOptions([10, 50, 100, 250, 500])}
                 </select>
-                <button className="input input-small" onClick={() => updateMedia('movie', getCount(updateMovieCount.current))}>
-                    Run
-                </button>
+                <Button text="Run" onClick={() => updateMedia('movie', getCount(updateMovieCount.current))} />
                 <span className="truncate">Update number of stored tv-shows</span>
-                <select className="input input-small" defaultValue="10" ref={updateTvCount}>
+                <select className={select} defaultValue="10" ref={updateTvCount}>
                     {renderOptions([5, 10, 50, 100])}
                 </select>
-                <button className="input input-small" onClick={() => updateMedia('tv', getCount(updateTvCount.current))}>
-                    Run
-                </button>
-            </div>
-            <hr className="divider" />
-            <div className="admin-list text">
+                <Button text="Run" onClick={() => updateMedia('tv', getCount(updateTvCount.current))} />
                 <span className="truncate">Update IATA airline entries</span>
                 <span />
-                <button className="input input-small" onClick={() => updateIata('airlines')}>
-                    Run
-                </button>
+                <Button text="Run" onClick={() => updateIata('airlines')} />
                 <span className="truncate">Update IATA location entries</span>
                 <span />
-                <button className="input input-small" onClick={() => updateIata('locations')}>
-                    Run
-                </button>
-            </div>
-            <hr className="divider" />
-            <div className="admin-list text">
+                <Button text="Run" onClick={() => updateIata('locations')} />
                 <span className="truncate">Clear all log messages</span>
                 <span />
-                <button className="input input-small" onClick={() => clearLogs()}>
-                    Clear
-                </button>
+                <Button text="Clear" onClick={() => clearLogs()} />
                 <span className="truncate">Run database backup</span>
                 <span />
-                <button className="input input-small" onClick={() => backup()}>
-                    Backup
-                </button>
-            </div>
-            <hr className="divider" />
-            <div className="admin-list text">
+                <Button text="Backup" onClick={() => backup()} />
+            </Box>
+            <Box title="Home Assistant" className="grid grid-cols-3-auto gap-12 items-center">
                 <span className="truncate">Latest Home Assistant states</span>
-                <select className="input input-small" defaultValue="25" ref={hassCount}>
+                <select className={select} defaultValue="25" ref={hassCount}>
                     {renderOptions([10, 25, 50, 100, 250, 500])}
                 </select>
-                <button className="input input-small" onClick={() => getHass(getCount(hassCount.current))}>
-                    Load
-                </button>
-            </div>
-            <div className="admin-list text-small mtl">
-                {hass.map((state) => (
-                    <Fragment key={`hass${state.id}`}>
-                        <span className="truncate">{state.sensor}</span>
-                        <span className="strong">{state.value}</span>
-                        <span>{state.updated}</span>
-                    </Fragment>
-                ))}
-            </div>
-        </div>
+                <Button text="Load" onClick={() => getHass(getCount(hassCount.current))} />
+                <div className="col-span-3 grid grid-cols-3-auto gap-12 mt-16">
+                    {hass.map((state) => (
+                        <Fragment key={`hass${state.id}`}>
+                            <span className="truncate">{state.sensor}</span>
+                            <span className="font-bold">{state.value}</span>
+                            <span>{state.updated}</span>
+                        </Fragment>
+                    ))}
+                </div>
+            </Box>
+        </>
     );
 };

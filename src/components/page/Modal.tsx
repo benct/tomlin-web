@@ -1,20 +1,19 @@
-import { FC, memo, MouseEvent, PropsWithChildren, ReactNode, useEffect } from 'react';
+import { FC, MouseEvent, PropsWithChildren, ReactNode, useEffect } from 'react';
+import { Button } from '@/components/page/Button';
+import { mdiClose } from '@mdi/js';
 
 interface ModalProps {
-    children: ReactNode;
+    title: string;
+    footer?: ReactNode;
     close: () => void;
     className?: string;
 }
 
-interface ModalElementProps {
-    className?: string;
-}
-
-const ModalWrapper: FC<ModalProps> = ({ close, className, children }) => {
+export const Modal: FC<PropsWithChildren<ModalProps>> = ({ title, footer, close, className = '', children }) => {
     useEffect(() => {
-        document.body.classList.add('no-scroll');
+        document.body.classList.add('overflow-hidden');
 
-        return (): void => document.body.classList.remove('no-scroll');
+        return (): void => document.body.classList.remove('overflow-hidden');
     }, []);
 
     const handleOutsideClick = (event: MouseEvent): void => {
@@ -24,18 +23,24 @@ const ModalWrapper: FC<ModalProps> = ({ close, className, children }) => {
     };
 
     return (
-        <div className="overlay" onClick={handleOutsideClick} role="dialog">
-            <div className={`wrapper overlay-modal shadow ${className ?? ''}`}>{children}</div>
+        <div
+            className="bg-slate-900 bg-opacity-50 fixed inset-0 flex sm:place-content-center sm:place-items-center items-end z-20"
+            onClick={handleOutsideClick}>
+            <div
+                className="bg-light dark:bg-dark mx-0 sm:mx-16 flex flex-col overflow-hidden outline-none transition pt-16 sm:pt-32 pb-16 sm:pb-32 rounded-t-8 sm:rounded-b-8 w-full max-w-narrow max-h-[80%]"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-header"
+                tabIndex={-1}>
+                <div className="flex justify-between items-center px-16 sm:px-32 pb-16 border-b">
+                    <h3 id="modal-header" className="font-bold">
+                        {title}
+                    </h3>
+                    <Button text="Close" icon={mdiClose} onClick={close} />
+                </div>
+                <div className={`overflow-y-auto overflow-x-hidden px-16 sm:px-32 py-16 relative ${className}`}>{children}</div>
+                {footer ? <div className="flex justify-end gap-24 px-16 sm:px-32 pt-16 border-t">{footer}</div> : null}
+            </div>
         </div>
     );
 };
-
-export const ModalHeader: FC<PropsWithChildren<ModalElementProps>> = ({ children, className }) => (
-    <div className={`overlay-modal-header color-primary strong ${className ?? ''}`}>{children}</div>
-);
-
-export const ModalContent: FC<PropsWithChildren> = ({ children }) => <div className="overlay-modal-content">{children}</div>;
-
-export const ModalFooter: FC<PropsWithChildren> = ({ children }) => <div className="overlay-modal-footer">{children}</div>;
-
-export const Modal = memo(ModalWrapper);

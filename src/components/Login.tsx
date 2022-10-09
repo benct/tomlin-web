@@ -1,7 +1,7 @@
 import { FC, FormEvent, useRef } from 'react';
 import { UrlObject } from 'url';
 
-import { button, input } from '@/styles';
+import { inputBlock } from '@/styles';
 import { useLogin } from '@/data/auth';
 
 import { Box } from './page/Box';
@@ -25,16 +25,9 @@ export const Login: FC<{ redirectTo?: string | UrlObject }> = ({ redirectTo }) =
                 {redirectTo ? 'Sorry, you need to log in to view this page.' : 'Please fill out the form below to log in.'}
             </div>
             <form className="mx-auto max-w-max space-y-16" onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    ref={username}
-                    placeholder="E-mail"
-                    aria-label="E-mail"
-                    autoComplete="off"
-                    className={`block mx-auto ${input}`}
-                />
-                <input type="password" ref={password} placeholder="********" aria-label="Password" className={`block mx-auto ${input}`} />
-                <input type="submit" value="Submit" aria-label="Login" className={`block mx-auto ${button}`} />
+                <input type="email" ref={username} placeholder="E-mail" aria-label="E-mail" autoComplete="off" className={inputBlock} />
+                <input type="password" ref={password} placeholder="********" aria-label="Password" className={inputBlock} />
+                <input type="submit" value="Submit" aria-label="Login" className={inputBlock} />
                 {error && <p className="text-warn">Incorrect username or password!</p>}
                 <Loading isLoading={loading} text="Logging in..." />
             </form>

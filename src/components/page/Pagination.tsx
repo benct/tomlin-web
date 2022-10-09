@@ -2,6 +2,7 @@ import { FC, ReactElement } from 'react';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import { mdiChevronDoubleRight, mdiChevronRight } from '@mdi/js';
+import { buttonIcon } from '@/styles';
 
 interface PaginationProps {
     current: number;
@@ -45,28 +46,34 @@ export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix 
     const next = current + 1;
     const last = current < total - 1;
 
-    const renderImage = (image: PaginationImage): ReactElement => (
-        <Icon path={image.double ? mdiChevronDoubleRight : mdiChevronRight} rotate={image.rotate ? 180 : 0} size={1} title={image.title} />
+    const computePath = (page: number) => `${path}${page}/${postfix ? `${postfix}/` : ''}`;
+
+    const renderPage = (page: number): ReactElement => (
+        <Link href={computePath(page)} key={`pagination${page}`}>
+            <a className={`${buttonIcon} px-8`}>{page}</a>
+        </Link>
     );
 
-    const renderPage = (page: number, image?: PaginationImage): ReactElement => (
-        <Link href={`${path}${page}/${postfix ? `${postfix}/` : ''}`} key={`pagination${page}`}>
-            <a className="button-icon phm">{image ? renderImage(image) : page}</a>
+    const renderPageIcon = (page: number, { title, double, rotate }: PaginationImage) => (
+        <Link href={computePath(page)} key={`pagination${page}`}>
+            <a className={buttonIcon}>
+                <Icon path={double ? mdiChevronDoubleRight : mdiChevronRight} rotate={rotate ? 180 : 0} size={1} title={title} />
+            </a>
         </Link>
     );
 
     return enabled ? (
-        <div className="text-center clear ptl">
-            {first ? renderPage(1, { title: 'First page', double: true, rotate: true }) : null}
-            {previousPages.length ? renderPage(previous, { title: 'Previous page', rotate: true }) : null}
-            <span className="phm hide-gt480">Page {current}</span>
-            <div className="phm hide-lt480" style={{ display: 'inline-block' }}>
+        <div className="flex justify-center items-center gap-8 pt-24">
+            {first ? renderPageIcon(1, { title: 'First page', double: true, rotate: true }) : null}
+            {previousPages.length ? renderPageIcon(previous, { title: 'Previous page', rotate: true }) : null}
+            <span className="sm:hidden px-8">Page {current}</span>
+            <div className="hidden sm:flex items-center gap-8 px-8">
                 {previousPages.map((page: number) => renderPage(page))}
-                <span className="phm strong">{current}</span>
+                <span className="text-secondary dark:text-secondary-dark font-bold px-8">{current}</span>
                 {consecutivePages.map((page: number) => renderPage(page))}
             </div>
-            {consecutivePages.length ? renderPage(next, { title: 'Next page' }) : null}
-            {last ? renderPage(total, { title: 'Last page', double: true }) : null}
+            {consecutivePages.length ? renderPageIcon(next, { title: 'Next page' }) : null}
+            {last ? renderPageIcon(total, { title: 'Last page', double: true }) : null}
         </div>
     ) : null;
 };
