@@ -1,11 +1,12 @@
 import { FC, ReactElement, useState } from 'react';
-import { Icon } from '@mdi/react';
-import { mdiFileDocumentMultipleOutline } from '@mdi/js';
 
+import { formatTimestamp } from '@/util/formatting';
 import { useNotes } from '@/data/notes';
 
 import { Note } from '@/interfaces';
 import { Loading } from '@/components/page/Loading';
+import { Button } from '@/components/page/Button';
+import { Box } from '@/components/page/Box';
 import { NotesModal } from './NotesModal';
 
 export const Notes: FC = () => {
@@ -25,33 +26,33 @@ export const Notes: FC = () => {
     };
 
     return (
-        <div className="wrapper min-height ptm">
+        <Box title="Notes" className="min-h">
             <Loading isLoading={loading} text="Loading notes...">
                 {notes.length ? (
                     notes.map(
                         (note: Note): ReactElement => (
-                            <div className="admin-logs admin-note" key={`note${note.id}`}>
+                            <div
+                                className="grid sm:grid-cols-2-auto gap-16 border-b border-dashed pb-16 mb-16 text-14"
+                                key={`note${note.id}`}>
                                 <code>
-                                    {note.updated}
+                                    {formatTimestamp(note.updated)}
                                     <br />
-                                    <button className="button-blank text-left strong mts" onClick={(): void => edit(note)}>
+                                    <button className="text-left font-bold mt-4" onClick={(): void => edit(note)}>
                                         {note.title ?? 'No title'}
                                     </button>
                                 </code>
-                                <pre style={{ whiteSpace: 'pre-wrap' }}>{note.content ?? 'No content...'}</pre>
+                                <pre style={{ whiteSpace: 'pre-wrap' }} className="overflow-x-auto">
+                                    {note.content ?? 'No content...'}
+                                </pre>
                             </div>
                         )
                     )
                 ) : (
-                    <div className="text">No notes found...</div>
+                    <div className="text-center">No notes found...</div>
                 )}
+                <Button text="New" onClick={(): void => edit({})} className="block mx-auto mt-16" />
             </Loading>
-            <div className="text-center">
-                <button className="button-icon button-icon-text" onClick={(): void => edit({})}>
-                    New note <Icon path={mdiFileDocumentMultipleOutline} size="28px" title="New" />
-                </button>
-            </div>
             {showOverlay && selected ? <NotesModal note={selected} close={closeModal} /> : null}
-        </div>
+        </Box>
     );
 };

@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, SyntheticEvent } from 'react';
-import { Icon } from '@mdi/react';
-import { mdiCloseCircleOutline, mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
+import { mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
+import { input, inputFull, label, select } from '@/styles';
 
 import { Flight } from '@/interfaces';
-import { Modal, ModalContent, ModalFooter, ModalHeader } from '@/components/page/Modal';
-import { FlightsInput } from './FlightsInput';
+import { Modal } from '@/components/page/Modal';
+import { Button } from '@/components/page/Button';
 
 interface FlightModalProps {
     form: Flight;
@@ -18,87 +18,166 @@ interface FlightModalProps {
 }
 
 export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }) => (
-    <Modal close={close}>
-        <ModalHeader>{`${form.id ? 'Edit' : 'New'} Flight`}</ModalHeader>
-        <ModalContent>
-            <form onSubmit={save} className="admin-flight-form">
-                <fieldset>
-                    <div className="form-line text-smaller">
-                        <FlightsInput name="origin" value={form.origin} onChange={change} extraProps={{ maxLength: 3 }} />
-                        <FlightsInput name="destination" value={form.destination} onChange={change} extraProps={{ maxLength: 3 }} />
-                        <FlightsInput name="departure" type="datetime-local" value={form.departure} onChange={change} />
-                        <FlightsInput name="arrival" type="datetime-local" value={form.arrival} onChange={change} />
-                        <FlightsInput name="carrier" value={form.carrier} fraction="31%" onChange={change} extraProps={{ maxLength: 2 }} />
-                        <FlightsInput
-                            name="number"
-                            type="number"
-                            value={form.number}
-                            fraction="31%"
-                            onChange={change}
-                            extraProps={{ min: 1, max: 9999 }}
-                        />
-                        <div className="form-element" style={{ width: '31%' }}>
-                            <label htmlFor="form-cabin">Cabin</label>
-                            <select
-                                className="input input-small"
-                                id="form-cabin"
-                                name="cabin"
-                                autoComplete="off"
-                                onChange={change}
-                                onBlur={change}
-                                defaultValue={form.cabin ?? 'economy'}>
-                                <option value="economy">Economy</option>
-                                <option value="premium_economy">Premium</option>
-                                <option value="business">Business</option>
-                                <option value="first">First</option>
-                            </select>
-                        </div>
-                        <FlightsInput
-                            name="aircraft"
-                            value={form.aircraft}
-                            fraction="31%"
-                            onChange={change}
-                            extraProps={{ maxLength: 4 }}
-                        />
-                        <FlightsInput name="seat" value={form.seat} fraction="31%" onChange={change} extraProps={{ maxLength: 4 }} />
-                        <FlightsInput name="reference" value={form.reference} fraction="31%" onChange={change} required />
-                        <div className="form-element full-width">
-                            <label htmlFor="form-info">Info</label>
-                            <textarea
-                                className="input-textarea man"
-                                id="form-info"
-                                name="info"
-                                autoComplete="off"
-                                rows={4}
-                                onChange={change}
-                                defaultValue={form.info ?? undefined}
-                            />
-                        </div>
-                    </div>
-                    {invalid && <div className="text text-small error pts">Please fill the required fields!</div>}
-                </fieldset>
-            </form>
-        </ModalContent>
-        <ModalFooter>
-            {form.id ? (
-                <>
-                    <button className="button-icon mrl" onClick={(): void => remove(form.id)}>
-                        <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
-                    </button>
-                    <button className="button-icon mrl" onClick={(): void => copy(form)}>
-                        <Icon path={mdiContentCopy} size="26px" title="Copy" />
-                    </button>
-                </>
-            ) : null}
-            <button className="button-icon mrl" onClick={save}>
-                <Icon path={mdiContentSaveOutline} size="28px" title="Save" />
-            </button>
-            <button className="button-icon" onClick={swap}>
-                <Icon path={mdiSwapHorizontal} size="28px" title="Swap airports" />
-            </button>
-            <button className="button-icon float-right" onClick={close}>
-                <Icon path={mdiCloseCircleOutline} size="28px" title="Cancel" />
-            </button>
-        </ModalFooter>
+    <Modal
+        title={`${form.id ? 'Edit' : 'New'} Flight`}
+        close={close}
+        footer={
+            <>
+                <Button text="Swap airports" icon={mdiSwapHorizontal} onClick={swap} />
+                {form.id ? (
+                    <>
+                        <Button text="Delete" icon={mdiDeleteOutline} onClick={(): void => remove(form.id)} />
+                        <Button text="Copy" icon={mdiContentCopy} onClick={(): void => copy(form)} />
+                    </>
+                ) : null}
+                <Button text="Save" icon={mdiContentSaveOutline} onClick={save} />
+            </>
+        }>
+        <form onSubmit={save} className="space-y-16">
+            <div className="grid grid-cols-2 gap-16">
+                <label className={label}>
+                    Origin
+                    <input
+                        className={inputFull}
+                        type="text"
+                        name="origin"
+                        required
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.origin}
+                        maxLength={3}
+                    />
+                </label>
+                <label className={label}>
+                    Destination
+                    <input
+                        className={inputFull}
+                        type="text"
+                        name="destination"
+                        required
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.destination}
+                        maxLength={3}
+                    />
+                </label>
+                <label className={label}>
+                    Departure
+                    <input
+                        className={inputFull}
+                        type="datetime-local"
+                        name="departure"
+                        required
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.departure}
+                    />
+                </label>
+                <label className={label}>
+                    Arrival
+                    <input
+                        className={inputFull}
+                        type="datetime-local"
+                        name="arrival"
+                        required
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.arrival}
+                    />
+                </label>
+            </div>
+            <div className="grid grid-cols-3 gap-16">
+                <label className={label}>
+                    Carrier
+                    <input
+                        className={inputFull}
+                        type="text"
+                        name="carrier"
+                        required
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.carrier}
+                        maxLength={2}
+                    />
+                </label>
+                <label className={label}>
+                    Number
+                    <input
+                        className={inputFull}
+                        type="number"
+                        name="number"
+                        required
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.number}
+                        min={1}
+                        max={9999}
+                    />
+                </label>
+                <label className={label}>
+                    Cabin
+                    <select
+                        className={`${select} block w-full text-14`}
+                        name="cabin"
+                        onChange={change}
+                        onBlur={change}
+                        defaultValue={form.cabin ?? 'economy'}>
+                        <option value="economy">Economy</option>
+                        <option value="premium_economy">Premium</option>
+                        <option value="business">Business</option>
+                        <option value="first">First</option>
+                    </select>
+                </label>
+                <label className={label}>
+                    Aircraft
+                    <input
+                        className={inputFull}
+                        type="text"
+                        name="aircraft"
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.aircraft}
+                        maxLength={4}
+                    />
+                </label>
+                <label className={label}>
+                    Seat
+                    <input
+                        className={inputFull}
+                        type="text"
+                        name="seat"
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.seat}
+                        maxLength={4}
+                    />
+                </label>
+                <label className={label}>
+                    Reference
+                    <input
+                        className={inputFull}
+                        type="text"
+                        name="reference"
+                        required
+                        autoComplete="off"
+                        onChange={change}
+                        value={form.reference}
+                    />
+                </label>
+            </div>
+            <label className={label}>
+                Info
+                <textarea
+                    className={inputFull}
+                    name="info"
+                    required
+                    autoComplete="off"
+                    rows={4}
+                    onChange={change}
+                    value={form.info ?? undefined}
+                />
+            </label>
+        </form>
+        {invalid && <div className="text-center text-12 text-warn pt-16">Please fill the required fields!</div>}
     </Modal>
 );

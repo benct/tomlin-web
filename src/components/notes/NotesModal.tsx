@@ -1,11 +1,12 @@
 import { FC, memo, useRef } from 'react';
-import { Icon } from '@mdi/react';
-import { mdiCloseCircleOutline, mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
+import { mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
+import { input, inputFull, label } from '@/styles';
 import { useNoteActions } from '@/data/notes';
 
 import { Note } from '@/interfaces';
-import { Modal, ModalContent, ModalFooter, ModalHeader } from '@/components/page/Modal';
+import { Modal } from '@/components/page/Modal';
+import { Button } from '@/components/page/Button';
 
 interface NotesModalProps {
     close: () => void;
@@ -34,21 +35,24 @@ export const NotesModal: FC<NotesModalProps> = memo(({ note, close }) => {
     };
 
     return (
-        <Modal close={close}>
-            <ModalHeader>{`${note.id ? 'Edit' : 'New'} Note`}</ModalHeader>
-            <ModalContent>
-                <input
-                    className="input full-width"
-                    type="text"
-                    maxLength={64}
-                    placeholder="Title"
-                    autoComplete="off"
-                    required
-                    ref={title}
-                    defaultValue={note.title}
-                />
+        <Modal
+            title={`${note.id ? 'Edit' : 'New'} Note`}
+            close={close}
+            footer={
+                <>
+                    {note.id ? <Button text="Delete" icon={mdiDeleteOutline} onClick={remove} /> : null}
+                    <Button text="Save" icon={mdiContentSaveOutline} onClick={save} />
+                </>
+            }
+            className="space-y-16">
+            <label className={label}>
+                Title
+                <input className={inputFull} type="text" maxLength={64} autoComplete="off" required ref={title} defaultValue={note.title} />
+            </label>
+            <label className={label}>
+                Content
                 <textarea
-                    className="input-textarea full-width monospace"
+                    className={`${inputFull} font-mono text-14`}
                     rows={18}
                     placeholder="Notes..."
                     autoComplete="off"
@@ -56,20 +60,7 @@ export const NotesModal: FC<NotesModalProps> = memo(({ note, close }) => {
                     ref={content}
                     defaultValue={note.content}
                 />
-            </ModalContent>
-            <ModalFooter>
-                {note.id ? (
-                    <button className="button-icon mrl" onClick={remove}>
-                        <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
-                    </button>
-                ) : null}
-                <button className="button-icon" onClick={save}>
-                    <Icon path={mdiContentSaveOutline} size="28px" title="Save" />
-                </button>
-                <button className="button-icon float-right" onClick={close}>
-                    <Icon path={mdiCloseCircleOutline} size="28px" title="Cancel" />
-                </button>
-            </ModalFooter>
+            </label>
         </Modal>
     );
 });

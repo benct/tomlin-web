@@ -4,6 +4,7 @@ import { mdiBriefcaseEditOutline, mdiChevronDown, mdiChevronUp } from '@mdi/js';
 
 import { formatDate } from '@/util/formatting';
 import { Flight } from '@/interfaces';
+import { Button } from '@/components/page/Button';
 
 interface FlightGroupProps {
     flights: Flight[];
@@ -28,38 +29,33 @@ export const FlightsGroup: FC<FlightGroupProps> = ({ flights, edit }) => {
 
     return (
         <>
-            <tr onClick={(): void => setShowFlights(!showFlights)} role="button">
-                <td className="no-wrap">{formatDate(flights[0].departure)}</td>
-                <td className="no-wrap hide-lt600">{flights.length > 1 ? formatDate(flights[flights.length - 1].arrival) : '—'}</td>
-                <td>{locations}</td>
-                <td className="text-right">
-                    <button className="button-icon">
-                        <Icon path={showFlights ? mdiChevronUp : mdiChevronDown} size="20px" title="Show flights" />
-                    </button>
+            <tr className="odd:bg-slate-100 dark:odd:bg-slate-800" onClick={(): void => setShowFlights(!showFlights)} role="button">
+                <td className="p-4 whitespace-nowrap">{formatDate(flights[0].departure)}</td>
+                <td className="p-4 whitespace-nowrap hidden sm:table-cell">
+                    {flights.length > 1 ? formatDate(flights[flights.length - 1].arrival) : '—'}
+                </td>
+                <td className="p-4">{locations}</td>
+                <td className="p-4 text-center">
+                    <Icon path={showFlights ? mdiChevronUp : mdiChevronDown} size="20px" title="Show flights" className="inline" />
                 </td>
             </tr>
             {showFlights &&
                 flights.map(
                     (flight: Flight): ReactElement => (
-                        <tr key={`flight${flight.id}`} className="admin-flight-group">
-                            <td className="no-wrap">{formatDate(flight.departure)}</td>
-                            <td>
-                                <div className="grid grid-col-2">
-                                    <span>{flight.origin}</span>
-                                    <span>{flight.destination}</span>
-                                </div>
+                        <tr key={`flight${flight.id}`} className="border-x-2 border-sky-500">
+                            <td className="p-4 whitespace-nowrap">{formatDate(flight.departure)}</td>
+                            <td className="p-4">
+                                {flight.origin} - {flight.destination}
                             </td>
-                            <td className="hide-lt600">
-                                <div className="grid grid-col-3">
+                            <td className="p-4 hidden sm:table-cell">
+                                <div className="grid grid-cols-3">
                                     <span>{`${flight.carrier} ${flight.number}`}</span>
                                     <span>{flight.aircraft ?? '—'}</span>
                                     <span>{flight.seat ?? '—'}</span>
                                 </div>
                             </td>
-                            <td className="text-right">
-                                <button className="button-icon" onClick={(): void => edit(flight)}>
-                                    <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />
-                                </button>
+                            <td className="pr-4 text-right">
+                                <Button text="Edit" icon={mdiBriefcaseEditOutline} size={0.85} onClick={(): void => edit(flight)} />
                             </td>
                         </tr>
                     )

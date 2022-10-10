@@ -1,18 +1,13 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
-import { Icon } from '@mdi/react';
-import {
-    mdiCloseCircleOutline,
-    mdiCloudUploadOutline,
-    mdiFileDownloadOutline,
-    mdiFolderPlusOutline,
-    mdiFolderSyncOutline,
-    mdiFolderUploadOutline,
-} from '@mdi/js';
+import { mdiClose, mdiFileDownloadOutline, mdiFolderPlusOutline, mdiFolderSyncOutline, mdiFolderUploadOutline } from '@mdi/js';
 
+import { inputCenter } from '@/styles';
 import { useFiles } from '@/data/files';
 
 import { FileItem } from '@/interfaces';
 import { Loading } from '@/components/page/Loading';
+import { Button } from '@/components/page/Button';
+import { Box } from '@/components/page/Box';
 import { FileList } from './FileList';
 
 const PARENT_DIR = '..';
@@ -116,21 +111,19 @@ export const Files: FC = () => {
     }, []);
 
     return (
-        <div className="wrapper min-height ptm">
-            <div className="file-table-header">
-                <button className="button-icon" onClick={() => changeDirectory(PARENT_DIR)} disabled={cwd === ''}>
-                    <Icon path={mdiFolderUploadOutline} size="28px" title="Parent directory" />
-                </button>
-                <div className="text-right">
-                    <button className="button-icon mrl" onClick={() => createDirectory()}>
-                        <Icon path={mdiFolderPlusOutline} size="28px" title="New directory" />
-                    </button>
-                    <button className="button-icon" onClick={() => refresh()}>
-                        <Icon path={mdiFolderSyncOutline} size="28px" title="Refresh content" />
-                    </button>
-                </div>
+        <Box title="Files" className="min-h">
+            <div className="flex gap-16 mb-16">
+                <Button
+                    text="Parent directory"
+                    icon={mdiFolderUploadOutline}
+                    onClick={() => changeDirectory(PARENT_DIR)}
+                    disabled={cwd === ''}
+                />
+                <span className="flex-1" />
+                <Button text="New directory" icon={mdiFolderPlusOutline} onClick={() => createDirectory()} />
+                <Button text="Refresh content" icon={mdiFolderSyncOutline} onClick={() => refresh()} />
             </div>
-            <Loading isLoading={loading} text="Loading file list..." className="file-table">
+            <Loading isLoading={loading} text="Loading file list...">
                 <FileList
                     content={files}
                     focused={focused}
@@ -139,53 +132,39 @@ export const Files: FC = () => {
                     handleDelete={(item: FileItem) => remove(item)}
                 />
             </Loading>
-            <div className="text-center">
-                <label htmlFor="file" className="color-primary pointer">
-                    <input
-                        className="input input-file"
-                        type="file"
-                        name="files[]"
-                        id="file"
-                        aria-label="Add files"
-                        onChange={handleFileChange}
-                        ref={fileInput}
-                        disabled={uploading}
-                        multiple
-                    />
-                    <Icon path={mdiCloudUploadOutline} size="20px" title="Upload" />
-                    <span className="mlm" ref={fileLabel}>
-                        Choose a file
-                    </span>
-                </label>
-                <button className="input text-small mtl" onClick={handleUpload} disabled={uploading}>
-                    {uploading ? 'Uploading...' : 'Upload'}
-                </button>
+            <div className="text-center my-32 space-y-16">
+                <input
+                    className={inputCenter}
+                    type="file"
+                    name="files[]"
+                    id="file"
+                    aria-label="Add files"
+                    onChange={handleFileChange}
+                    ref={fileInput}
+                    disabled={uploading}
+                    multiple
+                />
+                <Button text={uploading ? 'Uploading...' : 'Upload'} onClick={handleUpload} disabled={uploading} />
             </div>
-
             {preview ? (
-                <div className="overlay">
-                    <button className="button-icon" onClick={closePreview}>
-                        <Icon path={mdiCloseCircleOutline} className="file-preview-icon file-preview-close" title="Close" color="white" />
-                    </button>
-                    <button className="button-icon" onClick={downloadPreview}>
-                        <Icon
-                            path={mdiFileDownloadOutline}
-                            className="file-preview-icon file-preview-download"
-                            title="Download"
-                            color="white"
-                        />
-                    </button>
+                <div className="bg-slate-900 bg-opacity-50 fixed inset-0 flex place-content-center place-items-center z-20">
+                    <div className="absolute top-16 right-16 flex gap-24">
+                        <Button text="Download" icon={mdiFileDownloadOutline} onClick={downloadPreview} />
+                        <Button text="Close" icon={mdiClose} onClick={closePreview} />
+                    </div>
                     {preview.type == 'image' ? (
-                        <img className="overlay-image" src={preview.content} alt="Preview" />
+                        <img className="max-w-full max-h-full" src={preview.content} alt="Preview" />
                     ) : preview.type == 'video' ? (
-                        <video className="overlay-image" controls>
+                        <video className="max-w-full max-h-full" controls>
                             <source src={preview.content} type={`video/${preview.item.type}`} />
                         </video>
                     ) : (
-                        <pre className="overlay-preview">{preview.content}</pre>
+                        <pre className="text-left text-12 overflow-auto border max-h-[90%] max-w-[90%] p-8 bg-light dark:bg-dark">
+                            {preview.content}
+                        </pre>
                     )}
                 </div>
             ) : null}
-        </div>
+        </Box>
     );
 };

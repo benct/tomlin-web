@@ -7,6 +7,8 @@ const buttonDefault = 'px-8 py-6 border rounded-4 dark:border-slate-400 hover:sh
 export const button = text + buttonCommon + buttonDefault + 'text-12 font-bold uppercase';
 export const buttonIcon = text + buttonCommon + 'p-2 rounded-8 hover:bg-neutral';
 
+export const label = 'block text-secondary dark:text-secondary-dark text-14';
 export const input = text + bg + buttonCommon + buttonDefault;
-export const inputBlock = input + 'block mx-auto';
+export const inputCenter = input + 'block mx-auto';
+export const inputFull = input + 'block w-full';
 export const select = input + 'text-12 pr-16';

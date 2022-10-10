@@ -1,5 +1,4 @@
 import { ChangeEvent, FC, ReactElement, SyntheticEvent, useState } from 'react';
-import { Icon } from '@mdi/react';
 import { mdiAirplane, mdiBriefcaseEditOutline } from '@mdi/js';
 
 import { formatDate } from '@/util/formatting';
@@ -7,6 +6,8 @@ import { useFlightActions, useFlights } from '@/data/flights';
 
 import { Flight } from '@/interfaces';
 import { Loading } from '@/components/page/Loading';
+import { Button } from '@/components/page/Button';
+import { Box } from '@/components/page/Box';
 import { FlightsModal } from './FlightsModal';
 import { FlightsGroup } from './FlightsGroup';
 
@@ -78,16 +79,14 @@ export const Flights: FC = () => {
     };
 
     const renderGrouped = (): ReactElement => (
-        <table className="table-striped">
+        <table className="table-auto border-collapse w-full text-14">
             <thead>
-                <tr className="text-smaller">
-                    <th>Departure</th>
-                    <th className="hide-lt600">Return</th>
-                    <th>Trip</th>
-                    <th className="text-right">
-                        <button className="button-icon" onClick={handleNew}>
-                            <Icon path={mdiAirplane} size="24px" title="New" />
-                        </button>
+                <tr className="text-left">
+                    <th className="px-4">Departure</th>
+                    <th className="px-4 hidden sm:table-cell">Return</th>
+                    <th className="px-4">Trip</th>
+                    <th className="px-4 text-right">
+                        <Button text="New" icon={mdiAirplane} onClick={handleNew} />
                     </th>
                 </tr>
             </thead>
@@ -102,38 +101,34 @@ export const Flights: FC = () => {
     );
 
     const renderAll = (): ReactElement => (
-        <table className="table-striped">
+        <table className="table-auto border-collapse w-full text-14">
             <thead>
-                <tr className="text-smaller">
-                    <th>Departure</th>
+                <tr className="text-left">
+                    <th className="pl-4">Departure</th>
                     <th>From</th>
                     <th>To</th>
-                    <th className="hide-lt480">Flight</th>
-                    <th className="hide-lt480">Type</th>
-                    <th className="hide-lt600">Seat</th>
-                    <th className="hide-lt768">Reference</th>
-                    <th className="text-right">
-                        <button className="button-icon" onClick={handleNew}>
-                            <Icon path={mdiAirplane} size="24px" title="New" />
-                        </button>
+                    <th>Flight</th>
+                    <th className="hidden sm:table-cell">Type</th>
+                    <th className="hidden sm:table-cell">Seat</th>
+                    <th className="hidden md:table-cell">Reference</th>
+                    <th className="pr-4 text-right">
+                        <Button text="New" icon={mdiAirplane} onClick={handleNew} />
                     </th>
                 </tr>
             </thead>
             <tbody>
                 {flights.flat().map(
                     (flight: Flight): ReactElement => (
-                        <tr key={`flight${flight.id}`}>
-                            <td className="no-wrap">{formatDate(flight.departure)}</td>
+                        <tr className="odd:bg-slate-100 dark:odd:bg-slate-800" key={`flight${flight.id}`}>
+                            <td className="pl-4 whitespace-nowrap">{formatDate(flight.departure)}</td>
                             <td>{flight.origin}</td>
                             <td>{flight.destination}</td>
-                            <td className="hide-lt480">{`${flight.carrier} ${flight.number}`}</td>
-                            <td className="hide-lt480">{flight.aircraft ?? '—'}</td>
-                            <td className="hide-lt600">{flight.seat ?? '—'}</td>
-                            <td className="hide-lt768">{flight.reference ?? '—'}</td>
-                            <td className="text-right">
-                                <button className="button-icon" onClick={(): void => handleEdit(flight)}>
-                                    <Icon path={mdiBriefcaseEditOutline} size="20px" title="Edit" />
-                                </button>
+                            <td>{`${flight.carrier} ${flight.number}`}</td>
+                            <td className="hidden sm:table-cell">{flight.aircraft ?? '—'}</td>
+                            <td className="hidden sm:table-cell">{flight.seat ?? '—'}</td>
+                            <td className="hidden md:table-cell">{flight.reference ?? '—'}</td>
+                            <td className="pr-4 text-right">
+                                <Button text="Edit" icon={mdiBriefcaseEditOutline} size={0.85} onClick={(): void => handleEdit(flight)} />
                             </td>
                         </tr>
                     )
@@ -142,15 +137,21 @@ export const Flights: FC = () => {
         </table>
     );
 
+    const renderTitle = () => (
+        <>
+            <span>Flight</span>
+            <Button
+                text={`Display: ${showGrouped ? 'Grouped' : 'All'}`}
+                onClick={(): void => setShowGrouped(!showGrouped)}
+                className="sm:ml-16"
+            />
+        </>
+    );
+
     return (
-        <div className="wrapper min-height ptm">
-            <div className="text-center mbm">
-                <button className="input input-small" onClick={(): void => setShowGrouped(!showGrouped)}>
-                    Display: {showGrouped ? 'Grouped' : 'All'}
-                </button>
-            </div>
+        <Box title={renderTitle()} className="min-h">
             <Loading isLoading={loading} text="Loading flights...">
-                {flights.length ? showGrouped ? renderGrouped() : renderAll() : <div className="text">No flights...</div>}
+                {flights.length ? showGrouped ? renderGrouped() : renderAll() : <div className="text-center">No flights...</div>}
             </Loading>
             {showModal && (
                 <FlightsModal
@@ -164,6 +165,6 @@ export const Flights: FC = () => {
                     close={(): void => setShowModal(false)}
                 />
             )}
-        </div>
+        </Box>
     );
 };
