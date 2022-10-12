@@ -4,12 +4,13 @@ import { mdiClose } from '@mdi/js';
 
 interface ModalProps {
     title: string;
-    footer?: ReactNode;
+    right: ReactNode; // footer right
+    left?: ReactNode; // footer left
     close: () => void;
     className?: string;
 }
 
-export const Modal: FC<PropsWithChildren<ModalProps>> = ({ title, footer, close, className = '', children }) => {
+export const Modal: FC<PropsWithChildren<ModalProps>> = ({ title, left, right, close, className = '', children }) => {
     useEffect(() => {
         document.body.classList.add('overflow-hidden');
 
@@ -33,13 +34,16 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({ title, footer, close,
                 aria-labelledby="modal-header"
                 tabIndex={-1}>
                 <div className="flex justify-between items-center px-16 sm:px-32 pb-16">
-                    <h3 id="modal-header" className="font-bold">
+                    <h3 id="modal-header" className="text-secondary dark:text-secondary-dark font-bold">
                         {title}
                     </h3>
                     <Button text="Close" icon={mdiClose} onClick={close} />
                 </div>
                 <div className={`overflow-y-auto overflow-x-hidden px-16 sm:px-32 py-4 relative ${className}`}>{children}</div>
-                {footer ? <div className="flex justify-end gap-24 px-16 sm:px-32 pt-16">{footer}</div> : null}
+                <div className="flex gap-24 px-16 sm:px-32 pt-16 justify-between items-center">
+                    <div className="flex gap-24">{left}</div>
+                    <div className="flex gap-24">{right}</div>
+                </div>
             </div>
         </div>
     );

@@ -1,9 +1,10 @@
-import { FC, Fragment, ReactElement, useState } from 'react';
+import { FC, ReactElement, useState } from 'react';
 
 import { formatDate, formatGradientHSL } from '@/util/formatting';
 
 import { MediaEpisodeEntry, MediaSeasonEntry } from '@/interfaces';
-import { SeenIcon } from './MediaIcons';
+import { Button } from '@/components/page/Button';
+import { MediaEpisode } from './MediaEpisode';
 
 interface MediaSeasonProps {
     data: MediaSeasonEntry;
@@ -13,68 +14,38 @@ interface MediaSeasonProps {
 
 export const MediaSeason: FC<MediaSeasonProps> = ({ data, setSeenEpisode, setSeenEpisodes }) => {
     const [showEpisodes, setShowEpisodes] = useState<boolean>(false);
-    const [title, setTitle] = useState<string>();
-    const [overview, setOverview] = useState<string>();
 
     const toggleEpisodes = (): void => {
         setShowEpisodes(!showEpisodes);
     };
-
-    const showOverview = (title?: string, overview?: string): void => {
-        setTitle(title);
-        setOverview(overview);
-    };
-
-    const renderEpisodes = (): ReactElement[] =>
-        data.episodes.map(
-            (episode): ReactElement => (
-                <Fragment key={`episode${episode.id}`}>
-                    <span className="text-small pll">{episode.episode}</span>
-                    <button
-                        className="button-blank text-small text-left truncate"
-                        onClick={() => showOverview(episode.title, episode.overview)}>
-                        {episode.title}
-                    </button>
-                    <span className="text-small text-right">
-                        {episode.release_date ? formatDate(episode.release_date, 'MMM do') : null}
-                    </span>
-                    <SeenIcon seen={episode.seen} setSeen={() => setSeenEpisode(episode.id, !episode.seen)} size="22px" className="mrm" />
-                </Fragment>
-            )
-        );
 
     const episodesSeen = data.episodes.filter((ep: MediaEpisodeEntry): boolean => ep.seen).length;
     const episodesTotal = data.episodes.length;
 
     return (
         <>
-            <span className="pts">
-                <button
-                    className="input input-small float-right"
-                    style={{ color: formatGradientHSL(episodesSeen, episodesTotal) }}
-                    onClick={toggleEpisodes}>
-                    {episodesSeen}/{episodesTotal}
-                </button>
-                {episodesSeen === 0 ? (
-                    <button className="input input-small float-right mrm" onClick={() => setSeenEpisodes(data.id)}>
-                        Mark all
+            <div className="grid grid-cols-media-content gap-8 items-center">
+                <span className="text-14 text-neutral dark:text-neutral-dark">{data.season}</span>
+                <div>
+                    <button onClick={toggleEpisodes} className="text-secondary dark:text-secondary-dark">
+                        {data.title?.trim() || 'No Title'}
                     </button>
-                ) : null}
-                <span className="text-small prl">{data.season}</span>
-                <button className="button-blank border-bottom" onClick={toggleEpisodes}>
-                    {data.title}
-                </button>
-                <span className="text-small plm">{formatDate(data.release_date, '(MMM do, YYY)')}</span>
-            </span>
+                    <span className="text-14 pl-8">{formatDate(data.release_date, '(MMM do, YYY)')}</span>
+                </div>
+                {episodesSeen === 0 ? <Button text="Mark all" onClick={() => setSeenEpisodes(data.id)} /> : <span />}
+                <Button
+                    text={`${episodesSeen}/${episodesTotal}`}
+                    style={{ color: formatGradientHSL(episodesSeen, episodesTotal) }}
+                    onClick={toggleEpisodes}
+                />
+            </div>
             {showEpisodes ? (
-                <div className="media-overlay-episodes">
-                    {renderEpisodes()}
-                    {overview ? (
-                        <div className="media-overlay-episode-overview shadow" role="dialog" onClick={() => showOverview()}>
-                            <span>{title}</span>
-                            <span className="text-small">{overview}</span>
-                        </div>
-                    ) : null}
+                <div className="grid grid-cols-media-content gap-x-8 gap-y-4 items-center px-12">
+                    {data.episodes.map(
+                        (episode): ReactElement => (
+                            <MediaEpisode episode={episode} setSeenEpisode={setSeenEpisode} key={`episode${episode.id}`} />
+                        )
+                    )}
                 </div>
             ) : null}
         </>

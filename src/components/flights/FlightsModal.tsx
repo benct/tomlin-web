@@ -21,15 +21,11 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
     <Modal
         title={`${form.id ? 'Edit' : 'New'} Flight`}
         close={close}
-        footer={
+        left={form.id ? <Button text="Delete" icon={mdiDeleteOutline} onClick={(): void => remove(form.id)} /> : null}
+        right={
             <>
                 <Button text="Swap airports" icon={mdiSwapHorizontal} onClick={swap} />
-                {form.id ? (
-                    <>
-                        <Button text="Delete" icon={mdiDeleteOutline} onClick={(): void => remove(form.id)} />
-                        <Button text="Copy" icon={mdiContentCopy} onClick={(): void => copy(form)} />
-                    </>
-                ) : null}
+                {form.id ? <Button text="Copy" icon={mdiContentCopy} onClick={(): void => copy(form)} /> : null}
                 <Button text="Save" icon={mdiContentSaveOutline} onClick={save} />
             </>
         }>

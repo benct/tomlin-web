@@ -29,7 +29,7 @@ export const Logs: FC<PageProps> = ({ page }) => {
             <Loading isLoading={loading} text="Loading logs...">
                 {logs.length ? (
                     <>
-                        <div className="grid grid-cols-2-auto gap-12 text-12">{logs.map(renderLog)}</div>
+                        <div className="grid grid-cols-auto-1fr gap-12 text-12">{logs.map(renderLog)}</div>
                         <Pagination current={pagination.current} total={pagination.total} path="/admin/logs/" />
                     </>
                 ) : (

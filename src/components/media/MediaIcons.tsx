@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Icon } from '@mdi/react';
 import { mdiEyeCheckOutline, mdiEyeOffOutline, mdiStar, mdiStarOutline } from '@mdi/js';
+import { Button } from '@/components/page/Button';
 
 interface FavouriteIconProps {
     favourite: boolean;
@@ -9,15 +9,15 @@ interface FavouriteIconProps {
     className?: string;
 }
 
-export const FavouriteIcon: FC<FavouriteIconProps> = ({ favourite, setFavourite, size, className, ...props }) => (
-    <button className={`button-icon ${className ?? ''}`} onClick={setFavourite} {...props}>
-        <Icon
-            path={favourite ? mdiStar : mdiStarOutline}
-            size={size ?? '24px'}
-            title={favourite ? 'Favourite' : 'Set favourite'}
-            color="#fad000"
-        />
-    </button>
+export const FavouriteIcon: FC<FavouriteIconProps> = ({ favourite, setFavourite, size, className }) => (
+    <Button
+        text={favourite ? 'Favourite' : 'Set favourite'}
+        icon={favourite ? mdiStar : mdiStarOutline}
+        size={size}
+        className={className}
+        onClick={setFavourite}
+        style={{ color: '#fad000' }}
+    />
 );
 
 interface SeenIconProps {
@@ -27,13 +27,13 @@ interface SeenIconProps {
     className?: string;
 }
 
-export const SeenIcon: FC<SeenIconProps> = ({ seen, setSeen, size, className, ...props }) => (
-    <button className={`button-icon ${className ?? ''}`} onClick={setSeen} {...props}>
-        <Icon
-            path={seen ? mdiEyeCheckOutline : mdiEyeOffOutline}
-            size={size ?? '24px'}
-            title={seen ? 'Seen' : 'Set seen'}
-            className={seen ? 'color-success' : 'color-warn'}
-        />
-    </button>
+export const SeenIcon: FC<SeenIconProps> = ({ seen, setSeen, size, className }) => (
+    <Button
+        text={seen ? 'Seen' : 'Set seen'}
+        icon={seen ? mdiEyeCheckOutline : mdiEyeOffOutline}
+        className={className}
+        size={size}
+        onClick={setSeen}
+        style={{ color: seen ? '#a3f7bf' : '#c32323' }}
+    />
 );

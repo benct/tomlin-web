@@ -1,12 +1,14 @@
 import { ChangeEvent, FC, KeyboardEvent, ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
+import { input, select } from '@/styles';
 import { formatQuery } from '@/util/formatting';
 import { useMediaList } from '@/data/media';
 
 import { MediaItemEntry, MediaProps } from '@/interfaces';
 import { Loading } from '@/components/page/Loading';
 import { Pagination } from '@/components/page/Pagination';
+import { Box } from '@/components/page/Box';
 import { MediaModal } from './MediaModal';
 import { MediaItem } from './MediaItem';
 
@@ -60,9 +62,11 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
     const renderWatchlist = (data: MediaItemEntry[]): ReactElement => (
         <Loading isLoading={loading} text="Loading media...">
             <div>TV-Shows:</div>
-            <div className="clear-fix text-center">{data.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(renderRow)}</div>
+            <div className="grid sm:grid-cols-2 gap-16">
+                {data.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(renderRow)}
+            </div>
             <div>Movies:</div>
-            <div className="clear-fix text-center">
+            <div className="grid sm:grid-cols-2 gap-16">
                 {data.filter((item: MediaItemEntry): boolean => item.type === 'movie').map(renderRow)}
             </div>
         </Loading>
@@ -70,9 +74,9 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
 
     const renderList = (data: MediaItemEntry[]): ReactElement => (
         <>
-            <div className="text-center mbl">
+            <div className="flex justify-center gap-16 mb-24">
                 <select
-                    className="input input-small media-input mrs"
+                    className={select}
                     onChange={(e: ChangeEvent<HTMLSelectElement>): void => e.target.blur()}
                     onBlur={handleSort}
                     defaultValue={sort}>
@@ -84,16 +88,10 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
                     <option value="title-desc">Title (reverse)</option>
                     <option value="favourite">Favourite</option>
                 </select>
-                <input
-                    className="input input-small media-input mls"
-                    type="text"
-                    placeholder="Search"
-                    aria-label="Search"
-                    onKeyPress={handleKey}
-                />
+                <input type="text" placeholder="Search" aria-label="Search" onKeyDown={handleKey} className={input} />
             </div>
             <Loading isLoading={loading} text="Loading media...">
-                <div className="clear-fix text-center">{data.map(renderRow)}</div>
+                <div className="grid sm:grid-cols-2 gap-16">{data.map(renderRow)}</div>
                 <Pagination
                     path={`/media/${type}/`}
                     postfix={formatQuery({ sort: sort !== 'rating-desc' ? sort : null, query })}
@@ -105,9 +103,9 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
     );
 
     return (
-        <div className="wrapper min-height ptm">
+        <Box title={type} className="min-h">
             {type === 'watchlist' ? renderWatchlist(media) : renderList(media)}
             {selected ? renderModal(selected) : null}
-        </div>
+        </Box>
     );
 };

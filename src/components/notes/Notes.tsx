@@ -32,7 +32,7 @@ export const Notes: FC = () => {
                     notes.map(
                         (note: Note): ReactElement => (
                             <div
-                                className="grid sm:grid-cols-2-auto gap-16 border-b border-dashed pb-16 mb-16 text-14"
+                                className="grid sm:grid-cols-auto-1fr gap-16 border-b border-dashed pb-16 mb-16 text-14"
                                 key={`note${note.id}`}>
                                 <code>
                                     {formatTimestamp(note.updated)}

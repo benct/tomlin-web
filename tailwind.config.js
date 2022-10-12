@@ -6,8 +6,10 @@ module.exports = {
     theme: {
         extend: {
             gridTemplateColumns: {
-                '2-auto': 'auto 1fr',
-                '3-auto': '1fr auto auto',
+                'auto-1fr': 'auto 1fr',
+                admin: '1fr auto auto',
+                'media-title': '1fr auto',
+                'media-content': 'auto 1fr auto auto',
             },
             minHeight: {
                 DEFAULT: '256px',

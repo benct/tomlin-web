@@ -62,7 +62,7 @@ export const Admin: FC = () => {
                     </div>
                 </Loading>
             </Box>
-            <Box title="Settings" border="border-b" className="grid grid-cols-3-auto gap-12 items-center">
+            <Box title="Settings" border="border-b" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Countdown icon</span>
                 <select className={select} defaultValue={settings.countdownIcon} ref={countdownIcon}>
                     <option value="none">None</option>
@@ -77,7 +77,7 @@ export const Admin: FC = () => {
                 <input className={`${input} text-12`} type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
                 <Button text="Set" onClick={() => saveSetting('countdownTarget', getValue(countdownTarget.current))} />
             </Box>
-            <Box title="Tasks" border="border-b" className="grid grid-cols-3-auto gap-12 items-center">
+            <Box title="Tasks" border="border-b" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Update number of stored movies</span>
                 <select className={select} defaultValue="50" ref={updateMovieCount}>
                     {renderOptions([10, 50, 100, 250, 500])}
@@ -101,13 +101,13 @@ export const Admin: FC = () => {
                 <span />
                 <Button text="Backup" onClick={() => backup()} />
             </Box>
-            <Box title="Home Assistant" className="grid grid-cols-3-auto gap-12 items-center">
+            <Box title="Home Assistant" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Latest Home Assistant states</span>
                 <select className={select} defaultValue="25" ref={hassCount}>
                     {renderOptions([10, 25, 50, 100, 250, 500])}
                 </select>
                 <Button text="Load" onClick={() => getHass(getCount(hassCount.current))} />
-                <div className="col-span-3 grid grid-cols-3-auto gap-12 mt-16">
+                <div className="col-span-3 grid grid-cols-admin gap-12 mt-16">
                     {hass.map((state) => (
                         <Fragment key={`hass${state.id}`}>
                             <span className="truncate">{state.sensor}</span>

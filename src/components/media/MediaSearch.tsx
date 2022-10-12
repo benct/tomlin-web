@@ -1,12 +1,14 @@
 import { ChangeEvent, FC, ReactNode } from 'react';
 import Link from 'next/link';
 
+import { inputCenter } from '@/styles';
 import { debounce } from '@/util/debounce';
 import { useExisting, useMediaSearch } from '@/data/media';
 
 import { MediaSearchItemEntry, MediaSearchProps } from '@/interfaces';
 import { Pagination } from '@/components/page/Pagination';
 import { Loading } from '@/components/page/Loading';
+import { Box } from '@/components/page/Box';
 import { MediaSearchItem } from './MediaSearchItem';
 
 export const MediaSearch: FC<MediaSearchProps> = ({ type, action, page, id }) => {
@@ -34,23 +36,23 @@ export const MediaSearch: FC<MediaSearchProps> = ({ type, action, page, id }) =>
     };
 
     return (
-        <div className="wrapper min-height ptm text-center">
-            <input type="text" name="query" className="input mbl" aria-label="Search" onChange={handleChange} />
-            <div className="media-search">
+        <Box title="Search" className="min-h">
+            <input type="text" placeholder="Movie or TV show" aria-label="Search" onChange={handleChange} className={inputCenter} />
+            <div className="flex justify-center gap-16 mt-16">
                 <Link href="/media/search/movie/popular/">Popular (Movie)</Link>
                 <Link href="/media/search/movie/top/">Top Rated (Movie)</Link>
                 <Link href="/media/search/movie/now/">Now Playing (Movie)</Link>
                 <Link href="/media/search/movie/upcoming/">Upcoming (Movie)</Link>
             </div>
-            <div className="media-search mbl">
+            <div className="flex justify-center gap-16 mt-8">
                 <Link href="/media/search/tv/popular/">Popular (TV)</Link>
                 <Link href="/media/search/tv/top/">Top Rated (TV)</Link>
                 <Link href="/media/search/tv/now/">Now Playing (TV)</Link>
             </div>
             <Loading isLoading={loading} text="Loading media...">
-                {media.map(renderItem)}
+                <div className="space-y-16 mt-24">{media.map(renderItem)}</div>
                 <Pagination path={`/media/search/${type}/${action}/`} postfix={id} current={pagination.current} total={pagination.total} />
             </Loading>
-        </div>
+        </Box>
     );
 };

@@ -33,7 +33,7 @@ export const Visits: FC<PageProps> = ({ page }) => {
             <Loading isLoading={loading} text="Loading visits...">
                 {visits.length ? (
                     <>
-                        <div className="grid grid-cols-2-auto gap-12 text-12">{visits.map(renderVisit)}</div>
+                        <div className="grid grid-cols-auto-1fr gap-12 text-12">{visits.map(renderVisit)}</div>
                         <Pagination current={pagination.current} total={pagination.total} path="/admin/visits/" />
                     </>
                 ) : (

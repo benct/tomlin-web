@@ -48,12 +48,8 @@ export const UserModal: FC<UserModalProps> = ({ user, close }) => {
         <Modal
             title={`${user ? 'Edit' : 'New'} User`}
             close={close}
-            footer={
-                <>
-                    {user ? <Button text="Delete" icon={mdiDeleteOutline} onClick={remove} /> : null}
-                    <Button text="Save" icon={mdiContentSaveOutline} onClick={save} />
-                </>
-            }
+            left={user ? <Button text="Delete" icon={mdiDeleteOutline} onClick={remove} /> : null}
+            right={<Button text="Save" icon={mdiContentSaveOutline} onClick={save} />}
             className="space-y-16">
             {user ? (
                 <div className="text-center font-bold">{user.email}</div>

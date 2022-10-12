@@ -38,12 +38,8 @@ export const NotesModal: FC<NotesModalProps> = memo(({ note, close }) => {
         <Modal
             title={`${note.id ? 'Edit' : 'New'} Note`}
             close={close}
-            footer={
-                <>
-                    {note.id ? <Button text="Delete" icon={mdiDeleteOutline} onClick={remove} /> : null}
-                    <Button text="Save" icon={mdiContentSaveOutline} onClick={save} />
-                </>
-            }
+            left={note.id ? <Button text="Delete" icon={mdiDeleteOutline} onClick={remove} /> : null}
+            right={<Button text="Save" icon={mdiContentSaveOutline} onClick={save} />}
             className="space-y-16">
             <label className={label}>
                 Title

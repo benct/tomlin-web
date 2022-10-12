@@ -1,8 +1,12 @@
-import { FC, InvalidEvent, memo, ReactElement, useState } from 'react';
+import { FC, memo, useState } from 'react';
+import Image from 'next/image';
 import ISO6391 from 'iso-639-1';
 
-import { MediaSearchItemEntry } from '@/interfaces';
+import { button } from '@/styles';
 import { formatDate } from '@/util/formatting';
+
+import { MediaSearchItemEntry } from '@/interfaces';
+import { Button } from '@/components/page/Button';
 
 interface MediaSearchItemProps {
     data: MediaSearchItemEntry;
@@ -13,7 +17,9 @@ interface MediaSearchItemProps {
 }
 
 export const MediaSearchItem: FC<MediaSearchItemProps> = memo((props) => {
-    const [overview, setOverview] = useState<boolean>(false);
+    const [src, setSrc] = useState<string>(
+        props.data.poster_path ? `https://image.tmdb.org/t/p/w200${props.data.poster_path}` : '/images/media/poster_small.png'
+    );
 
     const title = props.data.title ?? props.data.name;
     const originalTitle = props.data.original_title ?? props.data.original_name;
@@ -22,76 +28,47 @@ export const MediaSearchItem: FC<MediaSearchItemProps> = memo((props) => {
 
     const validLanguage = (code: string): boolean => code === 'en' || code === 'no' || code === 'nb';
 
-    const toggleOverview = (): void => setOverview(!overview);
-
-    const renderButton = (className?: string): ReactElement => (
-        <button
-            className={`input input-small ${className ?? ''}`}
-            onClick={props.stored ? props.remove : props.add}
-            style={{ width: '70px' }}>
-            {props.stored ? 'Remove' : 'Add'}
-        </button>
-    );
-
     return (
-        <div className="media-item pvm">
-            <div className="media-poster">
-                <img
-                    src={
-                        props.data.poster_path
-                            ? `https://image.tmdb.org/t/p/w200${props.data.poster_path}`
-                            : '/images/media/poster_small.png'
-                    }
+        <div className="grid grid-cols-auto-1fr gap-16">
+            <div className="w-64 sm:w-96">
+                <Image
+                    src={src}
                     alt={props.data.poster_path ? `Poster: ${title}` : 'No poster'}
-                    onError={(event: InvalidEvent<HTMLImageElement>): void => {
-                        event.target.src = '/images/media/poster_small.png';
-                    }}
-                    onClick={toggleOverview}
+                    width={100}
+                    height={150}
+                    onError={(): void => setSrc('/images/media/poster_small.png')}
                 />
             </div>
-            <h3 className="media-title color-primary truncate man" onClick={toggleOverview}>
-                {title} {formatDate(release, '(yyyy)')}
-            </h3>
-            <div className="media-data text-small">
-                {title !== originalTitle ? <div className="text-small italic">Orig: {originalTitle}</div> : null}
-                <span className={validLanguage(props.data.original_language) ? 'color-success' : 'color-warn'}>
-                    {language !== '' ? language : 'Unknown'}
-                </span>
-                {props.data.vote_average ? (
-                    <span>
-                        ,&nbsp;
-                        <span className="strong" data-tooltip={`${props.data.vote_count ?? 0} votes`}>
-                            {props.data.vote_average}
-                        </span>
+            <div>
+                <div className="grid grid-cols-media-title gap-16">
+                    <span
+                        className="text-left text-secondary dark:text-secondary-dark font-bold"
+                        data-tooltip={title !== originalTitle ? originalTitle : undefined}>
+                        {title}
                     </span>
-                ) : null}
-                {release ? (
-                    <span>
-                        ,&nbsp;
-                        <span className="hide-lt480">Release: </span>
-                        {formatDate(release)}
-                    </span>
-                ) : null}
-                <div className="hide-gt768">
-                    <button className="button-icon" onClick={props.imdb}>
-                        <img src="/images/icon/imdb.svg" alt="IMDb" width={48} />
-                    </button>
-                    {renderButton('float-right mtm')}
+                    <span className="text-right font-bold whitespace-nowrap">{formatDate(release, 'yyyy')}</span>
                 </div>
-            </div>
-            <div className="media-actions">{renderButton()}</div>
-            <div className="media-external">
-                <img
-                    className="pointer"
-                    src="/images/icon/imdb.svg"
-                    alt="IMDb"
-                    width={48}
-                    style={{ margin: '-15px 0' }}
-                    onClick={props.imdb}
-                />
-            </div>
-            <div className={`media-overview text-small mtm${overview ? '' : ' hide-lt768'}`}>
-                {props.data.overview === '' ? 'No description.' : props.data.overview}
+                <div className="grid grid-cols-media-content items-center gap-8 text-14 mt-8">
+                    <button onClick={props.imdb} className="h-24">
+                        <Image src="/images/icon/imdb.svg" alt="IMDb" width={24} height={24} />
+                    </button>
+                    <span className="col-span-2">
+                        <span className={validLanguage(props.data.original_language) ? 'text-good' : 'text-warn'}>
+                            {language || 'Unknown'}
+                        </span>{' '}
+                        |{' '}
+                        {props.data.vote_average ? (
+                            <span className="font-bold" data-tooltip={`${props.data.vote_count ?? 0} votes`}>
+                                {props.data.vote_average}
+                            </span>
+                        ) : (
+                            <span>No rating</span>
+                        )}{' '}
+                        | {release ? formatDate(release) : 'Unknown'}
+                    </span>
+                    <Button text={props.stored ? 'Remove' : 'Add'} className={button} onClick={props.stored ? props.remove : props.add} />
+                </div>
+                <div className="text-14 mt-8">{props.data.overview === '' ? 'No description.' : props.data.overview}</div>
             </div>
         </div>
     );

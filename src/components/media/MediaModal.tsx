@@ -1,12 +1,14 @@
-import { FC, InvalidEvent, memo, ReactElement, ReactNode, useEffect, useState } from 'react';
+import { FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
-import { mdiApproximatelyEqualBox, mdiCloseCircleOutline, mdiDeleteOutline, mdiRefresh, mdiThumbUpOutline } from '@mdi/js';
+import { mdiApproximatelyEqualBox, mdiDeleteOutline, mdiRefresh, mdiThumbUpOutline } from '@mdi/js';
 
 import { formatDate, formatDuration, formatThousands, formatYears } from '@/util/formatting';
 
 import { MediaEpisodeEntry, MediaItemEntry, MediaSeasonEntry, MediaType } from '@/interfaces';
 import { Modal } from '@/components/page/Modal';
+import { Button } from '@/components/page/Button';
 import { FavouriteIcon, SeenIcon } from './MediaIcons';
 import { MediaSeason } from './MediaSeason';
 
@@ -24,6 +26,7 @@ interface MediaModalProps {
 
 export const MediaModal: FC<MediaModalProps> = memo((props) => {
     const [showSeasons, setShowSeasons] = useState<boolean>(false);
+    const [posterSrc, setPosterSrc] = useState<string>(`https://cdn.tomlin.no/images/media${props.data.poster}`);
 
     useEffect(() => {
         document.body.classList.add('no-scroll');
@@ -42,92 +45,84 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
             0
         );
 
-    const renderPoster = (poster: string, title: string): ReactElement =>
-        poster ? (
-            <img
-                src={`https://cdn.tomlin.no/images/media${poster}`}
-                alt={`Poster: ${title}`}
-                onError={(event: InvalidEvent<HTMLImageElement>): void => {
-                    event.target.src = '/images/media/poster.png';
-                }}
-            />
-        ) : (
-            <span>No poster</span>
-        );
-
-    const renderRating = (rating?: number, votes?: number): ReactElement =>
-        rating ? (
-            <span>
-                {rating} <span className="text-smaller pls">({votes} votes)</span>
-            </span>
-        ) : (
-            <span>No rating</span>
-        );
-
-    const renderRuntime = (runtime: number | null): ReactNode =>
-        runtime ? (
-            <>
-                <span>Runtime</span>
-                <span>{formatDuration(runtime)}</span>
-            </>
-        ) : null;
-
-    const renderCost = (key: string, value?: number): ReactElement => (
+    const renderRow = (key: string, value?: string | ReactNode, className?: string): ReactNode => (
         <>
-            <span>{key}</span>
-            <span>{value ? `$ ${formatThousands(value)}` : ' - '}</span>
+            <span className="text-neutral dark:text-neutral-dark">{key}</span>
+            <span className={className}>{value}</span>
         </>
     );
 
-    const renderOptional = (key: string, value?: string, clazz?: string): ReactNode =>
-        value ? (
-            <>
-                <span>{key}</span>
-                <span className={clazz}>{value}</span>
-            </>
-        ) : null;
+    const renderOptional = (key: string, value?: string, className?: string): ReactNode =>
+        value ? renderRow(key, value, className) : null;
 
-    const renderLinks = (id: number, imdb: string | null): ReactElement => (
-        <div>
-            <a
-                href={`https://www.themoviedb.org/${props.type}/${id}`}
-                target="_blank"
-                rel="noopener noreferrer external"
-                className="pointer">
-                <img className="valign-middle" src="/images/icon/tmdb.svg" alt="TMDb" width={24} height={24} />
-            </a>
-            {imdb ? (
-                <a className="mlm pointer" href={`https://www.imdb.com/title/${imdb}`} target="_blank" rel="noopener noreferrer external">
-                    <img className="valign-middle" src="/images/icon/imdb.svg" alt="IMDb" width={38} style={{ margin: '-12px 0' }} />
-                </a>
-            ) : null}
-            <Link href={`/media/search/${props.type}/similar/1/${id}`}>
-                <a className="mlm pointer">
-                    <Icon path={mdiApproximatelyEqualBox} size="26px" title="Find similar" className="valign-middle" />
-                </a>
-            </Link>
-            <Link href={`/media/search/${props.type}/recommended/1/${id}`}>
-                <a className="mlm pointer">
-                    <Icon path={mdiThumbUpOutline} size="26px" title="Recommendations" className="valign-middle" />
-                </a>
-            </Link>
-        </div>
-    );
+    const renderRating = (rating?: number, votes?: number): ReactNode =>
+        renderRow(
+            'Rating',
+            rating ? (
+                <>
+                    {rating} <span className="text-12 pl-4">({votes} votes)</span>
+                </>
+            ) : (
+                'No rating'
+            )
+        );
 
-    const renderSeasonButton = (): ReactNode =>
-        props.type === 'tv' ? (
-            <span>
-                <button className="input input-small" onClick={toggleSeasons}>
-                    {showSeasons
-                        ? 'Overview'
-                        : `${props.data.number_of_seasons} ${props.data.number_of_seasons !== 1 ? 'seasons' : 'season'}`}
-                </button>
-            </span>
-        ) : null;
+    const renderPoster = (poster: string, title: string): ReactNode =>
+        renderRow(
+            'Poster',
+            poster ? (
+                <Image
+                    src={posterSrc}
+                    alt={`Poster: ${title}`}
+                    width={200}
+                    height={300}
+                    placeholder="blur"
+                    blurDataURL="/images/media/poster.png"
+                    onError={(): void => setPosterSrc('/images/media/poster.png')}
+                />
+            ) : (
+                'No poster'
+            )
+        );
+
+    const renderLinks = (id: number, imdb: string | null): ReactNode =>
+        renderRow(
+            'Links',
+            <div className="flex item-center gap-16 h-24">
+                <a href={`https://www.themoviedb.org/${props.type}/${id}`} target="_blank" rel="noreferrer external">
+                    <Image src="/images/icon/tmdb.svg" alt="TMDb" width={24} height={24} />
+                </a>
+                {imdb ? (
+                    <a className="mlm pointer" href={`https://www.imdb.com/title/${imdb}`} target="_blank" rel="noreferrer external">
+                        <Image src="/images/icon/imdb.svg" alt="IMDb" width={24} height={24} />
+                    </a>
+                ) : null}
+                <Link href={`/media/search/${props.type}/similar/1/${id}`}>
+                    <a>
+                        <Icon
+                            path={mdiApproximatelyEqualBox}
+                            size={1}
+                            title="Find similar"
+                            className="text-secondary dark:text-secondary-dark"
+                        />
+                    </a>
+                </Link>
+                <Link href={`/media/search/${props.type}/recommended/1/${id}`}>
+                    <a>
+                        <Icon
+                            path={mdiThumbUpOutline}
+                            size={1}
+                            title="Recommendations"
+                            className="text-secondary dark:text-secondary-dark"
+                        />
+                    </a>
+                </Link>
+            </div>
+        );
 
     const renderSeasons = (): ReactNode =>
         props.data.seasons ? (
-            <div className="media-overlay-seasons">
+            <div className="space-y-8">
                 {props.data.seasons
                     .filter((s: MediaSeasonEntry): boolean => s.season > 0)
                     .map(
@@ -144,72 +139,70 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
         ) : null;
 
     const renderContent = (): ReactElement => (
-        <div className="media-overlay-overview">
-            <span>Original</span>
-            <span>{props.data.original_title ?? props.data.title}</span>
-            <span>Language</span>
-            <span>{props.data.language}</span>
-            <span>Links</span>
-            {renderLinks(props.data.id, props.data.imdb_id)}
-            <span>Genre(s)</span>
-            <span>{props.data.genres}</span>
-            <span>Release</span>
-            <span>{props.data.release_date ? formatDate(props.data.release_date) : 'Unknown'}</span>
-            <span>Rating</span>
+        <div className="grid grid-cols-auto-1fr gap-x-12 gap-y-6 child:odd:text-neutral">
+            {renderRow('Original', props.data.original_title ?? props.data.title)}
+            {renderRow('Language', props.data.language)}
+            {renderRow('Genre(s)', props.data.genres)}
+            {renderRow('Release', props.data.release_date ? formatDate(props.data.release_date) : 'Unknown')}
+            {renderRow('Language', props.data.language)}
             {renderRating(props.data.rating, props.data.votes)}
-            {renderRuntime(props.data.runtime)}
+            {renderRow('Runtime', formatDuration(props.data.runtime))}
+            {renderLinks(props.data.id, props.data.imdb_id)}
             {props.type === 'movie' ? (
                 <>
-                    {renderCost('Budget', props.data.budget)}
-                    {renderCost('Revenue', props.data.revenue)}
-                    {renderOptional('Tagline', props.data.tagline, 'text-small')}
+                    {renderRow('Budget', props.data.budget ? `$ ${formatThousands(props.data.budget)}` : ' - ')}
+                    {renderRow('Revenue', props.data.revenue ? `$ ${formatThousands(props.data.revenue)}` : ' - ')}
+                    {renderOptional('Tagline', props.data.tagline)}
                 </>
             ) : (
                 <>
-                    <span>Episodes</span>
-                    <span>
-                        {props.data.number_of_episodes} (Seen:&nbsp;
-                        {props.data.seasons && calculateSeenEpisodes(props.data.seasons)})
-                    </span>
+                    {renderRow(
+                        'Episodes',
+                        `${props.data.number_of_episodes} (Seen: ${props.data.seasons && calculateSeenEpisodes(props.data.seasons)}`
+                    )}
                     {renderOptional('Type', props.data.series_type)}
-                    <span>Status</span>
-                    <span>
-                        {props.data.status}
-                        {props.data.end_year ? <span className="text-small pls">({props.data.end_year})</span> : null}
-                    </span>
+                    {renderRow(
+                        'Status',
+                        <>
+                            {props.data.status}
+                            {props.data.end_year ? <span className="text-14 pl-4">({props.data.end_year})</span> : null}
+                        </>
+                    )}
                     {renderOptional('Network(s)', props.data.networks)}
                     {renderOptional('Created by', props.data.created_by)}
                     {renderOptional('Production', props.data.production_companies)}
                 </>
             )}
-            {renderOptional('Overview', props.data.overview, 'text-small')}
-            <span>Poster</span>
+            {renderOptional('Overview', props.data.overview)}
             {renderPoster(props.data.poster, props.data.title)}
         </div>
     );
 
     return (
-        <Modal title={props.data.title} close={props.close}>
-            <div className="media-overlay-title">
-                <span className="color-primary strong">
-                    {props.data.title} ({formatYears(props.type, props.data.release_year, props.data.end_year)})
-                </span>
-                {renderSeasonButton()}
-            </div>
-            <div>{showSeasons ? renderSeasons() : renderContent()}</div>
-            <div>
-                <button className="button-icon mrl" onClick={props.remove}>
-                    <Icon path={mdiDeleteOutline} size="28px" title="Delete" />
-                </button>
-                <button className="button-icon mrl" onClick={props.update}>
-                    <Icon path={mdiRefresh} size="28px" title="Update" />
-                </button>
-                <SeenIcon seen={props.data.seen} setSeen={props.setSeen} size="28px" className="mrl" />
-                <FavouriteIcon favourite={props.data.favourite} setFavourite={props.setFavourite} size="28px" />
-                <button className="button-icon float-right" onClick={props.close}>
-                    <Icon path={mdiCloseCircleOutline} size="28px" title="Close" />
-                </button>
-            </div>
+        <Modal
+            title={`${props.data.title} (${formatYears(props.type, props.data.release_year, props.data.end_year)})`}
+            close={props.close}
+            left={
+                props.type === 'tv' ? (
+                    <Button
+                        text={
+                            showSeasons
+                                ? 'Overview'
+                                : `${props.data.number_of_seasons} ${props.data.number_of_seasons !== 1 ? 'seasons' : 'season'}`
+                        }
+                        onClick={toggleSeasons}
+                    />
+                ) : null
+            }
+            right={
+                <>
+                    <Button text="Delete" icon={mdiDeleteOutline} onClick={props.remove} />
+                    <Button text="Update" icon={mdiRefresh} onClick={props.update} />
+                    <SeenIcon seen={props.data.seen} setSeen={props.setSeen} />
+                    <FavouriteIcon favourite={props.data.favourite} setFavourite={props.setFavourite} />
+                </>
+            }>
+            {showSeasons ? renderSeasons() : renderContent()}
         </Modal>
     );
 });
