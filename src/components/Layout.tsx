@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useEffect } from 'react';
 import Head from 'next/head';
 
 import { useAppContext } from '@/data/context';
-import { useAuthenticate } from '@/data/auth';
+import { useInit } from '@/data/auth';
 
 import { NextPageProps } from '@/interfaces';
 import { Header } from './page/Header';
@@ -10,7 +10,7 @@ import { Footer } from './page/Footer';
 
 export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone, children }) => {
     const { toast } = useAppContext();
-    useAuthenticate();
+    useInit();
 
     useEffect(() => {
         document.body.classList.add('bg-body-light');

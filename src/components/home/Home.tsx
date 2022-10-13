@@ -5,7 +5,7 @@ import { Icon } from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
 
 import { useAppContext } from '@/data/context';
-import { useAuthenticate } from '@/data/auth';
+import { useInit } from '@/data/auth';
 
 import { Box } from '@/components/page/Box';
 import { Countdown } from './Countdown';
@@ -14,7 +14,7 @@ import { Time } from './Time';
 
 export const Home: FC = () => {
     const { settings } = useAppContext();
-    const { data, loading } = useAuthenticate();
+    const { data, loading } = useInit();
 
     const weatherIcon = data?.forecast ? `/images/weather/${data.forecast}.svg` : '/images/icon/home.svg';
 

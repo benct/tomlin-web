@@ -12,7 +12,7 @@ interface AuthResponse {
     weather: Weather;
 }
 
-export const useAuthenticate = () => {
+export const useInit = () => {
     const { data, error } = useSWR<AuthResponse, Error>('/authenticate', auth, {
         revalidateOnFocus: false,
         revalidateIfStale: false,
