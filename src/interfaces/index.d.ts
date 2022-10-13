@@ -2,10 +2,15 @@ export interface Settings {
     [key: string]: string;
 }
 
-export interface HomeState {
-    livingroom?: number;
-    outside?: number;
-    day?: boolean;
+export interface Weather {
+    updated: string;
+    temperature: number;
+    humidity: number;
+    clouds: number;
+    wind: number;
+    direction: number;
+    forecast: string | null;
+    rain: number | null;
 }
 
 export interface QuoteState {

@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAppContext } from './context';
 import { auth } from '@/util/api';
-import { Settings } from '@/interfaces';
+import { Settings, Weather } from '@/interfaces';
 
 interface AuthResponse {
     authenticated: boolean;
     settings: Settings;
+    weather: Weather;
 }
 
 export const useAuthenticate = () => {
@@ -32,7 +33,7 @@ export const useAuthenticate = () => {
         }
     }, [error, setIsLoggedIn]);
 
-    return { loading: !error && !data };
+    return { data: data?.weather, loading: !error && !data };
 };
 
 export const useLogin = (redirectTo?: string | UrlObject) => {

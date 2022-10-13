@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import { useAppContext } from './context';
 import { del, get, post } from '@/util/api';
-import { FinnState, GitHubState, HomeState } from '@/interfaces';
+import { FinnState, GitHubState } from '@/interfaces';
 
 export const useToast = (message?: string) => {
     const { setToast } = useAppContext();
@@ -14,14 +14,6 @@ export const useToast = (message?: string) => {
             }, 3000);
         }
     }, [message, setToast]);
-};
-
-export const useHomeState = () => {
-    const { data, error } = useSWR<HomeState, Error>('/hass/states', get, { revalidateOnFocus: false, errorRetryCount: 1 });
-
-    useToast(error && 'Could not load server data...');
-
-    return { data, loading: !error && !data };
 };
 
 export const useGitHub = () => {

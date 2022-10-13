@@ -20,7 +20,7 @@
         content: attr(data-tooltip);
         font-size: 12px;
         text-align: center;
-        text-transform: initial;
+        text-transform: capitalize;
         white-space: nowrap;
         -webkit-transform: translate3d(-50%, 0, 0);
         -moz-transform: translate3d(-50%, 0, 0);

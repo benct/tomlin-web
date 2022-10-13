@@ -10,7 +10,7 @@ import { Footer } from './page/Footer';
 
 export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone, children }) => {
     const { toast } = useAppContext();
-    const { loading } = useAuthenticate();
+    useAuthenticate();
 
     useEffect(() => {
         document.body.classList.add('bg-body-light');
@@ -55,13 +55,6 @@ export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone
                     <Footer />
                 </>
             )}
-            {loading ? (
-                <div className="overlay overlay-loading">
-                    <div className="overlay-container shadow">
-                        <div className="pac-man" />
-                    </div>
-                </div>
-            ) : null}
             {toast ? <div className="toast text-primary dark:text-primary-dark bg-light dark:bg-dark">{toast}</div> : null}
         </>
     );
