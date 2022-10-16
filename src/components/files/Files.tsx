@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { mdiClose, mdiFileDownloadOutline, mdiFolderPlusOutline, mdiFolderSyncOutline, mdiFolderUploadOutline } from '@mdi/js';
 
 import { inputCenter } from '@/styles';
@@ -14,7 +14,6 @@ const PARENT_DIR = '..';
 
 export const Files: FC = () => {
     const fileInput = useRef<HTMLInputElement>(null);
-    const fileLabel = useRef<HTMLLabelElement>(null);
 
     const [focused, setFocus] = useState<number | null>(null);
 
@@ -35,23 +34,6 @@ export const Files: FC = () => {
         }
 
         upload(formData);
-
-        if (fileInput.current && fileLabel.current) {
-            fileInput.current.value = '';
-            fileLabel.current.innerHTML = 'Choose a file';
-        }
-    };
-
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (fileLabel.current) {
-            if (fileInput.current?.files && fileInput.current.files.length > 1) {
-                fileLabel.current.innerHTML = `${fileInput.current.files.length} files selected`;
-            } else if (event.target.value) {
-                fileLabel.current.innerHTML = event.target.value.split('\\').pop() ?? '1 file selected';
-            } else {
-                fileLabel.current.innerHTML = 'Choose a file';
-            }
-        }
     };
 
     const closePreview = (): void => {
@@ -63,7 +45,7 @@ export const Files: FC = () => {
     };
 
     const handleClick = (item: FileItem): void => {
-        if (item.dir) {
+        if (item.isDir) {
             changeDirectory(item.name);
         } else if (item.preview) {
             view(item);
@@ -138,8 +120,7 @@ export const Files: FC = () => {
                     type="file"
                     name="files[]"
                     id="file"
-                    aria-label="Add files"
-                    onChange={handleFileChange}
+                    aria-label="Upload files"
                     ref={fileInput}
                     disabled={uploading}
                     multiple
@@ -156,7 +137,7 @@ export const Files: FC = () => {
                         <img className="max-w-full max-h-full" src={preview.content} alt="Preview" />
                     ) : preview.type == 'video' ? (
                         <video className="max-w-full max-h-full" controls>
-                            <source src={preview.content} type={`video/${preview.item.type}`} />
+                            <source src={preview.content} type={`video/${preview.item.ext}`} />
                         </video>
                     ) : (
                         <pre className="text-left text-12 overflow-auto border max-h-[90%] max-w-[90%] p-8 bg-light dark:bg-dark">

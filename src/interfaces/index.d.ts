@@ -58,19 +58,19 @@ export interface FileItem {
     path: string;
     name: string;
     short: string;
-    type: string;
-    dir: boolean;
-    icon: string;
     size: string;
-    files: number;
-    perms: string;
-    date: string;
-    preview: FilePreviewType;
+    modified?: string;
+    ext: string;
+    isDir: boolean;
+    preview: FilePreviewType | null;
+    contentType?: string;
+    perms?: string;
+    files?: number;
 }
 
 export interface FilePreview {
     content: string;
-    type: FilePreviewType;
+    type: FilePreviewType | null;
     item: FileItem;
 }
 

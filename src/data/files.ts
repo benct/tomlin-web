@@ -44,16 +44,16 @@ export const useFiles = () => {
         if (name) {
             post('/file/rename', { old: `${path}/${item.name}`, new: name })
                 .then(() => mutate())
-                .catch(() => setToast(`Could not rename ${item.dir ? 'directory' : 'file'}...`));
+                .catch(() => setToast(`Could not rename ${item.isDir ? 'directory' : 'file'}...`));
         }
     };
 
     const remove = (item: FileItem) => {
         if (confirm(`Are you sure you want to delete ${item.name}?`)) {
-            const action = item.dir ? 'rmdir' : 'remove';
+            const action = item.isDir ? 'rmdir' : 'remove';
             post(`/file/${action}`, { path: `${path}/${item.name}` })
                 .then(() => mutate())
-                .catch(() => setToast(`Could not delete ${item.dir ? 'directory' : 'file'}...`));
+                .catch(() => setToast(`Could not delete ${item.isDir ? 'directory' : 'file'}...`));
         }
     };
 

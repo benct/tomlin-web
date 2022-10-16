@@ -26,7 +26,9 @@ interface MediaModalProps {
 
 export const MediaModal: FC<MediaModalProps> = memo((props) => {
     const [showSeasons, setShowSeasons] = useState<boolean>(false);
-    const [posterSrc, setPosterSrc] = useState<string>(`https://cdn.tomlin.no/images/media${props.data.poster}`);
+    const [posterSrc, setPosterSrc] = useState<string>(
+        props.data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${props.data.poster}` : '/images/media/poster.png'
+    );
 
     useEffect(() => {
         document.body.classList.add('no-scroll');

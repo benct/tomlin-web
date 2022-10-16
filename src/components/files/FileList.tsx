@@ -17,27 +17,30 @@ interface FileListProps {
 export const FileList: FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete }) => {
     const renderItem = (item: FileItem, i: number): ReactElement => (
         <tr key={i}>
-            <td>
-                {item.dir ? (
+            <td className="text-secondary dark:text-secondary-dark">
+                {item.isDir ? (
                     <Icon path={mdiFolderOutline} title="Directory" size={1} />
-                ) : item.icon ? (
-                    <Image src={`/images/file/${item.type}.png`} alt={item.type} width={22} height={22} />
+                ) : item.ext ? (
+                    <Image src={`/images/file/${item.ext}.png`} alt={item.ext} width={24} height={24} />
                 ) : (
-                    <Icon path={mdiFileQuestion} title="Unknown type" size={1} />
+                    <Icon path={mdiFileQuestion} title="Unknown" size={1} />
                 )}
             </td>
             <td>
                 <button
                     onClick={(): void => handleClick(item)}
                     className={i === focused ? 'text-secondary dark:text-secondary-dark' : undefined}>
-                    {item.short} {item.dir && <span className="text-12">({item.files})</span>}
+                    {item.short} {item.isDir && item.files && <span className="text-12">({item.files})</span>}
                 </button>
-                <Button text="Delete" icon={mdiDeleteOutline} onClick={(): void => handleDelete(item)} className="float-right" />
-                <Button text="Rename" icon={mdiRenameBox} onClick={(): void => handleRename(item)} className="float-right" />
             </td>
-            <td className="font-mono hidden sm:table-cell text-right text-12">{item.size}</td>
-            <td className="font-mono hidden md:table-cell text-right text-12">{item.perms}</td>
-            <td className="font-mono hidden md:table-cell text-right text-12">{item.date}</td>
+            <td className="font-mono hidden sm:table-cell text-right text-12 text-neutral dark:text-neutral-dark">{item.size}</td>
+            <td className="font-mono hidden md:table-cell text-right text-12 text-neutral dark:text-neutral-dark">
+                {item.modified ?? '-'}
+            </td>
+            <td className="text-right items-center">
+                <Button text="Rename" icon={mdiRenameBox} onClick={(): void => handleRename(item)} />
+                <Button text="Delete" icon={mdiDeleteOutline} onClick={(): void => handleDelete(item)} />
+            </td>
         </tr>
     );
 
@@ -48,8 +51,8 @@ export const FileList: FC<FileListProps> = ({ content, focused, handleClick, han
                     <th>&nbsp;</th>
                     <th className="text-left">Filename</th>
                     <th className="hidden sm:table-cell text-right">Size</th>
-                    <th className="hidden md:table-cell text-right">Permissions</th>
                     <th className="hidden md:table-cell text-right">Uploaded</th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>

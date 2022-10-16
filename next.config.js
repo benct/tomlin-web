@@ -10,7 +10,7 @@ const nextConfig = (phase) => ({
         apiUrl: phase === PHASE_DEVELOPMENT_SERVER ? 'http://localhost:8081' : 'https://api.tomlin.no',
     },
     images: {
-        domains: ['avatars.githubusercontent.com', 'cdn.tomlin.no', 'image.tmdb.org'],
+        domains: ['avatars.githubusercontent.com', 'image.tmdb.org', 'storage.googleapis.com'],
     },
 });
 
