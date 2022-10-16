@@ -13,7 +13,7 @@ export const Auth: FC<AuthProps> = ({ children }) => {
     const { isLoggedIn } = useAppContext();
 
     return (
-        <Loading isLoading={isLoggedIn === null}>
+        <Loading isLoading={isLoggedIn === null} className="bg-light dark:bg-dark">
             {isLoggedIn ? children : <Login redirectTo={{ pathname: router.pathname, query: router.query }} />}
         </Loading>
     );

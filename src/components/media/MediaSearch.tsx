@@ -38,13 +38,13 @@ export const MediaSearch: FC<MediaSearchProps> = ({ type, action, page, id }) =>
     return (
         <Box title="Search" className="min-h">
             <input type="text" placeholder="Movie or TV show" aria-label="Search" onChange={handleChange} className={inputCenter} />
-            <div className="flex justify-center gap-16 mt-16">
+            <div className="flex justify-center gap-16 text-14 my-16">
                 <Link href="/media/search/movie/popular/">Popular (Movie)</Link>
                 <Link href="/media/search/movie/top/">Top Rated (Movie)</Link>
                 <Link href="/media/search/movie/now/">Now Playing (Movie)</Link>
                 <Link href="/media/search/movie/upcoming/">Upcoming (Movie)</Link>
             </div>
-            <div className="flex justify-center gap-16 mt-8">
+            <div className="flex justify-center gap-16 text-14 my-16">
                 <Link href="/media/search/tv/popular/">Popular (TV)</Link>
                 <Link href="/media/search/tv/top/">Top Rated (TV)</Link>
                 <Link href="/media/search/tv/now/">Now Playing (TV)</Link>
