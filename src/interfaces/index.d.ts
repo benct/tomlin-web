@@ -123,7 +123,7 @@ export interface MediaSeasonEntry {
     season: number;
     title: string;
     episodes: MediaEpisodeEntry[];
-    release_date: string;
+    release_date: string | null;
 }
 
 export interface MediaEpisodeEntry {

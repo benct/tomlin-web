@@ -30,7 +30,7 @@ export const MediaSeason: FC<MediaSeasonProps> = ({ data, setSeenEpisode, setSee
                     <button onClick={toggleEpisodes} className="text-secondary dark:text-secondary-dark">
                         {data.title?.trim() || 'No Title'}
                     </button>
-                    <span className="text-14 pl-8">{formatDate(data.release_date, '(MMM do, YYY)')}</span>
+                    <span className="text-14 pl-8">{data.release_date ? formatDate(data.release_date, '(MMM do, YYY)') : 'Unknown'}</span>
                 </div>
                 {episodesSeen === 0 ? <Button text="Mark all" onClick={() => setSeenEpisodes(data.id)} /> : <span />}
                 <Button

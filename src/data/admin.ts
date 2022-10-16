@@ -36,7 +36,7 @@ export const useAdminActions = () => {
                 .catch(() => setToast('Could not clear log data...'));
         }
     };
-    const updateMedia = (type: string, count = 10) => {
+    const updateMedia = (type: string, count: number | string = 10) => {
         if (isLoggedIn) {
             setToast(undefined);
             post(`/media/${type}/update/${count}`)
@@ -52,7 +52,7 @@ export const useAdminActions = () => {
                 .catch(() => setToast('Failed to update IATA entries...'));
         }
     };
-    const getHass = (count = 25) => {
+    const getHass = (count: number | string = 25) => {
         if (isLoggedIn) {
             setToast(undefined);
             get<Hass[]>(`/hass/latest/${count}`)

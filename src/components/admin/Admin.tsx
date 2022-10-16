@@ -22,12 +22,12 @@ export const Admin: FC = () => {
 
     const formatStat = (key: string): string => (stats?.[key] !== undefined ? formatThousands(stats[key]) : '-');
 
-    const getCount = (field: HTMLSelectElement | null): number | undefined => (field ? Number(field.value) : undefined);
+    const getCount = (field: HTMLSelectElement | null): string | undefined => (field ? field.value : undefined);
 
     const getValue = (field: HTMLSelectElement | HTMLInputElement | null): string | null =>
         field && field.value !== 'none' ? field.value : null;
 
-    const renderOptions = (values: number[]): ReactElement[] =>
+    const renderOptions = (values: (number | string)[]): ReactElement[] =>
         values.map(
             (opt, idx): ReactElement => (
                 <option key={`ctrlOpt${idx}`} value={opt}>
@@ -80,12 +80,12 @@ export const Admin: FC = () => {
             <Box title="Tasks" border="border-b" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Update number of stored movies</span>
                 <select className={select} defaultValue="50" ref={updateMovieCount}>
-                    {renderOptions([10, 50, 100, 250, 500])}
+                    {renderOptions([10, 50, 100, 250, 500, 'all'])}
                 </select>
                 <Button text="Run" onClick={() => updateMedia('movie', getCount(updateMovieCount.current))} />
                 <span className="truncate">Update number of stored tv-shows</span>
                 <select className={select} defaultValue="10" ref={updateTvCount}>
-                    {renderOptions([5, 10, 50, 100])}
+                    {renderOptions([5, 10, 50, 100, 'all'])}
                 </select>
                 <Button text="Run" onClick={() => updateMedia('tv', getCount(updateTvCount.current))} />
                 <span className="truncate">Update IATA airline entries</span>
