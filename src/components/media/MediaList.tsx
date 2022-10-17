@@ -61,11 +61,11 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
 
     const renderWatchlist = (data: MediaItemEntry[]): ReactElement => (
         <Loading isLoading={loading} text="Loading media...">
-            <div>TV-Shows:</div>
+            <div className="mb-16 font-bold">TV-Shows:</div>
             <div className="grid sm:grid-cols-2 gap-16">
                 {data.filter((item: MediaItemEntry): boolean => item.type === 'tv').map(renderRow)}
             </div>
-            <div>Movies:</div>
+            <div className="my-16 font-bold">Movies:</div>
             <div className="grid sm:grid-cols-2 gap-16">
                 {data.filter((item: MediaItemEntry): boolean => item.type === 'movie').map(renderRow)}
             </div>

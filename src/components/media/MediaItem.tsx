@@ -1,5 +1,7 @@
 import { FC, ReactElement, ReactNode, useState } from 'react';
 import Image from 'next/image';
+import { Icon } from '@mdi/react';
+import { mdiCloseCircle } from '@mdi/js';
 
 import { formatDuration, formatGradientHSL, formatYears } from '@/util/formatting';
 
@@ -66,7 +68,9 @@ export const MediaItem: FC<MediaItemProps> = ({ type, data, setSeen, setFavourit
                         <a href={`https://www.imdb.com/title/${data.imdb_id}`} target="_blank" rel="noreferrer external" className="h-24">
                             <Image src="/images/icon/imdb.svg" alt="IMDb" width={24} height={24} />
                         </a>
-                    ) : null}
+                    ) : (
+                        <Icon path={mdiCloseCircle} size={1} className="h-24 text-neutral dark:text-neutral" />
+                    )}
                     <span className="truncate">
                         {type === 'tv' ? renderSeasons() : formatDuration(data.runtime)}
                         {data.rating ? renderRating() : ' | No rating'}
