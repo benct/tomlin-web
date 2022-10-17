@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.1.1] - 2022-10-17 - *More Tailwind*
+### Changed
+- More restructuring and refactoring of html structures
+- CSS class names and styling of all remaining components
+- Several styling adjustments for mobile screens
+- Move some admin pages to base path
+- Move all app code to `src` folder
+- Replace home state with current weather data
+
+### Fixed
+- Correct GitHub link to changelog
+- Correct sort order of media stats graph data
+- Ensure menu is not focusable when hidden
+
 ## [3.1.0] - 2022-10-06 - *Tailwind*
 ### Added
 - Tailwind CSS and configurations

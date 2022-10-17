@@ -53,7 +53,7 @@ export const Header: FC = () => {
                         title="Version"
                     />
                     <LinkButton
-                        text="3.1.0"
+                        text="3.1.1"
                         title="View changelog on GitHub"
                         href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
                         tabIndex={showMenu ? -1 : 0}
