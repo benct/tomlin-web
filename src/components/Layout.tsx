@@ -1,5 +1,7 @@
 import { FC, PropsWithChildren, useEffect } from 'react';
 import Head from 'next/head';
+import { Icon } from '@mdi/react';
+import { mdiLoading } from '@mdi/js';
 
 import { useAppContext } from '@/data/context';
 import { useInit } from '@/data/auth';
@@ -9,7 +11,7 @@ import { Header } from './page/Header';
 import { Footer } from './page/Footer';
 
 export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone, children }) => {
-    const { toast } = useAppContext();
+    const { toast, loading } = useAppContext();
     useInit();
 
     useEffect(() => {
@@ -55,6 +57,11 @@ export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone
                     <Footer />
                 </>
             )}
+            {loading ? (
+                <div className="bg-slate-900 bg-opacity-50 fixed inset-0 z-50 flex place-content-center place-items-center">
+                    <Icon path={mdiLoading} size={10} spin className="text-primary dark:text-primary-dark" />
+                </div>
+            ) : null}
             {toast ? <div className="toast text-primary dark:text-primary-dark bg-light dark:bg-dark">{toast}</div> : null}
         </>
     );
