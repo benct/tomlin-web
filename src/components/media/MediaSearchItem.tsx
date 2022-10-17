@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 import Image from 'next/image';
 import ISO6391 from 'iso-639-1';
 
-import { button } from '@/styles';
 import { formatDate } from '@/util/formatting';
 import { useMediaSearchActions } from '@/data/media';
 
@@ -68,7 +67,7 @@ export const MediaSearchItem: FC<MediaSearchItemProps> = ({ data, type }) => {
                         )}{' '}
                         | {release ? formatDate(release) : 'Unknown'}
                     </span>
-                    <Button text={stored ? 'Remove' : 'Add'} className={button} onClick={handleAddRemove} />
+                    <Button text={stored ? 'Remove' : 'Add'} onClick={handleAddRemove} />
                 </div>
                 <div className="text-14 mt-8">{data.overview === '' ? 'No description.' : data.overview}</div>
             </div>

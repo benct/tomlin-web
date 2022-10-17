@@ -1,7 +1,6 @@
 import { ChangeEvent, FC } from 'react';
 import Link from 'next/link';
 
-import { inputCenter } from '@/styles';
 import { debounce } from '@/util/debounce';
 import { useMediaSearch } from '@/data/media';
 
@@ -22,7 +21,7 @@ export const MediaSearch: FC<MediaSearchProps> = ({ type, action, page, id }) =>
 
     return (
         <Box title="Search" className="min-h">
-            <input type="text" placeholder="Movie or TV show" aria-label="Search" onChange={handleChange} className={inputCenter} />
+            <input type="text" placeholder="Movie or TV show" aria-label="Search" onChange={handleChange} className="input mx-auto" />
             <div className="flex justify-center gap-16 text-14 my-16">
                 <Link href="/media/search/movie/popular/">Popular (Movie)</Link>
                 <Link href="/media/search/movie/top/">Top Rated (Movie)</Link>

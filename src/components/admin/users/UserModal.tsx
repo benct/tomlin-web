@@ -1,7 +1,6 @@
 import { FC, useRef, useState } from 'react';
 import { mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
-import { inputCenter } from '@/styles';
 import { useUserActions } from '@/data/users';
 
 import { User } from '@/interfaces';
@@ -54,10 +53,10 @@ export const UserModal: FC<UserModalProps> = ({ user, close }) => {
             {user ? (
                 <div className="text-center font-bold">{user.email}</div>
             ) : (
-                <input className={inputCenter} type="text" maxLength={50} placeholder="Email" autoComplete="off" ref={email} />
+                <input className="input mx-auto" type="text" maxLength={50} placeholder="Email" autoComplete="off" ref={email} />
             )}
             <input
-                className={inputCenter}
+                className="input mx-auto"
                 type="text"
                 maxLength={50}
                 placeholder="Name"
@@ -65,7 +64,7 @@ export const UserModal: FC<UserModalProps> = ({ user, close }) => {
                 ref={name}
                 defaultValue={user?.name}
             />
-            <input className={inputCenter} type="password" maxLength={50} placeholder="Password" autoComplete="off" ref={password} />
+            <input className="input mx-auto" type="password" maxLength={50} placeholder="Password" autoComplete="off" ref={password} />
             {user ? (
                 <div className="flex justify-center gap-8">
                     <input id="enabled" type="checkbox" ref={enabled} defaultChecked={user.enabled} />

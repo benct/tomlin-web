@@ -38,8 +38,8 @@ export const FileList: FC<FileListProps> = ({ content, focused, handleClick, han
                 {item.modified ?? '-'}
             </td>
             <td className="text-right items-center">
-                <Button text="Rename" icon={mdiRenameBox} onClick={(): void => handleRename(item)} />
-                <Button text="Delete" icon={mdiDeleteOutline} onClick={(): void => handleDelete(item)} />
+                <Button text="Rename" icon={mdiRenameBox} onClick={(): void => handleRename(item)} className="inline-block" />
+                <Button text="Delete" icon={mdiDeleteOutline} onClick={(): void => handleDelete(item)} className="inline-block" />
             </td>
         </tr>
     );

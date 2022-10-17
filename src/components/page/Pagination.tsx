@@ -2,7 +2,6 @@ import { FC, ReactElement } from 'react';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import { mdiChevronDoubleRight, mdiChevronRight } from '@mdi/js';
-import { buttonIcon } from '@/styles';
 
 interface PaginationProps {
     current: number;
@@ -50,13 +49,13 @@ export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix 
 
     const renderPage = (page: number): ReactElement => (
         <Link href={computePath(page)} key={`pagination${page}`}>
-            <a className={`${buttonIcon} px-8`}>{page}</a>
+            <a className="button-icon px-8">{page}</a>
         </Link>
     );
 
     const renderPageIcon = (page: number, { title, double, rotate }: PaginationImage) => (
         <Link href={computePath(page)} key={`pagination${page}`}>
-            <a className={buttonIcon}>
+            <a className="button-icon">
                 <Icon path={double ? mdiChevronDoubleRight : mdiChevronRight} rotate={rotate ? 180 : 0} size={1} title={title} />
             </a>
         </Link>

@@ -1,7 +1,6 @@
 import { FC, memo, useRef } from 'react';
 import { mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
-import { input, inputFull, label } from '@/styles';
 import { useNoteActions } from '@/data/notes';
 
 import { Note } from '@/interfaces';
@@ -41,14 +40,22 @@ export const NotesModal: FC<NotesModalProps> = memo(({ note, close }) => {
             left={note.id ? <Button text="Delete" icon={mdiDeleteOutline} onClick={remove} /> : null}
             right={<Button text="Save" icon={mdiContentSaveOutline} onClick={save} />}
             className="space-y-16">
-            <label className={label}>
+            <label className="label">
                 Title
-                <input className={inputFull} type="text" maxLength={64} autoComplete="off" required ref={title} defaultValue={note.title} />
+                <input
+                    className="input w-full"
+                    type="text"
+                    maxLength={64}
+                    autoComplete="off"
+                    required
+                    ref={title}
+                    defaultValue={note.title}
+                />
             </label>
-            <label className={label}>
+            <label className="label">
                 Content
                 <textarea
-                    className={`${inputFull} font-mono text-14`}
+                    className="input w-full font-mono text-14"
                     rows={18}
                     placeholder="Notes..."
                     autoComplete="off"

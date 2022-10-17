@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { mdiClose, mdiFileDownloadOutline, mdiFolderPlusOutline, mdiFolderSyncOutline, mdiFolderUploadOutline } from '@mdi/js';
 
-import { inputCenter } from '@/styles';
 import { useFiles } from '@/data/files';
 
 import { FileItem } from '@/interfaces';
@@ -116,7 +115,7 @@ export const Files: FC = () => {
             </Loading>
             <div className="text-center my-32 space-y-16">
                 <input
-                    className={inputCenter}
+                    className="input mx-auto"
                     type="file"
                     name="files[]"
                     id="file"
@@ -125,7 +124,7 @@ export const Files: FC = () => {
                     disabled={uploading}
                     multiple
                 />
-                <Button text={uploading ? 'Uploading...' : 'Upload'} onClick={handleUpload} disabled={uploading} />
+                <Button text={uploading ? 'Uploading...' : 'Upload'} onClick={handleUpload} disabled={uploading} className="mx-auto" />
             </div>
             {preview ? (
                 <div className="bg-slate-900 bg-opacity-50 fixed inset-0 flex place-content-center place-items-center z-20">

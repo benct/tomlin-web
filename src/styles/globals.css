@@ -7,3 +7,24 @@
     color: #eee;
     fill: #eee;
 }
+
+@layer components {
+    .button-text,
+    .button-icon,
+    .input {
+        @apply block text-primary dark:text-primary-dark bg-light dark:bg-dark dark:hover:bg-neutral-dark focus:outline-none focus:ring focus:ring-sky-500 cursor-pointer;
+    }
+    .button-text,
+    .input {
+        @apply px-8 py-6 border rounded-4 dark:border-slate-400 hover:shadow;
+    }
+    .button-text {
+        @apply text-12 font-bold uppercase;
+    }
+    .button-icon {
+        @apply p-2 rounded-8 hover:bg-neutral;
+    }
+    .label {
+        @apply block text-secondary dark:text-secondary-dark text-14;
+    }
+}

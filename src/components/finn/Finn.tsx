@@ -1,7 +1,6 @@
 import { FC, ReactElement, useRef } from 'react';
 import { mdiDelete } from '@mdi/js';
 
-import { input } from '@/styles';
 import { formatDate } from '@/util/formatting';
 import { useFinn } from '@/data/base';
 
@@ -59,7 +58,7 @@ export const Finn: FC = () => {
     return (
         <Box className="min-h">
             <div className="flex justify-center gap-16 items-center mb-32">
-                <input type="number" placeholder="FINN-kode" className={`${input} text-12`} ref={idInput} />
+                <input type="number" placeholder="FINN-kode" className="input text-12" ref={idInput} />
                 <Button text="Track" onClick={handleSubmit} />
             </div>
             <Loading isLoading={loading} text="Loading FINN data...">

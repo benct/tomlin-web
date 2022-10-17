@@ -1,6 +1,5 @@
 import { FC, Fragment, ReactElement, useRef } from 'react';
 
-import { input, select } from '@/styles';
 import { formatThousands } from '@/util/formatting';
 import { useAppContext } from '@/data/context';
 import { useAdminActions, useAdminStats } from '@/data/admin';
@@ -64,7 +63,7 @@ export const Admin: FC = () => {
             </Box>
             <Box title="Settings" border="border-b" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Countdown icon</span>
-                <select className={select} defaultValue={settings.countdownIcon} ref={countdownIcon}>
+                <select className="input text-12 pr-16" defaultValue={settings.countdownIcon} ref={countdownIcon}>
                     <option value="none">None</option>
                     <option value="birthday">Birthday</option>
                     <option value="christmas">Christmas</option>
@@ -74,17 +73,17 @@ export const Admin: FC = () => {
                 </select>
                 <Button text="Set" onClick={() => saveSetting('countdownIcon', getValue(countdownIcon.current))} />
                 <span className="truncate">Countdown target date</span>
-                <input className={`${input} text-12`} type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
+                <input className="input text-12" type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
                 <Button text="Set" onClick={() => saveSetting('countdownTarget', getValue(countdownTarget.current))} />
             </Box>
             <Box title="Tasks" border="border-b" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Update number of stored movies</span>
-                <select className={select} defaultValue="50" ref={updateMovieCount}>
+                <select className="input text-12 pr-16" defaultValue="50" ref={updateMovieCount}>
                     {renderOptions([10, 50, 100, 250, 500, 'all'])}
                 </select>
                 <Button text="Run" onClick={() => updateMedia('movie', getCount(updateMovieCount.current))} />
                 <span className="truncate">Update number of stored tv-shows</span>
-                <select className={select} defaultValue="10" ref={updateTvCount}>
+                <select className="input text-12 pr-16" defaultValue="10" ref={updateTvCount}>
                     {renderOptions([5, 10, 50, 100, 'all'])}
                 </select>
                 <Button text="Run" onClick={() => updateMedia('tv', getCount(updateTvCount.current))} />
@@ -103,7 +102,7 @@ export const Admin: FC = () => {
             </Box>
             <Box title="Home Assistant" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Latest Home Assistant states</span>
-                <select className={select} defaultValue="25" ref={hassCount}>
+                <select className="input text-12 pr-16" defaultValue="25" ref={hassCount}>
                     {renderOptions([10, 25, 50, 100, 250, 500])}
                 </select>
                 <Button text="Load" onClick={() => getHass(getCount(hassCount.current))} />

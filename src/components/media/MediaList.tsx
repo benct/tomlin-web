@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, KeyboardEvent, ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
-import { input, select } from '@/styles';
 import { formatQuery } from '@/util/formatting';
 import { useMediaList } from '@/data/media';
 
@@ -76,7 +75,7 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
         <>
             <div className="flex justify-center gap-16 mb-24">
                 <select
-                    className={select}
+                    className="input text-12 pr-16"
                     onChange={(e: ChangeEvent<HTMLSelectElement>): void => e.target.blur()}
                     onBlur={handleSort}
                     defaultValue={sort}>
@@ -88,7 +87,7 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
                     <option value="title-desc">Title (reverse)</option>
                     <option value="favourite">Favourite</option>
                 </select>
-                <input type="text" placeholder="Search" aria-label="Search" onKeyDown={handleKey} className={input} />
+                <input type="text" placeholder="Search" aria-label="Search" onKeyDown={handleKey} className="input" />
             </div>
             <Loading isLoading={loading} text="Loading media...">
                 <div className="grid sm:grid-cols-2 gap-16">{data.map(renderRow)}</div>

@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, SyntheticEvent } from 'react';
 import { mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
-import { input, inputFull, label, select } from '@/styles';
 
 import { Flight } from '@/interfaces';
 import { Modal } from '@/components/page/Modal';
@@ -31,10 +30,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
         }>
         <form onSubmit={save} className="space-y-16">
             <div className="grid grid-cols-2 gap-16">
-                <label className={label}>
+                <label className="label">
                     Origin
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="text"
                         name="origin"
                         required
@@ -44,10 +43,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                         maxLength={3}
                     />
                 </label>
-                <label className={label}>
+                <label className="label">
                     Destination
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="text"
                         name="destination"
                         required
@@ -57,10 +56,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                         maxLength={3}
                     />
                 </label>
-                <label className={label}>
+                <label className="label">
                     Departure
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="datetime-local"
                         name="departure"
                         required
@@ -69,10 +68,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                         value={form.departure}
                     />
                 </label>
-                <label className={label}>
+                <label className="label">
                     Arrival
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="datetime-local"
                         name="arrival"
                         required
@@ -83,10 +82,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                 </label>
             </div>
             <div className="grid grid-cols-3 gap-16">
-                <label className={label}>
+                <label className="label">
                     Carrier
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="text"
                         name="carrier"
                         required
@@ -96,10 +95,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                         maxLength={2}
                     />
                 </label>
-                <label className={label}>
+                <label className="label">
                     Number
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="number"
                         name="number"
                         required
@@ -110,10 +109,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                         max={9999}
                     />
                 </label>
-                <label className={label}>
+                <label className="label">
                     Cabin
                     <select
-                        className={`${select} block w-full text-14`}
+                        className="input w-full text-14 pr-16"
                         name="cabin"
                         onChange={change}
                         onBlur={change}
@@ -124,10 +123,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                         <option value="first">First</option>
                     </select>
                 </label>
-                <label className={label}>
+                <label className="label">
                     Aircraft
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="text"
                         name="aircraft"
                         autoComplete="off"
@@ -136,10 +135,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                         maxLength={4}
                     />
                 </label>
-                <label className={label}>
+                <label className="label">
                     Seat
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="text"
                         name="seat"
                         autoComplete="off"
@@ -148,10 +147,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                         maxLength={4}
                     />
                 </label>
-                <label className={label}>
+                <label className="label">
                     Reference
                     <input
-                        className={inputFull}
+                        className="input w-full"
                         type="text"
                         name="reference"
                         required
@@ -161,10 +160,10 @@ export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, 
                     />
                 </label>
             </div>
-            <label className={label}>
+            <label className="label">
                 Info
                 <textarea
-                    className={inputFull}
+                    className="input w-full"
                     name="info"
                     required
                     autoComplete="off"
