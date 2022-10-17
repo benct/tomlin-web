@@ -16,32 +16,36 @@ export const useUsers = () => {
 
 export const useUserActions = () => {
     const { mutate } = useSWRConfig();
-    const { isLoggedIn } = useAppContext();
+    const { isLoggedIn, setLoading } = useAppContext();
     const [toast, setToast] = useState<string>();
 
     useToast(toast);
 
     const saveUser = (email: string, name: string, password: string | null, enabled: boolean) => {
         if (isLoggedIn) {
+            setLoading(true);
             setToast(undefined);
             post('/user', { email, name, password, enabled })
                 .then(() => {
                     setToast('Successfully saved user!');
                     mutate('/user');
                 })
-                .catch(() => setToast('Could not save user...'));
+                .catch(() => setToast('Could not save user...'))
+                .finally(() => setLoading(false));
         }
     };
 
     const deleteUser = (email: string) => {
         if (isLoggedIn && confirm('Are you sure you want to delete this user?')) {
+            setLoading(true);
             setToast(undefined);
             del('/user', { email })
                 .then(() => {
                     setToast('Successfully deleted user!');
                     mutate('/user');
                 })
-                .catch(() => setToast('Could not delete user...'));
+                .catch(() => setToast('Could not delete user...'))
+                .finally(() => setLoading(false));
         }
     };
 

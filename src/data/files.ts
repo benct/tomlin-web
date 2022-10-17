@@ -11,7 +11,7 @@ export const useFiles = () => {
     const [preview, setPreview] = useState<FilePreview>();
     const [toast, setToast] = useState<string>();
 
-    const { isLoggedIn } = useAppContext();
+    const { isLoggedIn, setLoading } = useAppContext();
     const { data, error, mutate } = useSWR<FileItem[], Error>(isLoggedIn ? ['/file/tree', { path }] : null, get, {
         revalidateOnFocus: false,
     });
@@ -33,33 +33,44 @@ export const useFiles = () => {
     const createDirectory = () => {
         const name = prompt('Enter name of new folder:');
         if (name) {
+            setLoading(true);
+            setToast(undefined);
             post('/file/mkdir', { path: `${path}/${name}` })
                 .then(() => mutate())
-                .catch(() => setToast('Could not create directory...'));
+                .catch(() => setToast('Could not create directory...'))
+                .finally(() => setLoading(false));
         }
     };
 
     const rename = (item: FileItem) => {
         const name = prompt('Enter new name of file:', item.name);
         if (name) {
+            setLoading(true);
+            setToast(undefined);
             post('/file/rename', { old: `${path}/${item.name}`, new: name })
                 .then(() => mutate())
-                .catch(() => setToast(`Could not rename ${item.isDir ? 'directory' : 'file'}...`));
+                .catch(() => setToast(`Could not rename ${item.isDir ? 'directory' : 'file'}...`))
+                .finally(() => setLoading(false));
         }
     };
 
     const remove = (item: FileItem) => {
         if (confirm(`Are you sure you want to delete ${item.name}?`)) {
             const action = item.isDir ? 'rmdir' : 'remove';
+            setLoading(true);
+            setToast(undefined);
             post(`/file/${action}`, { path: `${path}/${item.name}` })
                 .then(() => mutate())
-                .catch(() => setToast(`Could not delete ${item.isDir ? 'directory' : 'file'}...`));
+                .catch(() => setToast(`Could not delete ${item.isDir ? 'directory' : 'file'}...`))
+                .finally(() => setLoading(false));
         }
     };
 
     const upload = (files: FormData) => {
         setUploading(true);
 
+        setLoading(true);
+        setToast(undefined);
         post('/file/upload', { path }, files)
             .then(() => {
                 setUploading(false);
@@ -68,10 +79,13 @@ export const useFiles = () => {
             .catch(() => {
                 setUploading(false);
                 setToast('An error occurred while uploading the file(s)...');
-            });
+            })
+            .finally(() => setLoading(false));
     };
 
     const download = (item: FileItem) => {
+        setLoading(true);
+        setToast(undefined);
         blob('/file/download', { path: item.path })
             .then((blob) => {
                 // if (typeof window.navigator?.msSaveOrOpenBlob !== 'undefined') {
@@ -96,20 +110,27 @@ export const useFiles = () => {
                     window.URL.revokeObjectURL(url);
                 }, 100);
             })
-            .catch(() => setToast('Could not fetch file...'));
+            .catch(() => setToast('Could not fetch file...'))
+            .finally(() => setLoading(false));
     };
 
     const view = (item?: FileItem) => {
         if (!item) {
             setPreview(undefined);
         } else if (item.preview == 'image' || item.preview == 'video') {
+            setLoading(true);
+            setToast(undefined);
             blob('/file/download', { path: item.path })
                 .then((blob) => setPreview({ content: window.URL.createObjectURL(blob), type: item.preview, item }))
-                .catch(() => setToast('Could not fetch image...'));
+                .catch(() => setToast('Could not fetch image...'))
+                .finally(() => setLoading(false));
         } else {
+            setLoading(true);
+            setToast(undefined);
             text('/file/download', { path: item.path })
                 .then((data) => setPreview({ content: data, type: item.preview, item }))
-                .catch(() => setToast('Could not fetch content...'));
+                .catch(() => setToast('Could not fetch content...'))
+                .finally(() => setLoading(false));
         }
     };
 

@@ -39,6 +39,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
     const selectItem = (type?: MediaType, id?: number) => {
         if (type && id) {
             setLoading(true);
+            setToast(undefined);
             load<MediaItemEntry>('GET', `/media/${type}/${id}`)
                 .then((response) => setSelected(response))
                 .catch(() => setToast('Could not fetch media content...'))
@@ -50,6 +51,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
 
     const update = (type: MediaType, id: number) => {
         setLoading(true);
+        setToast(undefined);
         post(`/media/${type}/${id}`)
             .then(() => {
                 selectItem(type, id);
@@ -63,6 +65,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
     const remove = (type: MediaType, id: number) => {
         if (confirm(`Are you sure you want to remove this?`)) {
             setLoading(true);
+            setToast(undefined);
             del(`/media/${type}/${id}`)
                 .then(() => {
                     setSelected(undefined);
@@ -76,6 +79,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
 
     const favourite = (type: MediaType, id: number, set: boolean) => {
         setLoading(true);
+        setToast(undefined);
         post(`/media/${type}/favourite/${id}`, { set })
             .then(() => {
                 if (selected) setSelected({ ...selected, favourite: set });
@@ -88,6 +92,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
 
     const seen = (type: MediaType, id: number, set: boolean) => {
         setLoading(true);
+        setToast(undefined);
         post(`/media/${type}/seen/${id}`, { set })
             .then(() => {
                 if (selected) setSelected({ ...selected, seen: set });
@@ -100,6 +105,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
 
     const seenEpisode = (type: MediaType, id: number, episodeId: number, set: boolean) => {
         setLoading(true);
+        setToast(undefined);
         post(`/media/tv/seen/episode/${episodeId}`, { set })
             .then(() => {
                 selectItem(type, id);
@@ -111,6 +117,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
 
     const seenEpisodes = (type: MediaType, id: number, seasonId: number) => {
         setLoading(true);
+        setToast(undefined);
         post(`/media/tv/seen/season/${seasonId}`, { set: true })
             .then(() => {
                 selectItem(type, id);
@@ -154,6 +161,7 @@ export const useMediaSearch = ({ type, action, page, id }: MediaSearchProps) => 
     const search = (query?: string) => {
         if (query) {
             setLoading(true);
+            setToast(undefined);
             get<PaginationResponse<MediaSearchItemEntry>>('/media/search', { query: encodeURI(query) })
                 .then((response) => {
                     setSearchData(
@@ -192,6 +200,7 @@ export const useMediaSearchActions = () => {
 
     const add = (type: MediaType, id: number) => {
         setLoading(true);
+        setToast(undefined);
         post(`/media/${type}/${id}`)
             .then(() => {
                 setToast('Media successfully added!');
@@ -204,6 +213,7 @@ export const useMediaSearchActions = () => {
     const remove = (type: MediaType, id: number) => {
         if (confirm(`Are you sure you want to remove this?`)) {
             setLoading(true);
+            setToast(undefined);
             del(`/media/${type}/${id}`)
                 .then(() => {
                     setToast('Media successfully removed!');
@@ -216,6 +226,7 @@ export const useMediaSearchActions = () => {
 
     const imdb = (type: MediaType, id: number) => {
         setLoading(true);
+        setToast(undefined);
         load<MediaExternal>('GET', `/media/${type}/external/${id}`)
             .then((response) => {
                 if (response && response.imdb_id) {
