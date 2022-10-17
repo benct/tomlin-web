@@ -1,4 +1,4 @@
-import { FC, forwardRef } from 'react';
+import { FC, forwardRef, MouseEventHandler } from 'react';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import {
@@ -29,7 +29,7 @@ export interface NavigationLinkProps {
     icon?: string;
     chevron?: boolean;
     href?: string;
-    onClick?: () => void;
+    onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
 export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
@@ -39,7 +39,10 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
         <a
             ref={ref}
             href={href}
-            onClick={onClick}
+            onClick={(event) => {
+                onClick?.(event);
+                toggle();
+            }}
             tabIndex={show ? 0 : -1}
             className="flex gap-16 p-8 rounded-8 hover:bg-neutral dark:hover:bg-neutral-dark">
             {icon ? <Icon path={icon} size={1} className="text-neutral dark:text-neutral-dark" /> : <span className="w-24" />}
