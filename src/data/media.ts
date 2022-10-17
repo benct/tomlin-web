@@ -131,7 +131,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
         media: data?.results ?? [],
         pagination: {
             current: data?.page ?? 1,
-            total: data?.total_pages ?? 1,
+            total: Math.min(data?.total_pages ?? 1, 500),
         },
         loading: !data && !error,
         selected,
@@ -183,7 +183,7 @@ export const useMediaSearch = ({ type, action, page, id }: MediaSearchProps) => 
             ? { current: 1, total: 1 }
             : {
                   current: data?.page ?? 1,
-                  total: Math.min(data?.total_pages ?? 1, 950),
+                  total: Math.min(data?.total_pages ?? 1, 500),
               },
         loading: !!type && !!action && !data && !error,
         search,
