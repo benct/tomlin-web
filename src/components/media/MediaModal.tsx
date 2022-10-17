@@ -1,4 +1,4 @@
-import { FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react';
+import { FC, ReactElement, ReactNode, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
@@ -24,10 +24,20 @@ interface MediaModalProps {
     setSeenEpisodes: (seasonId: number) => void;
 }
 
-export const MediaModal: FC<MediaModalProps> = memo((props) => {
+export const MediaModal: FC<MediaModalProps> = ({
+    data,
+    type,
+    close,
+    update,
+    remove,
+    setSeen,
+    setFavourite,
+    setSeenEpisode,
+    setSeenEpisodes,
+}) => {
     const [showSeasons, setShowSeasons] = useState<boolean>(false);
     const [posterSrc, setPosterSrc] = useState<string>(
-        props.data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${props.data.poster}` : '/images/media/poster.png'
+        data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${data.poster}` : '/images/media/poster.png'
     );
 
     useEffect(() => {
@@ -91,7 +101,7 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
         renderRow(
             'Links',
             <div className="flex item-center gap-16 h-24">
-                <a href={`https://www.themoviedb.org/${props.type}/${id}`} target="_blank" rel="noreferrer external">
+                <a href={`https://www.themoviedb.org/${type}/${id}`} target="_blank" rel="noreferrer external">
                     <Image src="/images/icon/tmdb.svg" alt="TMDb" width={24} height={24} />
                 </a>
                 {imdb ? (
@@ -99,7 +109,7 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
                         <Image src="/images/icon/imdb.svg" alt="IMDb" width={24} height={24} />
                     </a>
                 ) : null}
-                <Link href={`/media/search/${props.type}/similar/1/${id}`}>
+                <Link href={`/media/search/${type}/similar/1/${id}`}>
                     <a>
                         <Icon
                             path={mdiApproximatelyEqualBox}
@@ -109,7 +119,7 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
                         />
                     </a>
                 </Link>
-                <Link href={`/media/search/${props.type}/recommended/1/${id}`}>
+                <Link href={`/media/search/${type}/recommended/1/${id}`}>
                     <a>
                         <Icon
                             path={mdiThumbUpOutline}
@@ -123,17 +133,17 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
         );
 
     const renderSeasons = (): ReactNode =>
-        props.data.seasons ? (
+        data.seasons ? (
             <div className="space-y-8">
-                {props.data.seasons
+                {data.seasons
                     .filter((s: MediaSeasonEntry): boolean => s.season > 0)
                     .map(
                         (season: MediaSeasonEntry): ReactNode => (
                             <MediaSeason
                                 key={`season${season.id}`}
                                 data={season}
-                                setSeenEpisode={props.setSeenEpisode}
-                                setSeenEpisodes={props.setSeenEpisodes}
+                                setSeenEpisode={setSeenEpisode}
+                                setSeenEpisodes={setSeenEpisodes}
                             />
                         )
                     )}
@@ -142,71 +152,62 @@ export const MediaModal: FC<MediaModalProps> = memo((props) => {
 
     const renderContent = (): ReactElement => (
         <div className="grid grid-cols-auto-1fr gap-x-12 gap-y-6 child:odd:text-neutral">
-            {renderRow('Original', props.data.original_title ?? props.data.title)}
-            {renderRow('Language', props.data.language)}
-            {renderRow('Genre(s)', props.data.genres)}
-            {renderRow('Release', props.data.release_date ? formatDate(props.data.release_date) : 'Unknown')}
-            {renderRow('Language', props.data.language)}
-            {renderRating(props.data.rating, props.data.votes)}
-            {renderRow('Runtime', formatDuration(props.data.runtime))}
-            {renderLinks(props.data.id, props.data.imdb_id)}
-            {props.type === 'movie' ? (
+            {renderRow('Original', data.original_title ?? data.title)}
+            {renderRow('Language', data.language)}
+            {renderRow('Genre(s)', data.genres)}
+            {renderRow('Release', data.release_date ? formatDate(data.release_date) : 'Unknown')}
+            {renderRow('Language', data.language)}
+            {renderRating(data.rating, data.votes)}
+            {renderRow('Runtime', formatDuration(data.runtime))}
+            {renderLinks(data.id, data.imdb_id)}
+            {type === 'movie' ? (
                 <>
-                    {renderRow('Budget', props.data.budget ? `$ ${formatThousands(props.data.budget)}` : ' - ')}
-                    {renderRow('Revenue', props.data.revenue ? `$ ${formatThousands(props.data.revenue)}` : ' - ')}
-                    {renderOptional('Tagline', props.data.tagline)}
+                    {renderRow('Budget', data.budget ? `$ ${formatThousands(data.budget)}` : ' - ')}
+                    {renderRow('Revenue', data.revenue ? `$ ${formatThousands(data.revenue)}` : ' - ')}
+                    {renderOptional('Tagline', data.tagline)}
                 </>
             ) : (
                 <>
-                    {renderRow(
-                        'Episodes',
-                        `${props.data.number_of_episodes} (Seen: ${props.data.seasons && calculateSeenEpisodes(props.data.seasons)}`
-                    )}
-                    {renderOptional('Type', props.data.series_type)}
+                    {renderRow('Episodes', `${data.number_of_episodes} (Seen: ${data.seasons && calculateSeenEpisodes(data.seasons)})`)}
+                    {renderOptional('Type', data.series_type)}
                     {renderRow(
                         'Status',
                         <>
-                            {props.data.status}
-                            {props.data.end_year ? <span className="text-14 pl-4">({props.data.end_year})</span> : null}
+                            {data.status}
+                            {data.end_year ? <span className="text-14 pl-4">({data.end_year})</span> : null}
                         </>
                     )}
-                    {renderOptional('Network(s)', props.data.networks)}
-                    {renderOptional('Created by', props.data.created_by)}
-                    {renderOptional('Production', props.data.production_companies)}
+                    {renderOptional('Network(s)', data.networks)}
+                    {renderOptional('Created by', data.created_by)}
+                    {renderOptional('Production', data.production_companies)}
                 </>
             )}
-            {renderOptional('Overview', props.data.overview)}
-            {renderPoster(props.data.poster, props.data.title)}
+            {renderOptional('Overview', data.overview)}
+            {renderPoster(data.poster, data.title)}
         </div>
     );
 
     return (
         <Modal
-            title={`${props.data.title} (${formatYears(props.type, props.data.release_year, props.data.end_year)})`}
-            close={props.close}
+            title={`${data.title} (${formatYears(type, data.release_year, data.end_year)})`}
+            close={close}
             left={
-                props.type === 'tv' ? (
+                type === 'tv' ? (
                     <Button
-                        text={
-                            showSeasons
-                                ? 'Overview'
-                                : `${props.data.number_of_seasons} ${props.data.number_of_seasons !== 1 ? 'seasons' : 'season'}`
-                        }
+                        text={showSeasons ? 'Overview' : `${data.number_of_seasons} ${data.number_of_seasons !== 1 ? 'seasons' : 'season'}`}
                         onClick={toggleSeasons}
                     />
                 ) : null
             }
             right={
                 <>
-                    <Button text="Delete" icon={mdiDeleteOutline} onClick={props.remove} />
-                    <Button text="Update" icon={mdiRefresh} onClick={props.update} />
-                    <SeenIcon seen={props.data.seen} setSeen={props.setSeen} />
-                    <FavouriteIcon favourite={props.data.favourite} setFavourite={props.setFavourite} />
+                    <Button text="Delete" icon={mdiDeleteOutline} onClick={remove} />
+                    <Button text="Update" icon={mdiRefresh} onClick={update} />
+                    <SeenIcon seen={data.seen} setSeen={setSeen} />
+                    <FavouriteIcon favourite={data.favourite} setFavourite={setFavourite} />
                 </>
             }>
             {showSeasons ? renderSeasons() : renderContent()}
         </Modal>
     );
-});
-
-MediaModal.displayName = 'MediaModal';
+};

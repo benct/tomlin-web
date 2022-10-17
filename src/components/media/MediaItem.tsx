@@ -1,4 +1,4 @@
-import { FC, memo, ReactElement, ReactNode, useState } from 'react';
+import { FC, ReactElement, ReactNode, useState } from 'react';
 import Image from 'next/image';
 
 import { formatDuration, formatGradientHSL, formatYears } from '@/util/formatting';
@@ -14,7 +14,7 @@ interface MediaItemProps {
     showItem: () => void;
 }
 
-export const MediaItem: FC<MediaItemProps> = memo(({ type, data, setSeen, setFavourite, showItem }) => {
+export const MediaItem: FC<MediaItemProps> = ({ type, data, setSeen, setFavourite, showItem }) => {
     const [src, setSrc] = useState(
         data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${data.poster}` : '/images/media/poster.png'
     );
@@ -77,6 +77,4 @@ export const MediaItem: FC<MediaItemProps> = memo(({ type, data, setSeen, setFav
             </div>
         </div>
     );
-});
-
-MediaItem.displayName = 'MediaItem';
+};

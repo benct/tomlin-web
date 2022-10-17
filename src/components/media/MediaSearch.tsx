@@ -1,9 +1,9 @@
-import { ChangeEvent, FC, ReactNode } from 'react';
+import { ChangeEvent, FC } from 'react';
 import Link from 'next/link';
 
 import { inputCenter } from '@/styles';
 import { debounce } from '@/util/debounce';
-import { useExisting, useMediaSearch } from '@/data/media';
+import { useMediaSearch } from '@/data/media';
 
 import { MediaSearchItemEntry, MediaSearchProps } from '@/interfaces';
 import { Pagination } from '@/components/page/Pagination';
@@ -12,27 +12,12 @@ import { Box } from '@/components/page/Box';
 import { MediaSearchItem } from './MediaSearchItem';
 
 export const MediaSearch: FC<MediaSearchProps> = ({ type, action, page, id }) => {
-    const existing = useExisting();
-    const { media, pagination, loading, search, add, remove, imdb } = useMediaSearch({ type, action, page, id });
+    const { media, pagination, loading, search } = useMediaSearch({ type, action, page, id });
 
     const searchMedia = debounce((query: string) => search(query), 500);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         searchMedia(event.target.value);
-    };
-
-    const renderItem = (data: MediaSearchItemEntry): ReactNode => {
-        const current = existing[data.media_type ?? type] ?? [];
-        return (
-            <MediaSearchItem
-                data={data}
-                stored={current.includes(data.id)}
-                add={() => add(data.media_type ?? type, data.id)}
-                remove={() => remove(data.media_type ?? type, data.id)}
-                imdb={() => imdb(data.media_type ?? type, data.id)}
-                key={`mediaResult${data.id}`}
-            />
-        );
     };
 
     return (
@@ -50,7 +35,11 @@ export const MediaSearch: FC<MediaSearchProps> = ({ type, action, page, id }) =>
                 <Link href="/media/search/tv/now/">Now Playing (TV)</Link>
             </div>
             <Loading isLoading={loading} text="Loading media...">
-                <div className="space-y-16 mt-24">{media.map(renderItem)}</div>
+                <div className="space-y-16 mt-24">
+                    {media.map((data: MediaSearchItemEntry) => (
+                        <MediaSearchItem data={data} type={data.media_type ?? type} key={`mediaResult${data.id}`} />
+                    ))}
+                </div>
                 <Pagination path={`/media/search/${type}/${action}/`} postfix={id} current={pagination.current} total={pagination.total} />
             </Loading>
         </Box>
