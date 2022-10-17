@@ -22,7 +22,7 @@ export const MediaItem: FC<MediaItemProps> = ({ type, data, setSeen, setFavourit
     const renderRating = (): ReactElement => (
         <>
             &nbsp;|&nbsp;
-            <span className="font-bold">{data.rating}</span>
+            <span className="font-bold">{data.rating.toFixed(1)}</span>
             <span className="text-12">/10</span>
         </>
     );
