@@ -53,7 +53,7 @@ export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone
             ) : (
                 <>
                     <Header />
-                    <main className="max-w mx-auto bg-white">{children}</main>
+                    <main className="max-w mx-auto">{children}</main>
                     <Footer />
                 </>
             )}

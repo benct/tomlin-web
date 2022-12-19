@@ -14,9 +14,13 @@ import { Time } from './Time';
 
 export const Home: FC = () => {
     const { settings } = useAppContext();
-    const { data, loading } = useInit();
+    const { api, database, weather, loading } = useInit();
 
-    const weatherIcon = data?.forecast ? `/images/weather/${data.forecast}.svg` : '/images/icon/home.svg';
+    const weatherIcon = weather?.forecast ? `/images/weather/${weather.forecast}.svg` : '/images/icon/home.svg';
+
+    const renderStatus = (status: boolean, message: string) => (
+        <span className={`align-middle italic ${status ? 'text-good' : 'text-warn'}`}>{message}</span>
+    );
 
     return (
         <>
@@ -31,7 +35,7 @@ export const Home: FC = () => {
             </Box>
             <div className="grid md:grid-cols-2 border-b">
                 <Box title="Home" border="border-b md:border-none" className="flex justify-evenly items-center gap-8">
-                    <div className="w-48 h-48" data-tooltip={data?.forecast?.replaceAll('_', ' ')}>
+                    <div className="w-48 h-48" data-tooltip={weather?.forecast?.replaceAll('_', ' ')}>
                         <Image src={weatherIcon} alt="Current weather" width={48} height={48} />
                     </div>
                     <div className="text-center">
@@ -41,17 +45,28 @@ export const Home: FC = () => {
                         </div>
                     </div>
                     <div className="flex justify-center gap-8 items-center w-48 h-48" data-tooltip="Temperature">
-                        <span className="text-22 font-bold">{data?.temperature ?? '-'}</span>
+                        <span className="text-22 font-bold">{weather?.temperature ?? '-'}</span>
                         <span className="text-12">&deg;C</span>
                     </div>
                 </Box>
-                <Box title="API" className="flex justify-center items-center gap-32">
+                <Box title="Server" className="flex justify-center items-center gap-32">
                     {loading ? (
-                        <Icon path={mdiLoading} spin={true} size="48px" aria-label="Loading..." />
+                        <>
+                            <Icon path={mdiLoading} spin={true} size="48px" aria-label="Loading..." />
+                            <span className="italic">Loading...</span>
+                        </>
                     ) : (
-                        <Image src={`/images/icon/${data ? 'up' : 'down'}.svg`} alt={data ? 'Up' : 'Down'} width={48} height={48} />
+                        <>
+                            <Image src={`/images/icon/${api ? 'up' : 'down'}.svg`} alt={api ? 'Up' : 'Down'} width={48} height={48} />
+                            <div className="items-center">
+                                <span className="text-12 align-middle pr-6">API:</span>
+                                {renderStatus(api, api ? 'Running' : 'Not running...')}
+                                <br />
+                                <span className="text-12 align-middle pr-6">DB:</span>
+                                {renderStatus(database, database ? 'Connected' : 'No connection...')}
+                            </div>
+                        </>
                     )}
-                    <span className="italic">{loading ? 'Loading...' : data ? 'Running' : 'Down...'}</span>
                 </Box>
             </div>
             <Countdown title="Countdown to something..." timestamp={settings.countdownTarget} icon={settings.countdownIcon} />

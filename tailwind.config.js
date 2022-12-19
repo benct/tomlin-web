@@ -81,6 +81,7 @@ module.exports = {
             neutral: colors.slate['500'],
             'neutral-dark': colors.slate['400'],
             warn: colors.red['600'],
+            good: colors.green['300'],
         },
         backgroundColor: {
             white: colors.white,
