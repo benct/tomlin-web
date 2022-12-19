@@ -8,6 +8,7 @@ import { Settings, Weather } from '@/interfaces';
 
 interface AuthResponse {
     authenticated: boolean;
+    database: boolean;
     settings: Settings;
     weather: Weather;
 }
@@ -33,7 +34,7 @@ export const useInit = () => {
         }
     }, [error, setIsLoggedIn]);
 
-    return { data: data?.weather, loading: !error && !data };
+    return { api: !!data?.weather, database: !!data?.database, weather: data?.weather, loading: !error && !data };
 };
 
 export const useLogin = (redirectTo?: string | UrlObject) => {
