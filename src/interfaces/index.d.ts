@@ -186,13 +186,6 @@ export interface MediaStatsEntry {
     count: number;
 }
 
-export interface Hass {
-    id: number;
-    sensor: string;
-    value: string;
-    updated: string;
-}
-
 export interface Log {
     id: number;
     message: string;

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
 import { del, get, post } from '@/util/api';
-import { Hass, Log, PaginationResponse, Visit } from '@/interfaces';
+import { Log, PaginationResponse, Visit } from '@/interfaces';
 
 export const useAdminStats = () => {
     const { data, error } = useSWR<Record<string, number>, Error>('/admin/stats', get);
@@ -16,7 +16,6 @@ export const useAdminStats = () => {
 export const useAdminActions = () => {
     const { isLoggedIn, setLoading } = useAppContext();
     const [toast, setToast] = useState<string>();
-    const [hass, setHass] = useState<Hass[]>([]);
 
     useToast(toast);
 
@@ -60,16 +59,6 @@ export const useAdminActions = () => {
                 .finally(() => setLoading(false));
         }
     };
-    const getHass = (count: number | string = 25) => {
-        if (isLoggedIn) {
-            setLoading(true);
-            setToast(undefined);
-            get<Hass[]>(`/hass/latest/${count}`)
-                .then((response) => setHass(response ?? []))
-                .catch(() => setToast('Could not fetch home-assistant data...'))
-                .finally(() => setLoading(false));
-        }
-    };
     const backup = () => {
         if (isLoggedIn) {
             setLoading(true);
@@ -81,7 +70,7 @@ export const useAdminActions = () => {
         }
     };
 
-    return { saveSetting, clearLogs, updateMedia, updateIata, backup, getHass, hass };
+    return { saveSetting, clearLogs, updateMedia, updateIata, backup };
 };
 
 export const useVisits = (page: number) => {

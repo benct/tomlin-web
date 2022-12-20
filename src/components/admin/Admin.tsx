@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactElement, useRef } from 'react';
+import { FC, ReactElement, useRef } from 'react';
 
 import { formatThousands } from '@/util/formatting';
 import { useAppContext } from '@/data/context';
@@ -9,7 +9,6 @@ import { Button } from '@/components/page/Button';
 import { Box } from '@/components/page/Box';
 
 export const Admin: FC = () => {
-    const hassCount = useRef<HTMLSelectElement>(null);
     const updateMovieCount = useRef<HTMLSelectElement>(null);
     const updateTvCount = useRef<HTMLSelectElement>(null);
     const countdownIcon = useRef<HTMLSelectElement>(null);
@@ -17,7 +16,7 @@ export const Admin: FC = () => {
 
     const { settings } = useAppContext();
     const { stats, loading } = useAdminStats();
-    const { saveSetting, clearLogs, updateIata, updateMedia, backup, getHass, hass } = useAdminActions();
+    const { saveSetting, clearLogs, updateIata, updateMedia, backup } = useAdminActions();
 
     const formatStat = (key: string): string => (stats?.[key] !== undefined ? formatThousands(stats[key]) : '-');
 
@@ -55,9 +54,9 @@ export const Admin: FC = () => {
                         Locations: {formatStat('location')}
                     </div>
                     <div>
-                        HA Events: {formatStat('hass')}
-                        <br />
                         Logs: {formatStat('log')}
+                        <br />
+                        Visits: {formatStat('visit')}
                     </div>
                 </Loading>
             </Box>
@@ -99,22 +98,6 @@ export const Admin: FC = () => {
                 <span className="truncate">Run database backup</span>
                 <span />
                 <Button text="Backup" onClick={() => backup()} />
-            </Box>
-            <Box title="Home Assistant" className="grid grid-cols-admin gap-12 items-center">
-                <span className="truncate">Latest Home Assistant states</span>
-                <select className="input text-12 pr-16" defaultValue="25" ref={hassCount}>
-                    {renderOptions([10, 25, 50, 100, 250, 500])}
-                </select>
-                <Button text="Load" onClick={() => getHass(getCount(hassCount.current))} />
-                <div className="col-span-3 grid grid-cols-admin gap-12 mt-16">
-                    {hass.map((state) => (
-                        <Fragment key={`hass${state.id}`}>
-                            <span className="truncate">{state.sensor}</span>
-                            <span className="font-bold">{state.value}</span>
-                            <span>{state.updated}</span>
-                        </Fragment>
-                    ))}
-                </div>
             </Box>
         </>
     );
