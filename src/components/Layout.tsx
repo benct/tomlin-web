@@ -48,15 +48,9 @@ export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone
                 <meta name="msapplication-config" content="/manifest/browserconfig.xml" />
                 <meta name="theme-color" content="#002080" />
             </Head>
-            {standalone ? (
-                <main>{children}</main>
-            ) : (
-                <>
-                    <Header />
-                    <main className="max-w mx-auto">{children}</main>
-                    <Footer />
-                </>
-            )}
+            <Header standalone={standalone} />
+            <main className="max-w mx-auto">{children}</main>
+            {standalone ? null : <Footer />}
             {loading ? (
                 <div className="bg-slate-900 bg-opacity-50 fixed inset-0 z-50 flex place-content-center place-items-center">
                     <Icon path={mdiLoading} size={10} spin className="text-primary dark:text-primary-dark" />

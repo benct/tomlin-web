@@ -3,8 +3,9 @@ import { Icon } from '@mdi/react';
 import { mdiGithub, mdiMenu, mdiThemeLightDark } from '@mdi/js';
 import { Navigation } from './Navigation';
 import { Button, LinkButton } from './Button';
+import { NextPageProps } from '@/interfaces';
 
-export const Header: FC = () => {
+export const Header: FC<Pick<NextPageProps, 'standalone'>> = ({ standalone }) => {
     const [showMenu, setShowMenu] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
 
@@ -45,22 +46,26 @@ export const Header: FC = () => {
                         title="Theme"
                     />
                     <Button text={darkMode ? 'Dark' : 'Light'} title="Swap theme" onClick={toggleTheme} tabIndex={showMenu ? -1 : 0} />
-                    <Icon
-                        path={mdiGithub}
-                        size="24px"
-                        id="version-icon"
-                        className="text-neutral dark:text-neutral-dark ml-16"
-                        title="Version"
-                    />
-                    <LinkButton
-                        text="3.1.1"
-                        title="View changelog on GitHub"
-                        href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
-                        tabIndex={showMenu ? -1 : 0}
-                    />
+                    {!standalone && (
+                        <>
+                            <Icon
+                                path={mdiGithub}
+                                size="24px"
+                                id="version-icon"
+                                className="text-neutral dark:text-neutral-dark ml-16"
+                                title="Version"
+                            />
+                            <LinkButton
+                                text="3.1.1"
+                                title="View changelog on GitHub"
+                                href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
+                                tabIndex={showMenu ? -1 : 0}
+                            />
+                        </>
+                    )}
                 </div>
             </header>
-            <Navigation show={showMenu} toggle={toggleMenu} />
+            {!standalone && <Navigation show={showMenu} toggle={toggleMenu} />}
         </>
     );
 };
