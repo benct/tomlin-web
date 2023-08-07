@@ -45,7 +45,7 @@ export const Notes: FC = () => {
                                     {note.content ?? 'No content...'}
                                 </pre>
                             </div>
-                        )
+                        ),
                     )
                 ) : (
                     <div className="text-center">No notes found...</div>

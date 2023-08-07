@@ -44,7 +44,7 @@ export const MediaSeason: FC<MediaSeasonProps> = ({ data, setSeenEpisode, setSee
                     {data.episodes.map(
                         (episode): ReactElement => (
                             <MediaEpisode episode={episode} setSeenEpisode={setSeenEpisode} key={`episode${episode.id}`} />
-                        )
+                        ),
                     )}
                 </div>
             ) : null}

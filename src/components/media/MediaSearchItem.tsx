@@ -16,7 +16,7 @@ interface MediaSearchItemProps {
 export const MediaSearchItem: FC<MediaSearchItemProps> = ({ data, type }) => {
     const { existing, add, remove, imdb } = useMediaSearchActions();
     const [src, setSrc] = useState<string>(
-        data.poster_path ? `https://image.tmdb.org/t/p/w200${data.poster_path}` : '/images/media/poster_small.png'
+        data.poster_path ? `https://image.tmdb.org/t/p/w200${data.poster_path}` : '/images/media/poster_small.png',
     );
 
     const current = existing[data.media_type ?? type] ?? [];

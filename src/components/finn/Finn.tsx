@@ -49,7 +49,7 @@ export const Finn: FC = () => {
                             <td className="py-8 px-16">{formatDate(entry.timestamp, 'MMM d - HH:mm')}</td>
                             <td className="py-8 px-16">{entry.price}</td>
                         </tr>
-                    )
+                    ),
                 )}
             </tbody>
         </table>

@@ -28,7 +28,7 @@ export const UserModal: FC<UserModalProps> = ({ user, close }) => {
                 user?.email ?? email.current?.value ?? 'TmpUserName',
                 name.current.value,
                 password.current?.value ?? null,
-                enabled.current?.checked ?? true
+                enabled.current?.checked ?? true,
             );
             close();
         } else {

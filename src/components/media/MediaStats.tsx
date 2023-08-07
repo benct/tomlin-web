@@ -35,7 +35,7 @@ export const MediaStats: FC = () => {
                   (num: number): MediaGraphEntry => ({
                       x: `${num} +`,
                       y: (data.find((item: MediaStatsEntry): boolean => item.score === num) ?? { count: 0 }).count,
-                  })
+                  }),
               )
             : [];
 

@@ -18,7 +18,7 @@ interface MediaItemProps {
 
 export const MediaItem: FC<MediaItemProps> = ({ type, data, setSeen, setFavourite, showItem }) => {
     const [src, setSrc] = useState(
-        data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${data.poster}` : '/images/media/poster.png'
+        data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${data.poster}` : '/images/media/poster.png',
     );
 
     const renderRating = (): ReactElement => (

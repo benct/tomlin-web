@@ -23,7 +23,7 @@ export const FlightsGroup: FC<FlightGroupProps> = ({ flights, edit }) => {
         : flights
               .flatMap((flight: Flight): string[] => [flight.origin ?? '', flight.destination ?? ''])
               .filter(
-                  (location: string, idx: number, arr: string[]): boolean => location !== '' && (idx === 0 || arr[idx - 1] !== location)
+                  (location: string, idx: number, arr: string[]): boolean => location !== '' && (idx === 0 || arr[idx - 1] !== location),
               )
               .join(' - ');
 
@@ -58,7 +58,7 @@ export const FlightsGroup: FC<FlightGroupProps> = ({ flights, edit }) => {
                                 <Button text="Edit" icon={mdiBriefcaseEditOutline} size={0.85} onClick={(): void => edit(flight)} />
                             </td>
                         </tr>
-                    )
+                    ),
                 )}
         </>
     );

@@ -31,7 +31,7 @@ export const Admin: FC = () => {
                 <option key={`ctrlOpt${idx}`} value={opt}>
                     {opt}
                 </option>
-            )
+            ),
         );
 
     return (

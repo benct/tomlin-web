@@ -37,7 +37,7 @@ export const MediaModal: FC<MediaModalProps> = ({
 }) => {
     const [showSeasons, setShowSeasons] = useState<boolean>(false);
     const [posterSrc, setPosterSrc] = useState<string>(
-        data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${data.poster}` : '/images/media/poster.png'
+        data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${data.poster}` : '/images/media/poster.png',
     );
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export const MediaModal: FC<MediaModalProps> = ({
         seasons.reduce(
             (acc: number, cur: MediaSeasonEntry): number =>
                 acc + cur.episodes.reduce((acc: number, cur: MediaEpisodeEntry): number => acc + (cur.seen ? 1 : 0), 0),
-            0
+            0,
         );
 
     const renderRow = (key: string, value?: string | ReactNode, className?: string): ReactNode => (
@@ -76,7 +76,7 @@ export const MediaModal: FC<MediaModalProps> = ({
                 </>
             ) : (
                 'No rating'
-            )
+            ),
         );
 
     const renderPoster = (poster: string, title: string): ReactNode =>
@@ -94,7 +94,7 @@ export const MediaModal: FC<MediaModalProps> = ({
                 />
             ) : (
                 'No poster'
-            )
+            ),
         );
 
     const renderLinks = (id: number, imdb: string | null): ReactNode =>
@@ -129,7 +129,7 @@ export const MediaModal: FC<MediaModalProps> = ({
                         />
                     </a>
                 </Link>
-            </div>
+            </div>,
         );
 
     const renderSeasons = (): ReactNode =>
@@ -145,7 +145,7 @@ export const MediaModal: FC<MediaModalProps> = ({
                                 setSeenEpisode={setSeenEpisode}
                                 setSeenEpisodes={setSeenEpisodes}
                             />
-                        )
+                        ),
                     )}
             </div>
         ) : null;
@@ -175,7 +175,7 @@ export const MediaModal: FC<MediaModalProps> = ({
                         <>
                             {data.status}
                             {data.end_year ? <span className="text-14 pl-4">({data.end_year})</span> : null}
-                        </>
+                        </>,
                     )}
                     {renderOptional('Network(s)', data.networks)}
                     {renderOptional('Created by', data.created_by)}

@@ -94,7 +94,7 @@ export const Flights: FC = () => {
                 {flights.map(
                     (group, idx): ReactElement => (
                         <FlightsGroup flights={group} edit={handleEdit} key={`flightGroup${idx}`} />
-                    )
+                    ),
                 )}
             </tbody>
         </table>
@@ -131,7 +131,7 @@ export const Flights: FC = () => {
                                 <Button text="Edit" icon={mdiBriefcaseEditOutline} size={0.85} onClick={(): void => handleEdit(flight)} />
                             </td>
                         </tr>
-                    )
+                    ),
                 )}
             </tbody>
         </table>
