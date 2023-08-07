@@ -110,24 +110,15 @@ export const MediaModal: FC<MediaModalProps> = ({
                     </a>
                 ) : null}
                 <Link href={`/media/search/${type}/similar/1/${id}`}>
-                    <a>
-                        <Icon
-                            path={mdiApproximatelyEqualBox}
-                            size={1}
-                            title="Find similar"
-                            className="text-secondary dark:text-secondary-dark"
-                        />
-                    </a>
+                    <Icon
+                        path={mdiApproximatelyEqualBox}
+                        size={1}
+                        title="Find similar"
+                        className="text-secondary dark:text-secondary-dark"
+                    />
                 </Link>
                 <Link href={`/media/search/${type}/recommended/1/${id}`}>
-                    <a>
-                        <Icon
-                            path={mdiThumbUpOutline}
-                            size={1}
-                            title="Recommendations"
-                            className="text-secondary dark:text-secondary-dark"
-                        />
-                    </a>
+                    <Icon path={mdiThumbUpOutline} size={1} title="Recommendations" className="text-secondary dark:text-secondary-dark" />
                 </Link>
             </div>,
         );

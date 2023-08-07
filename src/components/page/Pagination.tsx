@@ -48,16 +48,14 @@ export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix 
     const computePath = (page: number) => `${path}${page}/${postfix ? `${postfix}/` : ''}`;
 
     const renderPage = (page: number): ReactElement => (
-        <Link href={computePath(page)} key={`pagination${page}`}>
-            <a className="button-icon px-8">{page}</a>
+        <Link href={computePath(page)} key={`pagination${page}`} className="button-icon px-8">
+            {page}
         </Link>
     );
 
     const renderPageIcon = (page: number, { title, double, rotate }: PaginationImage) => (
-        <Link href={computePath(page)} key={`pagination${page}`}>
-            <a className="button-icon">
-                <Icon path={double ? mdiChevronDoubleRight : mdiChevronRight} rotate={rotate ? 180 : 0} size={1} title={title} />
-            </a>
+        <Link href={computePath(page)} key={`pagination${page}`} className="button-icon">
+            <Icon path={double ? mdiChevronDoubleRight : mdiChevronRight} rotate={rotate ? 180 : 0} size={1} title={title} />
         </Link>
     );
 

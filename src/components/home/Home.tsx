@@ -27,8 +27,8 @@ export const Home: FC = () => {
             <Box title="Welcome" border="border-b">
                 <p className="max-w-narrow mx-auto text-center">
                     This site is just a personal website project I doodle with from time to time. For more on me, see the{' '}
-                    <Link href="/about">
-                        <a className="text-secondary dark:text-secondary-dark hover:underline">about section</a>
+                    <Link href="/about" className="text-secondary dark:text-secondary-dark hover:underline">
+                        about section
                     </Link>{' '}
                     or follow the social media links at the bottom of the page.
                 </p>

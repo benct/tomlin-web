@@ -26,21 +26,20 @@ interface NavigationProps {
 
 export interface NavigationLinkProps {
     title: string;
+    href: string;
     icon?: string;
     chevron?: boolean;
-    href?: string;
     onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
 export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
     const { isLoggedIn } = useAppContext();
 
-    const NavLink = forwardRef<HTMLAnchorElement, NavigationLinkProps>(({ onClick, href, title, icon, chevron }, ref) => (
-        <a
-            ref={ref}
+    const NavLink: FC<NavigationLinkProps> = ({ title, href, icon, chevron, onClick }) => (
+        <Link
             href={href}
             onClick={(event) => {
-                onClick?.(event);
+                // onClick?.(event);
                 toggle();
             }}
             tabIndex={show ? 0 : -1}
@@ -48,9 +47,8 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
             {icon ? <Icon path={icon} size={1} className="text-neutral dark:text-neutral-dark" /> : <span className="w-24" />}
             <span className="flex-1 text-primary dark:text-primary-dark">{title}</span>
             {chevron ? <Icon path={mdiChevronDown} size={1} className="text-neutral dark:text-neutral-dark" /> : null}
-        </a>
-    ));
-    NavLink.displayName = 'NavLink';
+        </Link>
+    );
 
     return (
         <>
@@ -71,64 +69,28 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
                 </div>
                 <ul className="space-y-4 py-16">
                     <li>
-                        <Link href="/" passHref>
-                            <NavLink title="Home" icon={mdiHomeOutline} />
-                        </Link>
-                        <Link href="/about" passHref>
-                            <NavLink title="About" icon={mdiInformationOutline} />
-                        </Link>
-                        <Link href="/media" passHref>
-                            <NavLink title="Media" icon={mdiTelevision} chevron />
-                        </Link>
-                        <Link href="/media/movie" passHref>
-                            <NavLink title="Movies" />
-                        </Link>
-                        <Link href="/media/tv" passHref>
-                            <NavLink title="TV" />
-                        </Link>
-                        <Link href="/media/watchlist" passHref>
-                            <NavLink title="Watchlist" />
-                        </Link>
-                        <Link href="/media/search" passHref>
-                            <NavLink title="Search" />
-                        </Link>
-                        <Link href="/flights" passHref>
-                            <NavLink title="Flights" icon={mdiAirplane} />
-                        </Link>
-                        <Link href="/notes" passHref>
-                            <NavLink title="Notes" icon={mdiNoteOutline} />
-                        </Link>
-                        <Link href="/files" passHref>
-                            <NavLink title="Files" icon={mdiFileOutline} />
-                        </Link>
-                        <Link href="/admin" passHref>
-                            <NavLink title="Admin" icon={mdiShieldLockOutline} chevron={isLoggedIn ?? false} />
-                        </Link>
+                        <NavLink href="/" title="Home" icon={mdiHomeOutline} />
+                        <NavLink href="/about" title="About" icon={mdiInformationOutline} />
+                        <NavLink href="/media" title="Media" icon={mdiTelevision} chevron />
+                        <NavLink href="/media/movie" title="Movies" />
+                        <NavLink href="/media/tv" title="TV" />
+                        <NavLink href="/media/watchlist" title="Watchlist" />
+                        <NavLink href="/media/search" title="Search" />
+                        <NavLink href="/flights" title="Flights" icon={mdiAirplane} />
+                        <NavLink href="/notes" title="Notes" icon={mdiNoteOutline} />
+                        <NavLink href="/files" title="Files" icon={mdiFileOutline} />
+                        <NavLink href="/admin" title="Admin" icon={mdiShieldLockOutline} chevron={isLoggedIn ?? false} />
                         {isLoggedIn ? (
                             <>
-                                <Link href="/admin/logs" passHref>
-                                    <NavLink title="Logs" />
-                                </Link>
-                                <Link href="/admin/visits" passHref>
-                                    <NavLink title="Visits" />
-                                </Link>
-                                <Link href="/admin/users" passHref>
-                                    <NavLink title="Users" />
-                                </Link>
-                                <Link href="/admin/ratings" passHref>
-                                    <NavLink title="Ratings" />
-                                </Link>
-                                <Link href="/finn" passHref>
-                                    <NavLink title="Finn" icon={mdiHomeSearchOutline} />
-                                </Link>
-                                <Link href="/logout" passHref>
-                                    <NavLink title="Logout" icon={mdiLogout} />
-                                </Link>
+                                <NavLink href="/admin/logs" title="Logs" />
+                                <NavLink href="/admin/visits" title="Visits" />
+                                <NavLink href="/admin/users" title="Users" />
+                                <NavLink href="/admin/ratings" title="Ratings" />
+                                <NavLink href="/finn" title="Finn" icon={mdiHomeSearchOutline} />
+                                <NavLink href="/logout" title="Logout" icon={mdiLogout} />
                             </>
                         ) : (
-                            <Link href="/login" passHref>
-                                <NavLink title="Login" icon={mdiLogin} />
-                            </Link>
+                            <NavLink href="/login" title="Login" icon={mdiLogin} />
                         )}
                     </li>
                 </ul>
