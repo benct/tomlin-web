@@ -14,7 +14,7 @@ interface AuthResponse {
 }
 
 export const useInit = () => {
-    const { data, error } = useSWR<AuthResponse, Error>('/authenticate', auth, {
+    const { data, error, isLoading } = useSWR<AuthResponse, Error>('/authenticate', auth, {
         revalidateOnFocus: false,
         revalidateIfStale: false,
     });
@@ -34,7 +34,7 @@ export const useInit = () => {
         }
     }, [error, setIsLoggedIn]);
 
-    return { api: !!data?.weather, database: !!data?.database, weather: data?.weather, loading: !error && !data };
+    return { api: !!data?.weather, database: !!data?.database, weather: data?.weather, loading: isLoading };
 };
 
 export const useLogin = (redirectTo?: string | UrlObject) => {

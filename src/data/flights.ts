@@ -7,11 +7,11 @@ import { Flight } from '@/interfaces';
 
 export const useFlights = () => {
     const { isLoggedIn } = useAppContext();
-    const { data, error } = useSWR<Flight[][], Error>(isLoggedIn ? '/flight' : null, get, { revalidateOnFocus: false });
+    const { data, error, isLoading } = useSWR<Flight[][], Error>(isLoggedIn ? '/flight' : null, get, { revalidateOnFocus: false });
 
     useToast(error && 'Could not fetch flights data...');
 
-    return { flights: data ?? [], loading: !data && !error };
+    return { flights: data ?? [], loading: isLoading };
 };
 
 export const useFlightActions = () => {

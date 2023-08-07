@@ -6,38 +6,42 @@ import { del, get, post } from '@/util/api';
 import { Rating, RatingItem, RatingResult } from '@/interfaces';
 
 export const useActiveRatings = () => {
-    const { data, error } = useSWR<Rating, Error>('/rating', get, { refreshInterval: 15_000 });
+    const { data, error, isLoading } = useSWR<Rating, Error>('/rating', get, { refreshInterval: 15_000 });
 
     useToast(error && 'Could not fetch data...');
 
-    return { data, loading: !data && !error };
+    return { data, loading: isLoading };
 };
 
 export const useRatings = () => {
     const { isLoggedIn } = useAppContext();
-    const { data, error } = useSWR<Rating[], Error>(isLoggedIn ? '/rating/all' : null, get, { revalidateOnFocus: false });
+    const { data, error, isLoading } = useSWR<Rating[], Error>(isLoggedIn ? '/rating/all' : null, get, { revalidateOnFocus: false });
 
     useToast(error && 'Could not fetch rating data...');
 
-    return { ratings: data ?? [], loading: !data && !error };
+    return { ratings: data ?? [], loading: isLoading };
 };
 
 export const useRatingItems = (id: number) => {
     const { isLoggedIn } = useAppContext();
-    const { data, error } = useSWR<RatingItem[], Error>(isLoggedIn ? `/rating/items/${id}` : null, get, { revalidateOnFocus: false });
+    const { data, error, isLoading } = useSWR<RatingItem[], Error>(isLoggedIn ? `/rating/items/${id}` : null, get, {
+        revalidateOnFocus: false,
+    });
 
     useToast(error && 'Could not fetch rating data...');
 
-    return { items: data ?? [], loading: !data && !error };
+    return { items: data ?? [], loading: isLoading };
 };
 
 export const useRatingResults = (id: number) => {
     const { isLoggedIn } = useAppContext();
-    const { data, error } = useSWR<RatingResult[], Error>(isLoggedIn ? `/rating/result/${id}` : null, get, { refreshInterval: 15_000 });
+    const { data, error, isLoading } = useSWR<RatingResult[], Error>(isLoggedIn ? `/rating/result/${id}` : null, get, {
+        refreshInterval: 15_000,
+    });
 
     useToast(error && 'Could not fetch rating data...');
 
-    return { results: data ?? [], loading: !data && !error };
+    return { results: data ?? [], loading: isLoading };
 };
 
 export const useRatingActions = () => {

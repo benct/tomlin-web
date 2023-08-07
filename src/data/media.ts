@@ -16,11 +16,11 @@ import {
 } from '@/interfaces';
 
 export const useMediaStats = () => {
-    const { data, error } = useSWR<MediaStats, Error>('/media', get, { revalidateOnFocus: false });
+    const { data, error, isLoading } = useSWR<MediaStats, Error>('/media', get, { revalidateOnFocus: false });
 
     useToast(error && 'Could not fetch media stats...');
 
-    return { stats: data, loading: !data && !error };
+    return { stats: data, loading: isLoading };
 };
 
 export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
@@ -28,10 +28,10 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
     const [selected, setSelected] = useState<MediaItemEntry>();
 
     const { isLoggedIn, setLoading } = useAppContext();
-    const { data, error, mutate } = useSWR<PaginationResponse<MediaItemEntry>, Error>(
+    const { data, error, isLoading, mutate } = useSWR<PaginationResponse<MediaItemEntry>, Error>(
         isLoggedIn ? [`/media/${type}`, { page, sort, query }] : null,
-        get,
-        { revalidateOnFocus: false }
+        ([url, data]: [string, MediaProps]) => get<PaginationResponse<MediaItemEntry>>(url, data),
+        { revalidateOnFocus: false },
     );
 
     useToast(error ? 'Could not fetch media...' : toast);
@@ -133,7 +133,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
             current: data?.page ?? 1,
             total: Math.min(data?.total_pages ?? 1, 500),
         },
-        loading: !data && !error,
+        loading: isLoading,
         selected,
         selectItem,
         update,
@@ -150,10 +150,10 @@ export const useMediaSearch = ({ type, action, page, id }: MediaSearchProps) => 
     const [searchData, setSearchData] = useState<MediaSearchItemEntry[]>();
 
     const { isLoggedIn, setLoading } = useAppContext();
-    const { data, error } = useSWR<PaginationResponse<MediaSearchItemEntry>, Error>(
+    const { data, error, isLoading } = useSWR<PaginationResponse<MediaSearchItemEntry>, Error>(
         isLoggedIn && type && action ? [`/media/${type}/${action}/${id ?? ''}`, { page }] : null,
-        get,
-        { revalidateOnFocus: false }
+        ([url, data]: [string, MediaSearchProps]) => get<PaginationResponse<MediaSearchItemEntry>>(url, data),
+        { revalidateOnFocus: false },
     );
 
     useToast(error ? 'Could not fetch media...' : toast);
@@ -166,8 +166,8 @@ export const useMediaSearch = ({ type, action, page, id }: MediaSearchProps) => 
                 .then((response) => {
                     setSearchData(
                         response.results?.filter(
-                            (item: MediaSearchItemEntry): boolean => item.media_type === 'movie' || item.media_type === 'tv'
-                        ) ?? []
+                            (item: MediaSearchItemEntry): boolean => item.media_type === 'movie' || item.media_type === 'tv',
+                        ) ?? [],
                     );
                 })
                 .catch(() => setToast('Failed to execute search...'))
@@ -185,7 +185,7 @@ export const useMediaSearch = ({ type, action, page, id }: MediaSearchProps) => 
                   current: data?.page ?? 1,
                   total: Math.min(data?.total_pages ?? 1, 500),
               },
-        loading: !!type && !!action && !data && !error,
+        loading: !!type && !!action && isLoading,
         search,
     };
 };

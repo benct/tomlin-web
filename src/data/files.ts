@@ -12,9 +12,11 @@ export const useFiles = () => {
     const [toast, setToast] = useState<string>();
 
     const { isLoggedIn, setLoading } = useAppContext();
-    const { data, error, mutate } = useSWR<FileItem[], Error>(isLoggedIn ? ['/file/tree', { path }] : null, get, {
-        revalidateOnFocus: false,
-    });
+    const { data, error, isLoading, mutate } = useSWR<FileItem[], Error>(
+        isLoggedIn ? ['/file/tree', { path }] : null,
+        ([url, data]: [string, Record<string, string>]) => get<FileItem[]>(url, data),
+        { revalidateOnFocus: false },
+    );
 
     useToast(error ? 'Could not fetch files...' : toast);
 
@@ -136,7 +138,7 @@ export const useFiles = () => {
 
     return {
         files: data ?? [],
-        loading: !data && !error,
+        loading: isLoading,
         cwd: path,
         uploading,
         preview,

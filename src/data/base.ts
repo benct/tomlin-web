@@ -17,16 +17,16 @@ export const useToast = (message?: string) => {
 };
 
 export const useGitHub = () => {
-    const { data, error } = useSWR<GitHubState, Error>('/github', get, { revalidateOnFocus: false, errorRetryCount: 0 });
+    const { data, error, isLoading } = useSWR<GitHubState, Error>('/github', get, { revalidateOnFocus: false, errorRetryCount: 0 });
 
     useToast(error && 'Could not load GitHub data...');
 
-    return { data, loading: !error && !data };
+    return { data, loading: isLoading };
 };
 
 export const useFinn = () => {
     const [toast, setToast] = useState<string>();
-    const { data, error, mutate } = useSWR<FinnState, Error>('/finn', get, { revalidateOnFocus: false, errorRetryCount: 1 });
+    const { data, error, isLoading, mutate } = useSWR<FinnState, Error>('/finn', get, { revalidateOnFocus: false, errorRetryCount: 1 });
 
     useToast(error ? 'Could not load FINN data...' : toast);
 
@@ -48,5 +48,5 @@ export const useFinn = () => {
             .catch(() => setToast('Could not remove tracking id...'));
     };
 
-    return { data, loading: !error && !data, add, remove };
+    return { data, loading: isLoading, add, remove };
 };

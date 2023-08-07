@@ -7,11 +7,11 @@ import { Note } from '@/interfaces';
 
 export const useNotes = () => {
     const { isLoggedIn } = useAppContext();
-    const { data, error } = useSWR<Note[], Error>(isLoggedIn ? '/note' : null, get, { revalidateOnFocus: false });
+    const { data, error, isLoading } = useSWR<Note[], Error>(isLoggedIn ? '/note' : null, get, { revalidateOnFocus: false });
 
     useToast(error && 'Could not fetch notes...');
 
-    return { notes: data ?? [], loading: !data && !error };
+    return { notes: data ?? [], loading: isLoading };
 };
 
 export const useNoteActions = () => {

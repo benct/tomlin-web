@@ -6,11 +6,11 @@ import { del, get, post } from '@/util/api';
 import { Log, PaginationResponse, Visit } from '@/interfaces';
 
 export const useAdminStats = () => {
-    const { data, error } = useSWR<Record<string, number>, Error>('/admin/stats', get);
+    const { data, error, isLoading } = useSWR<Record<string, number>, Error>('/admin/stats', get);
 
     useToast(error && 'Could not fetch stats...');
 
-    return { stats: data, loading: !error && !data };
+    return { stats: data, loading: isLoading };
 };
 
 export const useAdminActions = () => {
@@ -75,7 +75,7 @@ export const useAdminActions = () => {
 
 export const useVisits = (page: number) => {
     const { isLoggedIn } = useAppContext();
-    const { data, error } = useSWR<PaginationResponse<Visit>, Error>(() => (isLoggedIn ? `/admin/visits/${page}` : null), get);
+    const { data, error, isLoading } = useSWR<PaginationResponse<Visit>, Error>(isLoggedIn ? `/admin/visits/${page}` : null, get);
 
     useToast(error && 'Could not fetch visit data...');
 
@@ -85,13 +85,13 @@ export const useVisits = (page: number) => {
             current: data?.page ?? 1,
             total: data?.total_pages ?? 1,
         },
-        loading: !error && !data,
+        loading: isLoading,
     };
 };
 
 export const useLogs = (page: number) => {
     const { isLoggedIn, setLoading } = useAppContext();
-    const { data, error, mutate } = useSWR<PaginationResponse<Log>, Error>(() => (isLoggedIn ? `/admin/logs/${page}` : null), get);
+    const { data, error, isLoading, mutate } = useSWR<PaginationResponse<Log>, Error>(isLoggedIn ? `/admin/logs/${page}` : null, get);
     const [toast, setToast] = useState<string>();
 
     useToast(error ? 'Could not fetch log data...' : toast);
@@ -117,7 +117,7 @@ export const useLogs = (page: number) => {
             current: data?.page ?? 1,
             total: data?.total_pages ?? 1,
         },
-        loading: !error && !data,
+        loading: isLoading,
         deleteLog,
     };
 };

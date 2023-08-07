@@ -7,11 +7,11 @@ import { User } from '@/interfaces';
 
 export const useUsers = () => {
     const { isLoggedIn } = useAppContext();
-    const { data, error } = useSWR<User[], Error>(isLoggedIn ? '/user' : null, get, { revalidateOnFocus: false });
+    const { data, error, isLoading } = useSWR<User[], Error>(isLoggedIn ? '/user' : null, get, { revalidateOnFocus: false });
 
     useToast(error && 'Could not fetch user data...');
 
-    return { users: data ?? [], loading: !data && !error };
+    return { users: data ?? [], loading: isLoading };
 };
 
 export const useUserActions = () => {
