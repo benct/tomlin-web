@@ -13,6 +13,6 @@ export const Footer: FC = () => (
             {renderLink('https://www.linkedin.com/in/bentomlin', 'LinkedIn', mdiLinkedin)}
             {renderLink('mailto:ben@tomlin.no', 'Email', mdiAt)}
         </div>
-        <div className="text-16 text-neutral dark:text-neutral-dark text-center user-select-none">Ben Tomlin © 2022</div>
+        <div className="text-16 text-neutral dark:text-neutral-dark text-center user-select-none">Ben Tomlin © 2023</div>
     </footer>
 );
