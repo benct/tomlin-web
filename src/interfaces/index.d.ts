@@ -224,6 +224,28 @@ export interface Note {
     updated?: string;
 }
 
+export interface Rating {
+    id: number;
+    title: string;
+    active: boolean;
+    blind: boolean;
+    step: number;
+    cat1: string;
+    cat2?: string;
+    cat3?: string;
+    cat4?: string;
+    updated: string;
+    item?: RatingItem;
+}
+
+export interface RatingItem {
+    id: number;
+    title: string;
+    subtitle?: string;
+}
+
+export type RatingResult = RatingItem & { [key: string]: number };
+
 export interface PaginationResponse<T> {
     results: T[];
     page: number;

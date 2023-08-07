@@ -115,6 +115,9 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
                                 <Link href="/admin/users" passHref>
                                     <NavLink title="Users" />
                                 </Link>
+                                <Link href="/admin/ratings" passHref>
+                                    <NavLink title="Ratings" />
+                                </Link>
                                 <Link href="/finn" passHref>
                                     <NavLink title="Finn" icon={mdiHomeSearchOutline} />
                                 </Link>
