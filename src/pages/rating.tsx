@@ -2,11 +2,11 @@ import type { GetStaticProps, NextPage } from 'next';
 import { useEffect, useRef, useState } from 'react';
 
 import { Box } from '@/components/page/Box';
-import { Ratings } from '@/components/rating/Ratings';
+import { Rating } from '@/components/rating/Rating';
 
 const storageKey = 'rating-user-id';
 
-const RatingsPage: NextPage = () => {
+const RatingPage: NextPage = () => {
     const userRef = useRef<HTMLInputElement>(null);
     const [user, setUser] = useState<string | null>();
     const [error, setError] = useState<boolean>(false);
@@ -29,7 +29,7 @@ const RatingsPage: NextPage = () => {
     };
 
     return user ? (
-        <Ratings user={user} />
+        <Rating user={user} />
     ) : (
         <Box title="Enter username" className="space-y-16 min-h">
             <input type="text" ref={userRef} aria-label="Username" className="input mx-auto" maxLength={16} />
@@ -41,4 +41,4 @@ const RatingsPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Rating', standalone: true } });
 
-export default RatingsPage;
+export default RatingPage;

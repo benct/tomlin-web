@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { Auth } from '@/components/Auth';
-import { Ratings } from '@/components/admin/rating/Ratings';
+import { Ratings } from '@/components/rating/Ratings';
 
 const RatingsPage: NextPage = () => (
     <Auth>
@@ -8,6 +8,6 @@ const RatingsPage: NextPage = () => (
     </Auth>
 );
 
-export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Rating', standalone: false } });
+export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Ratings', standalone: false } });
 
 export default RatingsPage;

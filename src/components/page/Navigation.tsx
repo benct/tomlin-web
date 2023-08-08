@@ -1,8 +1,9 @@
-import { FC, forwardRef, MouseEventHandler } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import {
     mdiAirplane,
+    mdiChartBoxOutline,
     mdiChevronDown,
     mdiClose,
     mdiFileOutline,
@@ -79,13 +80,13 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
                         <NavLink href="/flights" title="Flights" icon={mdiAirplane} />
                         <NavLink href="/notes" title="Notes" icon={mdiNoteOutline} />
                         <NavLink href="/files" title="Files" icon={mdiFileOutline} />
+                        <NavLink href="/ratings" title="Ratings" icon={mdiChartBoxOutline} />
                         <NavLink href="/admin" title="Admin" icon={mdiShieldLockOutline} chevron={isLoggedIn ?? false} />
                         {isLoggedIn ? (
                             <>
                                 <NavLink href="/admin/logs" title="Logs" />
                                 <NavLink href="/admin/visits" title="Visits" />
                                 <NavLink href="/admin/users" title="Users" />
-                                <NavLink href="/admin/ratings" title="Ratings" />
                                 <NavLink href="/finn" title="Finn" icon={mdiHomeSearchOutline} />
                                 <NavLink href="/logout" title="Logout" icon={mdiLogout} />
                             </>

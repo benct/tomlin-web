@@ -2,9 +2,9 @@ import { FC, useRef, useState } from 'react';
 import { mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 import { useRatingActions } from '@/data/ratings';
 
-import { Rating } from '@/interfaces';
 import { Modal } from '@/components/page/Modal';
 import { Button } from '@/components/page/Button';
+import { Rating } from '@/interfaces';
 
 interface RatingModalProps {
     close: () => void;
