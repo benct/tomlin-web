@@ -1,30 +1,14 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiGithub, mdiMenu, mdiThemeLightDark } from '@mdi/js';
+import { useTheme } from '@/data/base';
+
 import { Navigation } from './Navigation';
 import { Button, LinkButton } from './Button';
-import { NextPageProps } from '@/interfaces';
 
-export const Header: FC<Pick<NextPageProps, 'standalone'>> = ({ standalone }) => {
+export const Header: FC = () => {
     const [showMenu, setShowMenu] = useState(false);
-    const [darkMode, setDarkMode] = useState(false);
-
-    useEffect(() => {
-        if (window.localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark');
-            setDarkMode(true);
-        }
-    }, []);
-
-    const toggleTheme = () => {
-        if (darkMode) {
-            document.documentElement.classList.remove('dark');
-        } else {
-            document.documentElement.classList.add('dark');
-        }
-        window.localStorage.setItem('theme', darkMode ? 'light' : 'dark');
-        setDarkMode(!darkMode);
-    };
+    const { darkMode, toggleTheme } = useTheme();
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
@@ -46,26 +30,23 @@ export const Header: FC<Pick<NextPageProps, 'standalone'>> = ({ standalone }) =>
                         title="Theme"
                     />
                     <Button text={darkMode ? 'Dark' : 'Light'} title="Swap theme" onClick={toggleTheme} tabIndex={showMenu ? -1 : 0} />
-                    {!standalone && (
-                        <>
-                            <Icon
-                                path={mdiGithub}
-                                size="24px"
-                                id="version-icon"
-                                className="text-neutral dark:text-neutral-dark ml-16"
-                                title="Version"
-                            />
-                            <LinkButton
-                                text="3.1.1"
-                                title="View changelog on GitHub"
-                                href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
-                                tabIndex={showMenu ? -1 : 0}
-                            />
-                        </>
-                    )}
+
+                    <Icon
+                        path={mdiGithub}
+                        size="24px"
+                        id="version-icon"
+                        className="text-neutral dark:text-neutral-dark ml-16"
+                        title="Version"
+                    />
+                    <LinkButton
+                        text="3.1.1"
+                        title="View changelog on GitHub"
+                        href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
+                        tabIndex={showMenu ? -1 : 0}
+                    />
                 </div>
             </header>
-            {!standalone && <Navigation show={showMenu} toggle={toggleMenu} />}
+            <Navigation show={showMenu} toggle={toggleMenu} />
         </>
     );
 };

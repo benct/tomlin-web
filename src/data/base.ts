@@ -4,6 +4,29 @@ import { useAppContext } from './context';
 import { del, get, post } from '@/util/api';
 import { FinnState, GitHubState } from '@/interfaces';
 
+export const useTheme = () => {
+    const [darkMode, setDarkMode] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (window.localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            setDarkMode(true);
+        }
+    }, []);
+
+    const toggleTheme = () => {
+        if (darkMode) {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+        window.localStorage.setItem('theme', darkMode ? 'light' : 'dark');
+        setDarkMode(!darkMode);
+    };
+
+    return { darkMode, toggleTheme };
+};
+
 export const useToast = (message?: string) => {
     const { setToast } = useAppContext();
     useEffect(() => {
