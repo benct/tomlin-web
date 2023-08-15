@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from 'react';
+import { FC } from 'react';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import {
@@ -15,6 +15,7 @@ import {
     mdiNoteOutline,
     mdiShieldLockOutline,
     mdiTelevision,
+    mdiToolboxOutline,
 } from '@mdi/js';
 
 import { useAppContext } from '@/data/context';
@@ -30,19 +31,15 @@ export interface NavigationLinkProps {
     href: string;
     icon?: string;
     chevron?: boolean;
-    onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
 export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
     const { isLoggedIn } = useAppContext();
 
-    const NavLink: FC<NavigationLinkProps> = ({ title, href, icon, chevron, onClick }) => (
+    const NavLink: FC<NavigationLinkProps> = ({ title, href, icon, chevron }) => (
         <Link
             href={href}
-            onClick={(event) => {
-                // onClick?.(event);
-                toggle();
-            }}
+            onClick={toggle}
             tabIndex={show ? 0 : -1}
             className="flex gap-16 p-8 rounded-8 hover:bg-neutral dark:hover:bg-neutral-dark">
             {icon ? <Icon path={icon} size={1} className="text-neutral dark:text-neutral-dark" /> : <span className="w-24" />}
@@ -72,6 +69,7 @@ export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
                     <li>
                         <NavLink href="/" title="Home" icon={mdiHomeOutline} />
                         <NavLink href="/about" title="About" icon={mdiInformationOutline} />
+                        <NavLink href="/tools" title="Tools" icon={mdiToolboxOutline} />
                         <NavLink href="/media" title="Media" icon={mdiTelevision} chevron />
                         <NavLink href="/media/movie" title="Movies" />
                         <NavLink href="/media/tv" title="TV" />
