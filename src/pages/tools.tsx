@@ -1,9 +1,11 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { QRCode } from '@/components/tools/QRCode';
+import { Encoder } from '@/components/tools/Encoder';
 
 const ToolsPage: NextPage = () => (
     <>
         <QRCode />
+        <Encoder />
     </>
 );
 
