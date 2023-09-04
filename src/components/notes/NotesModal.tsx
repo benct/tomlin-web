@@ -1,4 +1,4 @@
-import { FC, memo, useRef } from 'react';
+import { memo, useRef } from 'react';
 import { mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
 import { useNoteActions } from '@/data/notes';
@@ -12,7 +12,7 @@ interface NotesModalProps {
     note: Note;
 }
 
-export const NotesModal: FC<NotesModalProps> = memo(({ note, close }) => {
+export const NotesModal = memo(({ note, close }: NotesModalProps) => {
     const title = useRef<HTMLInputElement>(null);
     const content = useRef<HTMLTextAreaElement>(null);
 

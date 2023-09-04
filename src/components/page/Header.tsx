@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiGithub, mdiMenu, mdiThemeLightDark } from '@mdi/js';
 import { useTheme } from '@/data/base';
@@ -6,7 +6,7 @@ import { useTheme } from '@/data/base';
 import { Navigation } from './Navigation';
 import { Button, LinkButton } from './Button';
 
-export const Header: FC = () => {
+export const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
     const { darkMode, toggleTheme } = useTheme();
 

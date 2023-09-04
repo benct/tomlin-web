@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiMovieOutline, mdiTelevisionClassic } from '@mdi/js';
 import {
@@ -25,7 +24,7 @@ interface MediaGraphEntry {
     y: number;
 }
 
-export const MediaStats: FC = () => {
+export const MediaStats = () => {
     const { isLoggedIn } = useAppContext();
     const { stats, loading } = useMediaStats();
 
@@ -45,7 +44,7 @@ export const MediaStats: FC = () => {
             .sort((a, b) => (a.year ?? 0) - (b.year ?? 0))
             .map((item: MediaStatsEntry): MediaGraphEntry => ({ x: `${item.year}0`, y: item.count })) ?? [];
 
-    const renderLineChart = (title: string, color: string, data: MediaGraphEntry[]): ReactElement => (
+    const renderLineChart = (title: string, color: string, data: MediaGraphEntry[]) => (
         <div style={{ height: '250px' }}>
             <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
                 <DiscreteColorLegend
@@ -62,7 +61,7 @@ export const MediaStats: FC = () => {
         </div>
     );
 
-    const renderBarChart = (title: string, color: string, data: MediaGraphEntry[]): ReactElement => (
+    const renderBarChart = (title: string, color: string, data: MediaGraphEntry[]) => (
         <div style={{ height: '250px' }}>
             <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
                 <DiscreteColorLegend
@@ -78,7 +77,7 @@ export const MediaStats: FC = () => {
         </div>
     );
 
-    const renderStats = (stats: MediaStatsType): ReactElement => (
+    const renderStats = (stats: MediaStatsType) => (
         <div className="flex justify-center items-center text-14 mb-8">
             Total&nbsp;<span className="font-bold text-16 pr-16">{stats.total ?? '-'}</span>
             Seen&nbsp;<span className="font-bold text-16 pr-16">{stats.seen ?? '-'}</span>
@@ -86,7 +85,7 @@ export const MediaStats: FC = () => {
         </div>
     );
 
-    const renderEpisodeStats = (stats: MediaStatsType): ReactElement => (
+    const renderEpisodeStats = (stats: MediaStatsType) => (
         <div className="flex justify-center items-center text-12">
             Episodes&nbsp;<span className="font-bold text-14 pr-16">{stats.episodes ?? '-'}</span>
             Seen&nbsp;<span className="font-bold text-14">{stats.seen_episodes ?? '-'}</span>

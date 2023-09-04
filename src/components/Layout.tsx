@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import Head from 'next/head';
 import { Icon } from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
@@ -11,7 +11,7 @@ import { Standalone } from '@/components/page/Standalone';
 import { Header } from './page/Header';
 import { Footer } from './page/Footer';
 
-export const Layout: FC<PropsWithChildren<NextPageProps>> = ({ title, standalone, children }) => {
+export const Layout = ({ title, standalone, children }: PropsWithChildren<NextPageProps>) => {
     const { toast, loading } = useAppContext();
     useInit();
 

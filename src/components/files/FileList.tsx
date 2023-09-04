@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import Image from 'next/image';
 import { Icon } from '@mdi/react';
 import { mdiDeleteOutline, mdiFileQuestion, mdiFolderOutline, mdiRenameBox } from '@mdi/js';
@@ -14,8 +13,8 @@ interface FileListProps {
     handleDelete: (item: FileItem) => void;
 }
 
-export const FileList: FC<FileListProps> = ({ content, focused, handleClick, handleRename, handleDelete }) => {
-    const renderItem = (item: FileItem, i: number): ReactElement => (
+export const FileList = ({ content, focused, handleClick, handleRename, handleDelete }: FileListProps) => {
+    const renderItem = (item: FileItem, i: number) => (
         <tr key={i}>
             <td className="text-secondary dark:text-secondary-dark">
                 {item.isDir ? (

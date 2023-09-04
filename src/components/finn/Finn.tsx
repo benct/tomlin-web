@@ -1,4 +1,4 @@
-import { FC, ReactElement, useRef } from 'react';
+import { useRef } from 'react';
 import { mdiDelete } from '@mdi/js';
 
 import { formatDate } from '@/util/formatting';
@@ -9,7 +9,7 @@ import { Loading } from '@/components/page/Loading';
 import { Button } from '@/components/page/Button';
 import { Box } from '@/components/page/Box';
 
-export const Finn: FC = () => {
+export const Finn = () => {
     const idInput = useRef<HTMLInputElement>(null);
 
     const { data, loading, add, remove } = useFinn();
@@ -26,7 +26,7 @@ export const Finn: FC = () => {
         }
     };
 
-    const renderEntry = (id: string): ReactElement => (
+    const renderEntry = (id: string) => (
         <table className="table-auto border-collapse mb-16 mx-auto" key={`finn${id}`}>
             <thead>
                 <tr>
@@ -41,16 +41,12 @@ export const Finn: FC = () => {
                 </tr>
             </thead>
             <tbody>
-                {data?.[id].map(
-                    (entry: FinnEntry): ReactElement => (
-                        <tr
-                            className="border dark:border-slate-400 odd:bg-slate-100 dark:odd:bg-slate-800"
-                            key={`finn${id}${entry.timestamp}`}>
-                            <td className="py-8 px-16">{formatDate(entry.timestamp, 'MMM d - HH:mm')}</td>
-                            <td className="py-8 px-16">{entry.price}</td>
-                        </tr>
-                    ),
-                )}
+                {data?.[id].map((entry: FinnEntry) => (
+                    <tr className="border dark:border-slate-400 odd:bg-slate-100 dark:odd:bg-slate-800" key={`finn${id}${entry.timestamp}`}>
+                        <td className="py-8 px-16">{formatDate(entry.timestamp, 'MMM d - HH:mm')}</td>
+                        <td className="py-8 px-16">{entry.price}</td>
+                    </tr>
+                ))}
             </tbody>
         </table>
     );

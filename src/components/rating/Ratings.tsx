@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { mdiChartBoxOutline, mdiListBoxOutline, mdiViewGridPlusOutline } from '@mdi/js';
 
 import { formatDate } from '@/util/formatting';
@@ -12,7 +12,7 @@ import { RatingResultModal } from './RatingResultModal';
 import { RatingItemModal } from './RatingItemModal';
 import { Rating } from '@/interfaces';
 
-export const Ratings: FC = () => {
+export const Ratings = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [showResults, setShowResults] = useState<boolean>(false);
     const [showItems, setShowItems] = useState<boolean>(false);

@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from 'react';
+import { useState } from 'react';
 
 import { formatDate, formatGradientHSL } from '@/util/formatting';
 
@@ -12,7 +12,7 @@ interface MediaSeasonProps {
     setSeenEpisodes: (seasonId: number) => void;
 }
 
-export const MediaSeason: FC<MediaSeasonProps> = ({ data, setSeenEpisode, setSeenEpisodes }) => {
+export const MediaSeason = ({ data, setSeenEpisode, setSeenEpisodes }: MediaSeasonProps) => {
     const [showEpisodes, setShowEpisodes] = useState<boolean>(false);
 
     const toggleEpisodes = (): void => {
@@ -41,11 +41,9 @@ export const MediaSeason: FC<MediaSeasonProps> = ({ data, setSeenEpisode, setSee
             </div>
             {showEpisodes ? (
                 <div className="grid grid-cols-media-content gap-x-8 gap-y-4 items-center px-12">
-                    {data.episodes.map(
-                        (episode): ReactElement => (
-                            <MediaEpisode episode={episode} setSeenEpisode={setSeenEpisode} key={`episode${episode.id}`} />
-                        ),
-                    )}
+                    {data.episodes.map((episode) => (
+                        <MediaEpisode episode={episode} setSeenEpisode={setSeenEpisode} key={`episode${episode.id}`} />
+                    ))}
                 </div>
             ) : null}
         </>

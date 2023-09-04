@@ -1,11 +1,11 @@
-import { FC, FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Image from 'next/image';
 
 import { Box } from '@/components/page/Box';
 import { Button } from '@/components/page/Button';
 import { Modal } from '@/components/page/Modal';
 
-export const QRCode: FC = () => {
+export const QRCode = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [content, setContent] = useState<string>('');
     const [size, setSize] = useState<number>(250);

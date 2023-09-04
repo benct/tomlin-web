@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import {
@@ -33,10 +32,10 @@ export interface NavigationLinkProps {
     chevron?: boolean;
 }
 
-export const Navigation: FC<NavigationProps> = ({ show, toggle }) => {
+export const Navigation = ({ show, toggle }: NavigationProps) => {
     const { isLoggedIn } = useAppContext();
 
-    const NavLink: FC<NavigationLinkProps> = ({ title, href, icon, chevron }) => (
+    const NavLink = ({ title, href, icon, chevron }: NavigationLinkProps) => (
         <Link
             href={href}
             onClick={toggle}

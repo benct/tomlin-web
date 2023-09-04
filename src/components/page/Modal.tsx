@@ -1,4 +1,4 @@
-import { FC, MouseEvent, PropsWithChildren, ReactNode, useEffect } from 'react';
+import { MouseEvent, PropsWithChildren, ReactNode, useEffect } from 'react';
 import { Button } from '@/components/page/Button';
 import { mdiClose } from '@mdi/js';
 
@@ -11,7 +11,7 @@ interface ModalProps {
     className?: string;
 }
 
-export const Modal: FC<PropsWithChildren<ModalProps>> = ({ title, left, center, right, close, className = '', children }) => {
+export const Modal = ({ title, left, center, right, close, className = '', children }: PropsWithChildren<ModalProps>) => {
     useEffect(() => {
         document.body.classList.add('overflow-hidden');
 

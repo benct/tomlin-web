@@ -1,4 +1,4 @@
-import { FC, FormEvent, useRef } from 'react';
+import { FormEvent, useRef } from 'react';
 import { UrlObject } from 'url';
 
 import { useLogin } from '@/data/auth';
@@ -6,7 +6,7 @@ import { useLogin } from '@/data/auth';
 import { Box } from './page/Box';
 import { Loading } from './page/Loading';
 
-export const Login: FC<{ redirectTo?: string | UrlObject }> = ({ redirectTo }) => {
+export const Login = ({ redirectTo }: { redirectTo?: string | UrlObject }) => {
     const username = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);
 

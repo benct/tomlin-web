@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { mdiClose, mdiFileDownloadOutline, mdiFolderPlusOutline, mdiFolderSyncOutline, mdiFolderUploadOutline } from '@mdi/js';
 
 import { useFiles } from '@/data/files';
@@ -11,7 +11,7 @@ import { FileList } from './FileList';
 
 const PARENT_DIR = '..';
 
-export const Files: FC = () => {
+export const Files = () => {
     const fileInput = useRef<HTMLInputElement>(null);
 
     const [focused, setFocus] = useState<number | null>(null);

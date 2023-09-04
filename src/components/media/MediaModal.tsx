@@ -1,4 +1,4 @@
-import { FC, ReactElement, ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
@@ -24,7 +24,7 @@ interface MediaModalProps {
     setSeenEpisodes: (seasonId: number) => void;
 }
 
-export const MediaModal: FC<MediaModalProps> = ({
+export const MediaModal = ({
     data,
     type,
     close,
@@ -34,7 +34,7 @@ export const MediaModal: FC<MediaModalProps> = ({
     setFavourite,
     setSeenEpisode,
     setSeenEpisodes,
-}) => {
+}: MediaModalProps) => {
     const [showSeasons, setShowSeasons] = useState<boolean>(false);
     const [posterSrc, setPosterSrc] = useState<string>(
         data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${data.poster}` : '/images/media/poster.png',
@@ -57,17 +57,16 @@ export const MediaModal: FC<MediaModalProps> = ({
             0,
         );
 
-    const renderRow = (key: string, value?: string | ReactNode, className?: string): ReactNode => (
+    const renderRow = (key: string, value?: string | ReactNode, className?: string) => (
         <>
             <span className="text-neutral dark:text-neutral-dark">{key}</span>
             <span className={className}>{value}</span>
         </>
     );
 
-    const renderOptional = (key: string, value?: string, className?: string): ReactNode =>
-        value ? renderRow(key, value, className) : null;
+    const renderOptional = (key: string, value?: string, className?: string) => (value ? renderRow(key, value, className) : null);
 
-    const renderRating = (rating?: number, votes?: number): ReactNode =>
+    const renderRating = (rating?: number, votes?: number) =>
         renderRow(
             'Rating',
             rating ? (
@@ -79,7 +78,7 @@ export const MediaModal: FC<MediaModalProps> = ({
             ),
         );
 
-    const renderPoster = (poster: string, title: string): ReactNode =>
+    const renderPoster = (poster: string, title: string) =>
         renderRow(
             'Poster',
             poster ? (
@@ -97,7 +96,7 @@ export const MediaModal: FC<MediaModalProps> = ({
             ),
         );
 
-    const renderLinks = (id: number, imdb: string | null): ReactNode =>
+    const renderLinks = (id: number, imdb: string | null) =>
         renderRow(
             'Links',
             <div className="flex item-center gap-16 h-24">
@@ -123,25 +122,23 @@ export const MediaModal: FC<MediaModalProps> = ({
             </div>,
         );
 
-    const renderSeasons = (): ReactNode =>
+    const renderSeasons = () =>
         data.seasons ? (
             <div className="space-y-8">
                 {data.seasons
                     .filter((s: MediaSeasonEntry): boolean => s.season > 0)
-                    .map(
-                        (season: MediaSeasonEntry): ReactNode => (
-                            <MediaSeason
-                                key={`season${season.id}`}
-                                data={season}
-                                setSeenEpisode={setSeenEpisode}
-                                setSeenEpisodes={setSeenEpisodes}
-                            />
-                        ),
-                    )}
+                    .map((season: MediaSeasonEntry) => (
+                        <MediaSeason
+                            key={`season${season.id}`}
+                            data={season}
+                            setSeenEpisode={setSeenEpisode}
+                            setSeenEpisodes={setSeenEpisodes}
+                        />
+                    ))}
             </div>
         ) : null;
 
-    const renderContent = (): ReactElement => (
+    const renderContent = () => (
         <div className="grid grid-cols-auto-1fr gap-x-12 gap-y-6 child:odd:text-neutral">
             {renderRow('Original', data.original_title ?? data.title)}
             {renderRow('Language', data.language)}

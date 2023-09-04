@@ -1,4 +1,4 @@
-import { FC, FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import { useActiveRatings, useRatingActions } from '@/data/ratings';
 
@@ -11,7 +11,7 @@ type RatingProps = {
     user: string;
 };
 
-export const Rating: FC<RatingProps> = ({ user }) => {
+export const Rating = ({ user }: RatingProps) => {
     const { data, loading } = useActiveRatings();
     const { submitScore } = useRatingActions();
 

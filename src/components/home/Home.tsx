@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
@@ -12,7 +11,7 @@ import { Countdown } from './Countdown';
 import { Quote } from './Quote';
 import { Time } from './Time';
 
-export const Home: FC = () => {
+export const Home = () => {
     const { settings } = useAppContext();
     const { api, database, weather, loading } = useInit();
 

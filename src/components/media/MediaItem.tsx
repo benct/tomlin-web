@@ -1,4 +1,4 @@
-import { FC, ReactElement, ReactNode, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { Icon } from '@mdi/react';
 import { mdiCloseCircle } from '@mdi/js';
@@ -16,12 +16,12 @@ interface MediaItemProps {
     showItem: () => void;
 }
 
-export const MediaItem: FC<MediaItemProps> = ({ type, data, setSeen, setFavourite, showItem }) => {
+export const MediaItem = ({ type, data, setSeen, setFavourite, showItem }: MediaItemProps) => {
     const [src, setSrc] = useState(
         data.poster ? `https://storage.googleapis.com/tomlin-cdn/images/media${data.poster}` : '/images/media/poster.png',
     );
 
-    const renderRating = (): ReactElement => (
+    const renderRating = () => (
         <>
             &nbsp;|&nbsp;
             <span className="font-bold">{data.rating.toFixed(1)}</span>
@@ -29,7 +29,7 @@ export const MediaItem: FC<MediaItemProps> = ({ type, data, setSeen, setFavourit
         </>
     );
 
-    const renderSeasons = (): ReactNode => {
+    const renderSeasons = () => {
         const seen = data.seen_episodes ?? 0;
 
         return data.number_of_episodes ? (

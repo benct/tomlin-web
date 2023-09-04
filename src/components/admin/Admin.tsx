@@ -1,4 +1,4 @@
-import { FC, ReactElement, useRef } from 'react';
+import { ReactElement, useRef } from 'react';
 
 import { formatThousands } from '@/util/formatting';
 import { useAppContext } from '@/data/context';
@@ -8,7 +8,7 @@ import { Loading } from '@/components/page/Loading';
 import { Button } from '@/components/page/Button';
 import { Box } from '@/components/page/Box';
 
-export const Admin: FC = () => {
+export const Admin = () => {
     const updateMovieCount = useRef<HTMLSelectElement>(null);
     const updateTvCount = useRef<HTMLSelectElement>(null);
     const countdownIcon = useRef<HTMLSelectElement>(null);
@@ -26,13 +26,11 @@ export const Admin: FC = () => {
         field && field.value !== 'none' ? field.value : null;
 
     const renderOptions = (values: (number | string)[]): ReactElement[] =>
-        values.map(
-            (opt, idx): ReactElement => (
-                <option key={`ctrlOpt${idx}`} value={opt}>
-                    {opt}
-                </option>
-            ),
-        );
+        values.map((opt, idx) => (
+            <option key={`ctrlOpt${idx}`} value={opt}>
+                {opt}
+            </option>
+        ));
 
     return (
         <>

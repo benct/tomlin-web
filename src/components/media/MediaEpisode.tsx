@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { formatDate } from '@/util/formatting';
 
@@ -10,7 +10,7 @@ interface MediaEpisodeProps {
     setSeenEpisode: (episodeId: number, set: boolean) => void;
 }
 
-export const MediaEpisode: FC<MediaEpisodeProps> = ({ episode, setSeenEpisode }) => {
+export const MediaEpisode = ({ episode, setSeenEpisode }: MediaEpisodeProps) => {
     const [overview, setOverview] = useState<boolean>(false);
 
     const toggleOverview = (): void => {

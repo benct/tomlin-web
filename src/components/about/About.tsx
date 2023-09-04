@@ -1,11 +1,10 @@
-import { FC } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiMapMarkerOutline } from '@mdi/js';
 
 import { Box } from '@/components/page/Box';
 import { GitHub } from './GitHub';
 
-export const About: FC = () => (
+export const About = () => (
     <>
         <Box title="Ben Tomlin" border="border-b" className="text-center">
             <div>

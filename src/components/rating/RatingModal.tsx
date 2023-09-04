@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 import { useRatingActions } from '@/data/ratings';
 
@@ -11,7 +11,7 @@ interface RatingModalProps {
     rating?: Rating;
 }
 
-export const RatingModal: FC<RatingModalProps> = ({ rating, close }) => {
+export const RatingModal = ({ rating, close }: RatingModalProps) => {
     const title = useRef<HTMLInputElement>(null);
     const cat1 = useRef<HTMLInputElement>(null);
     const cat2 = useRef<HTMLInputElement>(null);

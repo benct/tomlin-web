@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { mdiContentSaveOutline, mdiDeleteOutline } from '@mdi/js';
 
 import { useUserActions } from '@/data/users';
@@ -12,7 +12,7 @@ interface UserModalProps {
     user?: User;
 }
 
-export const UserModal: FC<UserModalProps> = ({ user, close }) => {
+export const UserModal = ({ user, close }: UserModalProps) => {
     const name = useRef<HTMLInputElement>(null);
     const email = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, SyntheticEvent } from 'react';
+import { ChangeEvent, SyntheticEvent } from 'react';
 import { mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
 
 import { Flight } from '@/interfaces';
@@ -16,7 +16,7 @@ interface FlightModalProps {
     close: () => void;
 }
 
-export const FlightsModal: FC<FlightModalProps> = ({ form, invalid, save, swap, change, copy, remove, close }) => (
+export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, close }: FlightModalProps) => (
     <Modal
         title={`${form.id ? 'Edit' : 'New'} Flight`}
         close={close}

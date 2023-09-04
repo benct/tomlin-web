@@ -1,9 +1,9 @@
-import { FC, PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import { mdiThemeLightDark } from '@mdi/js';
 import { useTheme } from '@/data/base';
 import { Button } from './Button';
 
-export const Standalone: FC<PropsWithChildren<{ title?: string }>> = ({ title, children }) => {
+export const Standalone = ({ title, children }: PropsWithChildren<{ title?: string }>) => {
     const { darkMode, toggleTheme } = useTheme();
 
     return (

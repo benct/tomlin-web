@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { mdiAccountPlusOutline } from '@mdi/js';
 
 import { formatDate } from '@/util/formatting';
@@ -10,7 +10,7 @@ import { Button } from '@/components/page/Button';
 import { Box } from '@/components/page/Box';
 import { UserModal } from './UserModal';
 
-export const Users: FC = () => {
+export const Users = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const [selected, setSelected] = useState<User>();
 

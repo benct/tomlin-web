@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Box } from '@/components/page/Box';
 
@@ -8,7 +8,7 @@ interface CountdownProps {
     icon?: string;
 }
 
-export const Countdown: FC<CountdownProps> = ({ title, timestamp, icon }) => {
+export const Countdown = ({ title, timestamp, icon }: CountdownProps) => {
     const interval = useRef<number>(0);
     const countdownTarget = useRef<Date | null>(null);
 
@@ -41,7 +41,7 @@ export const Countdown: FC<CountdownProps> = ({ title, timestamp, icon }) => {
         };
     }, [timestamp]);
 
-    const renderTimeUnit = (time: number, unit: string): ReactElement => (
+    const renderTimeUnit = (time: number, unit: string) => (
         <li className="text-center">
             <span className="text-28 font-bold">{timestamp ? time : '-'}</span>
             <p className="text-12 uppercase">{unit}</p>

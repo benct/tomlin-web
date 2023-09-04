@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactElement } from 'react';
+import { Fragment } from 'react';
 
 import { formatTimestamp } from '@/util/formatting';
 import { useVisits } from '@/data/admin';
@@ -8,10 +8,10 @@ import { Loading } from '@/components/page/Loading';
 import { Pagination } from '@/components/page/Pagination';
 import { Box } from '@/components/page/Box';
 
-export const Visits: FC<PageProps> = ({ page }) => {
+export const Visits = ({ page }: PageProps) => {
     const { visits, pagination, loading } = useVisits(page);
 
-    const renderVisit = (visit: Visit, idx: number): ReactElement => (
+    const renderVisit = (visit: Visit, idx: number) => (
         <Fragment key={`visits${idx}`}>
             <code>
                 {formatTimestamp(visit.timestamp)}

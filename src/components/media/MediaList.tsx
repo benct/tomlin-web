@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, KeyboardEvent, ReactElement } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 import { useRouter } from 'next/router';
 
 import { formatQuery } from '@/util/formatting';
@@ -11,7 +11,7 @@ import { Box } from '@/components/page/Box';
 import { MediaModal } from './MediaModal';
 import { MediaItem } from './MediaItem';
 
-export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
+export const MediaList = ({ type, page, sort, query }: MediaProps) => {
     const router = useRouter();
     const { media, pagination, loading, selected, selectItem, update, remove, favourite, seen, seenEpisode, seenEpisodes } = useMediaList({
         type,
@@ -33,7 +33,7 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
         }
     };
 
-    const renderRow = (item: MediaItemEntry): ReactElement => (
+    const renderRow = (item: MediaItemEntry) => (
         <MediaItem
             key={`mediaItem${item.id}`}
             data={item}
@@ -44,7 +44,7 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
         />
     );
 
-    const renderModal = (item: MediaItemEntry): ReactElement => (
+    const renderModal = (item: MediaItemEntry) => (
         <MediaModal
             data={item}
             type={item.type ?? type}
@@ -58,7 +58,7 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
         />
     );
 
-    const renderWatchlist = (data: MediaItemEntry[]): ReactElement => (
+    const renderWatchlist = (data: MediaItemEntry[]) => (
         <Loading isLoading={loading} text="Loading media...">
             <div className="mb-16 font-bold">TV-Shows:</div>
             <div className="grid sm:grid-cols-2 gap-16">
@@ -71,7 +71,7 @@ export const MediaList: FC<MediaProps> = ({ type, page, sort, query }) => {
         </Loading>
     );
 
-    const renderList = (data: MediaItemEntry[]): ReactElement => (
+    const renderList = (data: MediaItemEntry[]) => (
         <>
             <div className="flex justify-center gap-16 mb-24">
                 <select

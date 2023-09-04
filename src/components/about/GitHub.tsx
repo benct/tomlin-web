@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import Image from 'next/image';
 import { Icon } from '@mdi/react';
 import {
@@ -20,7 +19,7 @@ import { GitHubRepo } from '@/interfaces';
 import { Loading } from '@/components/page/Loading';
 import { Box } from '@/components/page/Box';
 
-export const GitHub: FC = () => {
+export const GitHub = () => {
     const { data, loading } = useGitHub();
 
     const getLanguageIcon = (language: string): string => {
@@ -43,7 +42,7 @@ export const GitHub: FC = () => {
         }
     };
 
-    const renderRepo = (repo: GitHubRepo): ReactElement => (
+    const renderRepo = (repo: GitHubRepo) => (
         <div className="flex justify-between gap-8 items-center" key={repo.name}>
             <a href={repo.htmlUrl} target="_blank" rel="noopener noreferrer" className="truncate">
                 <Icon

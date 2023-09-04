@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { mdiPageNextOutline, mdiPagePreviousOutline } from '@mdi/js';
 
 import { useRatingActions, useRatingResults } from '@/data/ratings';
@@ -13,7 +12,7 @@ interface RatingResultModalProps {
     close: () => void;
 }
 
-export const RatingResultModal: FC<RatingResultModalProps> = ({ rating, close }) => {
+export const RatingResultModal = ({ rating, close }: RatingResultModalProps) => {
     const { results, loading } = useRatingResults(rating.id);
     const { changeStep } = useRatingActions();
 

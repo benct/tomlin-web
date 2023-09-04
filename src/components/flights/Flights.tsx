@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, ReactElement, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { mdiAirplane, mdiBriefcaseEditOutline } from '@mdi/js';
 
 import { formatDate } from '@/util/formatting';
@@ -13,7 +13,7 @@ import { FlightsGroup } from './FlightsGroup';
 
 const required: string[] = ['origin', 'destination', 'departure', 'arrival', 'carrier', 'number', 'reference'];
 
-export const Flights: FC = () => {
+export const Flights = () => {
     const [showGrouped, setShowGrouped] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [invalid, setInvalid] = useState<boolean>(false);
@@ -78,7 +78,7 @@ export const Flights: FC = () => {
         }
     };
 
-    const renderGrouped = (): ReactElement => (
+    const renderGrouped = () => (
         <table className="table-auto border-collapse w-full text-14">
             <thead>
                 <tr className="text-left">
@@ -91,16 +91,14 @@ export const Flights: FC = () => {
                 </tr>
             </thead>
             <tbody>
-                {flights.map(
-                    (group, idx): ReactElement => (
-                        <FlightsGroup flights={group} edit={handleEdit} key={`flightGroup${idx}`} />
-                    ),
-                )}
+                {flights.map((group, idx) => (
+                    <FlightsGroup flights={group} edit={handleEdit} key={`flightGroup${idx}`} />
+                ))}
             </tbody>
         </table>
     );
 
-    const renderAll = (): ReactElement => (
+    const renderAll = () => (
         <table className="table-auto border-collapse w-full text-14">
             <thead>
                 <tr className="text-left">
@@ -117,22 +115,20 @@ export const Flights: FC = () => {
                 </tr>
             </thead>
             <tbody>
-                {flights.flat().map(
-                    (flight: Flight): ReactElement => (
-                        <tr className="odd:bg-slate-100 dark:odd:bg-slate-800" key={`flight${flight.id}`}>
-                            <td className="pl-4 whitespace-nowrap">{formatDate(flight.departure)}</td>
-                            <td>{flight.origin}</td>
-                            <td>{flight.destination}</td>
-                            <td>{`${flight.carrier} ${flight.number}`}</td>
-                            <td className="hidden sm:table-cell">{flight.aircraft ?? '—'}</td>
-                            <td className="hidden sm:table-cell">{flight.seat ?? '—'}</td>
-                            <td className="hidden md:table-cell">{flight.reference ?? '—'}</td>
-                            <td className="pr-4 text-right">
-                                <Button text="Edit" icon={mdiBriefcaseEditOutline} size={0.85} onClick={(): void => handleEdit(flight)} />
-                            </td>
-                        </tr>
-                    ),
-                )}
+                {flights.flat().map((flight: Flight) => (
+                    <tr className="odd:bg-slate-100 dark:odd:bg-slate-800" key={`flight${flight.id}`}>
+                        <td className="pl-4 whitespace-nowrap">{formatDate(flight.departure)}</td>
+                        <td>{flight.origin}</td>
+                        <td>{flight.destination}</td>
+                        <td>{`${flight.carrier} ${flight.number}`}</td>
+                        <td className="hidden sm:table-cell">{flight.aircraft ?? '—'}</td>
+                        <td className="hidden sm:table-cell">{flight.seat ?? '—'}</td>
+                        <td className="hidden md:table-cell">{flight.reference ?? '—'}</td>
+                        <td className="pr-4 text-right">
+                            <Button text="Edit" icon={mdiBriefcaseEditOutline} size={0.85} onClick={(): void => handleEdit(flight)} />
+                        </td>
+                    </tr>
+                ))}
             </tbody>
         </table>
     );

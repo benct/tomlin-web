@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent } from 'react';
 import Link from 'next/link';
 
 import { debounce } from '@/util/debounce';
@@ -10,7 +10,7 @@ import { Loading } from '@/components/page/Loading';
 import { Box } from '@/components/page/Box';
 import { MediaSearchItem } from './MediaSearchItem';
 
-export const MediaSearch: FC<MediaSearchProps> = ({ type, action, page, id }) => {
+export const MediaSearch = ({ type, action, page, id }: MediaSearchProps) => {
     const { media, pagination, loading, search } = useMediaSearch({ type, action, page, id });
 
     const searchMedia = debounce((query: string) => search(query), 500);

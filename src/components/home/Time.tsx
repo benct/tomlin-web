@@ -1,11 +1,11 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface TimeProps {
     locale: string;
     timeZone: string;
 }
 
-export const Time: FC<TimeProps> = ({ locale, timeZone }) => {
+export const Time = ({ locale, timeZone }: TimeProps) => {
     const now = useCallback((): string => new Date().toLocaleTimeString(locale, { timeZone }), [locale, timeZone]);
 
     const interval = useRef<number>(0);

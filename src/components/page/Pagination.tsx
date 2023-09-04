@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import { mdiChevronDoubleRight, mdiChevronRight } from '@mdi/js';
@@ -35,7 +34,7 @@ const listConsecutivePages = (totalPages: number, firstPage: number, currentPage
     return consecutivePages;
 };
 
-export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix }) => {
+export const Pagination = ({ current, total, path, postfix }: PaginationProps) => {
     const previousPages = listPreviousPages(total, current);
     const consecutivePages = listConsecutivePages(total, previousPages[0] ?? 1, current);
 
@@ -47,7 +46,7 @@ export const Pagination: FC<PaginationProps> = ({ current, total, path, postfix 
 
     const computePath = (page: number) => `${path}${page}/${postfix ? `${postfix}/` : ''}`;
 
-    const renderPage = (page: number): ReactElement => (
+    const renderPage = (page: number) => (
         <Link href={computePath(page)} key={`pagination${page}`} className="button-icon px-8">
             {page}
         </Link>

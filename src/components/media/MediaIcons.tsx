@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { mdiEyeCheckOutline, mdiEyeOffOutline, mdiStar, mdiStarOutline } from '@mdi/js';
 import { Button } from '@/components/page/Button';
 
@@ -9,7 +8,7 @@ interface FavouriteIconProps {
     className?: string;
 }
 
-export const FavouriteIcon: FC<FavouriteIconProps> = ({ favourite, setFavourite, size, className }) => (
+export const FavouriteIcon = ({ favourite, setFavourite, size, className }: FavouriteIconProps) => (
     <Button
         text={favourite ? 'Favourite' : 'Set favourite'}
         icon={favourite ? mdiStar : mdiStarOutline}
@@ -27,7 +26,7 @@ interface SeenIconProps {
     className?: string;
 }
 
-export const SeenIcon: FC<SeenIconProps> = ({ seen, setSeen, size, className }) => (
+export const SeenIcon = ({ seen, setSeen, size, className }: SeenIconProps) => (
     <Button
         text={seen ? 'Seen' : 'Set seen'}
         icon={seen ? mdiEyeCheckOutline : mdiEyeOffOutline}

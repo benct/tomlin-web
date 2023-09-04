@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, FC } from 'react';
+import { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 import { Icon } from '@mdi/react';
 
 type ButtonProps = {
@@ -8,19 +8,13 @@ type ButtonProps = {
     className?: string;
 };
 
-export const Button: FC<ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>> = ({ text, icon, size = 1, className = '', ...rest }) => (
+export const Button = ({ text, icon, size = 1, className = '', ...rest }: ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => (
     <button className={`${icon ? 'button-icon' : 'button-text'} ${className}`} title={text} aria-label={text} {...rest}>
         {icon ? <Icon path={icon} size={size ?? 1} /> : text}
     </button>
 );
 
-export const LinkButton: FC<ButtonProps & AnchorHTMLAttributes<HTMLAnchorElement>> = ({
-    text,
-    icon,
-    size = 1,
-    className = '',
-    ...rest
-}) => (
+export const LinkButton = ({ text, icon, size = 1, className = '', ...rest }: ButtonProps & AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
         target="_blank"
         rel="noreferrer"

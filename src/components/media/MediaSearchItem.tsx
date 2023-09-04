@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import ISO6391 from 'iso-639-1';
 
@@ -13,7 +13,7 @@ interface MediaSearchItemProps {
     type: MediaType;
 }
 
-export const MediaSearchItem: FC<MediaSearchItemProps> = ({ data, type }) => {
+export const MediaSearchItem = ({ data, type }: MediaSearchItemProps) => {
     const { existing, add, remove, imdb } = useMediaSearchActions();
     const [src, setSrc] = useState<string>(
         data.poster_path ? `https://image.tmdb.org/t/p/w200${data.poster_path}` : '/images/media/poster_small.png',

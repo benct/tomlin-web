@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactElement } from 'react';
+import { Fragment } from 'react';
 
 import { formatTimestamp } from '@/util/formatting';
 import { useLogs } from '@/data/admin';
@@ -8,10 +8,10 @@ import { Loading } from '@/components/page/Loading';
 import { Pagination } from '@/components/page/Pagination';
 import { Box } from '@/components/page/Box';
 
-export const Logs: FC<PageProps> = ({ page }) => {
+export const Logs = ({ page }: PageProps) => {
     const { logs, pagination, loading, deleteLog } = useLogs(page);
 
-    const renderLog = (log: Log, idx: number): ReactElement => (
+    const renderLog = (log: Log, idx: number) => (
         <Fragment key={`logs${idx}`}>
             <code onClick={() => deleteLog(log.id)} role="button" tabIndex={0} aria-label="Delete log entry">
                 {formatTimestamp(log.timestamp)}

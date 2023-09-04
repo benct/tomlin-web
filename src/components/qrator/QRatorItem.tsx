@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 import { formatThousands } from '@/util/formatting';
@@ -8,7 +8,7 @@ import { Loading } from '@/components/page/Loading';
 import { Box } from '@/components/page/Box';
 import { Button } from '@/components/page/Button';
 
-export const QRatorItem: FC<{ id: number }> = ({ id }) => {
+export const QRatorItem = ({ id }: { id: number }) => {
     const { data, loading, saveItem, deleteItem } = useQRatorItem(id);
 
     const [editing, setEditing] = useState<boolean>(false);

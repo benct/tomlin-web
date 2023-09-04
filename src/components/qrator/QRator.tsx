@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
 import { useAppContext } from '@/data/context';
 import { useQRator } from '@/data/qrator';
@@ -7,7 +7,7 @@ import { Box } from '@/components/page/Box';
 import { Button } from '@/components/page/Button';
 import { Loading } from '@/components/page/Loading';
 
-export const QRator: FC = () => {
+export const QRator = () => {
     const fileInput = useRef<HTMLInputElement>(null);
     const { isLoggedIn } = useAppContext();
     const { data, loading, uploading, upload } = useQRator();

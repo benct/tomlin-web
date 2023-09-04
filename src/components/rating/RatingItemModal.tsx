@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { mdiContentSaveOutline, mdiDeleteOutline, mdiPencilOutline } from '@mdi/js';
 
 import { useRatingActions, useRatingItems } from '@/data/ratings';
@@ -13,7 +13,7 @@ interface RatingItemModalProps {
     close: () => void;
 }
 
-export const RatingItemModal: FC<RatingItemModalProps> = ({ rating, close }) => {
+export const RatingItemModal = ({ rating, close }: RatingItemModalProps) => {
     const { items, loading } = useRatingItems(rating.id);
     const { saveRatingItem, deleteRatingItem } = useRatingActions();
 

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { mdiRefresh } from '@mdi/js';
 
 import { quotes } from '@/util/quotes';
@@ -6,7 +6,7 @@ import { QuoteState } from '@/interfaces';
 import { Box } from '@/components/page/Box';
 import { Button } from '@/components/page/Button';
 
-export const Quote: FC = () => {
+export const Quote = () => {
     const [quote, setQuote] = useState<QuoteState>({
         text: null,
         author: null,

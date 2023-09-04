@@ -1,10 +1,10 @@
-import { FC, FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import { Box } from '@/components/page/Box';
 import { Button } from '@/components/page/Button';
 import { Modal } from '@/components/page/Modal';
 
-export const Encoder: FC = () => {
+export const Encoder = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [content, setContent] = useState<string>('');
     const [result, setResult] = useState<string>('');

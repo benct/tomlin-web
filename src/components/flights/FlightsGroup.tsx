@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from 'react';
+import { useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiBriefcaseEditOutline, mdiChevronDown, mdiChevronUp } from '@mdi/js';
 
@@ -11,7 +11,7 @@ interface FlightGroupProps {
     edit: (flight: Flight) => void;
 }
 
-export const FlightsGroup: FC<FlightGroupProps> = ({ flights, edit }) => {
+export const FlightsGroup = ({ flights, edit }: FlightGroupProps) => {
     const [showFlights, setShowFlights] = useState<boolean>(false);
 
     const isSimple =
@@ -40,26 +40,24 @@ export const FlightsGroup: FC<FlightGroupProps> = ({ flights, edit }) => {
                 </td>
             </tr>
             {showFlights &&
-                flights.map(
-                    (flight: Flight): ReactElement => (
-                        <tr key={`flight${flight.id}`} className="border-x-2 border-sky-500">
-                            <td className="p-4 whitespace-nowrap">{formatDate(flight.departure)}</td>
-                            <td className="p-4">
-                                {flight.origin} - {flight.destination}
-                            </td>
-                            <td className="p-4 hidden sm:table-cell">
-                                <div className="grid grid-cols-3">
-                                    <span>{`${flight.carrier} ${flight.number}`}</span>
-                                    <span>{flight.aircraft ?? '—'}</span>
-                                    <span>{flight.seat ?? '—'}</span>
-                                </div>
-                            </td>
-                            <td className="pr-4 text-right">
-                                <Button text="Edit" icon={mdiBriefcaseEditOutline} size={0.85} onClick={(): void => edit(flight)} />
-                            </td>
-                        </tr>
-                    ),
-                )}
+                flights.map((flight: Flight) => (
+                    <tr key={`flight${flight.id}`} className="border-x-2 border-sky-500">
+                        <td className="p-4 whitespace-nowrap">{formatDate(flight.departure)}</td>
+                        <td className="p-4">
+                            {flight.origin} - {flight.destination}
+                        </td>
+                        <td className="p-4 hidden sm:table-cell">
+                            <div className="grid grid-cols-3">
+                                <span>{`${flight.carrier} ${flight.number}`}</span>
+                                <span>{flight.aircraft ?? '—'}</span>
+                                <span>{flight.seat ?? '—'}</span>
+                            </div>
+                        </td>
+                        <td className="pr-4 text-right">
+                            <Button text="Edit" icon={mdiBriefcaseEditOutline} size={0.85} onClick={(): void => edit(flight)} />
+                        </td>
+                    </tr>
+                ))}
         </>
     );
 };
