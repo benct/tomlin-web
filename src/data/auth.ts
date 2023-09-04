@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { UrlObject } from 'url';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -8,7 +8,7 @@ import { auth } from '@/util/api';
 interface AuthResponse {
     authenticated: boolean;
     username: string | undefined;
-    roles: string;
+    roles: string[];
 }
 
 export const useInit = () => {
@@ -16,25 +16,27 @@ export const useInit = () => {
         revalidateOnFocus: false,
         revalidateIfStale: false,
     });
-    const { setIsLoggedIn } = useAppContext();
+    const { setIsLoggedIn, setRoles } = useAppContext();
 
     useEffect(() => {
         if (data) {
             setIsLoggedIn(data.authenticated);
+            setRoles(data.roles.map((role) => role.toLowerCase()));
         }
-    }, [data, setIsLoggedIn]);
+    }, [data, setIsLoggedIn, setRoles]);
 
     useEffect(() => {
         if (error) {
             setIsLoggedIn(false);
+            setRoles([]);
             window.localStorage.removeItem('token');
         }
-    }, [error, setIsLoggedIn]);
+    }, [error, setIsLoggedIn, setRoles]);
 };
 
 export const useLogin = (redirectTo?: string | UrlObject) => {
     const router = useRouter();
-    const { setIsLoggedIn } = useAppContext();
+    const { mutate } = useSWRConfig();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
 
@@ -47,12 +49,11 @@ export const useLogin = (redirectTo?: string | UrlObject) => {
         auth<string>('/login')
             .then((authenticated) => (authenticated ? Promise.resolve() : Promise.reject()))
             .then(() => {
-                setIsLoggedIn(true);
+                mutate('/authenticate');
                 router.replace(redirectTo ?? '/');
             })
             .catch(() => {
                 window.localStorage.removeItem('token');
-                setIsLoggedIn(false);
                 setError(true);
             })
             .finally(() => setLoading(false));
@@ -63,11 +64,11 @@ export const useLogin = (redirectTo?: string | UrlObject) => {
 
 export const useLogout = () => {
     const router = useRouter();
-    const { setIsLoggedIn } = useAppContext();
+    const { mutate } = useSWRConfig();
 
     return () => {
         localStorage.removeItem('token');
-        setIsLoggedIn(false);
+        mutate('/authenticate');
 
         setTimeout((): void => {
             router.replace('/');
