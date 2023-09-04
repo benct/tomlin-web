@@ -12,13 +12,13 @@ import { UserModal } from './UserModal';
 
 export const Users = () => {
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
-    const [selected, setSelected] = useState<User>();
+    const [selected, setSelected] = useState<string>();
 
     const { users, loading } = useUsers();
 
     const edit = (user?: User): void => {
         setShowOverlay(true);
-        setSelected(user);
+        setSelected(user?.email);
     };
 
     const closeModal = (): void => {
@@ -31,10 +31,13 @@ export const Users = () => {
             <td className="py-8 px-16">
                 <button className="text-secondary dark:text-secondary-dark font-bold" onClick={(): void => edit(user)}>
                     {user.name}
+                    {user.enabled ? null : <span className="text-warn text-10 ml-8">(inactive)</span>}
                 </button>
                 <div className="text-12 truncate">{user.email}</div>
             </td>
-            <td className="py-8 px-16 text-14 hidden sm:table-cell">{user.roles.join(', ')}</td>
+            <td className="py-8 px-16 text-14 hidden sm:table-cell">
+                {user.roles.map((role) => role.substring(role.indexOf('_') + 1)).join(', ')}
+            </td>
             <td className="py-8 px-16 text-14 whitespace-nowrap">{formatDate(user.created)}</td>
             <td className="py-8 px-16 text-14 whitespace-nowrap">{user.lastSeen ? formatDate(user.lastSeen) : 'Never'}</td>
         </tr>
@@ -61,7 +64,7 @@ export const Users = () => {
                     <div className="text-center">No users found...</div>
                 )}
             </Loading>
-            {showOverlay ? <UserModal user={selected} close={closeModal} /> : null}
+            {showOverlay ? <UserModal user={users.find((user) => user.email === selected)} close={closeModal} /> : null}
         </Box>
     );
 };
