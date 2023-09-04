@@ -1,29 +1,30 @@
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 
 import { formatThousands } from '@/util/formatting';
-import { useAppContext } from '@/data/context';
-import { useAdminActions, useAdminStats } from '@/data/admin';
+import { useAdminActions, useAdminData } from '@/data/admin';
 
 import { Loading } from '@/components/page/Loading';
 import { Button } from '@/components/page/Button';
 import { Box } from '@/components/page/Box';
 
 export const Admin = () => {
+    const { stats, settings, loading } = useAdminData();
+    const { saveSetting, clearLogs, updateIata, updateMedia, backup } = useAdminActions();
+
     const updateMovieCount = useRef<HTMLSelectElement>(null);
     const updateTvCount = useRef<HTMLSelectElement>(null);
-    const countdownIcon = useRef<HTMLSelectElement>(null);
     const countdownTarget = useRef<HTMLInputElement>(null);
+    const [countdownIcon, setCountdownIcon] = useState<string>('none');
 
-    const { settings } = useAppContext();
-    const { stats, loading } = useAdminStats();
-    const { saveSetting, clearLogs, updateIata, updateMedia, backup } = useAdminActions();
+    useEffect(() => {
+        if (settings?.countdownIcon) {
+            setCountdownIcon(settings?.countdownIcon ?? 'none');
+        }
+    }, [settings, setCountdownIcon]);
 
     const formatStat = (key: string): string => (stats?.[key] !== undefined ? formatThousands(stats[key]) : '-');
 
     const getCount = (field: HTMLSelectElement | null): string | undefined => (field ? field.value : undefined);
-
-    const getValue = (field: HTMLSelectElement | HTMLInputElement | null): string | null =>
-        field && field.value !== 'none' ? field.value : null;
 
     const renderOptions = (values: (number | string)[]): ReactElement[] =>
         values.map((opt, idx) => (
@@ -60,7 +61,7 @@ export const Admin = () => {
             </Box>
             <Box title="Settings" border="border-b" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Countdown icon</span>
-                <select className="input text-12 pr-16" defaultValue={settings.countdownIcon} ref={countdownIcon}>
+                <select className="input text-12 pr-16" value={countdownIcon} onChange={(e) => setCountdownIcon(e.target.value)}>
                     <option value="none">None</option>
                     <option value="birthday">Birthday</option>
                     <option value="christmas">Christmas</option>
@@ -68,10 +69,10 @@ export const Admin = () => {
                     <option value="anniversary">Anniversary</option>
                     <option value="wedding">Wedding</option>
                 </select>
-                <Button text="Set" onClick={() => saveSetting('countdownIcon', getValue(countdownIcon.current))} />
+                <Button text="Set" onClick={() => saveSetting('countdownIcon', countdownIcon)} />
                 <span className="truncate">Countdown target date</span>
-                <input className="input text-12" type="datetime-local" defaultValue={settings.countdownTarget} ref={countdownTarget} />
-                <Button text="Set" onClick={() => saveSetting('countdownTarget', getValue(countdownTarget.current))} />
+                <input className="input text-12" type="datetime-local" defaultValue={settings?.countdownTarget} ref={countdownTarget} />
+                <Button text="Set" onClick={() => saveSetting('countdownTarget', countdownTarget.current?.value)} />
             </Box>
             <Box title="Tasks" border="border-b" className="grid grid-cols-admin gap-12 items-center">
                 <span className="truncate">Update number of stored movies</span>

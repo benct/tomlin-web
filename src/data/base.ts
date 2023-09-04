@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import { useAppContext } from './context';
 import { del, get, post } from '@/util/api';
-import { FinnState, GitHubState } from '@/interfaces';
+import { FinnState, GitHubState, HomeState } from '@/interfaces';
 
 export const useTheme = () => {
     const [darkMode, setDarkMode] = useState<boolean>(false);
@@ -37,6 +37,14 @@ export const useToast = (message?: string) => {
             }, 3000);
         }
     }, [message, setToast]);
+};
+
+export const useHome = () => {
+    const { data, error, isLoading } = useSWR<HomeState, Error>('/home', get, { revalidateOnFocus: false, errorRetryCount: 0 });
+
+    useToast(error && 'Could not load data...');
+
+    return { api: data?.api, database: data?.database, weather: data?.weather, settings: data?.settings, loading: isLoading };
 };
 
 export const useGitHub = () => {

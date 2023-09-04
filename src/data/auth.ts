@@ -4,28 +4,25 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAppContext } from './context';
 import { auth } from '@/util/api';
-import { Settings, Weather } from '@/interfaces';
 
 interface AuthResponse {
     authenticated: boolean;
-    database: boolean;
-    settings: Settings;
-    weather: Weather;
+    username: string | undefined;
+    roles: string;
 }
 
 export const useInit = () => {
-    const { data, error, isLoading } = useSWR<AuthResponse, Error>('/authenticate', auth, {
+    const { data, error } = useSWR<AuthResponse, Error>('/authenticate', auth, {
         revalidateOnFocus: false,
         revalidateIfStale: false,
     });
-    const { setIsLoggedIn, setSettings } = useAppContext();
+    const { setIsLoggedIn } = useAppContext();
 
     useEffect(() => {
         if (data) {
             setIsLoggedIn(data.authenticated);
-            setSettings(data.settings);
         }
-    }, [data, setIsLoggedIn, setSettings]);
+    }, [data, setIsLoggedIn]);
 
     useEffect(() => {
         if (error) {
@@ -33,8 +30,6 @@ export const useInit = () => {
             window.localStorage.removeItem('token');
         }
     }, [error, setIsLoggedIn]);
-
-    return { api: !!data?.weather, database: !!data?.database, weather: data?.weather, loading: isLoading };
 };
 
 export const useLogin = (redirectTo?: string | UrlObject) => {

@@ -3,14 +3,15 @@ import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
 import { del, get, post } from '@/util/api';
-import { Log, PaginationResponse, Visit } from '@/interfaces';
+import { Log, PaginationResponse, Settings, Visit } from '@/interfaces';
 
-export const useAdminStats = () => {
-    const { data, error, isLoading } = useSWR<Record<string, number>, Error>('/admin/stats', get);
+export const useAdminData = () => {
+    const stats = useSWR<Record<string, number>, Error>('/admin/stats', get, { revalidateOnFocus: false });
+    const settings = useSWR<Settings, Error>('/settings', get, { revalidateOnFocus: false });
 
-    useToast(error && 'Could not fetch stats...');
+    useToast((stats.error || settings.error) && 'Could not fetch data...');
 
-    return { stats: data, loading: isLoading };
+    return { stats: stats.data, settings: settings.data, loading: stats.isLoading || settings.isLoading };
 };
 
 export const useAdminActions = () => {
@@ -19,7 +20,7 @@ export const useAdminActions = () => {
 
     useToast(toast);
 
-    const saveSetting = (key: string, value: string | null) => {
+    const saveSetting = (key: string, value: string | undefined) => {
         if (isLoggedIn && confirm('Are you sure you want to change this setting?')) {
             setLoading(true);
             setToast(undefined);

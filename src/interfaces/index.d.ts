@@ -13,6 +13,13 @@ export interface Weather {
     rain: number | null;
 }
 
+export interface HomeState {
+    api: boolean;
+    database: boolean;
+    weather?: Weather;
+    settings?: Settings;
+}
+
 export interface QuoteState {
     text: string | null;
     author: string | null;

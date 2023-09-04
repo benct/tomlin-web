@@ -5,8 +5,6 @@ interface AppContextState {
     setLoading: Dispatch<SetStateAction<boolean>>;
     isLoggedIn: boolean | null;
     setIsLoggedIn: Dispatch<SetStateAction<boolean | null>>;
-    settings: Record<string, string>;
-    setSettings: Dispatch<SetStateAction<Record<string, string>>>;
     toast: string | null;
     setToast: Dispatch<SetStateAction<string | null>>;
 }
@@ -16,8 +14,6 @@ const AppContext = createContext<AppContextState>({
     setLoading: () => {},
     isLoggedIn: null,
     setIsLoggedIn: () => {},
-    settings: {},
-    setSettings: () => {},
     toast: null,
     setToast: () => {},
 });
@@ -25,7 +21,6 @@ const AppContext = createContext<AppContextState>({
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-    const [settings, setSettings] = useState<Record<string, string>>({});
     const [toast, setToast] = useState<string | null>(null);
 
     const value = {
@@ -33,8 +28,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setLoading,
         isLoggedIn,
         setIsLoggedIn,
-        settings,
-        setSettings,
         toast,
         setToast,
     };

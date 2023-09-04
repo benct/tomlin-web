@@ -3,8 +3,7 @@ import Link from 'next/link';
 import { Icon } from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
 
-import { useAppContext } from '@/data/context';
-import { useInit } from '@/data/auth';
+import { useHome } from '@/data/base';
 
 import { Box } from '@/components/page/Box';
 import { Countdown } from './Countdown';
@@ -12,12 +11,11 @@ import { Quote } from './Quote';
 import { Time } from './Time';
 
 export const Home = () => {
-    const { settings } = useAppContext();
-    const { api, database, weather, loading } = useInit();
+    const { api, database, weather, settings, loading } = useHome();
 
     const weatherIcon = weather?.forecast ? `/images/weather/${weather.forecast}.svg` : '/images/icon/home.svg';
 
-    const renderStatus = (status: boolean, message: string) => (
+    const renderStatus = (status: boolean | undefined, message: string) => (
         <span className={`align-middle italic ${status ? 'text-good' : 'text-warn'}`}>{message}</span>
     );
 
@@ -68,7 +66,7 @@ export const Home = () => {
                     )}
                 </Box>
             </div>
-            <Countdown title="Countdown to something..." timestamp={settings.countdownTarget} icon={settings.countdownIcon} />
+            <Countdown title="Countdown to something..." timestamp={settings?.countdownTarget} icon={settings?.countdownIcon} />
             <Quote />
         </>
     );
