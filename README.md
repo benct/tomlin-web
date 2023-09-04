@@ -22,8 +22,3 @@ about various web development technologies.
  - Run `yarn build-prod` to build the app for production.
  - Run `yarn lint` to check for code style issues.
  - Run `yarn clean` to clean/delete the output directory.
-
-## License
-
-This project is licensed under the MIT license, Copyright (c) 2021 Ben Christopher Tomlin.
-For more information see `LICENSE`.

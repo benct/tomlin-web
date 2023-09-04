@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.2.0] - 2023-09-05 - *Roles, Ratings, Tools*
+### Added
+- Proper handling and administration of user roles
+- Simple ratings page and functionality
+- Tools page with QR code generator and encoder/decoder
+- POC image/art curator functionality using QR codes
+
+### Changed
+- Simplified site design for standalone pages
+- Improved authentication flow
+- Extract theme toggle handling to hook
+- Upgrade Next.js and SWR major versions
+
 ## [3.1.1] - 2022-10-17 - *More Tailwind*
 ### Changed
 - More restructuring and refactoring of html structures

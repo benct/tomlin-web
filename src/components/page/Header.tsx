@@ -39,7 +39,7 @@ export const Header = () => {
                         title="Version"
                     />
                     <Button
-                        text="3.1.1"
+                        text="3.2.0"
                         title="View changelog on GitHub"
                         href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
                         tabIndex={showMenu ? -1 : 0}
