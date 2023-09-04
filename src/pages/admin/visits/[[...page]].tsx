@@ -3,7 +3,7 @@ import { Auth } from '@/components/Auth';
 import { Visits } from '@/components/admin/Visits';
 import { NextPageProps, PageProps } from '@/interfaces';
 
-const LogsPage: NextPage<PageProps> = ({ page }) => (
+const LogsPage: NextPage<PageProps> = ({ page }: PageProps) => (
     <Auth>
         <Visits page={page} />
     </Auth>

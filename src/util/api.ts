@@ -1,16 +1,9 @@
 import getConfig from 'next/config';
 import { formatQuery } from './formatting';
-import { debounce } from './debounce';
 
 type ApiParams = Record<string, any>;
 
 const { publicRuntimeConfig } = getConfig();
-
-// TODO reimplement loading overlay?
-let loadingOverlay = false;
-const delayedLoading = debounce((value: boolean): void => {
-    loadingOverlay = value;
-}, 150);
 
 const authHeader = (): Record<string, string> => {
     const token = window.localStorage.getItem('token');
@@ -40,20 +33,14 @@ const api = <T>(method: string, path: string, body?: FormData, type?: string): P
         })
         .then((response: Response): Promise<T> => (type == 'text' ? response.text() : type == 'blob' ? response.blob() : response.json()));
 
-export const load = <T>(method: string, path: string, body?: FormData, type?: string): Promise<T> => {
-    delayedLoading(true);
-
-    return api<T>(method, path, body, type).finally(() => delayedLoading(false));
-};
-
 export const get = <T>(path: string, params?: ApiParams): Promise<T> => api<T>('GET', path + formatQuery(params));
 
 export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));
 
-export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => load('POST', path, buildForm(params, files));
+export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => api('POST', path, buildForm(params, files));
 
-export const del = <T>(path: string, params?: ApiParams): Promise<T> => load('DELETE', path, buildForm(params));
+export const del = <T>(path: string, params?: ApiParams): Promise<T> => api('DELETE', path, buildForm(params));
 
-export const text = (path: string, params?: ApiParams): Promise<string> => load('POST', path, buildForm(params), 'text');
+export const text = (path: string, params?: ApiParams): Promise<string> => api('POST', path, buildForm(params), 'text');
 
-export const blob = (path: string, params?: ApiParams): Promise<Blob> => load('POST', path, buildForm(params), 'blob');
+export const blob = (path: string, params?: ApiParams): Promise<Blob> => api('POST', path, buildForm(params), 'blob');

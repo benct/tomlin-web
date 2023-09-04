@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
-import { del, get, load, post } from '@/util/api';
+import { del, get, post } from '@/util/api';
 import {
     MediaExisting,
     MediaExternal,
@@ -40,7 +40,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
         if (type && id) {
             setLoading(true);
             setToast(undefined);
-            load<MediaItemEntry>('GET', `/media/${type}/${id}`)
+            get<MediaItemEntry>(`/media/${type}/${id}`)
                 .then((response) => setSelected(response))
                 .catch(() => setToast('Could not fetch media content...'))
                 .finally(() => setLoading(false));
@@ -227,7 +227,7 @@ export const useMediaSearchActions = () => {
     const imdb = (type: MediaType, id: number) => {
         setLoading(true);
         setToast(undefined);
-        load<MediaExternal>('GET', `/media/${type}/external/${id}`)
+        get<MediaExternal>(`/media/${type}/external/${id}`)
             .then((response) => {
                 if (response && response.imdb_id) {
                     window.open(`https://www.imdb.com/title/${response.imdb_id}`, '_blank')?.focus();

@@ -3,7 +3,7 @@ import { Auth } from '@/components/Auth';
 import { MediaList } from '@/components/media/MediaList';
 import { MediaProps, MediaType, NextPageProps } from '@/interfaces';
 
-const MediaListPage: NextPage<MediaProps> = ({ type, page, sort, query }) => (
+const MediaListPage: NextPage<MediaProps> = ({ type, page, sort, query }: MediaProps) => (
     <Auth>
         <MediaList type={type} page={page} sort={sort} query={query} />
     </Auth>
