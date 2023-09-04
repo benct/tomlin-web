@@ -9,7 +9,7 @@ export const About = () => (
         <Box title="Ben Tomlin" border="border-b" className="text-center">
             <div>
                 Senior Developer at{' '}
-                <a href="https://finn.no" rel="noreferrer" className="text-secondary dark:text-secondary-dark">
+                <a href="https://finn.no" target="_blank" rel="noreferrer" className="text-secondary dark:text-secondary-dark">
                     FINN.no
                 </a>
             </div>

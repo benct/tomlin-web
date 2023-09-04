@@ -4,7 +4,7 @@ import { mdiGithub, mdiMenu, mdiThemeLightDark } from '@mdi/js';
 import { useTheme } from '@/data/base';
 
 import { Navigation } from './Navigation';
-import { Button, LinkButton } from './Button';
+import { Button } from './Button';
 
 export const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -38,7 +38,7 @@ export const Header = () => {
                         className="text-neutral dark:text-neutral-dark ml-16"
                         title="Version"
                     />
-                    <LinkButton
+                    <Button
                         text="3.1.1"
                         title="View changelog on GitHub"
                         href="https://github.com/benct/tomlin-web/blob/master/CHANGELOG.md"
