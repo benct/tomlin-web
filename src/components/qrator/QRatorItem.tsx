@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import { formatThousands } from '@/util/formatting';
+import { useAppContext } from '@/data/context';
 import { useQRatorItem } from '@/data/qrator';
 
 import { Loading } from '@/components/page/Loading';
@@ -9,6 +10,7 @@ import { Box } from '@/components/page/Box';
 import { Button } from '@/components/page/Button';
 
 export const QRatorItem = ({ id }: { id: number }) => {
+    const { hasPermission } = useAppContext();
     const { data, loading, saveItem, deleteItem } = useQRatorItem(id);
 
     const [editing, setEditing] = useState<boolean>(false);
@@ -66,8 +68,12 @@ export const QRatorItem = ({ id }: { id: number }) => {
                                         <Link href="/qrator" className="button-text" title="Back">
                                             Back
                                         </Link>
-                                        <Button text="Edit" onClick={() => setEditing(true)} />
-                                        <Button text="Delete" onClick={() => deleteItem(id)} />
+                                        {hasPermission('qrator') && (
+                                            <>
+                                                <Button text="Edit" onClick={() => setEditing(true)} />
+                                                <Button text="Delete" onClick={() => deleteItem(id)} />
+                                            </>
+                                        )}
                                     </>
                                 )}
                             </div>

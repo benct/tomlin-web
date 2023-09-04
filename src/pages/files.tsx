@@ -3,7 +3,7 @@ import { Auth } from '@/components/Auth';
 import { Files } from '@/components/files/Files';
 
 const FilesPage: NextPage = () => (
-    <Auth>
+    <Auth role="private">
         <Files />
     </Auth>
 );

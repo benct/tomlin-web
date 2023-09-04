@@ -4,7 +4,7 @@ import { MediaSearch } from '@/components/media/MediaSearch';
 import { MediaSearchProps, NextPageProps } from '@/interfaces';
 
 const MediaSearchPage: NextPage<MediaSearchProps> = (props) => (
-    <Auth>
+    <Auth role="media">
         <MediaSearch {...props} />
     </Auth>
 );

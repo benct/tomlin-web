@@ -3,7 +3,7 @@ import { Auth } from '@/components/Auth';
 import { Notes } from '@/components/notes/Notes';
 
 const NotesPage: NextPage = () => (
-    <Auth>
+    <Auth role="private">
         <Notes />
     </Auth>
 );

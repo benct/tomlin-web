@@ -9,7 +9,7 @@ import { Loading } from '@/components/page/Loading';
 
 export const QRator = () => {
     const fileInput = useRef<HTMLInputElement>(null);
-    const { isLoggedIn } = useAppContext();
+    const { hasPermission } = useAppContext();
     const { data, loading, uploading, upload } = useQRator();
 
     const handleUpload = (): void => {
@@ -38,7 +38,7 @@ export const QRator = () => {
                     ))}
                 </Loading>
             </Box>
-            {isLoggedIn && (
+            {hasPermission('qrator') && (
                 <Box className="space-y-16 pb-32">
                     <input
                         className="input mx-auto"

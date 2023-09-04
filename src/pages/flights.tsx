@@ -3,7 +3,7 @@ import { Auth } from '@/components/Auth';
 import { Flights } from '@/components/flights/Flights';
 
 const FlightsPage: NextPage = () => (
-    <Auth>
+    <Auth role="private">
         <Flights />
     </Auth>
 );

@@ -4,7 +4,7 @@ import { MediaList } from '@/components/media/MediaList';
 import { MediaProps, MediaType, NextPageProps } from '@/interfaces';
 
 const MediaListPage: NextPage<MediaProps> = ({ type, page, sort, query }: MediaProps) => (
-    <Auth>
+    <Auth role="media">
         <MediaList type={type} page={page} sort={sort} query={query} />
     </Auth>
 );
