@@ -30,18 +30,20 @@ export interface NavigationLinkProps {
     href: string;
     icon?: string;
     chevron?: boolean;
+    prefetch?: boolean;
 }
 
 export const Navigation = ({ show, toggle }: NavigationProps) => {
     const { isLoggedIn, hasPermission } = useAppContext();
 
-    const NavLink = ({ title, href, icon, chevron }: NavigationLinkProps) => (
+    const NavLink = ({ title, href, icon, chevron, prefetch = false }: NavigationLinkProps) => (
         <li>
             <Link
                 href={href}
                 onClick={toggle}
                 tabIndex={show ? 0 : -1}
-                className="flex gap-16 p-8 rounded-8 hover:bg-neutral dark:hover:bg-neutral-dark">
+                className="flex gap-16 p-8 rounded-8 hover:bg-neutral dark:hover:bg-neutral-dark"
+                prefetch={prefetch}>
                 {icon ? <Icon path={icon} size={1} className="text-neutral dark:text-neutral-dark" /> : <span className="w-24" />}
                 <span className="flex-1 text-primary dark:text-primary-dark">{title}</span>
                 {chevron ? <Icon path={mdiChevronDown} size={1} className="text-neutral dark:text-neutral-dark" /> : null}
@@ -67,9 +69,9 @@ export const Navigation = ({ show, toggle }: NavigationProps) => {
                     <Button text="Close" icon={mdiClose} onClick={toggle} tabIndex={show ? 0 : -1} />
                 </div>
                 <ul className="space-y-4 py-16">
-                    <NavLink href="/" title="Home" icon={mdiHomeOutline} />
-                    <NavLink href="/tools" title="Tools" icon={mdiToolboxOutline} />
-                    <NavLink href="/about" title="About" icon={mdiInformationOutline} />
+                    <NavLink href="/" title="Home" icon={mdiHomeOutline} prefetch />
+                    <NavLink href="/tools" title="Tools" icon={mdiToolboxOutline} prefetch />
+                    <NavLink href="/about" title="About" icon={mdiInformationOutline} prefetch />
                     <hr className="dark:border-t-slate-400" />
                     <NavLink href="/media" title="Media" icon={mdiTelevision} chevron={isLoggedIn ?? false} />
                     {hasPermission('media') && (
