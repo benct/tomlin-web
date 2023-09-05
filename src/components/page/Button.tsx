@@ -16,15 +16,15 @@ export const Button = ({
     target = '_blank',
     size = 1,
     active = false,
-    className = '',
+    className,
     ...rest
 }: ButtonProps & ButtonHTMLAttributes<HTMLButtonElement> & AnchorHTMLAttributes<HTMLAnchorElement>) => {
-    const activeClassNames = active ? 'bg-slate-100 dark:bg-slate-800 border-slate-800 dark:border-slate-100' : '';
-    const classNames = `${icon ? 'button-icon' : 'button-text'} ${activeClassNames} ${className}`;
+    const activeClassNames = active ? ' bg-slate-100 dark:bg-slate-800 border-slate-800 dark:border-slate-100' : '';
+    const classNames = `${icon ? 'button-icon' : 'button-text'}${activeClassNames}${className ? ` ${className}` : ''}`;
     const content = icon ? <Icon path={icon} size={size} /> : text;
 
     return href ? (
-        <a target={target} rel="noreferrer" className={classNames} title={text} aria-label={text} {...rest}>
+        <a href={href} target={target} rel="noreferrer" className={classNames} title={text} aria-label={text} {...rest}>
             {content}
         </a>
     ) : (
