@@ -43,7 +43,7 @@ export const Navigation = ({ show, toggle }: NavigationProps) => {
                 onClick={toggle}
                 tabIndex={show ? 0 : -1}
                 className="flex gap-16 p-8 rounded-8 hover:bg-neutral dark:hover:bg-neutral-dark"
-                prefetch={prefetch}>
+                prefetch={prefetch ? undefined : false}>
                 {icon ? <Icon path={icon} size={1} className="text-neutral dark:text-neutral-dark" /> : <span className="w-24" />}
                 <span className="flex-1 text-primary dark:text-primary-dark">{title}</span>
                 {chevron ? <Icon path={mdiChevronDown} size={1} className="text-neutral dark:text-neutral-dark" /> : null}
