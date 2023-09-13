@@ -2,10 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-.dark .rv-discrete-color-legend-item,
-.dark .rv-xy-plot__axis__tick__text {
-    color: #eee;
-    fill: #eee;
+.recharts-legend-item-text {
+    color: #475569 !important;
+}
+.dark .recharts-legend-item-text {
+    color: #f8fafc !important;
+}
+.dark .recharts-cartesian-axis-tick-value {
+    fill: #f8fafc;
+}
+.dark .recharts-tooltip-cursor {
+    fill: #1e293b;
+    fill-opacity: 0.3;
+}
+.dark .recharts-default-tooltip {
+    background-color: #334155 !important;
 }
 
 @layer components {

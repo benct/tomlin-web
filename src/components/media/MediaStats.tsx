@@ -1,16 +1,6 @@
 import { Icon } from '@mdi/react';
 import { mdiMovieOutline, mdiTelevisionClassic } from '@mdi/js';
-import {
-    AreaSeries,
-    DiscreteColorLegend,
-    FlexibleWidthXYPlot,
-    HorizontalGridLines,
-    LineMarkSeries,
-    VerticalBarSeries,
-    XAxis,
-    YAxis,
-} from 'react-vis';
-import 'react-vis/dist/style.css';
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 import { useAppContext } from '@/data/context';
 import { useMediaStats } from '@/data/media';
@@ -19,62 +9,42 @@ import { MediaStatsEntry, MediaStatsType } from '@/interfaces';
 import { Loading } from '@/components/page/Loading';
 import { Box } from '@/components/page/Box';
 
-interface MediaGraphEntry {
-    x: string;
-    y: number;
-}
-
 export const MediaStats = () => {
     const { isLoggedIn } = useAppContext();
     const { stats, loading } = useMediaStats();
 
-    const mapRatings = (data?: MediaStatsEntry[]): MediaGraphEntry[] =>
-        data
-            ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map(
-                  (num: number): MediaGraphEntry => ({
-                      x: `${num} +`,
-                      y: (data.find((item: MediaStatsEntry): boolean => item.score === num) ?? { count: 0 }).count,
-                  }),
-              )
-            : [];
-
-    const mapYears = (data?: MediaStatsEntry[]): MediaGraphEntry[] =>
-        data
-            ?.filter((item) => item.year)
-            .sort((a, b) => (a.year ?? 0) - (b.year ?? 0))
-            .map((item: MediaStatsEntry): MediaGraphEntry => ({ x: `${item.year}0`, y: item.count })) ?? [];
-
-    const renderLineChart = (title: string, color: string, data: MediaGraphEntry[]) => (
-        <div style={{ height: '250px' }}>
-            <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
-                <DiscreteColorLegend
-                    style={{ position: 'absolute', left: '50px', top: '10px' }}
-                    orientation="horizontal"
-                    items={[{ title, color }]}
+    const renderLineChart = (title: string, color: string, data?: MediaStatsEntry[]) => (
+        <ResponsiveContainer width="100%" height={250}>
+            <AreaChart data={data} margin={{ right: 32, top: 16 }}>
+                <CartesianGrid strokeDasharray="3 5" opacity={0.5} />
+                <XAxis dataKey="score" fontSize={10} />
+                <YAxis fontSize={10} />
+                <Tooltip
+                    formatter={(value) => [value, 'Total']}
+                    labelFormatter={(label) => `${label} - ${label + 1}`}
+                    contentStyle={{ fontSize: 10 }}
                 />
-                <HorizontalGridLines />
-                <XAxis />
-                <YAxis />
-                <AreaSeries curve="curveMonotoneX" color={color} opacity={0.25} stroke="transparent" data={data} />
-                <LineMarkSeries curve="curveMonotoneX" stroke={color} strokeStyle="solid" size={3} data={data} />
-            </FlexibleWidthXYPlot>
-        </div>
+                <Legend formatter={() => title} wrapperStyle={{ fontSize: 10, marginTop: 20 }} verticalAlign="top" />
+                <Area type="monotone" dataKey="count" stroke={color} strokeWidth={1} fill={color} fillOpacity={0.3} />
+            </AreaChart>
+        </ResponsiveContainer>
     );
 
-    const renderBarChart = (title: string, color: string, data: MediaGraphEntry[]) => (
-        <div style={{ height: '250px' }}>
-            <FlexibleWidthXYPlot xType="ordinal" height={250} animation={true}>
-                <DiscreteColorLegend
-                    style={{ position: 'absolute', left: '50px', top: '10px' }}
-                    orientation="horizontal"
-                    items={[{ title, color }]}
+    const renderBarChart = (title: string, color: string, data: MediaStatsEntry[]) => (
+        <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={data} margin={{ right: 32, top: 16 }}>
+                <CartesianGrid strokeDasharray="3 5" opacity={0.5} vertical={false} />
+                <XAxis dataKey="year" fontSize={10} interval={0} />
+                <YAxis fontSize={10} />
+                <Tooltip
+                    formatter={(value) => [value, 'Total']}
+                    labelFormatter={(label) => `${label} - ${label + 9}`}
+                    contentStyle={{ fontSize: 10 }}
                 />
-                <HorizontalGridLines />
-                <XAxis />
-                <YAxis />
-                <VerticalBarSeries color={color} opacity={0.8} stroke="#aaa" data={data} />
-            </FlexibleWidthXYPlot>
-        </div>
+                <Legend formatter={() => title} wrapperStyle={{ fontSize: 10, marginTop: 20 }} verticalAlign="top" />
+                <Bar dataKey="count" stroke={color} strokeWidth={1} fill={color} fillOpacity={0.3} />
+            </BarChart>
+        </ResponsiveContainer>
     );
 
     const renderStats = (stats: MediaStatsType) => (
@@ -88,7 +58,7 @@ export const MediaStats = () => {
     const renderEpisodeStats = (stats: MediaStatsType) => (
         <div className="flex justify-center items-center text-12">
             Episodes&nbsp;<span className="font-bold text-14 pr-16">{stats.episodes ?? '-'}</span>
-            Seen&nbsp;<span className="font-bold text-14">{stats.seen_episodes ?? '-'}</span>
+            Seen&nbsp;<span className="font-bold text-14">{stats.episodesSeen ?? '-'}</span>
         </div>
     );
 
@@ -113,8 +83,8 @@ export const MediaStats = () => {
                                 <span>Tracked Movies</span>
                             </div>
                             <div className="h-56">{renderStats(stats.movie)}</div>
-                            {renderLineChart(`Rating (avg: ${stats.movie?.rating ?? '-'})`, '#006080', mapRatings(stats.movie.ratings))}
-                            {renderBarChart('Release (by decade)', '#006080', mapYears(stats.movie.years))}
+                            {renderLineChart(`Rating (avg: ${stats.movie.rating.toFixed(1) ?? '-'})`, '#0284c7', stats.movie.ratings)}
+                            {renderBarChart('Released (by decade)', '#0284c7', stats.movie.years)}
                         </div>
                         <div>
                             <div className="flex justify-center gap-8 border-b pb-8 m-12">
@@ -131,8 +101,8 @@ export const MediaStats = () => {
                                 {renderStats(stats.tv)}
                                 {renderEpisodeStats(stats.tv)}
                             </div>
-                            {renderLineChart(`Rating (avg: ${stats.tv.rating ?? '-'})`, '#008060', mapRatings(stats.tv.ratings))}
-                            {renderBarChart('First aired (by decade)', '#008060', mapYears(stats.tv.years))}
+                            {renderLineChart(`Rating (avg: ${stats.tv.rating.toFixed(1) ?? '-'})`, '#16a34a', stats.tv.ratings)}
+                            {renderBarChart('First aired (by decade)', '#16a34a', stats.tv.years)}
                         </div>
                     </div>
                 ) : null}

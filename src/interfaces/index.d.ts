@@ -177,14 +177,14 @@ export interface MediaStats {
 }
 
 export interface MediaStatsType {
-    total?: number;
-    seen?: number;
-    favourite?: number;
+    total: number;
+    seen: number;
+    favourite: number;
     episodes?: number;
-    seen_episodes?: number;
-    rating?: number;
-    ratings?: MediaStatsEntry[];
-    years?: MediaStatsEntry[];
+    episodesSeen?: number;
+    rating: number;
+    ratings: MediaStatsEntry[];
+    years: MediaStatsEntry[];
 }
 
 export interface MediaStatsEntry {
