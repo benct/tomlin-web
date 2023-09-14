@@ -2,23 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.recharts-legend-item-text {
-    color: #475569 !important;
-}
-.dark .recharts-legend-item-text {
-    color: #f8fafc !important;
-}
-.dark .recharts-cartesian-axis-tick-value {
-    fill: #f8fafc;
-}
-.dark .recharts-tooltip-cursor {
-    fill: #1e293b;
-    fill-opacity: 0.3;
-}
-.dark .recharts-default-tooltip {
-    background-color: #334155 !important;
-}
-
 @layer components {
     .button-text,
     .button-icon,
@@ -38,4 +21,34 @@
     .label {
         @apply block text-secondary dark:text-secondary-dark text-14;
     }
+}
+
+/* recharts */
+.recharts-legend-item-text {
+    color: #475569 !important;
+}
+.dark .recharts-legend-item-text {
+    color: #f8fafc !important;
+}
+.dark .recharts-cartesian-axis-tick-value {
+    fill: #f8fafc;
+}
+.dark .recharts-tooltip-cursor {
+    fill: #1e293b;
+    fill-opacity: 0.3;
+}
+.dark .recharts-default-tooltip {
+    background-color: #334155 !important;
+}
+
+/* react-svg-worldmap */
+.worldmap__figure-container {
+    width: min-content;
+    margin: 0 auto;
+}
+.dark .worldmap__figure-container {
+    background-color: #1e293b !important;
+}
+.dark .worldmap__figure-container path {
+    stroke: white !important;
 }

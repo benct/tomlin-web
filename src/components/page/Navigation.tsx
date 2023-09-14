@@ -11,6 +11,7 @@ import {
     mdiInformationOutline,
     mdiLogin,
     mdiLogout,
+    mdiMapMarkerCheckOutline,
     mdiNoteOutline,
     mdiShieldLockOutline,
     mdiTelevision,
@@ -70,9 +71,10 @@ export const Navigation = ({ show, toggle }: NavigationProps) => {
                 </div>
                 <ul className="space-y-4 py-16">
                     <NavLink href="/" title="Home" icon={mdiHomeOutline} prefetch />
-                    <NavLink href="/tools" title="Tools" icon={mdiToolboxOutline} prefetch />
                     <NavLink href="/about" title="About" icon={mdiInformationOutline} prefetch />
                     <hr className="dark:border-t-slate-400" />
+                    <NavLink href="/tools" title="Tools" icon={mdiToolboxOutline} />
+                    <NavLink href="/been" title="Been" icon={mdiMapMarkerCheckOutline} />
                     <NavLink href="/media" title="Media" icon={mdiTelevision} chevron={isLoggedIn ?? false} />
                     {hasPermission('media') && (
                         <>
