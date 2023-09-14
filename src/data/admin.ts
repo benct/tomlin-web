@@ -1,20 +1,36 @@
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
 import { del, get, post } from '@/util/api';
-import { Log, PaginationResponse, Settings, Visit } from '@/interfaces';
+import { BeenItem, Log, PaginationResponse, Settings, Visit } from '@/interfaces';
 
-export const useAdminData = () => {
-    const stats = useSWR<Record<string, number>, Error>('/admin/stats', get, { revalidateOnFocus: false });
-    const settings = useSWR<Settings, Error>('/settings', get, { revalidateOnFocus: false });
+export const useSettings = () => {
+    const { data, error, isLoading } = useSWR<Settings, Error>('/settings', get, { revalidateOnFocus: false });
 
-    useToast((stats.error || settings.error) && 'Could not fetch data...');
+    useToast(error && 'Could not fetch settings...');
 
-    return { stats: stats.data, settings: settings.data, loading: stats.isLoading || settings.isLoading };
+    return { settings: data, loading: isLoading };
+};
+
+export const useAdminStats = () => {
+    const { data, error, isLoading } = useSWR<Record<string, number>, Error>('/admin/stats', get, { revalidateOnFocus: false });
+
+    useToast(error && 'Could not fetch stats...');
+
+    return { stats: data, loading: isLoading };
+};
+
+export const useBeen = () => {
+    const { data, error, isLoading } = useSWR<BeenItem[], Error>('/been', get, { revalidateOnFocus: false });
+
+    useToast(error && 'Could not fetch data...');
+
+    return { been: data, loading: isLoading };
 };
 
 export const useAdminActions = () => {
+    const { mutate } = useSWRConfig();
     const { isLoggedIn, setLoading } = useAppContext();
     const [toast, setToast] = useState<string>();
 
@@ -25,7 +41,10 @@ export const useAdminActions = () => {
             setLoading(true);
             setToast(undefined);
             post('/settings', { key, value })
-                .then(() => setToast('Successfully saved settings!'))
+                .then(() => {
+                    mutate('/settings');
+                    setToast('Successfully saved settings!');
+                })
                 .catch(() => setToast('Could not save settings...'))
                 .finally(() => setLoading(false));
         }
@@ -60,6 +79,52 @@ export const useAdminActions = () => {
                 .finally(() => setLoading(false));
         }
     };
+    const addCountry = (country?: string) => {
+        if (isLoggedIn && country) {
+            setLoading(true);
+            setToast(undefined);
+            post(`/been/${country}`)
+                .then(() => {
+                    mutate('/been');
+                    setToast('Successfully added country!');
+                })
+                .catch(() => setToast('Could not add country...'))
+                .finally(() => setLoading(false));
+        }
+    };
+    const removeCountry = (country: string) => {
+        if (isLoggedIn && confirm('Are you sure you want to remove this country?')) {
+            setLoading(true);
+            setToast(undefined);
+            del(`/been/${country}`)
+                .then(() => {
+                    mutate('/been');
+                    setToast('Successfully removed country!');
+                })
+                .catch(() => setToast('Could not remove country...'))
+                .finally(() => setLoading(false));
+        }
+    };
+    const incrementCountry = (country: string) => {
+        if (isLoggedIn) {
+            setLoading(true);
+            setToast(undefined);
+            post(`/been/increment/${country}`)
+                .then(() => mutate('/been'))
+                .catch(() => setToast('Could not increment value...'))
+                .finally(() => setLoading(false));
+        }
+    };
+    const decrementCountry = (country: string) => {
+        if (isLoggedIn) {
+            setLoading(true);
+            setToast(undefined);
+            post(`/been/decrement/${country}`)
+                .then(() => mutate('/been'))
+                .catch(() => setToast('Could not decrement value...'))
+                .finally(() => setLoading(false));
+        }
+    };
     const backup = () => {
         if (isLoggedIn) {
             setLoading(true);
@@ -71,7 +136,7 @@ export const useAdminActions = () => {
         }
     };
 
-    return { saveSetting, clearLogs, updateMedia, updateIata, backup };
+    return { saveSetting, clearLogs, updateMedia, updateIata, addCountry, removeCountry, incrementCountry, decrementCountry, backup };
 };
 
 export const useVisits = (page: number) => {

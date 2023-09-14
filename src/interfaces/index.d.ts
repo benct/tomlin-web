@@ -251,6 +251,12 @@ export interface RatingItem {
     subtitle?: string;
 }
 
+export interface BeenItem {
+    country: string;
+    name: string;
+    visited: number;
+}
+
 export type RatingResult = RatingItem & { [key: string]: number };
 
 export interface PaginationResponse<T> {
