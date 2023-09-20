@@ -39,7 +39,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         required
                         autoComplete="off"
                         onChange={change}
-                        value={form.origin}
+                        value={form.origin ?? ''}
                         maxLength={3}
                     />
                 </label>
@@ -52,7 +52,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         required
                         autoComplete="off"
                         onChange={change}
-                        value={form.destination}
+                        value={form.destination ?? ''}
                         maxLength={3}
                     />
                 </label>
@@ -65,7 +65,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         required
                         autoComplete="off"
                         onChange={change}
-                        value={form.departure}
+                        value={form.departure ?? ''}
                     />
                 </label>
                 <label className="label">
@@ -77,7 +77,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         required
                         autoComplete="off"
                         onChange={change}
-                        value={form.arrival}
+                        value={form.arrival ?? ''}
                     />
                 </label>
             </div>
@@ -91,7 +91,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         required
                         autoComplete="off"
                         onChange={change}
-                        value={form.carrier}
+                        value={form.carrier ?? ''}
                         maxLength={2}
                     />
                 </label>
@@ -104,7 +104,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         required
                         autoComplete="off"
                         onChange={change}
-                        value={form.number}
+                        value={form.number ?? ''}
                         min={1}
                         max={9999}
                     />
@@ -131,7 +131,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         name="aircraft"
                         autoComplete="off"
                         onChange={change}
-                        value={form.aircraft}
+                        value={form.aircraft ?? ''}
                         maxLength={4}
                     />
                 </label>
@@ -143,7 +143,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         name="seat"
                         autoComplete="off"
                         onChange={change}
-                        value={form.seat}
+                        value={form.seat ?? ''}
                         maxLength={4}
                     />
                 </label>
@@ -156,7 +156,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                         required
                         autoComplete="off"
                         onChange={change}
-                        value={form.reference}
+                        value={form.reference ?? ''}
                     />
                 </label>
             </div>
@@ -169,7 +169,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                     autoComplete="off"
                     rows={4}
                     onChange={change}
-                    value={form.info ?? undefined}
+                    value={form.info ?? ''}
                 />
             </label>
         </form>
