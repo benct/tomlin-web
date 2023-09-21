@@ -2,7 +2,7 @@ import useSWR, { useSWRConfig } from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
-import { del, get, post } from '@/util/api';
+import { del, get, post, query } from '@/util/api';
 import { BeenItem, Log, PaginationResponse, Settings, Visit } from '@/interfaces';
 
 export const useSettings = () => {
@@ -139,9 +139,13 @@ export const useAdminActions = () => {
     return { saveSetting, clearLogs, updateMedia, updateIata, addCountry, removeCountry, incrementCountry, decrementCountry, backup };
 };
 
-export const useVisits = (page: number) => {
+export const useVisits = (page: number, sort: string) => {
     const { isLoggedIn } = useAppContext();
-    const { data, error, isLoading } = useSWR<PaginationResponse<Visit>, Error>(isLoggedIn ? `/admin/visits/${page}` : null, get);
+    const { data, error, isLoading } = useSWR<PaginationResponse<Visit>, Error>(
+        isLoggedIn ? [`/admin/visits/${page}`, { sort }] : null,
+        query,
+        { revalidateOnFocus: false },
+    );
 
     useToast(error && 'Could not fetch visit data...');
 
