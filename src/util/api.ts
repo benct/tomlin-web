@@ -35,11 +35,13 @@ const api = <T>(method: string, path: string, body?: FormData, type?: string): P
 
 export const get = <T>(path: string, params?: ApiParams): Promise<T> => api<T>('GET', path + formatQuery(params));
 
-export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));
+export const query = <T>([path, params]: [string, ApiParams]): Promise<T> => api<T>('GET', path + formatQuery(params));
 
 export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => api('POST', path, buildForm(params, files));
 
 export const del = <T>(path: string, params?: ApiParams): Promise<T> => api('DELETE', path, buildForm(params));
+
+export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));
 
 export const text = (path: string, params?: ApiParams): Promise<string> => api('POST', path, buildForm(params), 'text');
 

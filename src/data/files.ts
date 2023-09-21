@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
-import { blob, get, post, text } from '@/util/api';
+import { blob, post, query, text } from '@/util/api';
 import { FileItem, FilePreview } from '@/interfaces';
 
 export const useFiles = () => {
@@ -12,11 +12,9 @@ export const useFiles = () => {
     const [toast, setToast] = useState<string>();
 
     const { isLoggedIn, setLoading } = useAppContext();
-    const { data, error, isLoading, mutate } = useSWR<FileItem[], Error>(
-        isLoggedIn ? ['/file/tree', { path }] : null,
-        ([url, data]: [string, Record<string, string>]) => get<FileItem[]>(url, data),
-        { revalidateOnFocus: false },
-    );
+    const { data, error, isLoading, mutate } = useSWR<FileItem[], Error>(isLoggedIn ? ['/file/tree', { path }] : null, query, {
+        revalidateOnFocus: false,
+    });
 
     useToast(error ? 'Could not fetch files...' : toast);
 

@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import { useToast } from './base';
 import { useAppContext } from './context';
-import { del, get, post } from '@/util/api';
+import { del, get, post, query as getQuery } from '@/util/api';
 import {
     MediaExisting,
     MediaExternal,
@@ -30,7 +30,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
     const { isLoggedIn, setLoading } = useAppContext();
     const { data, error, isLoading, mutate } = useSWR<PaginationResponse<MediaItemEntry>, Error>(
         isLoggedIn ? [`/media/${type}`, { page, sort, query }] : null,
-        ([url, data]: [string, MediaProps]) => get<PaginationResponse<MediaItemEntry>>(url, data),
+        getQuery,
         { revalidateOnFocus: false },
     );
 
@@ -152,7 +152,7 @@ export const useMediaSearch = ({ type, action, page, id }: MediaSearchProps) => 
     const { isLoggedIn, setLoading } = useAppContext();
     const { data, error, isLoading } = useSWR<PaginationResponse<MediaSearchItemEntry>, Error>(
         isLoggedIn && type && action ? [`/media/${type}/${action}/${id ?? ''}`, { page }] : null,
-        ([url, data]: [string, MediaSearchProps]) => get<PaginationResponse<MediaSearchItemEntry>>(url, data),
+        getQuery,
         { revalidateOnFocus: false },
     );
 
