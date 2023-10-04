@@ -109,8 +109,8 @@ export const Admin = () => {
             </Box>
             <Box title="Been" className="grid grid-cols-admin gap-12 items-center">
                 <Loading isLoading={loadingBeen} text="Loading data..." className="col-span-3">
-                    <span className="truncate">Add new country</span>
-                    <select className="input text-12 pr-16 max-w-narrow" ref={countryList}>
+                    <span className="truncate">Add country</span>
+                    <select className="input text-12 pr-16 max-w-128 sm:max-w-256" ref={countryList}>
                         {availableCountries.map((country) => (
                             <option key={country.code} value={country.code}>
                                 {country.name}

@@ -46,6 +46,8 @@ module.exports = {
             full: '100%',
             min: 'min-content',
             max: 'max-content',
+            128: '128px',
+            256: '256px',
             ...breakpoints(theme('screens')),
         }),
         borderRadius: {
