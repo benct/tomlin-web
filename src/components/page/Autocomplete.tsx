@@ -30,6 +30,7 @@ export const Autocomplete = <R, D>({
     mapResponse,
     queryParams = {},
     minLength = 3,
+    className = '',
     ...rest
 }: AutocompleteProps<R, D> & InputHTMLAttributes<HTMLInputElement>) => {
     const [value, setValue] = useState<string>(defaultValue ?? '');
@@ -91,12 +92,12 @@ export const Autocomplete = <R, D>({
         list.map((opt: AutocompleteOption<D>, idx: number) => (
             <li
                 className={`truncate cursor-pointer p-6 hover:font-bold odd:bg-slate-100 dark:odd:bg-slate-800 ${
-                    opt.indent ? 'pl-32' : ''
+                    opt.indent ? 'pl-24' : ''
                 }`}
                 onClick={() => handleSelect(opt)}
                 key={opt.value + idx}>
-                {opt.text}
-                <div className="text-12">{opt.subText}</div>
+                <span className="text-secondary dark:text-secondary-dark">{opt.text}</span>
+                {opt.subText ? <div className="text-12">{opt.subText}</div> : null}
             </li>
         ));
 
@@ -111,11 +112,11 @@ export const Autocomplete = <R, D>({
                 onKeyDown={handleKeyboard}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                className="input w-full"
+                className={`input w-full ${className}`}
                 {...rest}
             />
             {showList && (
-                <ul className="absolute w-full max-w-narrow z-10 mt-2 border-2 rounded-4 dark:border-slate-400 bg-light dark:bg-dark text-primary dark:text-primary-dark">
+                <ul className="absolute w-full z-10 mt-2 border-2 rounded-4 dark:border-slate-400 bg-light dark:bg-dark text-primary dark:text-primary-dark">
                     {error || !dataList?.length ? <li className="p-6">No results...</li> : renderOptions(dataList)}
                 </ul>
             )}

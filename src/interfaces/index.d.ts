@@ -220,15 +220,48 @@ export interface User {
     roles: string[];
 }
 
-export interface Flight {
-    [key: string]: string | undefined;
-}
-
 export interface Note {
     id?: number;
     title?: string;
     content?: string;
     updated?: string;
+}
+
+export interface Flight {
+    [key: string]: string | undefined;
+}
+
+export interface IataLocation {
+    iataCode: string;
+    icaoCode?: string;
+    cityCode?: string;
+    cityName: string;
+    name: string;
+    area?: string;
+    areaCode?: string;
+    country: string;
+    countryCode: string;
+    continent: string;
+    type: string;
+    typeName: string;
+    operational: boolean;
+    latitude?: number;
+    longitude?: number;
+    timezone?: string;
+    wiki?: string;
+}
+
+export interface IataAirline {
+    iataCode: string;
+    icaoCode?: string;
+    name: string;
+    alias?: string;
+    type: string;
+    typeName: string;
+    started?: string;
+    ended?: string;
+    operational: boolean;
+    wiki?: string;
 }
 
 export interface Rating {

@@ -1,7 +1,7 @@
 import { ChangeEvent, SyntheticEvent } from 'react';
 import { mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizontal } from '@mdi/js';
 
-import { Flight } from '@/interfaces';
+import { Flight, IataAirline, IataLocation } from '@/interfaces';
 import { Modal } from '@/components/page/Modal';
 import { Button } from '@/components/page/Button';
 import { Autocomplete, AutocompleteOption } from '@/components/page/Autocomplete';
@@ -16,22 +16,6 @@ interface FlightModalProps {
     remove: (id?: string) => void;
     close: () => void;
 }
-
-type Location = {
-    iataCode: string;
-    cityCode?: string;
-    name: string;
-    cityName: string;
-    area?: string;
-    country: string;
-    type: string;
-};
-
-type Airline = {
-    iataCode: string;
-    name: string;
-    type: string;
-};
 
 const mapAutocompleteResponse = <T,>(response: AutocompleteOption<T>[]): AutocompleteOption<T>[] => response;
 
@@ -55,7 +39,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                     defaultValue={form.origin}
                     // @ts-ignore
                     onSelectOption={(opt) => change({ target: { value: opt.value, name: 'origin' } })}
-                    mapResponse={mapAutocompleteResponse<Location>}
+                    mapResponse={mapAutocompleteResponse<IataLocation>}
                     required
                 />
                 <Autocomplete
@@ -64,7 +48,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                     defaultValue={form.destination}
                     // @ts-ignore
                     onSelectOption={(opt) => change({ target: { value: opt.value, name: 'destination' } })}
-                    mapResponse={mapAutocompleteResponse<Location>}
+                    mapResponse={mapAutocompleteResponse<IataLocation>}
                     required
                 />
                 <label className="label">
@@ -99,7 +83,7 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                     defaultValue={form.carrier}
                     // @ts-ignore
                     onSelectOption={(opt) => change({ target: { value: opt.value, name: 'carrier' } })}
-                    mapResponse={mapAutocompleteResponse<Airline>}
+                    mapResponse={mapAutocompleteResponse<IataAirline>}
                     minLength={2}
                     required
                 />
