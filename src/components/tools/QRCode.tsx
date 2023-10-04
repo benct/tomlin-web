@@ -16,10 +16,10 @@ export const QRCode = () => {
     };
 
     return (
-        <Box title="QR Code Generator" border="border-b">
-            <form className="flex flex-col sm:flex-row justify-center gap-16 p-16" onSubmit={handleSubmit}>
+        <Box title="QR Code Generator" className="max-w-sm mx-auto">
+            <form className="flex flex-col sm:flex-row justify-center gap-16" onSubmit={handleSubmit}>
                 <input
-                    className="input w-full sm:w-256"
+                    className="input flex-1"
                     placeholder="URL, content, etc."
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
@@ -35,7 +35,7 @@ export const QRCode = () => {
                 </div>
             </form>
             {showModal && (
-                <Modal title="QR Code" right={null} close={() => setShowModal(false)} className="flex justify-center">
+                <Modal title="QR Code" close={() => setShowModal(false)} className="flex justify-center">
                     <Image
                         src={`https://api.tomlin.no/qr?content=${content}&size=${size}`}
                         alt="Generated QR code"

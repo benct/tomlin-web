@@ -4,7 +4,7 @@ import { mdiClose } from '@mdi/js';
 
 interface ModalProps {
     title: string;
-    right: ReactNode; // footer right
+    right?: ReactNode; // footer right
     center?: ReactNode; // footer center
     left?: ReactNode; // footer left
     close: () => void;

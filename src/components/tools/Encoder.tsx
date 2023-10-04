@@ -26,10 +26,10 @@ export const Encoder = () => {
     };
 
     return (
-        <Box title="Encoder / Decoder">
-            <form className="flex flex-col sm:flex-row justify-center gap-16 p-16" onSubmit={handleSubmit}>
+        <Box title="Encoder / Decoder" border="border-t" className="max-w-sm mx-auto">
+            <form className="flex flex-col sm:flex-row justify-center gap-16" onSubmit={handleSubmit}>
                 <textarea
-                    className="input w-full sm:w-256 h-96"
+                    className="input flex-1 h-96"
                     placeholder="URL, content, etc."
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
@@ -46,7 +46,7 @@ export const Encoder = () => {
                 </div>
             </form>
             {showModal && (
-                <Modal title="Result" right={null} close={() => setShowModal(false)} className="flex justify-center">
+                <Modal title="Result" close={() => setShowModal(false)} className="flex justify-center">
                     <textarea className="input w-full" rows={5} value={result} onChange={() => {}} readOnly />
                 </Modal>
             )}
