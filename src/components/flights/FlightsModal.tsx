@@ -4,6 +4,7 @@ import { mdiContentCopy, mdiContentSaveOutline, mdiDeleteOutline, mdiSwapHorizon
 import { Flight } from '@/interfaces';
 import { Modal } from '@/components/page/Modal';
 import { Button } from '@/components/page/Button';
+import { Autocomplete, AutocompleteOption } from '@/components/page/Autocomplete';
 
 interface FlightModalProps {
     form: Flight;
@@ -15,6 +16,24 @@ interface FlightModalProps {
     remove: (id?: string) => void;
     close: () => void;
 }
+
+type Location = {
+    iataCode: string;
+    cityCode?: string;
+    name: string;
+    cityName: string;
+    area?: string;
+    country: string;
+    type: string;
+};
+
+type Airline = {
+    iataCode: string;
+    name: string;
+    type: string;
+};
+
+const mapAutocompleteResponse = <T,>(response: AutocompleteOption<T>[]): AutocompleteOption<T>[] => response;
 
 export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, close }: FlightModalProps) => (
     <Modal
@@ -30,32 +49,24 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
         }>
         <form onSubmit={save} className="space-y-16">
             <div className="grid grid-cols-2 gap-16">
-                <label className="label">
-                    Origin
-                    <input
-                        className="input w-full"
-                        type="text"
-                        name="origin"
-                        required
-                        autoComplete="off"
-                        onChange={change}
-                        value={form.origin ?? ''}
-                        maxLength={3}
-                    />
-                </label>
-                <label className="label">
-                    Destination
-                    <input
-                        className="input w-full"
-                        type="text"
-                        name="destination"
-                        required
-                        autoComplete="off"
-                        onChange={change}
-                        value={form.destination ?? ''}
-                        maxLength={3}
-                    />
-                </label>
+                <Autocomplete
+                    path="/iata/search/location"
+                    label="Origin"
+                    defaultValue={form.origin}
+                    // @ts-ignore
+                    onSelectOption={(opt) => change({ target: { value: opt.value, name: 'origin' } })}
+                    mapResponse={mapAutocompleteResponse<Location>}
+                    required
+                />
+                <Autocomplete
+                    path="/iata/search/location"
+                    label="Destination"
+                    defaultValue={form.destination}
+                    // @ts-ignore
+                    onSelectOption={(opt) => change({ target: { value: opt.value, name: 'destination' } })}
+                    mapResponse={mapAutocompleteResponse<Location>}
+                    required
+                />
                 <label className="label">
                     Departure
                     <input
@@ -82,19 +93,16 @@ export const FlightsModal = ({ form, invalid, save, swap, change, copy, remove, 
                 </label>
             </div>
             <div className="grid grid-cols-3 gap-16">
-                <label className="label">
-                    Carrier
-                    <input
-                        className="input w-full"
-                        type="text"
-                        name="carrier"
-                        required
-                        autoComplete="off"
-                        onChange={change}
-                        value={form.carrier ?? ''}
-                        maxLength={2}
-                    />
-                </label>
+                <Autocomplete
+                    path="/iata/search/airline"
+                    label="Carrier"
+                    defaultValue={form.carrier}
+                    // @ts-ignore
+                    onSelectOption={(opt) => change({ target: { value: opt.value, name: 'carrier' } })}
+                    mapResponse={mapAutocompleteResponse<Airline>}
+                    minLength={2}
+                    required
+                />
                 <label className="label">
                     Number
                     <input
