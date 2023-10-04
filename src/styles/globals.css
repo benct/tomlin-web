@@ -21,6 +21,11 @@
     .label {
         @apply block text-secondary dark:text-secondary-dark text-14;
     }
+    .label input,
+    .label select,
+    .label textarea {
+        @apply mt-4;
+    }
 }
 
 /* recharts */
