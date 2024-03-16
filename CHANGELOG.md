@@ -1,6 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.3.0] - 2023-10-05 - *Been, Autocomplete*
+### Added
+- Been/countries tracker with charts and world map
+- Generic autocomplete input component
+- IATA/ICAO data search tools using autocomplete
+- Sorting functionality for visits tracking
+
+### Changed
+- Replace react-vis charts with recharts library
+- Use autocomplete component for flight data input
+- Restructuring and improvements in backend API
+
+### Fixed
+- Missing href on link button components
+- Uncontrolled input error on flight form
+- Incorrect colour of main loading text
+
 ## [3.2.0] - 2023-09-05 - *Roles, Ratings, Tools*
 ### Added
 - Proper handling and administration of user roles
