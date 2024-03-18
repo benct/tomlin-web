@@ -5,9 +5,10 @@ type ApiParams = Record<string, any>;
 
 const { publicRuntimeConfig } = getConfig();
 
-const authHeader = (): Record<string, string> => {
+const authHeader = (headers: Record<string, string> = {}): Record<string, string> => {
     const token = window.localStorage.getItem('token');
-    return token ? { Authorization: `Basic ${token}` } : {};
+    if (token) headers['Authorization'] = `Basic ${token}`;
+    return headers;
 };
 
 const buildForm = (data?: ApiParams, files?: FormData): FormData => {
@@ -24,7 +25,7 @@ const api = <T>(method: string, path: string, body?: FormData, type?: string): P
     fetch(publicRuntimeConfig.apiUrl + path, {
         method: method,
         body: body ?? null,
-        headers: authHeader(),
+        headers: authHeader({ 'Client-Id': 'tomlin-web' }),
         mode: 'cors',
     })
         .then((response: Response): Promise<Response> => {
@@ -37,11 +38,11 @@ export const get = <T>(path: string, params?: ApiParams): Promise<T> => api<T>('
 
 export const query = <T>([path, params]: [string, ApiParams]): Promise<T> => api<T>('GET', path + formatQuery(params));
 
-export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => api('POST', path, buildForm(params, files));
+export const post = <T>(path: string, params?: ApiParams, files?: FormData): Promise<T> => api<T>('POST', path, buildForm(params, files));
 
-export const del = <T>(path: string, params?: ApiParams): Promise<T> => api('DELETE', path, buildForm(params));
+export const del = <T>(path: string, params?: ApiParams): Promise<T> => api<T>('DELETE', path, buildForm(params));
 
-export const auth = <T>(path: string): Promise<T> => api('POST', path, buildForm({ referrer: document.referrer }));
+export const auth = <T>(path: string): Promise<T> => api<T>('POST', path, buildForm({ referrer: document.referrer }));
 
 export const text = (path: string, params?: ApiParams): Promise<string> => api('POST', path, buildForm(params), 'text');
 
