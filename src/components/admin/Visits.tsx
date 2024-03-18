@@ -25,7 +25,7 @@ export const Visits = ({ page }: PageProps) => {
     const renderVisit = (visit: Visit, idx: number) => (
         <Fragment key={`visits${idx}`}>
             <code>
-                {formatTimestamp(visit.timestamp)}
+                <span className="text-neutral dark:text-neutral-dark">{formatTimestamp(visit.timestamp)}</span>
                 <br />
                 <span className="font-bold text-secondary dark:text-secondary-dark">{visit.visits}</span>
             </code>

@@ -34,7 +34,7 @@ export const Notes = () => {
                             className="grid sm:grid-cols-auto-1fr gap-16 border-b border-dashed pb-16 mb-16 text-14"
                             key={`note${note.id}`}>
                             <code>
-                                {formatTimestamp(note.updated)}
+                                <span className="text-12 text-neutral dark:text-neutral-dark">{formatTimestamp(note.updated)}</span>
                                 <br />
                                 <button className="text-left font-bold mt-4" onClick={(): void => edit(note)}>
                                     {note.title ?? 'No title'}

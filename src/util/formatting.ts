@@ -11,7 +11,7 @@ export const formatQuery = (data: Record<string, string | number | boolean | nul
 
 export const formatDate = (date?: string, format = 'MMM d, YYY'): string | null => (date ? dateFormat(dateParse(date), format) : null);
 
-export const formatTimestamp = (dateTime?: string, format = 'dd/MM/yy, HH:mm:ss'): string | null =>
+export const formatTimestamp = (dateTime?: string, format = 'dd/MM/yy HH:mm:ss'): string | null =>
     dateTime ? dateFormat(dateParse(dateTime), format) : null;
 
 export const formatDuration = (minutes: number | null): string => {

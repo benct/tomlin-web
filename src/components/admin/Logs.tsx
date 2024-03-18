@@ -13,7 +13,12 @@ export const Logs = ({ page }: PageProps) => {
 
     const renderLog = (log: Log, idx: number) => (
         <Fragment key={`logs${idx}`}>
-            <code onClick={() => deleteLog(log.id)} role="button" tabIndex={0} aria-label="Delete log entry">
+            <code
+                onClick={() => deleteLog(log.id)}
+                role="button"
+                tabIndex={0}
+                aria-label="Delete log entry"
+                className="text-neutral dark:text-neutral-dark">
                 {formatTimestamp(log.timestamp)}
             </code>
             <code>
