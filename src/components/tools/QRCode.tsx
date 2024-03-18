@@ -37,7 +37,7 @@ export const QRCode = () => {
             {showModal && (
                 <Modal title="QR Code" close={() => setShowModal(false)} className="flex justify-center">
                     <Image
-                        src={`https://api.tomlin.no/qr?content=${content}&size=${size}`}
+                        src={`https://api.tomlin.no/qr?content=${content}&size=${size}&clientId=tomlin-web`}
                         alt="Generated QR code"
                         width={size}
                         height={size}
