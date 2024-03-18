@@ -1,9 +1,11 @@
-import type { GetStaticProps, NextPage } from 'next';
-
+import type { NextPage } from 'next';
+import { Default } from '@/components/page/Default';
 import { Been } from '@/components/been/Been';
 
-const BeenPage: NextPage = () => <Been />;
-
-export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Been', standalone: false } });
+const BeenPage: NextPage = () => (
+    <Default title="Been">
+        <Been />
+    </Default>
+);
 
 export default BeenPage;

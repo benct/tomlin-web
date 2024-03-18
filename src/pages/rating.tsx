@@ -1,6 +1,7 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useEffect, useRef, useState } from 'react';
 
+import { Standalone } from '@/components/page/Standalone';
 import { Box } from '@/components/page/Box';
 import { Rating } from '@/components/rating/Rating';
 
@@ -28,17 +29,19 @@ const RatingPage: NextPage = () => {
         }
     };
 
-    return user ? (
-        <Rating user={user} />
-    ) : (
-        <Box title="Enter username" className="space-y-16 min-h">
-            <input type="text" ref={userRef} aria-label="Username" className="input mx-auto" maxLength={16} />
-            <input type="submit" value="Submit" aria-label="Submit" className="input mx-auto" onClick={handleSubmit} />
-            {error && <p className="text-center text-warn">Minimum 3 characters, A-Z!</p>}
-        </Box>
+    return (
+        <Standalone title="Rating">
+            {user ? (
+                <Rating user={user} />
+            ) : (
+                <Box title="Enter username" className="space-y-16 min-h">
+                    <input type="text" ref={userRef} aria-label="Username" className="input mx-auto" maxLength={16} />
+                    <input type="submit" value="Submit" aria-label="Submit" className="input mx-auto" onClick={handleSubmit} />
+                    {error && <p className="text-center text-warn">Minimum 3 characters, A-Z!</p>}
+                </Box>
+            )}
+        </Standalone>
     );
 };
-
-export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Rating', standalone: true } });
 
 export default RatingPage;

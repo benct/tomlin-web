@@ -1,13 +1,14 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { Auth } from '@/components/Auth';
+import { Default } from '@/components/page/Default';
 import { Finn } from '@/components/finn/Finn';
 
 const FinnPage: NextPage = () => (
-    <Auth role="private">
-        <Finn />
-    </Auth>
+    <Default title="FINN">
+        <Auth role="private">
+            <Finn />
+        </Auth>
+    </Default>
 );
-
-export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'FINN', standalone: false } });
 
 export default FinnPage;

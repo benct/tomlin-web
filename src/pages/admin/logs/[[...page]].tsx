@@ -1,20 +1,19 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import { Auth } from '@/components/Auth';
+import { Default } from '@/components/page/Default';
 import { Logs } from '@/components/admin/Logs';
-import { NextPageProps, PageProps } from '@/interfaces';
+import { PageProps } from '@/interfaces';
 
 const LogsPage: NextPage<PageProps> = ({ page: number }: PageProps) => (
-    <Auth>
-        <Logs page={number} />
-    </Auth>
+    <Default title="Logs">
+        <Auth>
+            <Logs page={number} />
+        </Auth>
+    </Default>
 );
 
-export const getServerSideProps: GetServerSideProps<NextPageProps & PageProps> = async ({ query }) => ({
-    props: {
-        title: 'Logs',
-        standalone: false,
-        page: Number(query.page?.[0] ?? 1),
-    },
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query }) => ({
+    props: { page: Number(query.page?.[0] ?? 1) },
 });
 
 export default LogsPage;

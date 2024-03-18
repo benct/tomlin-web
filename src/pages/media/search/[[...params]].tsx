@@ -1,21 +1,22 @@
-import type { NextPage, GetServerSideProps } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { Auth } from '@/components/Auth';
+import { Default } from '@/components/page/Default';
 import { MediaSearch } from '@/components/media/MediaSearch';
-import { MediaSearchProps, NextPageProps } from '@/interfaces';
+import { MediaSearchProps } from '@/interfaces';
 
 const MediaSearchPage: NextPage<MediaSearchProps> = (props) => (
-    <Auth role="media">
-        <MediaSearch {...props} />
-    </Auth>
+    <Default title="Media Search">
+        <Auth role="media">
+            <MediaSearch {...props} />
+        </Auth>
+    </Default>
 );
 
-export const getServerSideProps: GetServerSideProps<NextPageProps & MediaSearchProps> = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps<MediaSearchProps> = async ({ query }) => {
     const [type, action, page, id] = (query.params ?? []) as string[];
 
     return {
         props: {
-            title: `Media Search`,
-            standalone: false,
             ...(type ? { type } : {}),
             ...(action ? { action } : {}),
             ...(id ? { id } : {}),

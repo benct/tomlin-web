@@ -1,8 +1,11 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage } from 'next';
+import { Standalone } from '@/components/page/Standalone';
 import { QRator } from '@/components/qrator/QRator';
 
-const QRatorPage: NextPage = () => <QRator />;
-
-export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'QRator', standalone: true } });
+const QRatorPage: NextPage = () => (
+    <Standalone title="QRator">
+        <QRator />
+    </Standalone>
+);
 
 export default QRatorPage;

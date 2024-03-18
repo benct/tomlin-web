@@ -299,11 +299,6 @@ export interface PaginationResponse<T> {
     total_results: number;
 }
 
-export interface NextPageProps {
-    title?: string;
-    standalone?: boolean;
-}
-
 export interface PageProps {
     page: number;
 }

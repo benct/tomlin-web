@@ -1,8 +1,11 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage } from 'next';
+import { Default } from '@/components/page/Default';
 import { Home } from '@/components/home/Home';
 
-const HomePage: NextPage = () => <Home />;
-
-export const getStaticProps: GetStaticProps = async () => ({ props: { title: 'Home', standalone: false } });
+const HomePage: NextPage = () => (
+    <Default title="Home">
+        <Home />
+    </Default>
+);
 
 export default HomePage;
