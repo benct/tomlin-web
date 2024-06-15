@@ -127,6 +127,18 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
             .finally(() => setLoading(false));
     };
 
+    const removeEpisode = (type: MediaType, id: number, episodeId: number) => {
+        setLoading(true);
+        setToast(undefined);
+        del(`/media/tv/episode/${episodeId}`)
+            .then(() => {
+                selectItem(type, id);
+                setToast('Episode successfully removed!');
+            })
+            .catch(() => setToast('Failed to remove episode...'))
+            .finally(() => setLoading(false));
+    };
+
     return {
         media: data?.results ?? [],
         pagination: {
@@ -142,6 +154,7 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
         seen,
         seenEpisode,
         seenEpisodes,
+        removeEpisode,
     };
 };
 

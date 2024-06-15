@@ -22,6 +22,7 @@ interface MediaModalProps {
     setFavourite: () => void;
     setSeenEpisode: (episodeId: number, set: boolean) => void;
     setSeenEpisodes: (seasonId: number) => void;
+    removeEpisode: (episodeId: number) => void;
 }
 
 export const MediaModal = ({
@@ -34,6 +35,7 @@ export const MediaModal = ({
     setFavourite,
     setSeenEpisode,
     setSeenEpisodes,
+    removeEpisode,
 }: MediaModalProps) => {
     const [showSeasons, setShowSeasons] = useState<boolean>(false);
     const [posterSrc, setPosterSrc] = useState<string>(
@@ -133,6 +135,7 @@ export const MediaModal = ({
                             data={season}
                             setSeenEpisode={setSeenEpisode}
                             setSeenEpisodes={setSeenEpisodes}
+                            removeEpisode={removeEpisode}
                         />
                     ))}
             </div>

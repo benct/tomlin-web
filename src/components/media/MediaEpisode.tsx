@@ -1,16 +1,19 @@
 import { useState } from 'react';
+import { mdiDeleteOutline } from '@mdi/js';
 
 import { formatDate } from '@/util/formatting';
 
-import { MediaEpisodeEntry } from '@/interfaces';
+import { Button } from '@/components/page/Button';
 import { SeenIcon } from './MediaIcons';
+import { MediaEpisodeEntry } from '@/interfaces';
 
 interface MediaEpisodeProps {
     episode: MediaEpisodeEntry;
     setSeenEpisode: (episodeId: number, set: boolean) => void;
+    removeEpisode: (episodeId: number) => void;
 }
 
-export const MediaEpisode = ({ episode, setSeenEpisode }: MediaEpisodeProps) => {
+export const MediaEpisode = ({ episode, setSeenEpisode, removeEpisode }: MediaEpisodeProps) => {
     const [overview, setOverview] = useState<boolean>(false);
 
     const toggleOverview = (): void => {
@@ -25,7 +28,12 @@ export const MediaEpisode = ({ episode, setSeenEpisode }: MediaEpisodeProps) => 
             </button>
             <span className="text-14 text-right">{episode.release_date ? formatDate(episode.release_date, 'MMM do') : null}</span>
             <SeenIcon seen={episode.seen} setSeen={() => setSeenEpisode(episode.id, !episode.seen)} />
-            {overview ? <div className="col-span-4 text-12">{episode.overview}</div> : null}
+            {overview ? (
+                <div className="col-span-4 text-12 flex items-center gap-2">
+                    {episode.overview}
+                    <Button text="Delete" icon={mdiDeleteOutline} onClick={() => removeEpisode(episode.id)} />
+                </div>
+            ) : null}
         </>
     );
 };

@@ -13,12 +13,8 @@ import { MediaItem } from './MediaItem';
 
 export const MediaList = ({ type, page, sort, query }: MediaProps) => {
     const router = useRouter();
-    const { media, pagination, loading, selected, selectItem, update, remove, favourite, seen, seenEpisode, seenEpisodes } = useMediaList({
-        type,
-        page,
-        sort,
-        query,
-    });
+    const { media, pagination, loading, selected, selectItem, update, remove, favourite, seen, seenEpisode, seenEpisodes, removeEpisode } =
+        useMediaList({ type, page, sort, query });
 
     const handleKey = (event: KeyboardEvent<HTMLInputElement>): void => {
         if ((event.keyCode === 13 || event.key === 'Enter') && event.target) {
@@ -55,6 +51,7 @@ export const MediaList = ({ type, page, sort, query }: MediaProps) => {
             setFavourite={() => favourite(item.type ?? type, item.id, !item.favourite)}
             setSeenEpisode={(episodeId: number, set: boolean) => seenEpisode(item.type ?? type, item.id, episodeId, set)}
             setSeenEpisodes={(seasonId: number) => seenEpisodes(item.type ?? type, item.id, seasonId)}
+            removeEpisode={(episodeId: number) => removeEpisode(item.type ?? type, item.id, episodeId)}
         />
     );
 

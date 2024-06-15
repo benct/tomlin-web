@@ -10,9 +10,10 @@ interface MediaSeasonProps {
     data: MediaSeasonEntry;
     setSeenEpisode: (episodeId: number, set: boolean) => void;
     setSeenEpisodes: (seasonId: number) => void;
+    removeEpisode: (episodeId: number) => void;
 }
 
-export const MediaSeason = ({ data, setSeenEpisode, setSeenEpisodes }: MediaSeasonProps) => {
+export const MediaSeason = ({ data, setSeenEpisode, setSeenEpisodes, removeEpisode }: MediaSeasonProps) => {
     const [showEpisodes, setShowEpisodes] = useState<boolean>(false);
 
     const toggleEpisodes = (): void => {
@@ -42,7 +43,12 @@ export const MediaSeason = ({ data, setSeenEpisode, setSeenEpisodes }: MediaSeas
             {showEpisodes ? (
                 <div className="grid grid-cols-media-content gap-x-8 gap-y-4 items-center px-12">
                     {data.episodes.map((episode) => (
-                        <MediaEpisode episode={episode} setSeenEpisode={setSeenEpisode} key={`episode${episode.id}`} />
+                        <MediaEpisode
+                            episode={episode}
+                            setSeenEpisode={setSeenEpisode}
+                            removeEpisode={removeEpisode}
+                            key={`episode${episode.id}`}
+                        />
                     ))}
                 </div>
             ) : null}
