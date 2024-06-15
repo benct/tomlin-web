@@ -151,7 +151,7 @@ export const useMediaSearch = ({ type, action, page, id }: MediaSearchProps) => 
 
     const { isLoggedIn, setLoading } = useAppContext();
     const { data, error, isLoading } = useSWR<PaginationResponse<MediaSearchItemEntry>, Error>(
-        isLoggedIn && type && action ? [`/media/${type}/${action}/${id ?? ''}`, { page }] : null,
+        isLoggedIn && type && action ? [`/media/${type}/${action}${id ? `/${id}` : ''}`, { page }] : null,
         getQuery,
         { revalidateOnFocus: false },
     );
