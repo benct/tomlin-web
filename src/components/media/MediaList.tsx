@@ -50,7 +50,7 @@ export const MediaList = ({ type, page, sort, query }: MediaProps) => {
             setSeen={() => seen(item.type ?? type, item.id, !item.seen)}
             setFavourite={() => favourite(item.type ?? type, item.id, !item.favourite)}
             setSeenEpisode={(episodeId: number, set: boolean) => seenEpisode(item.type ?? type, item.id, episodeId, set)}
-            setSeenEpisodes={(seasonId: number) => seenEpisodes(item.type ?? type, item.id, seasonId)}
+            setSeenEpisodes={(seasonId: number, set: boolean) => seenEpisodes(item.type ?? type, item.id, seasonId, set)}
             removeEpisode={(episodeId: number) => removeEpisode(item.type ?? type, item.id, episodeId)}
         />
     );

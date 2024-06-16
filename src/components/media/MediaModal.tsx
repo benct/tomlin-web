@@ -21,7 +21,7 @@ interface MediaModalProps {
     setSeen: () => void;
     setFavourite: () => void;
     setSeenEpisode: (episodeId: number, set: boolean) => void;
-    setSeenEpisodes: (seasonId: number) => void;
+    setSeenEpisodes: (seasonId: number, set: boolean) => void;
     removeEpisode: (episodeId: number) => void;
 }
 

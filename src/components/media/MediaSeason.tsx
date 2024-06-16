@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { formatDate, formatGradientHSL } from '@/util/formatting';
 
 import { MediaEpisodeEntry, MediaSeasonEntry } from '@/interfaces';
-import { Button } from '@/components/page/Button';
 import { MediaEpisode } from './MediaEpisode';
+import { SeenIcon } from '@/components/media/MediaIcons';
 
 interface MediaSeasonProps {
     data: MediaSeasonEntry;
     setSeenEpisode: (episodeId: number, set: boolean) => void;
-    setSeenEpisodes: (seasonId: number) => void;
+    setSeenEpisodes: (seasonId: number, set: boolean) => void;
     removeEpisode: (episodeId: number) => void;
 }
 
@@ -22,6 +22,7 @@ export const MediaSeason = ({ data, setSeenEpisode, setSeenEpisodes, removeEpiso
 
     const episodesSeen = data.episodes.filter((ep: MediaEpisodeEntry): boolean => ep.seen).length;
     const episodesTotal = data.episodes.length;
+    const seasonSeen = episodesSeen === episodesTotal;
 
     return (
         <>
@@ -33,15 +34,13 @@ export const MediaSeason = ({ data, setSeenEpisode, setSeenEpisodes, removeEpiso
                     </button>
                     <span className="text-14 pl-8">{data.release_date ? formatDate(data.release_date, '(MMM do, YYY)') : 'Unknown'}</span>
                 </div>
-                {episodesSeen === 0 ? <Button text="Mark all" onClick={() => setSeenEpisodes(data.id)} /> : <span />}
-                <Button
-                    text={`${episodesSeen}/${episodesTotal}`}
-                    style={{ color: formatGradientHSL(episodesSeen, episodesTotal) }}
-                    onClick={toggleEpisodes}
-                />
+                <span className="text-14 font-bold" style={{ color: formatGradientHSL(episodesSeen, episodesTotal) }}>
+                    {episodesSeen}/{episodesTotal}
+                </span>
+                <SeenIcon seen={seasonSeen} setSeen={() => setSeenEpisodes(data.id, !seasonSeen)} />
             </div>
             {showEpisodes ? (
-                <div className="grid grid-cols-media-content gap-x-8 gap-y-4 items-center px-12">
+                <div className="grid grid-cols-media-content gap-x-8 gap-y-8 items-center pl-12">
                     {data.episodes.map((episode) => (
                         <MediaEpisode
                             episode={episode}

@@ -115,10 +115,10 @@ export const useMediaList = ({ type, page, sort, query }: MediaProps) => {
             .finally(() => setLoading(false));
     };
 
-    const seenEpisodes = (type: MediaType, id: number, seasonId: number) => {
+    const seenEpisodes = (type: MediaType, id: number, seasonId: number, set: boolean) => {
         setLoading(true);
         setToast(undefined);
-        post(`/media/tv/seen/season/${seasonId}`, { set: true })
+        post(`/media/tv/seen/season/${seasonId}`, { set })
             .then(() => {
                 selectItem(type, id);
                 setToast('All episodes set as seen');

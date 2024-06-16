@@ -26,7 +26,7 @@ export const MediaEpisode = ({ episode, setSeenEpisode, removeEpisode }: MediaEp
             <button className="text-14 text-left truncate" onClick={toggleOverview}>
                 {episode.title}
             </button>
-            <span className="text-14 text-right">{episode.release_date ? formatDate(episode.release_date, 'MMM do') : null}</span>
+            <span className="text-14 text-right">{episode.release_date ? formatDate(episode.release_date, 'MMM do yy') : null}</span>
             <SeenIcon seen={episode.seen} setSeen={() => setSeenEpisode(episode.id, !episode.seen)} />
             {overview ? (
                 <div className="col-span-4 text-12 flex items-center gap-2">
