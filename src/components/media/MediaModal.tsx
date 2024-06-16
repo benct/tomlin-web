@@ -53,11 +53,13 @@ export const MediaModal = ({
     };
 
     const calculateSeenEpisodes = (seasons: MediaSeasonEntry[]): number =>
-        seasons.reduce(
-            (acc: number, cur: MediaSeasonEntry): number =>
-                acc + cur.episodes.reduce((acc: number, cur: MediaEpisodeEntry): number => acc + (cur.seen ? 1 : 0), 0),
-            0,
-        );
+        seasons
+            .filter((season): boolean => season.season > 0)
+            .flatMap((season): MediaEpisodeEntry[] => season.episodes)
+            .filter((episode): boolean => episode.seen).length;
+
+    const calculateTotalEpisodes = (seasons: MediaSeasonEntry[]): number =>
+        seasons.filter((season): boolean => season.season > 0).flatMap((season): MediaEpisodeEntry[] => season.episodes).length;
 
     const renderRow = (key: string, value?: string | ReactNode, className?: string) => (
         <>
@@ -157,7 +159,12 @@ export const MediaModal = ({
                 </>
             ) : (
                 <>
-                    {renderRow('Episodes', `${data.number_of_episodes} (Seen: ${data.seasons && calculateSeenEpisodes(data.seasons)})`)}
+                    {renderRow(
+                        'Episodes',
+                        data.seasons
+                            ? `${calculateTotalEpisodes(data.seasons)} (Seen: ${calculateSeenEpisodes(data.seasons)})`
+                            : data.number_of_episodes,
+                    )}
                     {renderOptional('Type', data.series_type)}
                     {renderRow(
                         'Status',
