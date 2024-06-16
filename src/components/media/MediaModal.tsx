@@ -127,17 +127,15 @@ export const MediaModal = ({
     const renderSeasons = () =>
         data.seasons ? (
             <div className="space-y-8">
-                {data.seasons
-                    .filter((s: MediaSeasonEntry): boolean => s.season > 0)
-                    .map((season: MediaSeasonEntry) => (
-                        <MediaSeason
-                            key={`season${season.id}`}
-                            data={season}
-                            setSeenEpisode={setSeenEpisode}
-                            setSeenEpisodes={setSeenEpisodes}
-                            removeEpisode={removeEpisode}
-                        />
-                    ))}
+                {data.seasons.map((season: MediaSeasonEntry) => (
+                    <MediaSeason
+                        key={`season${season.id}`}
+                        data={season}
+                        setSeenEpisode={setSeenEpisode}
+                        setSeenEpisodes={setSeenEpisodes}
+                        removeEpisode={removeEpisode}
+                    />
+                ))}
             </div>
         ) : null;
 
