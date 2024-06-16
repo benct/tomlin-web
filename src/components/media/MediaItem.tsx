@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { Icon } from '@mdi/react';
+import { mdiCloseCircle } from '@mdi/js';
 
 import { formatDuration, formatGradientHSL, formatYears } from '@/util/formatting';
 
@@ -23,7 +25,7 @@ export const MediaItem = ({ type, data, setSeen, setFavourite, showItem }: Media
         <>
             &nbsp;|&nbsp;
             <span className="font-bold">{data.rating.toFixed(1)}</span>
-            <span className="text-xs">/10</span>
+            <span className="text-12">/10</span>
         </>
     );
 
@@ -42,7 +44,7 @@ export const MediaItem = ({ type, data, setSeen, setFavourite, showItem }: Media
     };
 
     return (
-        <div className="grid grid-cols-a1 gap-4">
+        <div className="grid grid-cols-auto-1fr gap-16">
             <button onClick={showItem}>
                 <Image
                     src={src}
@@ -55,14 +57,21 @@ export const MediaItem = ({ type, data, setSeen, setFavourite, showItem }: Media
                 />
             </button>
             <div>
-                <div className="grid grid-cols-1a gap-4">
+                <div className="grid grid-cols-media-title gap-16">
                     <button className="text-left text-secondary dark:text-secondary-dark font-bold truncate" onClick={showItem}>
                         {data.title}
                     </button>
                     <div className="text-right whitespace-nowrap">{formatYears(type, data.release_year, data.end_year)}</div>
                 </div>
-                <div className="grid grid-cols-a1aa items-center gap-2 text-sm mt-1">
-                    <span className="col-span-2 truncate">
+                <div className="grid grid-cols-media-content items-center gap-8 text-14 mt-4">
+                    {data.imdb_id ? (
+                        <a href={`https://www.imdb.com/title/${data.imdb_id}`} target="_blank" rel="noreferrer external" className="h-24">
+                            <Image src="/images/icon/imdb.svg" alt="IMDb" width={24} height={24} />
+                        </a>
+                    ) : (
+                        <Icon path={mdiCloseCircle} size={1} className="h-24 text-neutral dark:text-neutral" />
+                    )}
+                    <span className="truncate">
                         {type === 'tv' ? renderSeasons() : formatDuration(data.runtime)}
                         {data.rating ? renderRating() : ' | No rating'}
                     </span>
