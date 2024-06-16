@@ -27,7 +27,7 @@ export const formatYears = (type: string, start: string | null, end?: string | n
     if (!start) {
         return 'Unknown';
     }
-    return type === 'tv' ? `${start}${end ? '-' + end : String.fromCharCode(8594)}` : start;
+    return type === 'tv' && end !== start ? `${start}${end ? `-${end}` : String.fromCharCode(8594)}` : start;
 };
 
 export const formatGradientHSL = (count: number, total: number): string =>
