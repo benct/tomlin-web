@@ -21,7 +21,7 @@ export const Logs = ({ page }: PageProps) => {
                 className="text-neutral dark:text-neutral-dark">
                 {formatTimestamp(log.timestamp)}
             </code>
-            <code>
+            <code className="whitespace-pre-line">
                 {log.message}
                 {log.details && <div>{log.details}</div>}
                 {log.path && <div>{log.path}</div>}

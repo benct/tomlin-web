@@ -29,7 +29,6 @@ export const useInit = () => {
         if (error) {
             setIsLoggedIn(false);
             setRoles([]);
-            window.localStorage.removeItem('token');
         }
     }, [error, setIsLoggedIn, setRoles]);
 };
